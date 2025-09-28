@@ -119,6 +119,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &946347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 946349}
+  - component: {fileID: 946348}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &946348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 135ce289f892e864a8dce854ef45e5aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalWave: 1
+  totalEnemy: 30
+  maxOnScreen: 10
+  enemyPrefab: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
+--- !u!4 &946349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.7981672, y: 2.5520158, z: -0.07966766}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &60579282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2798471574156222828, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
@@ -214,8 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameInput: {fileID: 444733804}
   bulletPrefab: {fileID: 3267392343543207434, guid: a5c9a21879a19b7418edf3a9e92debf1, type: 3}
-  shootSpawnPosition: {fileID: 1084670746}
-  bulletSpeed: 10
+  firePoint: {fileID: 0}
 --- !u!1001 &205184682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1453,3 +1500,4 @@ SceneRoots:
   - {fileID: 119839059}
   - {fileID: 444733805}
   - {fileID: 867040474}
+  - {fileID: 946349}
