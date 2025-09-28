@@ -49,7 +49,7 @@ public class Bullets : MonoBehaviour
                 if (hit.CompareTag("Enemy"))
                 {
                     Destroy(hit.gameObject);
-                    //Destroy(gameObject);
+                    Destroy(gameObject);
                     /*
                      * Health health = hit.GetComponent<Health>();
                     if (health != null)
