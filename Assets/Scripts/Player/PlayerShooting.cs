@@ -3,46 +3,87 @@ using UnityEngine;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private WeaponData[] weapons;
     [SerializeField] private Transform firePoint;
+
+    private int currentWeaponIndex = 0;
+    private float nextFireTime;
+
 
     private void OnEnable()
     {
         gameInput.OnShootAction += HandleShoot;
+        gameInput.OnPreviousWeapon += HandlePreviousWeapon;
+        gameInput.OnNextWeapon += HandleNextWeapon;
     }
 
     private void OnDisable()
     {
         gameInput.OnShootAction -= HandleShoot;
+        gameInput.OnPreviousWeapon -= HandlePreviousWeapon;
+        gameInput.OnNextWeapon -= HandleNextWeapon;
+    }
+
+    private void HandleNextWeapon(object sender, System.EventArgs e)
+    {
+        currentWeaponIndex = (currentWeaponIndex + 1) % weapons.Length;
+        Debug.Log("Switched to: " + weapons[currentWeaponIndex].weaponName);
+    }
+
+    private void HandlePreviousWeapon(object sender, System.EventArgs e)
+    {
+        currentWeaponIndex--;
+        if (currentWeaponIndex < 0)
+        {
+            currentWeaponIndex = weapons.Length - 1;
+        }
+        Debug.Log("Switched to: " + weapons[currentWeaponIndex].weaponName);
     }
 
     private void HandleShoot(object sender, System.EventArgs e)
     {
-        //Shoot();
-        ShotgunShoot(5, 40f);
+        //Switch weapon with Q and E
+        WeaponData weapon = weapons[currentWeaponIndex];
+
+        if (Time.time < nextFireTime)
+        {
+            return;
+        }
+
+        nextFireTime = Time.time + weapon.fireRate;
+        if (weapon.pelletCount > 1)
+        {
+            ShotgunShoot(weapon);
+        }
+        else
+        {
+            Shoot(weapon);
+        }
+        
     }
 
-    private void Shoot()
+    private void Shoot(WeaponData weapon)
     {
-        GameObject bulletGameObject = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bulletGameObject = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation);
 
         Bullets bullet = bulletGameObject.GetComponent<Bullets>();
-        bullet.Fire(firePoint.up);
+        bullet.Fire(firePoint.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius);
     }
 
-    private void ShotgunShoot(int pelletCount, float spreadAngle)
+    private void ShotgunShoot(WeaponData weapon)
     {
-        float halfSpread = spreadAngle * 0.5f;
+        //Dont ask me what are these equation i also dk i just chatgpt.
+        float halfSpread = weapon.spread * 0.5f;
 
-        for (int i = 0; i < pelletCount; i++)
+        for (int i = 0; i < weapon.pelletCount; i++)
         {
             float angleOffset = Random.Range(-halfSpread, halfSpread);
-            Vector2 shootDir = Quaternion.Euler(0, 0, angleOffset) * firePoint.up;
+            Quaternion spreadRot = firePoint.rotation * Quaternion.Euler(0, 0, angleOffset);
 
-            GameObject bulletGameObject = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
+            GameObject bulletGameObject = Instantiate(weapon.bulletPrefab, firePoint.position, spreadRot);
             Bullets bullet = bulletGameObject.GetComponent<Bullets>();
-            bullet.Fire(shootDir);
+            bullet.Fire(spreadRot * Vector2.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius);
         }
     }
+    
 }

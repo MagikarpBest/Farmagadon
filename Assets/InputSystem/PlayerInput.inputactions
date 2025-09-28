@@ -15,9 +15,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Interactions",
+                    "name": "Shoot",
                     "type": "Button",
                     "id": "737cad25-af69-4526-a48a-7f896e9e5b63",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextWeapon",
+                    "type": "Button",
+                    "id": "85fdce52-df6a-4ca6-bad3-211c83cc67d9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousWeapon",
+                    "type": "Button",
+                    "id": "af57e581-6b27-43a1-8d27-c56e299ca988",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -65,7 +83,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interactions",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b15b0ec1-cd7b-44ed-a6ed-994735607d87",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c2ec02c-3401-4d0b-a35f-978e1554b3b4",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
