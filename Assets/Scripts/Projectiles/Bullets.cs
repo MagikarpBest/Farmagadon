@@ -3,7 +3,6 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
     [Header("Bullet Settings")]
-    [SerializeField] float lifeTime = 3f;
 
     private float damage;
     private float explosionRadius;
@@ -16,7 +15,6 @@ public class Bullets : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, lifeTime);
     }
 
     // Called by shooter (PlayerShooting) to launch bullet
