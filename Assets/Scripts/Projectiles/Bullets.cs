@@ -3,11 +3,9 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
     [Header("Bullet Settings")]
-    [SerializeField] float lifeTime = 3f;
-    [SerializeField] float damage = 1f;
-    [SerializeField] float speed = 5f;
-    [SerializeField] float explosionRadius = 0f; // 0 = not explosive bullet
 
+    private float damage;
+    private float explosionRadius;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -17,27 +15,68 @@ public class Bullets : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, lifeTime);
     }
 
     // Called by shooter (PlayerShooting) to launch bullet
-    public void Fire(Vector2 direction)
+    public void Fire(Vector2 velocity, float damage, float explosionRadius,float lifeTime)
     {
-        rb.linearVelocity = direction * speed;
+        this.damage = damage;
+        this.explosionRadius = explosionRadius;
+
+        rb.linearVelocity = velocity;
 
         // Rotate sprite to match movement direction
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // Destroy bullet after lifetime (why cause this can make some gun with shorter range without changing much code)
+        Destroy(gameObject, lifeTime);
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        //If collided with stuff check isit enemy, if yes then deal damage.
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (explosionRadius > 0)
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            // Explosive bullet -> damage in an area
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+
+            // Check every enemy in zone and reduce HP
+            foreach (var hit in hits)
+            {
+                if (hit.CompareTag("Enemy"))
+                {
+                    Destroy(hit.gameObject);
+                    Destroy(gameObject);
+                    /*
+                     * Health health = hit.GetComponent<Health>();
+                    if (health != null)
+                    {
+
+                    }
+                    */
+                }
+            }
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+            /*
+            Health health = collision.gameObject.GetComponent<Health>();
+            if (health != null)
+            {
+
+            }
+            */
+        }
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Explosive range debug tools
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
