@@ -20,7 +20,7 @@ public class Bullets : MonoBehaviour
     }
 
     // Called by shooter (PlayerShooting) to launch bullet
-    public void Fire(Vector2 velocity, float damage, float explosionRadius)
+    public void Fire(Vector2 velocity, float damage, float explosionRadius,float lifeTime)
     {
         this.damage = damage;
         this.explosionRadius = explosionRadius;
@@ -30,10 +30,13 @@ public class Bullets : MonoBehaviour
         // Rotate sprite to match movement direction
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // Destroy bullet after lifetime (why cause this can make some gun with shorter range without changing much code)
+        Destroy(gameObject, lifeTime);
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (explosionRadius > 0)
         {
@@ -45,24 +48,37 @@ public class Bullets : MonoBehaviour
             {
                 if (hit.CompareTag("Enemy"))
                 {
-                    Health health = hit.GetComponent<Health>();
+                    Destroy(hit.gameObject);
+                    //Destroy(gameObject);
+                    /*
+                     * Health health = hit.GetComponent<Health>();
                     if (health != null)
                     {
-                        Destroy(hit.gameObject);
-                        Destroy(gameObject);
+
                     }
+                    */
                 }
             }
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
+        else if (other.CompareTag("Enemy"))
         {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+            /*
             Health health = collision.gameObject.GetComponent<Health>();
             if (health != null)
             {
-                Destroy (collision.gameObject);
-                Destroy(gameObject);
+
             }
+            */
         }
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Explosive range debug tools
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

@@ -7,9 +7,11 @@ public class WeaponData : ScriptableObject
 
     [Header("Bullet Settings")]
     public GameObject bulletPrefab;
+    public float lifeTime = 0f;
     public float bulletSpeed = 10f;
     public float damage = 1f;
     public float explosionRadius = 0f; //edit if explosive weapon
+
 
     [Header("Fire Settings")]
     public float fireRate = 0.2f;
