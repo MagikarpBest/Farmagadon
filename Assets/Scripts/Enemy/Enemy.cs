@@ -4,12 +4,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float enemySpeed = 1.0f;
     private Rigidbody2D rb;
-    private EnemySpawn manager;
-
-    public void SetManager(EnemySpawn mgr)
-    {
-        manager = mgr;
-    }
 
     private void Awake()
     {
@@ -24,19 +18,4 @@ public class Enemy : MonoBehaviour
     {
        
     }
-
-    private void OnCollisionEnter2d(Collider2D collision)
-    {
-        if (collision.gameObject.name == "Bullet")
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-            manager.RemoveEnemy(gameObject);
-    }
-
-
 }
