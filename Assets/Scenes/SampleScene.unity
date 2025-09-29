@@ -261,8 +261,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 444733804}
-  bulletPrefab: {fileID: 3267392343543207434, guid: a5c9a21879a19b7418edf3a9e92debf1, type: 3}
-  firePoint: {fileID: 0}
+  weapons:
+  - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
+  - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
+  - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
+  - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
+  firePoint: {fileID: 1084670746}
 --- !u!1001 &205184682
 PrefabInstance:
   m_ObjectHideFlags: 0
