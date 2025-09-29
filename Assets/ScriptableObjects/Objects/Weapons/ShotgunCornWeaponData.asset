@@ -20,4 +20,4 @@ MonoBehaviour:
   explosionRadius: 0
   fireRate: 0.2
   pelletCount: 5
-  spread: 10
+  spread: 40

@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Wave System/Level Data", fileName = "NewLevel")]
 public class LevelData : ScriptableObject
@@ -19,5 +19,5 @@ public class EnemySpawnInfo
 {
     public GameObject enemyPrefab;      
     public int count;                // How much it spawn
-    public float interval;           // How long the interval to spawn 1?
+    public float duration;           // How long the interval to spawn 1?
 }
