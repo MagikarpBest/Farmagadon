@@ -23,6 +23,7 @@ public class EnemySpawn : MonoBehaviour
         if (enemiesOnScreen.Count < maxOnScreen)
         {
             Spawn();
+            Debug.Log(enemiesOnScreen.Count);
         }
         else
         {

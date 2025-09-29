@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
        
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2d(Collider2D collision)
     {
         if (collision.gameObject.name == "Bullet")
         {
@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        if (manager != null)
             manager.RemoveEnemy(gameObject);
     }
 
