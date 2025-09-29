@@ -44,7 +44,6 @@ public class EnemySpawn : MonoBehaviour
 
     private void Wave()
     {
-        currWave++;
         if (currWave > totalWave)
         {
             isAllWaveDone = true;
@@ -54,7 +53,7 @@ public class EnemySpawn : MonoBehaviour
         enemyCount = 0;
         isCurrWaveDone = false;
         goingNextWave = false;
-        
+        currWave++;
         Debug.Log(currWave);
 
     }
