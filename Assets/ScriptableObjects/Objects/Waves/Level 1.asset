@@ -17,7 +17,20 @@ MonoBehaviour:
   - time: 0
     enemies:
     - enemyPrefab: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
-      count: 10
-      duration: 10
+      count: 3
+      duration: 3
+  - time: 5
+    enemies:
+    - enemyPrefab: {fileID: 1940379239426215094, guid: 1ae25ab3e7b8ec1489eb314d79e5986b, type: 3}
+      count: 6
+      duration: 3
   - time: 10
-    enemies: []
+    enemies:
+    - enemyPrefab: {fileID: 1940379239426215094, guid: b34903bf7a48a2a4e8c8fe9920b549d5, type: 3}
+      count: 6
+      duration: 3
+  - time: 15
+    enemies:
+    - enemyPrefab: {fileID: 1940379239426215094, guid: a96132e2a2b28c44cadf8006c47ba7cd, type: 3}
+      count: 20
+      duration: 5

@@ -16,7 +16,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3267392343543207434, guid: a5c9a21879a19b7418edf3a9e92debf1, type: 3}
   lifeTime: 3
   bulletSpeed: 15
-  damage: 1
+  damage: 2
+  pierceCount: 2
   explosionRadius: 0
   fireRate: 0.2
   pelletCount: 1

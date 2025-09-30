@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 
     private float damage;
     private float explosionRadius;
+    private int pierceCount;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -12,15 +13,12 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-    }
-
     // Called by shooter (PlayerShooting) to launch bullet
-    public void Fire(Vector2 velocity, float damage, float explosionRadius,float lifeTime)
+    public void Fire(Vector2 velocity, float damage, float explosionRadius, float lifeTime, int pierceCount = 0)
     {
         this.damage = damage;
         this.explosionRadius = explosionRadius;
+        this.pierceCount = pierceCount;
 
         rb.linearVelocity = velocity;
 
@@ -52,6 +50,7 @@ public class Bullet : MonoBehaviour
                     }
                 }
             }
+            Destroy(gameObject);
         }
         else if (other.CompareTag("Enemy"))
         {
@@ -61,8 +60,20 @@ public class Bullet : MonoBehaviour
             {
                 damageable.TakeDamage(Mathf.RoundToInt(damage));
             }
+
+            if (pierceCount > 0)
+            {
+                pierceCount--;
+                if (pierceCount <= 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()

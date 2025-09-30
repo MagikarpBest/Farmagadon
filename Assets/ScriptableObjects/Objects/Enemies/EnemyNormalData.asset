@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: EnemyNormalData
   m_EditorClassIdentifier: 
   enemyName: Normal
-  maxHealth: 10
+  maxHealth: 3
   moveSpeed: 2
   damage: 1
