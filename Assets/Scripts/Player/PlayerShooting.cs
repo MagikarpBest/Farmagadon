@@ -66,7 +66,7 @@ public class PlayerShooting : MonoBehaviour
     {
         GameObject bulletGameObject = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation);
 
-        Bullets bullet = bulletGameObject.GetComponent<Bullets>();
+        Bullet bullet = bulletGameObject.GetComponent<Bullet>();
         bullet.Fire(firePoint.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius, weapon.lifeTime);
     }
 
@@ -81,7 +81,7 @@ public class PlayerShooting : MonoBehaviour
             Quaternion spreadRot = firePoint.rotation * Quaternion.Euler(0, 0, angleOffset);
 
             GameObject bulletGameObject = Instantiate(weapon.bulletPrefab, firePoint.position, spreadRot);
-            Bullets bullet = bulletGameObject.GetComponent<Bullets>();
+            Bullet bullet = bulletGameObject.GetComponent<Bullet>();
             bullet.Fire(spreadRot * Vector2.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius, weapon.lifeTime);
         }
     }
