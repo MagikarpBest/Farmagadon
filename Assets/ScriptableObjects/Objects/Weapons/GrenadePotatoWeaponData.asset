@@ -17,7 +17,8 @@ MonoBehaviour:
   lifeTime: 3
   bulletSpeed: 15
   damage: 1
-  explosionRadius: 1
+  pierceCount: 0
+  explosionRadius: 2
   fireRate: 0.2
   pelletCount: 1
   spread: 0
