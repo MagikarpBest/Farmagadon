@@ -26,6 +26,7 @@ public class WeaponInventory : MonoBehaviour
     private int currentIndex = 0;
 
     public event Action<WeaponSlot> OnWeaponChanged;
+    public event Action<WeaponSlot> OnAmmoChanged;
 
     private void Awake()
     {
@@ -84,6 +85,23 @@ public class WeaponInventory : MonoBehaviour
             currentIndex = slotIndex;
             OnWeaponChanged?.Invoke(weapons[slotIndex]);
         }
+    }
+
+    public bool ConsumeAmmo(int amount)
+    {
+        var slot = GetCurrentWeapon();
+        if (slot == null || slot.weaponData == null)
+        {
+            return false;
+        }
+
+        if (slot.currentAmmo >= amount)
+        {
+            slot.currentAmmo -= amount;
+            OnAmmoChanged.Invoke(slot);
+            return true;
+        }
+        return false;
     }
 
     public void NextWeapon()

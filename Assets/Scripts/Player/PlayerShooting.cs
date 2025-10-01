@@ -63,15 +63,14 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
-        if (currentSlot.currentAmmo <= 0) 
+        // Reduce ammo after shoot
+        if (!weaponInventory.ConsumeAmmo(1)) 
         {
             Debug.Log("Out of ammo for: " + currentSlot.weaponData.weaponName);
             return;
         }
 
         nextFireTime = Time.time + currentSlot.weaponData.fireRate;
-        // Reduce ammo after shoot
-        currentSlot.currentAmmo--;
 
         if (currentSlot.weaponData.pelletCount > 1)
         {
