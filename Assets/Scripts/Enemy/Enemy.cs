@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        Debug.Log(enemyData.enemyName + "died");
+        Debug.Log(enemyData.enemyName + " died");
         Destroy(gameObject);
     }
 }
