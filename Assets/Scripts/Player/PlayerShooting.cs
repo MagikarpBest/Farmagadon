@@ -24,13 +24,13 @@ public class PlayerShooting : MonoBehaviour
         gameInput.OnNextWeapon -= HandleNextWeapon;
     }
 
-    private void HandleNextWeapon(object sender, System.EventArgs e)
+    private void HandleNextWeapon()
     {
         currentWeaponIndex = (currentWeaponIndex + 1) % weapons.Length;
         Debug.Log("Switched to: " + weapons[currentWeaponIndex].weaponName);
     }
 
-    private void HandlePreviousWeapon(object sender, System.EventArgs e)
+    private void HandlePreviousWeapon()
     {
         currentWeaponIndex--;
         if (currentWeaponIndex < 0)
@@ -40,7 +40,7 @@ public class PlayerShooting : MonoBehaviour
         Debug.Log("Switched to: " + weapons[currentWeaponIndex].weaponName);
     }
 
-    private void HandleShoot(object sender, System.EventArgs e)
+    private void HandleShoot()
     {
         //Switch weapon with Q and E
         WeaponData weapon = weapons[currentWeaponIndex];

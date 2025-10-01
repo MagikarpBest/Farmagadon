@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0833922945385488052b2d42f5e2c3, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
-  totalDuration: 90
+  totalDuration: 20
   events:
   - time: 0
     enemies:
