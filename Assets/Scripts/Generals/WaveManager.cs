@@ -3,7 +3,8 @@ using System;
 using System.Collections;
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private LevelData levelData;       // ScriptableObject that stores all wave events for this level
+    // ScriptableObject that stores all wave events for this level
+    [SerializeField] private LevelData levelData;       
     [SerializeField] private Transform spawnPointA; 
     [SerializeField] private Transform spawnPointB;
 
