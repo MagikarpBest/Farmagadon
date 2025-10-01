@@ -6,7 +6,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private Transform firePoint;
 
-    private WeaponData currentWeapon;
+    private WeaponSlot currentSlot;
     private float nextFireTime;
 
 
@@ -16,7 +16,7 @@ public class PlayerShooting : MonoBehaviour
         gameInput.OnPreviousWeapon += HandlePreviousWeapon;
         gameInput.OnNextWeapon += HandleNextWeapon;
 
-        weaponInventory.OnWeaponChanged += UpdateWeapon;
+        weaponInventory.OnWeaponChanged += HandleWeaponChange;
     }
 
     private void OnDisable()
@@ -25,7 +25,7 @@ public class PlayerShooting : MonoBehaviour
         gameInput.OnPreviousWeapon -= HandlePreviousWeapon;
         gameInput.OnNextWeapon -= HandleNextWeapon;
 
-        weaponInventory.OnWeaponChanged -= UpdateWeapon;
+        weaponInventory.OnWeaponChanged -= HandleWeaponChange;
     }
 
     private void HandleNextWeapon()
@@ -37,26 +37,53 @@ public class PlayerShooting : MonoBehaviour
     {
         weaponInventory.PreviousWeapon();
     }
+    private void HandleWeaponChange(WeaponSlot slot)
+    {
+        currentSlot = slot;
+        if (slot != null && slot.weaponData != null)
+        {
+            Debug.Log("Switched to: " + slot.weaponData.weaponName + " Ammo: " + slot.currentAmmo);
+        }
+        else
+        {
+            Debug.Log("Empty slot selected");
+        }
+    }
 
     private void HandleShoot()
     {
-        if (currentWeapon != null)
+        if (currentSlot == null || currentSlot.weaponData == null) 
         {
-            if (Time.time < nextFireTime)
-            {
-                return;
-            }
-            nextFireTime = Time.time + currentWeapon.fireRate;
-
-            if (currentWeapon.pelletCount > 1)
-            {
-                ShotgunShoot(currentWeapon);
-            }
-            else
-            {
-                Shoot(currentWeapon);
-            }
+            return;
         }
+
+        // Fire rate check
+        if (Time.time < nextFireTime)
+        {
+            return;
+        }
+
+        if (currentSlot.currentAmmo <= 0) 
+        {
+            Debug.Log("Out of ammo for: " + currentSlot.weaponData.weaponName);
+            return;
+        }
+
+        nextFireTime = Time.time + currentSlot.weaponData.fireRate;
+        // Reduce ammo after shoot
+        currentSlot.currentAmmo--;
+
+        if (currentSlot.weaponData.pelletCount > 1)
+        {
+            ShotgunShoot(currentSlot.weaponData);
+        }
+        else
+        {
+            Shoot(currentSlot.weaponData);
+        }
+
+        Debug.Log(currentSlot.weaponData.weaponName + " fired. Ammo left: " + currentSlot.currentAmmo);
+
     }
 
     private void Shoot(WeaponData weapon)
@@ -82,18 +109,4 @@ public class PlayerShooting : MonoBehaviour
             bullet.Fire(spreadRot * Vector2.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius, weapon.lifeTime, weapon.pierceCount);
         }
     }
-
-    private void UpdateWeapon(WeaponData newWeapon)
-    {
-        currentWeapon = newWeapon;
-        if (newWeapon != null)
-        {
-            Debug.Log("Switched to: " + newWeapon.weaponName);
-        }
-        else
-        {
-            Debug.Log("Empty slot selected");
-        }
-    }
-
 }

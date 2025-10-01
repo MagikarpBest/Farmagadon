@@ -1,20 +1,35 @@
 using UnityEngine;
 using System;
 
+
+[System.Serializable]
+public class WeaponSlot
+{
+    public WeaponData weaponData;
+    public int currentAmmo;
+
+    public WeaponSlot(WeaponData data, int startingAmmo)
+    {
+        weaponData = data;
+        currentAmmo = startingAmmo;
+    }
+}
+
 public class WeaponInventory : MonoBehaviour
 {
     [SerializeField] private int maxSlot = 4;
     [SerializeField] private int unlockedSlot = 2;
     [SerializeField] private WeaponData[] startingWeapon;
+    [SerializeField] private int defaultStartingAmmo = 30;
 
-    private WeaponData[] weapons;
+    private WeaponSlot[] weapons;
     private int currentIndex = 0;
 
-    public event Action<WeaponData> OnWeaponChanged;
+    public event Action<WeaponSlot> OnWeaponChanged;
 
     private void Awake()
     {
-        weapons = new WeaponData[maxSlot];
+        weapons = new WeaponSlot[maxSlot];
     }
 
     private void Start()
@@ -23,7 +38,7 @@ public class WeaponInventory : MonoBehaviour
         {
             if (weapon != null)
             {
-                AddWeapon(weapon);
+                AddWeapon(weapon, defaultStartingAmmo);
             }
         }
         
@@ -46,28 +61,28 @@ public class WeaponInventory : MonoBehaviour
         }
     }
 
-    public void AddWeapon(WeaponData newWeapon)
+    public void AddWeapon(WeaponData newWeapon, int startingAmmo)
     {
         for (int i = 0; i < unlockedSlot; i++)
         {
             if (weapons[i] == null)
             {
-                weapons[i] = newWeapon;
+                weapons[i] = new WeaponSlot(newWeapon, startingAmmo);
                 currentIndex = i;
-                OnWeaponChanged?.Invoke(newWeapon);
+                OnWeaponChanged?.Invoke(weapons[i]);
                 return;
             }
         }
         Debug.Log("All slots full. Need to swap!");
     }
 
-    public void SwapWeapon(int slotIndex, WeaponData newWeapon)
+    public void SwapWeapon(int slotIndex, WeaponData newWeapon, int startingAmmo)
     {
         if (slotIndex < unlockedSlot)
         {
-            weapons[slotIndex] = newWeapon;
+            weapons[slotIndex] = new WeaponSlot(newWeapon, startingAmmo);
             currentIndex = slotIndex;
-            OnWeaponChanged?.Invoke(newWeapon);
+            OnWeaponChanged?.Invoke(weapons[slotIndex]);
         }
     }
 
@@ -97,7 +112,7 @@ public class WeaponInventory : MonoBehaviour
         OnWeaponChanged?.Invoke(weapons[currentIndex]);
     }
 
-    public WeaponData GetCurrentWeapon()
+    public WeaponSlot GetCurrentWeapon()
     {
         return weapons[currentIndex];
     }
