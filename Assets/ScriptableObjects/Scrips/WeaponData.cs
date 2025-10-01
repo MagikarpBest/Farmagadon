@@ -10,6 +10,7 @@ public class WeaponData : ScriptableObject
     public float lifeTime = 0f;
     public float bulletSpeed = 10f;
     public float damage = 1f;
+    public int pierceCount = 0;
     public float explosionRadius = 0f; //edit if explosive weapon
 
 
