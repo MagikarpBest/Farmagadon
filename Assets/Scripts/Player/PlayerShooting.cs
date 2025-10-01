@@ -3,10 +3,10 @@ using UnityEngine;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private WeaponData[] weapons;
+    [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private Transform firePoint;
 
-    private int currentWeaponIndex = 0;
+    private WeaponData currentWeapon;
     private float nextFireTime;
 
 
@@ -15,6 +15,8 @@ public class PlayerShooting : MonoBehaviour
         gameInput.OnShootAction += HandleShoot;
         gameInput.OnPreviousWeapon += HandlePreviousWeapon;
         gameInput.OnNextWeapon += HandleNextWeapon;
+
+        weaponInventory.OnWeaponChanged += UpdateWeapon;
     }
 
     private void OnDisable()
@@ -22,44 +24,39 @@ public class PlayerShooting : MonoBehaviour
         gameInput.OnShootAction -= HandleShoot;
         gameInput.OnPreviousWeapon -= HandlePreviousWeapon;
         gameInput.OnNextWeapon -= HandleNextWeapon;
+
+        weaponInventory.OnWeaponChanged -= UpdateWeapon;
     }
 
     private void HandleNextWeapon()
     {
-        currentWeaponIndex = (currentWeaponIndex + 1) % weapons.Length;
-        Debug.Log("Switched to: " + weapons[currentWeaponIndex].weaponName);
+        weaponInventory.NextWeapon();
     }
 
     private void HandlePreviousWeapon()
     {
-        currentWeaponIndex--;
-        if (currentWeaponIndex < 0)
-        {
-            currentWeaponIndex = weapons.Length - 1;
-        }
-        Debug.Log("Switched to: " + weapons[currentWeaponIndex].weaponName);
+        weaponInventory.PreviousWeapon();
     }
 
     private void HandleShoot()
     {
-        //Switch weapon with Q and E
-        WeaponData weapon = weapons[currentWeaponIndex];
+        if (currentWeapon != null)
+        {
+            if (Time.time < nextFireTime)
+            {
+                return;
+            }
+            nextFireTime = Time.time + currentWeapon.fireRate;
 
-        if (Time.time < nextFireTime)
-        {
-            return;
+            if (currentWeapon.pelletCount > 1)
+            {
+                ShotgunShoot(currentWeapon);
+            }
+            else
+            {
+                Shoot(currentWeapon);
+            }
         }
-
-        nextFireTime = Time.time + weapon.fireRate;
-        if (weapon.pelletCount > 1)
-        {
-            ShotgunShoot(weapon);
-        }
-        else
-        {
-            Shoot(weapon);
-        }
-        
     }
 
     private void Shoot(WeaponData weapon)
@@ -85,5 +82,18 @@ public class PlayerShooting : MonoBehaviour
             bullet.Fire(spreadRot * Vector2.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius, weapon.lifeTime, weapon.pierceCount);
         }
     }
-    
+
+    private void UpdateWeapon(WeaponData newWeapon)
+    {
+        currentWeapon = newWeapon;
+        if (newWeapon != null)
+        {
+            Debug.Log("Switched to: " + newWeapon.weaponName);
+        }
+        else
+        {
+            Debug.Log("Empty slot selected");
+        }
+    }
+
 }

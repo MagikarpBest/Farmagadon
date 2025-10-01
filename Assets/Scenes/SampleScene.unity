@@ -119,54 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &946347
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 946349}
-  - component: {fileID: 946348}
-  m_Layer: 0
-  m_Name: WaveManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &946348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 135ce289f892e864a8dce854ef45e5aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalWave: 1
-  enemyPerWave: 10
-  timeBetweenWave: 5
-  enemyPrefab: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
---- !u!4 &946349
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946347}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7981672, y: 2.5520158, z: -0.07966766}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &119839057
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +131,7 @@ GameObject:
   - component: {fileID: 119839058}
   - component: {fileID: 119839061}
   - component: {fileID: 119839062}
+  - component: {fileID: 119839063}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -256,12 +209,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 444733804}
-  weapons:
+  weaponInventory: {fileID: 119839063}
+  firePoint: {fileID: 1084670746}
+--- !u!114 &119839063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119839057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a61024661411eb34b9ad71baa3746bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSlot: 4
+  unlockedSlot: 2
+  startingWeapon:
+  - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
   - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
   - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
   - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
-  - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
-  firePoint: {fileID: 1084670746}
 --- !u!1 &314664068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1771,7 +1739,6 @@ SceneRoots:
   - {fileID: 1840535056}
   - {fileID: 119839059}
   - {fileID: 867040474}
-  - {fileID: 946349}
   - {fileID: 1828912154}
   - {fileID: 334180103}
   - {fileID: 556716329}
