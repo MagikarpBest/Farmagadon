@@ -15,4 +15,5 @@ MonoBehaviour:
   enemyName: Normal
   maxHealth: 20
   moveSpeed: 0
-  damage: 0
+  damage: 1
+  attackInterval: 1
