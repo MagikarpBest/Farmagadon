@@ -1,16 +1,35 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FenceHealthUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private FenceHealth fenceHealth;
+    [SerializeField] private Slider fenceHealthBar;
+
+    private void OnEnable()
     {
-        
+        fenceHealth.OnHealthChanged += HandleHealthUpdated;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        fenceHealth.OnHealthChanged -= HandleHealthUpdated;
+    }
+
+    private void Start()
+    {
+        if (fenceHealth != null)
+        {
+            HandleHealthUpdated(fenceHealth.GetHealth(), fenceHealth.GetMaxHealth());
+        }
+    }
+
+    private void HandleHealthUpdated(int current, int max)
+    {
+        if (fenceHealth != null)
+        {
+            fenceHealthBar.maxValue = max;
+            fenceHealthBar.value = current;
+        }
     }
 }

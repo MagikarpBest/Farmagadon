@@ -32,4 +32,9 @@ public class FenceHealth : MonoBehaviour
     {
         return currentHealth;
     }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
 }
