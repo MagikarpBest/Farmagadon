@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 119839061}
   - component: {fileID: 119839062}
   - component: {fileID: 119839063}
+  - component: {fileID: 119839064}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -231,6 +232,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
   - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
   defaultStartingAmmo: 10
+--- !u!114 &119839064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119839057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3b16fbf8d2f2e4cb2281f9e261168b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponInventory: {fileID: 119839063}
+  weaponNameText: {fileID: 1656785260}
+  weaponAmmoText: {fileID: 373948347}
 --- !u!1 &314664068
 GameObject:
   m_ObjectHideFlags: 0
