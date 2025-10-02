@@ -1,13 +1,18 @@
 using UnityEngine;
+using System;
 using System.Collections;
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private LevelData levelData;       // ScriptableObject that stores all wave events for this level
+    // ScriptableObject that stores all wave events for this level
+    [SerializeField] private LevelData levelData;       
     [SerializeField] private Transform spawnPointA; 
     [SerializeField] private Transform spawnPointB;
 
-    float elapsedTime;
+    float elapsedTime;  
     int nextEventIndex = 0; // Which wave event to trigger next (Go check levelData.cs SO eg.Element 1 is index 1, element 2 is index 2)
+
+    public event Action<float, float> OnTimeUpdated;
+    public event Action OnLevelCompleted;
 
     private void Start()
     {
@@ -22,6 +27,9 @@ public class WaveManager : MonoBehaviour
         // Run until total level duration is finished
         while (elapsedTime < levelData.totalDuration)
         {
+            // Send current time
+            OnTimeUpdated?.Invoke(elapsedTime, levelData.totalDuration);
+
             // Check if it still have events left AND the current time has reached the next event's time
             if (nextEventIndex < levelData.events.Length && elapsedTime >= levelData.events[nextEventIndex].time) 
             {
@@ -35,7 +43,6 @@ public class WaveManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
         Debug.Log("Level complete!");
     }
 
@@ -58,7 +65,7 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < info.count; i++)
         {
             // Pick random position between spawnPointA and spawnPointB
-            Vector3 spawnPos = Vector3.Lerp(spawnPointA.position, spawnPointB.position, Random.value);
+            Vector3 spawnPos = Vector3.Lerp(spawnPointA.position, spawnPointB.position, UnityEngine.Random.value);
             Instantiate(info.enemyPrefab, spawnPos, Quaternion.identity);
 
             // Wait before spawning new one (idk to prevent stacking i guess)
