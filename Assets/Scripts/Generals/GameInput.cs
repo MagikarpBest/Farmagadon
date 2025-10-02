@@ -4,9 +4,10 @@ using UnityEngine.EventSystems;
 
 public class GameInput : MonoBehaviour
 {
-    public event EventHandler OnShootAction;
-    public event EventHandler OnNextWeapon;
-    public event EventHandler OnPreviousWeapon;
+    public event Action OnShootAction;
+    public event Action OnNextWeapon;
+    public event Action OnPreviousWeapon;
+
     private PlayerInput playerInput;
 
 
@@ -14,6 +15,7 @@ public class GameInput : MonoBehaviour
     {
         playerInput = new PlayerInput();
         playerInput.Player.Enable();
+
         playerInput.Player.Shoot.performed += Shoot_performed;
         playerInput.Player.PreviousWeapon.performed += PreviousWeapon_performed;
         playerInput.Player.NextWeapon.performed += NextWeapon_performed;
@@ -21,15 +23,15 @@ public class GameInput : MonoBehaviour
 
     private void PreviousWeapon_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnPreviousWeapon?.Invoke(this, EventArgs.Empty);
+        OnPreviousWeapon?.Invoke();
     }
     private void NextWeapon_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnNextWeapon?.Invoke(this, EventArgs.Empty);
+        OnNextWeapon?.Invoke();
     }
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnShootAction?.Invoke(this, EventArgs.Empty);
+        OnShootAction?.Invoke();
         Debug.Log("Shoot");
     }
 
