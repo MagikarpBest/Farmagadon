@@ -7,5 +7,6 @@ public class EnemyData : ScriptableObject
     public string enemyName;        // Just for debug purposes i think
     public int maxHealth = 10;
     public float moveSpeed = 2f;
-    public float damage = 1f;
+    public int damage = 1;
+    public float attackInterval = 0f;
 }
