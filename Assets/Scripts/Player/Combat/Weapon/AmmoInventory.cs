@@ -21,9 +21,23 @@ public class AmmoInventory : MonoBehaviour
     public event Action OnInventoryChanged;
 
     // Create a collection that store all ammo data
+    [SerializeField] private AmmoData[] startAmmoTypes;
+    [SerializeField] private int debugStartingAmmo = 50;
+    
+
     private Dictionary<AmmoData, int>
     ammoDict = new Dictionary<AmmoData, int>();
 
+    private void Start()
+    {
+        foreach (var ammo in startAmmoTypes)
+        {
+            if (ammo != null)
+            {
+                AddAmmo(ammo, debugStartingAmmo);
+            }
+        }
+    }
     public void AddAmmo(AmmoData ammo, int amount)
     {
         // Check if the dictionary added the ammo in or not, if not create new list?(idk whats the terms) and add ammo
