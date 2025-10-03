@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 4795008b36ba3484f993fd55d7502e45
+guid: 1edd88a156ad1df42aa5c2b0a2f5ca62
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1208040086343421634
-    second: image_0
+      213: -1945288410362911548
+    second: ammo corn_0
+  - first:
+      213: -2807525079448299515
+    second: ammo corn_1
+  - first:
+      213: -3009432898439813076
+    second: ammo corn_2
+  - first:
+      213: 92660796110675804
+    second: ammo corn_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: image_0
+      name: ammo corn_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 88
-        height: 80
+        x: 94
+        y: 51
+        width: 285
+        height: 423
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ce8eecde02d3c010800000000000000
-      internalID: 1208040086343421634
+      spriteID: 4c462a25f72f005e0800000000000000
+      internalID: -1945288410362911548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ammo corn_1
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 93
+        width: 47
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 508db7da0daa909d0800000000000000
+      internalID: -2807525079448299515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ammo corn_2
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 37
+        width: 46
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c28ee1939b85c36d0800000000000000
+      internalID: -3009432898439813076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ammo corn_3
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 57
+        width: 34
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5f18ccc082394100800000000000000
+      internalID: 92660796110675804
       vertices: []
       indices: 
       edges: []
@@ -134,8 +209,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      image_0: 1208040086343421634
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
