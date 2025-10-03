@@ -7,13 +7,13 @@ namespace Farm
         private PlayerInput playerInput;
         [SerializeField] GameObject player;
         [SerializeField] GridController gridController;
-        Vector3Int playerPos = new Vector3Int(0,0);
+        Vector3Int playerPos = new();
 
 
         private void Awake()
         {
             playerPos = gridController.PlayerStartPos;
-            player.transform.position = gridController.Grid.GetCellCenterWorld(playerPos);
+            player.transform.position = gridController.TileMap.GetCellCenterWorld(playerPos);
             playerInput = new PlayerInput();
             playerInput.Player.Enable();
             playerInput.Player.Farm.performed += Farm_performed;
@@ -27,8 +27,8 @@ namespace Farm
             int y = (int)inputVector.y;
             Vector3Int moveDir = new Vector3Int(x, y, 0) + playerPos;
 
-            int xBoundary = (int)Mathf.Clamp(moveDir.x, gridController.Origin, gridController.Origin+gridController.Width-1);
-            int yBoundary = (int)Mathf.Clamp(moveDir.y, gridController.Origin, gridController.Origin+gridController.Height-1);
+            int xBoundary = (int)Mathf.Clamp(moveDir.x, gridController.TileMap.cellBounds.min.x, gridController.TileMap.cellBounds.max.x - 1);
+            int yBoundary = (int)Mathf.Clamp(moveDir.y, gridController.TileMap.cellBounds.min.y, gridController.TileMap.cellBounds.max.y - 1);
 
             moveDir =  new Vector3Int(xBoundary, yBoundary, 0);
 

@@ -1,46 +1,54 @@
+using NUnit.Framework;
 using NUnit.Framework.Internal;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.Rendering.DebugUI;
 
 namespace Farm
 {
-
-
     public class GridController : MonoBehaviour
     {
         [SerializeField] Grid grid;
-        [SerializeField] GameObject tilePrefab;
-
-        [SerializeField] int width;
-        [SerializeField] int height;
-
+        [SerializeField] Tilemap tileMap;
         [SerializeField] Vector3Int playerStartPos;
-
+        [SerializeField] GameObject plantPrefab;
+        private float growCooldown;
         public Grid Grid { get { return grid; } }
-        public int Width { get { return width; } set { width = (int)Mathf.Clamp(value, -3, 4); } }
-        public int Height { get { return height; } set { height = (int)Mathf.Clamp(value, -3, 4); } }
-        public Vector3Int PlayerStartPos { get { return playerStartPos; } set { playerStartPos = value; } }
+        public Tilemap TileMap { get { return tileMap; } }
+        public Vector3Int PlayerStartPos { get { return playerStartPos; } }
 
-        private int origin = -4;
-        public int Origin { get { return origin; } }
         void Start()
         {
-            for (int y = origin; y < origin + height; ++y)
+            for (int y = tileMap.cellBounds.yMin; y<tileMap.cellBounds.yMax; ++y)
             {
-                for (int x = origin; x < origin + width; ++x)
+                for (int x = tileMap.cellBounds.xMin; x<tileMap.cellBounds.xMax; ++x)
                 {
-                    Vector3 tilePos = grid.GetCellCenterWorld(new Vector3Int(x, y, 0));
-                    Instantiate(tilePrefab, tilePos, Quaternion.identity);
+                    GameObject createPlant = Instantiate(plantPrefab);
+                    createPlant.GetComponent<plants>().FarmGridLocation = new Vector3Int(x, y);
+                    createPlant.GetComponent<plants>().tilemap = tileMap;
+                    createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
+                    createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y));
                 }
             }
         }
 
-        private void OnValidate()
+        void event_Destroyed(Vector3 pos,int growRate)
         {
-            width = (int)Mathf.Clamp(width, -3, 4);
-            height = (int)Mathf.Clamp(height, -3, 4);
+            StartCoroutine(createPlantHere(pos, growRate));
+            
+        }
+
+        IEnumerator createPlantHere(Vector3 pos, int growRate)
+        {
+            yield return new WaitForSeconds(growRate);
+            GameObject createPlant = Instantiate(plantPrefab);
+            createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
+            createPlant.transform.position = pos;
         }
     }
 }
