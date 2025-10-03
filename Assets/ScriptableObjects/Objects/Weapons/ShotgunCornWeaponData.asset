@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShotgunCornWeaponData
   m_EditorClassIdentifier: 
   weaponName: ShotgunCorn
-  bulletPrefab: {fileID: 3267392343543207434, guid: a5c9a21879a19b7418edf3a9e92debf1, type: 3}
+  bulletPrefab: {fileID: 6037540156501391096, guid: 0034eda3ffcf874448c9a5bef2a9c4c4, type: 3}
   lifeTime: 0.4
   bulletSpeed: 10
   damage: 1
