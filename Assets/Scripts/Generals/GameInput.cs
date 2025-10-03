@@ -7,6 +7,7 @@ public class GameInput : MonoBehaviour
     public event Action OnShootAction;
     public event Action OnNextWeapon;
     public event Action OnPreviousWeapon;
+    public event Action OnPause;
 
     private PlayerInput playerInput;
 
@@ -15,7 +16,7 @@ public class GameInput : MonoBehaviour
     {
         playerInput = new PlayerInput();
         playerInput.Player.Enable();
-
+        playerInput.Player.Pause.performed += Pause_performed;
         playerInput.Player.Shoot.performed += Shoot_performed;
         playerInput.Player.PreviousWeapon.performed += PreviousWeapon_performed;
         playerInput.Player.NextWeapon.performed += NextWeapon_performed;
@@ -33,6 +34,11 @@ public class GameInput : MonoBehaviour
     {
         OnShootAction?.Invoke();
         Debug.Log("Shoot");
+    }
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPause?.Invoke();
+        Debug.Log("Pause");
     }
 
     public Vector2 GetMovementVectorNormalized()
