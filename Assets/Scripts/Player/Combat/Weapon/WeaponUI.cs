@@ -10,12 +10,12 @@ public class WeaponUI : MonoBehaviour
     private void OnEnable()
     {
         weaponInventory.OnWeaponChanged += UpdateUI;
-        weaponInventory.OnAmmoChanged += UpdateUI;
+        //weaponInventory.OnAmmoChanged += UpdateUI;
     }
     private void OnDisable()
     {
         weaponInventory.OnWeaponChanged -= UpdateUI;
-        weaponInventory.OnAmmoChanged += UpdateUI;
+        //weaponInventory.OnAmmoChanged += UpdateUI;
     }
 
     private void UpdateUI(WeaponSlot slot)
@@ -23,7 +23,7 @@ public class WeaponUI : MonoBehaviour
         if (slot != null && slot.weaponData != null)
         {
             weaponNameText.text = slot.weaponData.weaponName;
-            weaponAmmoText.text = $"Ammo:{slot.currentAmmo}";
+            weaponAmmoText.text = $"Ammo:{slot.weaponData.ammoType}";
         }
         else
         {

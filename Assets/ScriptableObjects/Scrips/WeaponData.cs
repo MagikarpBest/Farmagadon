@@ -7,6 +7,7 @@ public class WeaponData : ScriptableObject
 
     [Header("Bullet Settings")]
     public GameObject bulletPrefab;
+    public AmmoData ammoType;
     public float lifeTime = 0f;
     public float bulletSpeed = 10f;
     public float damage = 1f;

@@ -177,8 +177,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.92, y: 0.92, z: 0.92}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1954484844}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -227,7 +227,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 55cec8fdf7b5c57488129c868381a061, type: 3}
-  m_Color: {r: 0.7275069, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 119839062}
   - component: {fileID: 119839063}
   - component: {fileID: 119839064}
+  - component: {fileID: 119839065}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -294,7 +295,7 @@ Transform:
   m_GameObject: {fileID: 119839057}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.7, z: 0}
+  m_LocalPosition: {x: 0, y: -4.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -330,6 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameInput: {fileID: 444733804}
   weaponInventory: {fileID: 119839063}
+  ammoInventory: {fileID: 119839065}
   firePoint: {fileID: 90765714}
 --- !u!114 &119839063
 MonoBehaviour:
@@ -350,7 +352,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
   - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
   - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
-  defaultStartingAmmo: 30
 --- !u!114 &119839064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +367,18 @@ MonoBehaviour:
   weaponInventory: {fileID: 119839063}
   weaponNameText: {fileID: 1656785260}
   weaponAmmoText: {fileID: 373948347}
+--- !u!114 &119839065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119839057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0f87aa3517ffd48a13ee3e9b145d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &314664068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,7 +1389,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.44999996, y: 0.44999996, z: 0.44999996}
+  m_LocalScale: {x: 0.24, y: 0.24, z: 0.24}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 119839059}
@@ -2349,9 +2362,9 @@ Transform:
   m_GameObject: {fileID: 1954484842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.29, z: 0}
+  m_LocalPosition: {x: 0, y: -3.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 93129377}
   m_Father: {fileID: 0}
@@ -2395,8 +2408,8 @@ Transform:
   m_GameObject: {fileID: 1993127558}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.64, y: 0.02, z: 0}
-  m_LocalScale: {x: 11.008535, y: 10.158625, z: 1}
+  m_LocalPosition: {x: -0.02, y: 1.03, z: 0}
+  m_LocalScale: {x: 1.091434, y: 1.0071701, z: 0.09914435}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1840535056}
@@ -2445,12 +2458,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.15669516, g: 0.4433962, b: 0.039738327, a: 1}
+  m_Sprite: {fileID: -3275262418730369145, guid: 30a66687eed619c4cae4b2ac79016bad, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 8, y: 12.19}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

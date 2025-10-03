@@ -4,6 +4,7 @@ public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameInput gameInput;
     [SerializeField] private WeaponInventory weaponInventory;
+    [SerializeField] private AmmoInventory ammoInventory;
     [SerializeField] private Transform firePoint;
 
     private WeaponSlot currentSlot;
@@ -42,7 +43,7 @@ public class PlayerShooting : MonoBehaviour
         currentSlot = slot;
         if (slot != null && slot.weaponData != null)
         {
-            Debug.Log("Switched to: " + slot.weaponData.weaponName + " Ammo: " + slot.currentAmmo);
+            Debug.Log("Switched to: " + slot.weaponData.weaponName + " Ammo: " + slot.weaponData.ammoType);
         }
         else
         {
@@ -64,7 +65,7 @@ public class PlayerShooting : MonoBehaviour
         }
 
         // Reduce ammo after shoot
-        if (!weaponInventory.ConsumeAmmo(1)) 
+        if (!ammoInventory.ConsumeAmmo(currentSlot.weaponData.ammoType, 1))  
         {
             Debug.Log("Out of ammo for: " + currentSlot.weaponData.weaponName);
             return;
@@ -81,7 +82,7 @@ public class PlayerShooting : MonoBehaviour
             Shoot(currentSlot.weaponData);
         }
 
-        Debug.Log(currentSlot.weaponData.weaponName + " fired. Ammo left: " + currentSlot.currentAmmo);
+        Debug.Log(currentSlot.weaponData.weaponName + " fired. Ammo left: " + currentSlot.weaponData.ammoType);
 
     }
 
