@@ -4,7 +4,7 @@ namespace Farm
 {
     public class PlayerFarmMovement : MonoBehaviour
     {
-        private PlayerInput playerInput;
+        PlayerInput playerInput;
         [SerializeField] GameObject player;
         [SerializeField] GridController gridController;
         Vector3Int playerPos = new();
@@ -12,9 +12,9 @@ namespace Farm
 
         private void Awake()
         {
+            playerInput = new PlayerInput();
             playerPos = gridController.PlayerStartPos;
             player.transform.position = gridController.TileMap.GetCellCenterWorld(playerPos);
-            playerInput = new PlayerInput();
             playerInput.Player.Enable();
             playerInput.Player.Farm.performed += Farm_performed;
 

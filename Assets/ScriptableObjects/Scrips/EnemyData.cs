@@ -10,4 +10,7 @@ public class NewMonoBehaviourScript : ScriptableObject
     public int maxHealth = 10;
     public float moveSpeed = 2f;
     public float damage = 1f;
+
+    [Header("Weakness")]
+    public MatchupData bulletWeakness = MatchupData.Rice;
 }
