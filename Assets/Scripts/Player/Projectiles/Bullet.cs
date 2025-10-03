@@ -33,6 +33,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.CompareTag("Enemy"))
+        {
+            return;
+        }
+
         if (explosionRadius > 0)
         {
             // Explosive bullet -> damage in an area
@@ -40,7 +45,7 @@ public class Bullet : MonoBehaviour
 
             // Check every enemy in zone and reduce HP
             foreach (var hit in hits)
-            {
+            {   
                 if (hit.CompareTag("Enemy"))
                 {
                     IDamageable damageable = hit.GetComponent<IDamageable>();
