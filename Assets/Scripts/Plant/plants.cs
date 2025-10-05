@@ -11,15 +11,14 @@ public class plants : MonoBehaviour
 
     public delegate void Destroyed(Vector3 pos, int growRate);
     public Destroyed onDestroyed;
+
     void Awake()
     {
         growRate = (int)Random.Range(1.0f, 5.0f);
-        print(growRate);
     }
 
     public void destroySelf()
     {
-        Debug.Log("I RAN?");
         onDestroyed?.Invoke(gameObject.transform.position, growRate);
         Destroy(gameObject);
     }
