@@ -1,16 +1,12 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemies/Enemy Data", fileName = "NewEnemy")]
-public class NewMonoBehaviourScript : ScriptableObject
+public class EnemyData : ScriptableObject
 {
-    [Header("General Info")]
-    public GameObject prefab; // Enemy prefab
-
     [Header("Stats")]
+    public string enemyName;        // Just for debug purposes i think
     public int maxHealth = 10;
     public float moveSpeed = 2f;
-    public float damage = 1f;
-
-    [Header("Weakness")]
-    public MatchupData bulletWeakness = MatchupData.Rice;
+    public int damage = 1;
+    public float attackInterval = 0f;
 }

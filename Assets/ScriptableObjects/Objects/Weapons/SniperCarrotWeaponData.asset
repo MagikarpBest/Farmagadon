@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: SniperCarrotWeaponData
   m_EditorClassIdentifier: 
   weaponName: SniperCarrot
-  bulletPrefab: {fileID: 3267392343543207434, guid: a5c9a21879a19b7418edf3a9e92debf1, type: 3}
+  bulletPrefab: {fileID: 6108739619576341720, guid: 9093ef80a3d89a747aaf932e4e2841ce, type: 3}
+  ammoType: {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
   lifeTime: 3
   bulletSpeed: 15
-  damage: 1
+  damage: 2
+  pierceCount: 2
   explosionRadius: 0
   fireRate: 0.2
   pelletCount: 1
