@@ -209,7 +209,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ammo corn_0: -1945288410362911548
+      ammo corn_1: -2807525079448299515
+      ammo corn_2: -3009432898439813076
+      ammo corn_3: 92660796110675804
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
