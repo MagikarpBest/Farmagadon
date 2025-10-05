@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Rice
   m_EditorClassIdentifier: 
   ammoName: Rice
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 46946d55282c9d84da09e07ab62135d2, type: 3}

@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSlot: 4
-  unlockedSlot: 4
+  unlockedSlot: 2
   startingWeapon:
   - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
   - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoInventory: {fileID: 119839065}
+  weaponInventory: {fileID: 119839063}
   ammoTypes:
   - {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
   - {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}

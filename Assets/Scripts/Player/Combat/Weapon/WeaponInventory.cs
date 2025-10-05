@@ -105,8 +105,12 @@ public class WeaponInventory : MonoBehaviour
         OnWeaponChanged?.Invoke(weapons[currentIndex]);
     }
 
-    public WeaponSlot GetCurrentWeapon()
+    public WeaponSlot GetWeaponSlot(int index)
     {
-        return weapons[currentIndex];
+        if (index >= 0 && index < weapons.Length)
+        {
+            return weapons[index];
+        }
+        return null;
     }
 }
