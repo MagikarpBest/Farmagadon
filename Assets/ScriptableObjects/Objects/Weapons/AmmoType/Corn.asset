@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Corn
   m_EditorClassIdentifier: 
   ammoName: Corn
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: cad45563336f06546af05c0f7099f393, type: 3}
