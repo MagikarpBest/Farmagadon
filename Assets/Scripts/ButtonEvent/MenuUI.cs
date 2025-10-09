@@ -3,32 +3,18 @@ using UnityEngine.UI;
 public class MenuUI : MonoBehaviour
 {
     [SerializeField] public GameObject Menu;
-    [SerializeField] public Button button;
-    private bool isActive = false;
+    [SerializeField] public Button closeButton;
     public void Start()
     {
         Menu.SetActive(false);
+        closeButton.onClick.AddListener(Inactive);
     }
 
-    public void OnClick()
-    {
-        if (!isActive)
-        {
-            Active();
-            isActive = true;
-        }
-        else if (isActive)
-        {
-            Inactive();
-            isActive = false;
-        }
-    }
-
-    private void Active()
+    public void Active()
     {
         Menu.SetActive(true);
     }
-    private void Inactive()
+    public void Inactive()
     {
         Menu.SetActive(false);
     }
