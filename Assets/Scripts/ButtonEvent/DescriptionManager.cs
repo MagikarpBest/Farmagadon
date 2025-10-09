@@ -10,13 +10,6 @@ public class DescriptionManager : MonoBehaviour
 
     public void ShowDescription()
     {
-        if (descriptionText != null)
-        {
-            descriptionText.text = description;
-        }
-        else
-        {
-            Debug.Log("error");
-        }
+        descriptionText.text = description;
     }
 }

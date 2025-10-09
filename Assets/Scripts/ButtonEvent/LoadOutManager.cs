@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
+using UnityEngine.EventSystems;
+
 public class LoadOutManager : MonoBehaviour
 {
     [SerializeField] private Transform loadoutPanel;
@@ -11,27 +14,58 @@ public class LoadOutManager : MonoBehaviour
 
     public void AddToLoadout(string itemName)
     {
-        // Optional: limit number of loadout items (e.g., 4)
+        // limit number of loadout items (e.g., 4)
         if (currentLoadout.Count >= 4)
         {
-            Debug.Log("Loadout full!");
+            Debug.Log("full");
             return;
+        }
+
+        GameObject buttonObj = EventSystem.current.currentSelectedGameObject;
+        if (buttonObj != null)
+        {
+            Button bagButton = buttonObj.GetComponent<Button>();
+            if (bagButton != null)
+            {
+                bagButton.interactable = false; // disable the inventory button
+            }
         }
 
         // Create new slot button
         GameObject slot = Instantiate(loadoutSlotPrefab, loadoutPanel);
-        slot.GetComponentInChildren<TextMeshProUGUI>().text = itemName;
+        Debug.Log($"Added {itemName} to {slot.transform.parent.name}");
+        //StartCoroutine(RefreshLayout());
+        //slot.transform.SetParent(loadoutPanel, false);
 
-        // Add remove functionality
-        Button btn = slot.GetComponent<Button>();
-        btn.onClick.AddListener(() => RemoveFromLoadout(slot));
+
+        TextMeshProUGUI text = slot.GetComponentInChildren<TextMeshProUGUI>(true);
+        text.text = itemName;
+
+        //Make sure prefab or its Button has Button component
+        Button slotButton = slot.GetComponentInChildren<Button>();
+        slotButton.onClick.AddListener(() => RemoveFromLoadout(slot, buttonObj));
 
         currentLoadout.Add(slot);
     }
 
-    public void RemoveFromLoadout(GameObject slot)
+    public void RemoveFromLoadout(GameObject slot, GameObject buttonObj)
     {
         currentLoadout.Remove(slot);
         Destroy(slot);
+
+        if (buttonObj != null)
+        {
+            Button bagButton = buttonObj.GetComponent<Button>();
+            if (bagButton != null)
+            {
+                bagButton.interactable = true;
+            }
+        }
+    }
+
+    private IEnumerator RefreshLayout()
+    {
+        yield return null; // wait 1 frame
+        LayoutRebuilder.ForceRebuildLayoutImmediate(loadoutPanel.GetComponent<RectTransform>());
     }
 }
