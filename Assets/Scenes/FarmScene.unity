@@ -2760,9 +2760,10 @@ MonoBehaviour:
   grid: {fileID: 1980671680}
   tileMap: {fileID: 1844978971}
   playerStartPos: {x: -2, y: -2, z: 0}
-  potatoPrefab: {fileID: 3122481257737259072, guid: ff9a15ed748eb6e42986be60b3de9c29, type: 3}
-  carrotPrefab: {fileID: 3122481257737259072, guid: f9f2d59f64206f848928158b139973a0, type: 3}
-  cornPrefab: {fileID: 3122481257737259072, guid: e77090680eab403498b99eb72a496d1b, type: 3}
+  cropData:
+  - {fileID: 11400000, guid: 95b2f536f0335ef449337d16cdb9537d, type: 2}
+  - {fileID: 11400000, guid: 7929126337943034abb6c1cd934887fb, type: 2}
+  - {fileID: 11400000, guid: 369c5b88f7d41b44099a50cba425c109, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
