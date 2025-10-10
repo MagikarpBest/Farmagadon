@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyData enemyData;
+
+    public event Action<Enemy> OnDeath;
 
     private int currentHealth;
     private bool isAttackingFence = false;
@@ -26,6 +29,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        // Enemy take damage logic
         currentHealth -= damage;
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
@@ -43,6 +47,7 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             StopCoroutine(attackRoutine);
         }
+        OnDeath?.Invoke(this);
         Destroy(gameObject);
     }
 
@@ -50,6 +55,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         // When enemy touches fence
         FenceHealth fence = other.GetComponent<FenceHealth>();
+        // Start attacking fence
         if (fence != null && !isAttackingFence) 
         {
             StartAttackingFence(fence);
