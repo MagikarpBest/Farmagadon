@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 276da1c71998f4c4bad557f13544846b
+guid: d0bcf3fb27fcec149b4f43acec877feb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2993141438218492931
-    second: weapon frame 132x132_0
+      213: -4019441344786941507
+    second: weapon outer frame 132x132_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 15, y: 15, z: 15, w: 15}
+  spriteBorder: {x: 25, y: 25, z: 25, w: 25}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
