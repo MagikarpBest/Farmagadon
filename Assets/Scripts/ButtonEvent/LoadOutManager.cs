@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class LoadOutManager : MonoBehaviour
 {
-    [SerializeField] private Transform loadoutPanel;
+    [SerializeField] private RectTransform loadoutPanel;
     [SerializeField] private GameObject loadoutSlotPrefab;
 
     private List<GameObject> currentLoadout = new List<GameObject>();
