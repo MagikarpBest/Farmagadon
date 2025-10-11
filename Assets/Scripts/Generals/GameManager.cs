@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 // Current gameplay state
 public enum GameState
 {
@@ -35,11 +34,29 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        if (waveManager != null)
+        {
+            waveManager.OnLevelCompleted += HandleVictory;
+        }
+
+        if (fenceHealth != null)
+        {
+            fenceHealth.OnFenceDestroy += HandleGameOver;
+        }
         gameInput.OnPause += TogglePause;
     }
 
     private void OnDisable()
     {
+        if (waveManager != null)
+        {
+            waveManager.OnLevelCompleted -= HandleVictory;
+        }
+
+        if (fenceHealth != null)
+        {
+            fenceHealth.OnFenceDestroy -= HandleGameOver;
+        }
         gameInput.OnPause -= TogglePause;
     }
 
@@ -51,7 +68,7 @@ public class GameManager : MonoBehaviour
         // Safety check
         if (uiManager == null)
         {
-            uiManager =FindFirstObjectByType<UIManager>();
+            uiManager = FindFirstObjectByType<UIManager>();
         }
         if (waveManager == null)
         {
@@ -61,23 +78,54 @@ public class GameManager : MonoBehaviour
         {
             player = FindFirstObjectByType<Player>();
         }
+        if (fenceHealth == null)
+        {
+            fenceHealth = FindFirstObjectByType<FenceHealth>();
+        }
+        if (gameInput == null)
+        {
+            gameInput = FindFirstObjectByType<GameInput>();
+        }
+        CheckReferences();
     }
 
     private void Start()
     {
         if (waveManager != null)
         {
-            waveManager.OnLevelCompleted += HandleVictory;
+            waveManager.LoadLevelData(saveData.currentLevel);
         }
-
-        if (fenceHealth != null)
-        {
-            fenceHealth.OnFenceDestroy += HandleGameOver;
-        }
-
         // Start game
         Time.timeScale = 1f;
         uiManager.Show(UIScreen.HUD);
+    }
+
+    private void CheckReferences()
+    {
+        if (uiManager == null)
+        {
+            Debug.LogError(" GameManager: Missing reference to UIManager!");
+        }
+
+        if (waveManager == null)
+        {
+            Debug.LogWarning(" GameManager: WaveManager not found — waves won't trigger victory.");
+        }
+
+        if (fenceHealth == null)
+        {
+            Debug.LogWarning(" GameManager: FenceHealth not found — GameOver won't trigger.");
+        }
+
+        if (player == null)
+        {
+            Debug.LogWarning(" GameManager: Player reference missing!");
+        }
+
+        if (gameInput == null)
+        {
+            Debug.LogWarning(" GameManager: GameInput reference missing — pause won't work.");
+        }
     }
 
     /// <summary>
@@ -90,7 +138,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        currentState=GameState.Victory;
+        currentState = GameState.Victory;
 
         // Pause gameplay
         Time.timeScale = 0f;
@@ -99,9 +147,11 @@ public class GameManager : MonoBehaviour
         uiManager.Show(UIScreen.Victory);
         Debug.Log("Victory! All enemies defeated.");
 
-        // Increase and save progress
-        saveData.currentLevel++;
-        SaveSystem.SaveGame(saveData);
+        if (saveData == null)
+        {
+            Debug.LogWarning("SaveData is null — creating new.");
+            saveData = new SaveData();
+        }
 
         // Save progress logic
         if (saveData.currentPhase == GamePhase.Combat)
@@ -116,7 +166,7 @@ public class GameManager : MonoBehaviour
 
         // Save progress 
         SaveSystem.SaveGame(saveData);
-        Debug.Log($"Progress saved. Next level: {saveData.currentLevel}");
+        Debug.Log($"Progress saved. Next level: {saveData.currentLevel}, Next phase: {saveData.currentPhase}");
     }
 
     /// <summary>
@@ -158,6 +208,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void PauseGame()
     {
+        currentState = GameState.Paused;
         Time.timeScale = 0f;
         uiManager.Show(UIScreen.Pause);
         Debug.Log("Paused");
@@ -168,6 +219,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ResumeGame()
     {
+        currentState = GameState.Playing;
         Time.timeScale = 1f;
         uiManager.Show(UIScreen.HUD);
         Debug.Log("Unpaused");
@@ -187,11 +239,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void LoadNextLevel()
     {
+        if (saveData == null)
+        {
+            Debug.LogError("SaveData missing cannot load next level!");
+            return;
+        }
+
         Time.timeScale = 1f;
 
-        string nextScene = "";
-
         // Decide scene name based on current phase
+        string nextScene;
+
         if (saveData.currentPhase == GamePhase.Farm)
         {
             nextScene = $"Farm_{saveData.currentLevel}";
@@ -200,7 +258,7 @@ public class GameManager : MonoBehaviour
         {
             nextScene = $"Combat_{saveData.currentLevel}";
         }
-        
+
         // Check if scene exists before trying to load
         if (Application.CanStreamedLevelBeLoaded(nextScene))
         {
