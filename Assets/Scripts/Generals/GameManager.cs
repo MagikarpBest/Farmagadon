@@ -20,11 +20,12 @@ public enum GamePhase
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameInput gameInput;       // Player input
-    [SerializeField] private UIManager uiManager;       // Control UI
-    [SerializeField] private WaveManager waveManager;   // Manage enemy wave
-    [SerializeField] private Player player;             // Reference to player
-    [SerializeField] private FenceHealth fenceHealth;   // Reference to fence
+    [SerializeField] private LevelDatabase levelDatabase;   // Assign the SO in inspector
+    [SerializeField] private GameInput gameInput;           // Player input
+    [SerializeField] private UIManager uiManager;           // Control UI
+    [SerializeField] private WaveManager waveManager;       // Manage enemy wave
+    [SerializeField] private Player player;                 // Reference to player
+    [SerializeField] private FenceHealth fenceHealth;       // Reference to fence
 
     // Current gameplay state (default = playing)
     private GameState currentState = GameState.Playing;
@@ -93,7 +94,9 @@ public class GameManager : MonoBehaviour
     {
         if (waveManager != null)
         {
-            waveManager.LoadLevelData(saveData.currentLevel);
+            // Load level from database
+            LevelData currentLevelData = levelDatabase.GetLevelData(saveData.currentLevel);
+            waveManager.SetLevel(currentLevelData);
         }
         // Start game
         Time.timeScale = 1f;
@@ -138,13 +141,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        currentState = GameState.Victory;
-
         // Pause gameplay
         Time.timeScale = 0f;
 
         // Show victory UI
         uiManager.Show(UIScreen.Victory);
+        currentState = GameState.Victory;
+        saveData.currentLevel++;
         Debug.Log("Victory! All enemies defeated.");
 
         if (saveData == null)
@@ -156,7 +159,6 @@ public class GameManager : MonoBehaviour
         // Save progress logic
         if (saveData.currentPhase == GamePhase.Combat)
         {
-            saveData.currentLevel++;
             saveData.currentPhase = GamePhase.Farm;
         }
         else
@@ -228,7 +230,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Reloads the current scene from the start.
     /// </summary>
-    private void RestartLevel()
+    public void RestartLevel()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -237,7 +239,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Loads the next level or next phase (Farm > Combat or vice versa).
     /// </summary>
-    private void LoadNextLevel()
+    public void LoadNextLevel()
     {
         if (saveData == null)
         {

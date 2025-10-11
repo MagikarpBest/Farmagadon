@@ -4,10 +4,10 @@ using System.Collections;
 public class WaveManager : MonoBehaviour
 {
     // ScriptableObject that stores all wave events for this level
-    [SerializeField] private LevelData levelData;       
     [SerializeField] private Transform spawnPointA; 
     [SerializeField] private Transform spawnPointB;
 
+    private LevelData levelData;
     private float elapsedTime;
     private int activeEnemies = 0;
     private int nextEventIndex = 0; // Which wave event to trigger next (Go check levelData.cs SO eg.Element 1 is index 1, element 2 is index 2)
@@ -102,5 +102,10 @@ public class WaveManager : MonoBehaviour
             OnLevelCompleted?.Invoke();
             Debug.Log("All enemy died");
         }
+    }
+
+    public void SetLevel(LevelData data)
+    {
+        levelData = data;
     }
 }

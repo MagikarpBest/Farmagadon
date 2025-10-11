@@ -11,8 +11,7 @@ public class GameInput : MonoBehaviour
 
     private PlayerInput playerInput;
 
-
-    private void Awake()
+    private void OnEnable()
     {
         playerInput = new PlayerInput();
         playerInput.Player.Enable();
@@ -20,6 +19,14 @@ public class GameInput : MonoBehaviour
         playerInput.Player.Shoot.performed += Shoot_performed;
         playerInput.Player.PreviousWeapon.performed += PreviousWeapon_performed;
         playerInput.Player.NextWeapon.performed += NextWeapon_performed;
+    }
+    private void OnDisable()
+    {
+        playerInput.Player.Disable();
+        playerInput.Player.Pause.performed -= Pause_performed;
+        playerInput.Player.Shoot.performed -= Shoot_performed;
+        playerInput.Player.PreviousWeapon.performed -= PreviousWeapon_performed;
+        playerInput.Player.NextWeapon.performed -= NextWeapon_performed;
     }
 
     private void PreviousWeapon_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
