@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48e94293501e3a746962d69a935b91db, type: 3}
-  m_Name: Potato
+  m_Script: {fileID: 11500000, guid: ed794592e23d56b46af7c22da224113e, type: 3}
+  m_Name: NormalEnemyWavePatternData
   m_EditorClassIdentifier: 
-  ammoName: Potato
-  icon: {fileID: 21300000, guid: 05397c80530cc2b4faca477d52d0e397, type: 3}
+  enemies:
+  - enemyPrefab: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
+    count: 30
+    duration: 30

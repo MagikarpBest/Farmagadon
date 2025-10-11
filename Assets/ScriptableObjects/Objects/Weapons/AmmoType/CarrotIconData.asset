@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd0833922945385488052b2d42f5e2c3, type: 3}
-  m_Name: Level 1
+  m_Script: {fileID: 11500000, guid: 48e94293501e3a746962d69a935b91db, type: 3}
+  m_Name: CarrotIconData
   m_EditorClassIdentifier: 
-  totalDuration: 30
-  events:
-  - time: 0
-    wavePattern: {fileID: 11400000, guid: 838fb34a4e9397241891e339fdc39421, type: 2}
+  ammoName: Carrot
+  icon: {fileID: 21300000, guid: c177996f4d66fde4a8d757486f675271, type: 3}

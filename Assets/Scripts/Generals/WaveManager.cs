@@ -8,8 +8,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Transform spawnPointA; 
     [SerializeField] private Transform spawnPointB;
 
-    float elapsedTime;  
-    int nextEventIndex = 0; // Which wave event to trigger next (Go check levelData.cs SO eg.Element 1 is index 1, element 2 is index 2)
+    private float elapsedTime;
+    private int activeEnemies = 0;
+    private int nextEventIndex = 0; // Which wave event to trigger next (Go check levelData.cs SO eg.Element 1 is index 1, element 2 is index 2)
 
     public event Action<float, float> OnTimeUpdated;
     public event Action OnLevelCompleted;
@@ -43,13 +44,14 @@ public class WaveManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        OnLevelCompleted?.Invoke();
         Debug.Log("Level complete!");
     }
 
     private IEnumerator RunWaveEvent(WaveEvent waveEvent)
     {
         // Go through all enemy in a wave (Cuz it might contain more than 1 type of enemy in future)
-        foreach (EnemySpawnInfo enemy in waveEvent.enemies)
+        foreach (EnemySpawnInfo enemy in waveEvent.wavePattern.enemies)
         {
             // Start spawning all enemy in parrallel
             StartCoroutine(SpawnEnemyGroup(enemy));
@@ -66,10 +68,39 @@ public class WaveManager : MonoBehaviour
         {
             // Pick random position between spawnPointA and spawnPointB
             Vector3 spawnPos = Vector3.Lerp(spawnPointA.position, spawnPointB.position, UnityEngine.Random.value);
-            Instantiate(info.enemyPrefab, spawnPos, Quaternion.identity);
+            GameObject enemyObject = Instantiate(info.enemyPrefab, spawnPos, Quaternion.identity);
+
+            activeEnemies++;
+
+            // Subscribe to enemy death event
+            Enemy enemy =enemyObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.OnDeath += HandleEnemyDeath;
+            }
+            else
+            {
+                Debug.LogWarning($"Spawned enemy '{info.enemyPrefab.name}' has no Enemy Script");
+            }
 
             // Wait before spawning new one (idk to prevent stacking i guess)
             yield return new WaitForSeconds(interval);
+        }
+    }
+
+    private void HandleEnemyDeath(Enemy deadEnemy)
+    {
+        activeEnemies--;
+        if (activeEnemies < 0)
+        {
+            activeEnemies = 0;
+        }
+
+        // All wave finished + no enemy alive
+        if (activeEnemies == 0 && nextEventIndex >= levelData.events.Length)
+        {
+            OnLevelCompleted?.Invoke();
+            Debug.Log("All enemy died");
         }
     }
 }
