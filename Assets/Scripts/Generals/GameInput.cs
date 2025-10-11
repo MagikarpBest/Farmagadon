@@ -33,12 +33,12 @@ public class GameInput : MonoBehaviour
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnShootAction?.Invoke();
-        Debug.Log("Shoot");
+        Debug.Log("Space pressed");
     }
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnPause?.Invoke();
-        Debug.Log("Pause");
+        Debug.Log("Esc pressed");
     }
 
     public Vector2 GetMovementVectorNormalized()
