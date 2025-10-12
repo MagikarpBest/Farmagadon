@@ -46,6 +46,7 @@ public class LoadOutManager : MonoBehaviour
         slotButton.onClick.AddListener(() => RemoveFromLoadout(slot, buttonObj));
 
         currentLoadout.Add(slot);
+        Debug.Log(currentLoadout.Count);
     }
 
     public void RemoveFromLoadout(GameObject slot, GameObject buttonObj)
