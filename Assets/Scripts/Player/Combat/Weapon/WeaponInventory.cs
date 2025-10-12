@@ -113,4 +113,7 @@ public class WeaponInventory : MonoBehaviour
         }
         return null;
     }
+
+    public int UnlockedSlotCount => unlockedSlot;
+    public int GetCurrentWeaponIndex() => currentIndex;
 }
