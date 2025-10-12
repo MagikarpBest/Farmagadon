@@ -49,7 +49,7 @@ public class AmmoUI : MonoBehaviour
                     int count = ammoInventory.GetAmmoCount(ammoType);
 
                     // Update text with ammo name and count
-                    ammoTexts[i].text = $"{ammoType.ammoName}: {count}";
+                    ammoTexts[i].text = $"{count}";
 
                     // Update ammo icon
                     if (ammoIcons != null && i < ammoIcons.Length)
