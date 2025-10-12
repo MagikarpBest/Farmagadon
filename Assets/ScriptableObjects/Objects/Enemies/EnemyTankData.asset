@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyTankData
   m_EditorClassIdentifier: 
   enemyName: Tank
-  maxHealth: 5
+  maxHealth: 10
   moveSpeed: 1
   damage: 1
-  attackInterval: 1
+  attackInterval: 0
