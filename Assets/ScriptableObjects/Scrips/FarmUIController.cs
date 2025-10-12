@@ -1,21 +1,24 @@
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using static UnityEngine.Rendering.GPUSort;
+using System.Collections;
+
 
 public class FarmUIController : MonoBehaviour
 {
     [SerializeField] Canvas canvas;
     [SerializeField] UnityEngine.UI.Slider timeSlider;
-    [SerializeField] RectTransform upcomingEnemy;
-    [SerializeField] UnityEngine.UI.Image enemyIconPrefab;
-    [SerializeField] UnityEngine.UI.Image bulletIconPrefab;
+    [SerializeField] UnityEngine.UI.Image upcomingEnemy;
     [SerializeField] float maxTime; // seconds
     [SerializeField] GameController gameController;
+    [SerializeField] UnityEngine.UI.Image[] bulletPanels;
+    
     private float currTime;
     private float gameTime;
     private bool gameStart = false;
-    private List<List<string>> upcomingEnemyList = new List<List<string>>(); 
+    
 
     private void Awake()
     {
@@ -23,7 +26,7 @@ public class FarmUIController : MonoBehaviour
         currTime = maxTime;
         gameTime = Time.time;
         gameController.gameStart += Game_Start;
-        gameController.nextWave += expandRecommendedList;
+        //gameController.nextWave += expandRecommendedList;
 
     }
 
@@ -37,6 +40,7 @@ public class FarmUIController : MonoBehaviour
     private void Game_Start()
     { 
         gameStart = true;
+        setRecommendedList();
     }
     private void decreaseTime()
     {
@@ -56,48 +60,32 @@ public class FarmUIController : MonoBehaviour
         }
     }
 
-    private void setRecommendedList()
+
+    private void updateBulletCount()
     {
 
     }
 
-    private void expandRecommendedList(List<string> enemies)
+    private void setRecommendedList()
     {
+        UnityEngine.UI.Image[] images = upcomingEnemy.GetComponentsInChildren<UnityEngine.UI.Image>();
+        Sprite[] ammoSprites = Resources.LoadAll<Sprite>("ammo");
+        Sprite[] enemySprites = Resources.LoadAll<Sprite>("Enemy");
+        images[4].sprite = searchSpriteInList("SmallAnt", enemySprites);
+        images[7].sprite = searchSpriteInList("Rice", ammoSprites);
 
-        RectTransform bulletRect = bulletIconPrefab.GetComponent<RectTransform>();
-        float bulletHeight = bulletRect.rect.height;
-        float rowSpacing = 110f; 
-        float verticalIconOffset = 50f; 
-        float horizontalOffset = 870f; 
+    }
 
-        
-        float yOffset = 0f;
-
-        
-        foreach (string enemy in enemies)
+    private Sprite searchSpriteInList(string name, Sprite[] spriteList)
+    {
+        for (int i = 0; i < spriteList.Length; i++)
         {
-            
-            Vector2 panelSizeIncrease = new Vector2(0, bulletHeight);
-            upcomingEnemy.sizeDelta += panelSizeIncrease;
-
-            
-            upcomingEnemy.anchoredPosition -= new Vector2(0, bulletHeight - verticalIconOffset);
-
-            
-            float iconY = verticalIconOffset + yOffset;
-
-            
-            UnityEngine.UI.Image enemyIcon = Instantiate(enemyIconPrefab, canvas.transform);
-            RectTransform enemyRT = enemyIcon.GetComponent<RectTransform>();
-            enemyRT.anchoredPosition = new Vector2(-horizontalOffset, iconY+100);
-
-            
-            UnityEngine.UI.Image bulletIcon = Instantiate(bulletIconPrefab, canvas.transform);
-            RectTransform bulletRT = bulletIcon.GetComponent<RectTransform>();
-            bulletRT.anchoredPosition = new Vector2(-horizontalOffset+230, iconY+100);
-
-            
-            yOffset -= rowSpacing;
+            print(spriteList[i].name);
+            if (spriteList[i].name == name)
+            {
+                return spriteList[i];
+            }
         }
+        return spriteList[0];
     }
 }
