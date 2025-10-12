@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 55cec8fdf7b5c57488129c868381a061
+guid: d8bb88fd0bfc4054ca48d768d8c96ac1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6930213108106756726
-    second: fence 960x100_0
+      213: 774166078819116749
+    second: large aphid 300x300_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:

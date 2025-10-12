@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.InputSystem.Processors;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
@@ -10,6 +11,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private int currentHealth;
     private bool isAttackingFence = false;
+    private bool isDead = false;
     private Coroutine attackRoutine;
 
 
@@ -30,6 +32,11 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         // Enemy take damage logic
+        if (isDead)
+        {
+            return;
+        }
+
         currentHealth -= damage;
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
@@ -41,6 +48,12 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        if (isDead)
+        {
+            return;
+        }
+        isDead = true;
+
         Debug.Log(enemyData.enemyName + " died");
         // Stop attack if died
         if (attackRoutine != null)
