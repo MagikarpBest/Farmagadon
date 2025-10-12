@@ -309,7 +309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &42532852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2101,7 +2101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &543939852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3801,13 +3801,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoInventory: {fileID: 1967877933}
-  weaponInventory: {fileID: 0}
+  weaponInventory: {fileID: 1967877934}
   ammoTexts:
   - {fileID: 373948347}
   - {fileID: 414751114}
   - {fileID: 472735312}
   - {fileID: 21081800}
-  ammoIcons: []
+  ammoIcons:
+  - {fileID: 1019093724}
+  - {fileID: 1360378201}
+  - {fileID: 2124595368}
+  - {fileID: 2100609226}
 --- !u!114 &1096103688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3821,9 +3825,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponInventory: {fileID: 1967877934}
-  leftWeaponImage: {fileID: 0}
-  centerWeaponImage: {fileID: 0}
-  rightWeaponImage: {fileID: 0}
+  leftWeaponImage: {fileID: 42532853}
+  centerWeaponImage: {fileID: 1155954289}
+  rightWeaponImage: {fileID: 543939854}
 --- !u!1 &1097618874
 GameObject:
   m_ObjectHideFlags: 0
@@ -4214,7 +4218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1155954289
 MonoBehaviour:
   m_ObjectHideFlags: 0
