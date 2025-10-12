@@ -18,7 +18,7 @@ MonoBehaviour:
   ammoType: {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
   lifeTime: 3
   bulletSpeed: 10
-  damage: 3
+  damage: 1
   pierceCount: 0
   explosionRadius: 0
   fireRate: 0.2

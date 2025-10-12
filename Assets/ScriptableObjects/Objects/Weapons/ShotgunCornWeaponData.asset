@@ -21,6 +21,6 @@ MonoBehaviour:
   damage: 1
   pierceCount: 0
   explosionRadius: 0
-  fireRate: 0.2
+  fireRate: 1
   pelletCount: 5
   spread: 40
