@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
@@ -16,38 +17,24 @@ namespace Farm
         [SerializeField] Grid grid;
         [SerializeField] Tilemap tileMap;
         [SerializeField] Vector3Int playerStartPos;
-        [SerializeField] GameObject potatoPrefab;
-        [SerializeField] GameObject carrotPrefab;
-        [SerializeField] GameObject cornPrefab;
+        [SerializeField] CropsData[] cropData;
+        private float maxWeight = 100.0f;
         private float growCooldown;
         public Grid Grid { get { return grid; } }
         public Tilemap TileMap { get { return tileMap; } }
         public Vector3Int PlayerStartPos { get { return playerStartPos; } }
-        float corn;
-        float potato;
-        float carrot;
+        
         private void Awake()
         {
-            float maxWeight = 100;
-            float rand = Random.Range(1, maxWeight);
-            maxWeight -= rand;
-            corn = rand;
-            rand = Random.Range(1, maxWeight);
-            maxWeight -= rand;
-            potato = rand;
-            carrot = maxWeight;
-
-
+           
         }
         void Start()
         {
-            
-
             for (int y = tileMap.cellBounds.yMin; y<tileMap.cellBounds.yMax; ++y)
             {
                 for (int x = tileMap.cellBounds.xMin; x<tileMap.cellBounds.xMax; ++x)
                 {
-                    GameObject createPlant = Instantiate(pickPlant());
+                    GameObject createPlant = Instantiate(pickPlant().cropPrefab);
                     createPlant.GetComponent<plants>().FarmGridLocation = new Vector3Int(x, y);
                     createPlant.GetComponent<plants>().tilemap = tileMap;
                     createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
@@ -57,39 +44,32 @@ namespace Farm
             }
         }
 
-        void event_Destroyed(Vector3 pos,int growRate)
+        void event_Destroyed(Vector3 pos)
         {
-            StartCoroutine(createPlantHere(pos, growRate));
-            
+            StartCoroutine(createPlantHere(pos));
         }
 
-        IEnumerator createPlantHere(Vector3 pos, int growRate)
+        IEnumerator createPlantHere(Vector3 pos)
         {
-            yield return new WaitForSeconds(growRate);
-            GameObject createPlant = Instantiate(pickPlant());
+            CropsData chooseCrop = pickPlant();
+            yield return new WaitForSeconds(chooseCrop.growRate);
+            GameObject createPlant = Instantiate(chooseCrop.cropPrefab);
             createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
             createPlant.transform.position = pos;
         }
 
-        private GameObject pickPlant()
+        private CropsData pickPlant()
         {
-            float weight = Random.Range(1, 100);
-            if (weight > corn)
+            foreach (CropsData crop in cropData)
             {
-                return cornPrefab;
+                float randomNum = Random.Range(1, maxWeight);
+                if (crop.cropWeightage >= randomNum)
+                {
+                    return crop;
+                }
             }
-            else if (weight > carrot)
-            {
-                return carrotPrefab;
-            }
-            else if (weight > potato)
-            {
-                return potatoPrefab;
-            }
-            else
-            {
-                return potatoPrefab;
-            }
+            return cropData[Random.Range(1, cropData.Length - 1)];
+            
         }
     }
 }
