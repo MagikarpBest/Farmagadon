@@ -12,8 +12,38 @@ public class LoadOutManager : MonoBehaviour
 
     private List<GameObject> currentLoadout = new List<GameObject>();
 
+
+    private Color normalColor = Color.white;
+    private Color selectedColor = Color.yellow;
+
+    public void SelectSlot(Button slot)
+    {
+        // Deselect previous
+        if (selectedSlot != null)
+            SetSlotColor(selectedSlot, normalColor);
+
+        // Select new
+        selectedSlot = slot;
+        SetSlotColor(slot, selectedColor);
+        Debug.Log($"Selected slot: {slot.name}");
+    }
+
+
     public void AddToLoadout(string itemName)
     {
+        if (selectedSlot == null)
+        {
+            Debug.Log("No loadout slot selected!");
+            return;
+        }
+
+        // Prevent double assignment
+        if (slotToItem.ContainsKey(selectedSlot))
+        {
+            Debug.Log("Slot already occupied!");
+            return;
+        }
+        
         // limit number of loadout items (e.g., 4)
         if (currentLoadout.Count >= 4)
         {
