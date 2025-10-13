@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// Represents a weapon slot that holds a specific weapon data.
@@ -152,6 +153,24 @@ public class WeaponInventory : MonoBehaviour
         }
         return null;
     }
+
+    /// <summary>
+    /// Returns a list of all non-empty (equipped) weapon slots.
+    /// </summary>
+    public List<WeaponSlot> GetEquippedWeapon()
+    {
+        var equipped= new List<WeaponSlot>();
+        for (int i = 0; i < unlockedSlot; i++)
+        {
+            if (weapons[i] != null && weapons[i].weaponData != null)
+            {
+                equipped.Add(weapons[i]);
+            }
+        }
+
+        return equipped;
+    }
+
 
     /// <summary>
     /// Returns the number of unlocked slots.

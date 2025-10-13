@@ -8,11 +8,13 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private EnemyData enemyData;
 
     public event Action<Enemy> OnDeath;
+    public event Action OnHit;
 
     private int currentHealth;
     private bool isAttackingFence = false;
     private bool isDead = false;
     private Coroutine attackRoutine;
+
 
 
     private void Awake()
@@ -37,6 +39,7 @@ public class Enemy : MonoBehaviour, IDamageable
             return;
         }
 
+        OnHit?.Invoke();
         currentHealth -= damage;
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 

@@ -7,11 +7,14 @@ public class Bullet : MonoBehaviour
     private WeaponData weaponData;
     private Rigidbody2D rb;
     private int pierceCountRemaining;
+    private SpriteRenderer spriteRender;
     private HashSet<Collider2D> hitEnemies= new HashSet<Collider2D>();
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRender = GetComponentInChildren<SpriteRenderer>();
+
         if (rb != null)
         {
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -39,6 +42,7 @@ public class Bullet : MonoBehaviour
         // Stop movement immediately
         if (rb != null)
         {
+            spriteRender.enabled = false;
             rb.linearVelocity = Vector2.zero;
         }
 
@@ -84,12 +88,12 @@ public class Bullet : MonoBehaviour
         }
 
         // Optional delay so the shrapnel doesn’t hit enemies instantly
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
         // Calculate spread angles
         float angleStep = 360f / shrapnel.count;
         // So bullets don’t overlap exactly at center
-        float spawnOffset = 0.2f;
+        float spawnOffset = 0.5f;
 
         // Loop for each shrapnel bullet
         for (int i = 0; i < shrapnel.count; i++)
@@ -133,35 +137,41 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        else if (other.CompareTag("Enemy"))
+        if (weaponData.explosionRadius > 0)
         {
-            if (weaponData.explosionRadius > 0)
-            {
-                Explode();
-            }
-            else
-            {
-                HitEnemy(other);
-            }
+            Explode();
+        }
+        else
+        {
+
+            HitEnemy(other);
         }
     }
 
     private void HitEnemy(Collider2D other)
     {
+        if (hitEnemies.Contains(other))
+        {
+            return;
+        }
+
+        hitEnemies.Add(other);
+
         if (other.TryGetComponent<IDamageable>(out var damageable))
         {
             damageable.TakeDamage(Mathf.RoundToInt(weaponData.damage));
         }
 
+
+        pierceCountRemaining--;
         if (weaponData.pierceCount > 0)
         {
-            pierceCountRemaining--;
             if (pierceCountRemaining <= 0)
             {
                 Destroy(gameObject);
             }
         }
-        Destroy(gameObject);
+
     }
     private void OnDrawGizmos()
     {

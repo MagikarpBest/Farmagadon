@@ -44,7 +44,6 @@ public class WaveManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        OnLevelCompleted?.Invoke();
         Debug.Log("Level complete!");
     }
 
@@ -91,6 +90,7 @@ public class WaveManager : MonoBehaviour
     private void HandleEnemyDeath(Enemy deadEnemy)
     {
         activeEnemies--;
+        Debug.Log(activeEnemies);
         if (activeEnemies < 0)
         {
             activeEnemies = 0;

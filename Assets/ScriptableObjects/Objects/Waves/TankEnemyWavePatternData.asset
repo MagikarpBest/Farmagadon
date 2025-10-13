@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TankEnemyWavePatternData
   m_EditorClassIdentifier: 
   enemies:
-  - enemyPrefab: {fileID: 1940379239426215094, guid: b34903bf7a48a2a4e8c8fe9920b549d5, type: 3}
-    count: 3
-    duration: 1
+  - enemyPrefab: {fileID: 1940379239426215094, guid: 1ae25ab3e7b8ec1489eb314d79e5986b, type: 3}
+    count: 5
+    duration: 10
