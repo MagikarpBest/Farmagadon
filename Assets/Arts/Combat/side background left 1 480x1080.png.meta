@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 79995e57312e31445b303dd33e8ac118
+guid: 56e8473ec41f28b49ab31eeb998372e7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5439474025244060994
-    second: latest_0
+      213: 2374905585928782751
+    second: side background left 1 480x1080_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: latest_0
+      name: rice bullet_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 19
         y: 0
-        width: 1024
-        height: 768
+        width: 26
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 24de2af6ec4ec7b40800000000000000
-      internalID: 5439474025244060994
+      spriteID: 7465d3b976a7ad650800000000000000
+      internalID: 6258449217589433927
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      latest_0: 5439474025244060994
+      rice bullet_0: 6258449217589433927
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
