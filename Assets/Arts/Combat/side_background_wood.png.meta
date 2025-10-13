@@ -1,28 +1,10 @@
 fileFormatVersion: 2
-guid: 2d71f53f3bda07e45b2598020dc69aef
+guid: ad256548227ad8541aa7033e572604a4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8076094001830049347
-    second: side background right 2 480x1080_0
-  - first:
-      213: 1393903771395297108
-    second: side background right 2 480x1080_1
-  - first:
-      213: 8417406681664022920
-    second: side background right 2 480x1080_2
-  - first:
-      213: -1166436848507894961
-    second: side background right 2 480x1080_3
-  - first:
-      213: -4934566207298589876
-    second: side background right 2 480x1080_4
-  - first:
-      213: 2973992113031816499
-    second: side background right 2 480x1080_5
-  - first:
-      213: 1683752487918641439
-    second: side background right 2 480x1080_6
+      213: -5831156644658361797
+    second: side_background_wood_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:

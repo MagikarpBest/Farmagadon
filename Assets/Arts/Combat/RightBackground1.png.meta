@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 8dcdb3f34cad5d54eac8acaa5d226ae0
+guid: 85448c0afc7d34b4eb9217f9db9bfb11
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2212632357386000900
-    second: side background right 1 480x1080_0
+      213: -6241610330802459913
+    second: RightBackground1_0
+  - first:
+      213: -2941838559797663254
+    second: RightBackground1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
