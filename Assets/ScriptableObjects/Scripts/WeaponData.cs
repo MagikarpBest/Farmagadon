@@ -20,4 +20,20 @@ public class WeaponData : ScriptableObject
     public float fireRate = 0.2f;
     public int pelletCount = 1; // Set to more than 1 if shotgun
     public float spread = 0; // Set to more than 1 if shotgun
+
+    [System.Serializable]
+    public class ShrapnelSettings
+    {
+        [Header("Shrapnel Settings (special combination)")]
+        public bool enable = false;
+        public int count = 0;
+        public GameObject bulletPrefab; // Which bullet prefab to shoot (eg rice after explode)
+        public float bulletSpeed = 10f;
+        public float damage = 1f;
+        public float lifeTime = 0f;
+    }
+
+    [Header("Explosion / Shrapnel Settings")]
+    public ShrapnelSettings shrapnel = new ShrapnelSettings();
+
 }

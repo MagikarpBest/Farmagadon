@@ -1,24 +1,28 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
-
-    private float damage;
-    private float explosionRadius;
-    private int pierceCount;
+    private WeaponData weaponData;
     private Rigidbody2D rb;
+    private int pierceCountRemaining;
+    private HashSet<Collider2D> hitEnemies= new HashSet<Collider2D>();
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        }
     }
 
     // Called by shooter (PlayerShooting) to launch bullet
-    public void Fire(Vector2 velocity, float damage, float explosionRadius, float lifeTime, int pierceCount = 0)
+    public void Fire(Vector2 velocity, WeaponData data)
     {
-        this.damage = damage;
-        this.explosionRadius = explosionRadius;
-        this.pierceCount = pierceCount;
+        weaponData = data;
+        pierceCountRemaining = data.pierceCount;
 
         rb.linearVelocity = velocity;
 
@@ -27,7 +31,98 @@ public class Bullet : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
         // Destroy bullet after lifetime (why cause this can make some gun with shorter range without changing much code)
-        Destroy(gameObject, lifeTime);
+        Destroy(gameObject, data.lifeTime);
+    }
+
+    private void Explode()
+    {
+        // Stop movement immediately
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        // Apply explosion damage first
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, weaponData.explosionRadius);
+
+        // Check every enemy in zone and reduce HP
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                IDamageable damageable = hit.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    damageable.TakeDamage(Mathf.RoundToInt(weaponData.damage));
+                }
+            }
+        }
+
+        // Check if we should spawn shrapnel
+        if (weaponData.shrapnel != null && weaponData.shrapnel.enable && weaponData.shrapnel.count > 0)
+        {
+            // Start a coroutine that will spawn shrapnel and THEN destroy this bullet
+            StartCoroutine(SpawnShrapnelDelayed());
+        }
+        else
+        {
+            // If no shrapnel, just destroy immediately
+            Destroy(gameObject);
+        }
+    }
+
+    private IEnumerator SpawnShrapnelDelayed()
+    {
+        var shrapnel = weaponData.shrapnel;
+
+        // Validate setup
+        if (!shrapnel.enable || shrapnel.count <= 0 || shrapnel.bulletPrefab == null)
+        {
+            Debug.LogWarning($"SpawnShrapnel: invalid config for {weaponData.weaponName}");
+            Destroy(gameObject);
+            yield break;
+        }
+
+        // Optional delay so the shrapnel doesn’t hit enemies instantly
+        yield return new WaitForSeconds(0.1f);
+
+        // Calculate spread angles
+        float angleStep = 360f / shrapnel.count;
+        // So bullets don’t overlap exactly at center
+        float spawnOffset = 0.2f;
+
+        // Loop for each shrapnel bullet
+        for (int i = 0; i < shrapnel.count; i++)
+        {
+            float angle = i * angleStep;
+            Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+            Vector2 direction = rotation * Vector2.up;
+
+            // Spawn bullet prefab
+            Vector3 spawnPos = transform.position + (Vector3)(direction * spawnOffset);
+            GameObject bulletGO = Instantiate(shrapnel.bulletPrefab, spawnPos, rotation);
+
+            // Get its Bullet component
+            Bullet bullet = bulletGO.GetComponent<Bullet>();
+            if (bullet == null)
+            {
+                Debug.LogError("Spawned shrapnel bullet prefab has no Bullet component!");
+                continue;
+            }
+
+            //  Properly create a temporary ScriptableObject for shrapnel stats
+            WeaponData shrapnelData = ScriptableObject.CreateInstance<WeaponData>();
+            shrapnelData.damage = shrapnel.damage;
+            shrapnelData.lifeTime = (shrapnel.lifeTime > 0 ? shrapnel.lifeTime : weaponData.lifeTime);
+            shrapnelData.bulletSpeed = shrapnel.bulletSpeed;
+
+            // Fire with its independent settings
+            bullet.Fire(direction * shrapnel.bulletSpeed, shrapnelData);
+        }
+        Debug.Log($"Spawned {shrapnel.count} shrapnel bullets for {weaponData.weaponName}");
+
+        // Finally destroy the original exploding bullet
+        Destroy(gameObject);
     }
 
 
@@ -38,53 +133,45 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        if (explosionRadius > 0)
-        {
-            // Explosive bullet -> damage in an area
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-
-            // Check every enemy in zone and reduce HP
-            foreach (var hit in hits)
-            {   
-                if (hit.CompareTag("Enemy"))
-                {
-                    IDamageable damageable = hit.GetComponent<IDamageable>();
-                    if (damageable != null)
-                    {
-                        damageable.TakeDamage(Mathf.RoundToInt(damage));
-                    }
-                }
-            }
-            Destroy(gameObject);
-        }
         else if (other.CompareTag("Enemy"))
         {
-            // Single target
-            IDamageable damageable = other.GetComponent<IDamageable>();
-            if (damageable != null) 
+            if (weaponData.explosionRadius > 0)
             {
-                damageable.TakeDamage(Mathf.RoundToInt(damage));
-            }
-
-            if (pierceCount > 0)
-            {
-                pierceCount--;
-                if (pierceCount <= 0)
-                {
-                    Destroy(gameObject);
-                }
+                Explode();
             }
             else
             {
-                Destroy(gameObject);
+                HitEnemy(other);
             }
         }
     }
 
+    private void HitEnemy(Collider2D other)
+    {
+        if (other.TryGetComponent<IDamageable>(out var damageable))
+        {
+            damageable.TakeDamage(Mathf.RoundToInt(weaponData.damage));
+        }
+
+        if (weaponData.pierceCount > 0)
+        {
+            pierceCountRemaining--;
+            if (pierceCountRemaining <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+        Destroy(gameObject);
+    }
     private void OnDrawGizmos()
     {
+        if (weaponData == null)
+        {
+            return;
+        }
+
         // Explosive range debug tools
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        Gizmos.DrawWireSphere(transform.position, weaponData.explosionRadius);
     }
 }

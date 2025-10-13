@@ -1,7 +1,9 @@
 using UnityEngine;
 using System;
 
-
+/// <summary>
+/// Represents a weapon slot that holds a specific weapon data.
+/// </summary>
 [System.Serializable]
 public class WeaponSlot
 {
@@ -13,21 +15,30 @@ public class WeaponSlot
     }
 }
 
+/// <summary>
+/// Manages the player's weapon inventory handles adding, swapping, and switching between weapons.
+/// </summary>
 public class WeaponInventory : MonoBehaviour
 {
-    [SerializeField] private int maxSlot = 4;
-    [SerializeField] private int unlockedSlot = 2;
-    [SerializeField] private WeaponData[] startingWeapon;
+    [SerializeField] private int maxSlot = 4;               // Maximum number of weapon slots the player can have
+    [SerializeField] private int unlockedSlot = 2;          // How many weapon slots currently player have
+    [SerializeField] private WeaponData[] startingWeapon;   // Weapons player start with
 
-    private WeaponSlot[] weapons;
-    private AmmoInventory ammoInventory;
-    private int currentIndex = 0;
+    private WeaponSlot[] weapons;                           // Assign weapon to slots, first assign = first slot
+    private AmmoInventory ammoInventory;                    // Reference to player's ammo inventory
+    private int currentIndex = 0;                           // The index of current active weapon slot
 
+    /// <summary>
+    /// Event triggered whenever the currently equipped weapon changes.
+    /// </summary>
     public event Action<WeaponSlot> OnWeaponChanged;
 
     private void Awake()
     {
+        // Initialize weapon slot array
         weapons = new WeaponSlot[maxSlot];
+
+        // Cache the player's ammo inventory component
         ammoInventory = GetComponent<AmmoInventory>();
         if (ammoInventory == null)
         {
@@ -37,6 +48,7 @@ public class WeaponInventory : MonoBehaviour
 
     private void Start()
     {
+        // Add all starting weapon to available slots
         foreach (var weapon in startingWeapon)
         {
             if (weapon != null)
@@ -44,8 +56,15 @@ public class WeaponInventory : MonoBehaviour
                 AddWeapon(weapon);
             }
         }
+
+        // Set first weapon (slots 0) as the default active weapon
+        currentIndex = 0;
+        OnWeaponChanged?.Invoke(weapons[currentIndex]);
     }
 
+    /// <summary>
+    /// Unlocks one additional weapon slot (up to the max slot limit).
+    /// </summary>
     public void UnlockSlot()
     {
         if (unlockedSlot < maxSlot) 
@@ -54,6 +73,10 @@ public class WeaponInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds a new weapon to the first available unlocked slot.
+    /// If all unlocked slots are full, logs a message instead.
+    /// </summary>
     public void AddWeapon(WeaponData newWeapon)
     {
         for (int i = 0; i < unlockedSlot; i++)
@@ -63,12 +86,16 @@ public class WeaponInventory : MonoBehaviour
                 weapons[i] = new WeaponSlot(newWeapon);
                 currentIndex = i;
                 OnWeaponChanged?.Invoke(weapons[i]);
+
                 return;
             }
         }
         Debug.Log("All slots full. Need to swap!");
     }
 
+    /// <summary>
+    /// Replaces an existing weapon in a specific slot.
+    /// </summary>
     public void SwapWeapon(int slotIndex, WeaponData newWeapon)
     {
         if (slotIndex < unlockedSlot)
@@ -77,12 +104,16 @@ public class WeaponInventory : MonoBehaviour
             currentIndex = slotIndex;
             OnWeaponChanged?.Invoke(weapons[slotIndex]);
         }
-    }   
+    }
 
+    /// <summary>
+    /// Switches to the next available weapon slot (wraps around).
+    /// </summary>
     public void NextWeapon()
     {
         int startIndex = currentIndex;
 
+        // Skip empty slots
         do
         {
             currentIndex = (currentIndex + 1) % unlockedSlot;
@@ -92,10 +123,14 @@ public class WeaponInventory : MonoBehaviour
         OnWeaponChanged?.Invoke(weapons[currentIndex]);
     }
 
+    /// <summary>
+    /// Switches to the previous available weapon slot (wraps around).
+    /// </summary>
     public void PreviousWeapon()
     {
         int startIndex = currentIndex;
 
+        // Skip empty slots
         do
         {
             currentIndex = (currentIndex - 1 + unlockedSlot) % unlockedSlot;
@@ -105,6 +140,10 @@ public class WeaponInventory : MonoBehaviour
         OnWeaponChanged?.Invoke(weapons[currentIndex]);
     }
 
+    /// <summary>
+    /// Returns the weapon slot at the specified index.
+    /// Returns null if the index is out of range.
+    /// </summary>
     public WeaponSlot GetWeaponSlot(int index)
     {
         if (index >= 0 && index < weapons.Length)
@@ -114,6 +153,13 @@ public class WeaponInventory : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Returns the number of unlocked slots.
+    /// </summary>
     public int UnlockedSlotCount => unlockedSlot;
+
+    /// <summary>
+    /// Returns the index of the currently active weapon.
+    /// </summary>
     public int GetCurrentWeaponIndex() => currentIndex;
 }

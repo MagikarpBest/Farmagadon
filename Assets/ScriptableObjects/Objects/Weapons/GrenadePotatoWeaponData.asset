@@ -24,3 +24,10 @@ MonoBehaviour:
   fireRate: 0.2
   pelletCount: 1
   spread: 0
+  shrapnel:
+    enable: 1
+    count: 5
+    bulletPrefab: {fileID: 3267392343543207434, guid: a5c9a21879a19b7418edf3a9e92debf1, type: 3}
+    bulletSpeed: 10
+    damage: 1
+    lifeTime: 3
