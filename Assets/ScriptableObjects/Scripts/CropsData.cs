@@ -14,7 +14,7 @@ public class CropsData : ScriptableObject
     public CROP_NAMES cropNames;
     public float cropWeightage = 1.0f;
     public float baseGrowChance;
-    public int dropRate;
+    public int dropAmount;
     public int growRate;
 
 }

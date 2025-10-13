@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.GPUSort;
 using System.Collections;
+using TMPro;
 
 
 public class FarmUIController : MonoBehaviour
@@ -13,7 +14,7 @@ public class FarmUIController : MonoBehaviour
     [SerializeField] UnityEngine.UI.Image upcomingEnemy;
     [SerializeField] float maxTime; // seconds
     [SerializeField] GameController gameController;
-    [SerializeField] UnityEngine.UI.Image[] bulletPanels;
+    [SerializeField] TextMeshProUGUI[] bulletPanels;
     
     private float currTime;
     private float gameTime;
@@ -61,9 +62,13 @@ public class FarmUIController : MonoBehaviour
     }
 
 
-    private void updateBulletCount()
+    public void updateBulletCount(int corn, int carrot, int potato)
     {
 
+
+        bulletPanels[0].text = "x " + corn;
+        bulletPanels[1].text = "x " + carrot;
+        bulletPanels[2].text = "x " + potato;
     }
 
     private void setRecommendedList()

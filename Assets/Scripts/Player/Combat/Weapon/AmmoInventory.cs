@@ -24,6 +24,7 @@ public class AmmoInventory : MonoBehaviour
     [SerializeField] private AmmoData[] startAmmoTypes;
     [SerializeField] private int debugStartingAmmo = 50;
     
+    public AmmoData[] StartAmmoTypes { get { return startAmmoTypes; } }
 
     private Dictionary<AmmoData, int>
     ammoDict = new Dictionary<AmmoData, int>();

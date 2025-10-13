@@ -18,6 +18,7 @@ namespace Farm
         [SerializeField] Tilemap tileMap;
         [SerializeField] Vector3Int playerStartPos;
         [SerializeField] CropsData[] cropData;
+        [SerializeField] GameController gameController;
         private float maxWeight = 100.0f;
         private float growCooldown;
         public Grid Grid { get { return grid; } }
@@ -34,11 +35,12 @@ namespace Farm
             {
                 for (int x = tileMap.cellBounds.xMin; x<tileMap.cellBounds.xMax; ++x)
                 {
-                    GameObject createPlant = Instantiate(pickPlant().cropPrefab);
-                    createPlant.GetComponent<plants>().FarmGridLocation = new Vector3Int(x, y);
-                    createPlant.GetComponent<plants>().tilemap = tileMap;
+                    CropsData getCrop = pickPlant();
+                    GameObject createPlant = Instantiate(getCrop.cropPrefab);
+                    createPlant.GetComponent<plants>().DropAmount = getCrop.dropAmount;
+                    createPlant.GetComponent<plants>().PlantName = getCrop.cropNames;
                     createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
-                    
+                    createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
                     createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y/3, 0);
                 }
             }
@@ -46,6 +48,7 @@ namespace Farm
 
         void event_Destroyed(Vector3 pos)
         {
+
             StartCoroutine(createPlantHere(pos));
         }
 
@@ -54,7 +57,10 @@ namespace Farm
             CropsData chooseCrop = pickPlant();
             yield return new WaitForSeconds(chooseCrop.growRate);
             GameObject createPlant = Instantiate(chooseCrop.cropPrefab);
+            createPlant.GetComponent<plants>().DropAmount = chooseCrop.dropAmount;
+            createPlant.GetComponent<plants>().PlantName = chooseCrop.cropNames;
             createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
+            createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
             createPlant.transform.position = pos;
         }
 
