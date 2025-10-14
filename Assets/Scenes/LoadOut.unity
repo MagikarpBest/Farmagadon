@@ -1268,7 +1268,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.0710678, y: 218.16}
+  m_AnchoredPosition: {x: -1.0710144, y: 218.16006}
   m_SizeDelta: {x: 1325, y: 433.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &361724180
@@ -3605,7 +3605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcda7985a1810f4980ef1d2a01381fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadoutPanel: {fileID: 361724179}
+  loadoutSlots: []
   loadoutSlotPrefab: {fileID: 604357592078181102, guid: 4d16093b42bbc4841b62f93f305d298b, type: 3}
 --- !u!1 &1494183027
 GameObject:
