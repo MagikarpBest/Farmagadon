@@ -12,7 +12,7 @@ public class WeaponData : ScriptableObject
     public float lifeTime = 0f;
     public float bulletSpeed = 10f;
     public float damage = 1f;
-    public int pierceCount = 0;
+    public int pierceCount = 1; // Idk why 1 is 0 but yes, set default to 1 so it wont break
     public float explosionRadius = 0f; // Edit if explosive weapon
 
 
@@ -26,10 +26,12 @@ public class WeaponData : ScriptableObject
     {
         [Header("Shrapnel Settings (special combination)")]
         public bool enable = false;
-        public int count = 0;
         public GameObject bulletPrefab; // Which bullet prefab to shoot (eg rice after explode)
+        public int count = 0;
         public float bulletSpeed = 10f;
         public float damage = 1f;
+        public int pierceCount = 1;
+        public float explosionRadius = 0f; // Edit if explosive weapon
         public float lifeTime = 0f;
     }
 

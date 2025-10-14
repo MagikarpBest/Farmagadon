@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9abaee8ab25e3b448d370aba7cac92d, type: 3}
-  m_Name: CarrotWeaponData
+  m_Name: RiceCarrotCombinationWeaponData
   m_EditorClassIdentifier: 
-  weaponName: SniperCarrot
-  weaponSprite: {fileID: 21300000, guid: c177996f4d66fde4a8d757486f675271, type: 3}
+  weaponName: RiceCarrot
+  weaponSprite: {fileID: 21300000, guid: 61022bdfb679bcc44995548ba019fdc2, type: 3}
   bulletPrefab: {fileID: 6108739619576341720, guid: 9093ef80a3d89a747aaf932e4e2841ce, type: 3}
-  ammoType: {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
-  lifeTime: 3
+  ammoType: {fileID: 11400000, guid: db599a4bb595ee943b9b9cb3951a3d69, type: 2}
+  lifeTime: 5
   bulletSpeed: 15
   damage: 2
-  pierceCount: 2
+  pierceCount: 99
   explosionRadius: 0
   fireRate: 0.2
   pelletCount: 1

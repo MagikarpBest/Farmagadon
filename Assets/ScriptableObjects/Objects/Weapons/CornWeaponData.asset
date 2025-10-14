@@ -19,8 +19,15 @@ MonoBehaviour:
   lifeTime: 0.4
   bulletSpeed: 10
   damage: 1
-  pierceCount: 0
+  pierceCount: 1
   explosionRadius: 0
   fireRate: 1
   pelletCount: 5
   spread: 40
+  shrapnel:
+    enable: 0
+    count: 0
+    bulletPrefab: {fileID: 0}
+    bulletSpeed: 10
+    damage: 1
+    lifeTime: 0

@@ -155,6 +155,8 @@ public class Bullet : MonoBehaviour
             return;
         }
 
+        Debug.Log($"{name} hit {other.name}, pierceRemaining={pierceCountRemaining}");
+
         hitEnemies.Add(other);
 
         if (other.TryGetComponent<IDamageable>(out var damageable))

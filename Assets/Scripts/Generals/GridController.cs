@@ -7,7 +7,7 @@ using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 using static UnityEngine.Rendering.DebugUI;
 
 namespace Farm

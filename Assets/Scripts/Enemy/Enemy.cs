@@ -33,36 +33,41 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        OnHit?.Invoke();
         // Enemy take damage logic
         if (isDead)
         {
             return;
         }
 
-        OnHit?.Invoke();
         currentHealth -= damage;
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
         if (currentHealth <= 0)
         {
-            Die();
+            StartCoroutine(DieAfterDelay(0.1f));
         }
     }
 
-    private void Die()
+    private IEnumerator DieAfterDelay(float delay)
     {
         if (isDead)
         {
-            return;
+            yield break;
         }
         isDead = true;
 
         Debug.Log(enemyData.enemyName + " died");
+
         // Stop attack if died
         if (attackRoutine != null)
         {
             StopCoroutine(attackRoutine);
         }
+
+        // Allow flash to show before actually destroying the object
+        yield return new WaitForSeconds(delay);
+
         OnDeath?.Invoke(this);
         Destroy(gameObject);
     }

@@ -14,13 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: RiceRifle
   weaponSprite: {fileID: 21300000, guid: 46946d55282c9d84da09e07ab62135d2, type: 3}
-  bulletPrefab: {fileID: 3267392343543207434, guid: a5c9a21879a19b7418edf3a9e92debf1, type: 3}
+  bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
   ammoType: {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
   lifeTime: 3
   bulletSpeed: 10
   damage: 1
-  pierceCount: 0
+  pierceCount: 1
   explosionRadius: 0
   fireRate: 0.2
   pelletCount: 1
   spread: 0
+  shrapnel:
+    enable: 0
+    count: 0
+    bulletPrefab: {fileID: 0}
+    bulletSpeed: 10
+    damage: 1
+    lifeTime: 0
