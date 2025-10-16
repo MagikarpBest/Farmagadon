@@ -23,10 +23,11 @@ public class AmmoInventory : MonoBehaviour
     // Create a collection that store all ammo data
     [SerializeField] private AmmoData[] startAmmoTypes;
     [SerializeField] private int debugStartingAmmo = 50;
-    
 
-    private Dictionary<AmmoData, int>
-    ammoDict = new Dictionary<AmmoData, int>();
+    // Runtime ammo data storage
+    private Dictionary<AmmoData, int> ammoDict = new Dictionary<AmmoData, int>();
+
+    private SaveData SaveData;
 
     private void Start()
     {
@@ -67,5 +68,10 @@ public class AmmoInventory : MonoBehaviour
     {
         ammoDict.TryGetValue (ammo, out int count);
         return count;
+    }
+    
+    public void SaveToSaveData(SaveData saveData)
+    {
+
     }
 }

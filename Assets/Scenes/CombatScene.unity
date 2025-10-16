@@ -412,6 +412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelDatabase: {fileID: 11400000, guid: 961139f3ab0273b41b127f3b56740aad, type: 2}
+  weaponInventory: {fileID: 1967877934}
+  ammoInventory: {fileID: 1967877933}
   gameInput: {fileID: 444733804}
   uiManager: {fileID: 1096103686}
   waveManager: {fileID: 1265790043}
@@ -7401,10 +7403,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDatabase: {fileID: 11400000, guid: 27016c74377475649a0b1502fcf7906f, type: 2}
   maxSlot: 4
-  unlockedSlots: 2
+  unlockedSlots: 4
   startingWeapon:
   - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
-  - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
+  - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
   - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
   - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
   - {fileID: 11400000, guid: 2625ea96ab3cb80468b2251fb6bf357f, type: 2}
