@@ -10,24 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9abaee8ab25e3b448d370aba7cac92d, type: 3}
-  m_Name: RiceWeaponData
+  m_Name: RiceCarrotCombinationWeaponData
   m_EditorClassIdentifier: 
-  weaponName: RiceRifle
-  weaponSprite: {fileID: 21300000, guid: 46946d55282c9d84da09e07ab62135d2, type: 3}
-  bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
-  ammoType: {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
-  lifeTime: 3
-  bulletSpeed: 10
-  damage: 1
-  pierceCount: 1
+  weaponID: weapon_ricecarrot
+  weaponName: RiceCarrot
+  weaponSprite: {fileID: 21300000, guid: 61022bdfb679bcc44995548ba019fdc2, type: 3}
+  bulletPrefab: {fileID: 6108739619576341720, guid: 9093ef80a3d89a747aaf932e4e2841ce, type: 3}
+  ammoType: {fileID: 11400000, guid: db599a4bb595ee943b9b9cb3951a3d69, type: 2}
+  lifeTime: 5
+  bulletSpeed: 15
+  damage: 2
+  pierceCount: 99
   explosionRadius: 0
   fireRate: 0.2
   pelletCount: 1
   spread: 0
   shrapnel:
     enable: 0
-    count: 0
     bulletPrefab: {fileID: 0}
+    count: 0
     bulletSpeed: 10
     damage: 1
+    pierceCount: 1
+    explosionRadius: 0
     lifeTime: 0

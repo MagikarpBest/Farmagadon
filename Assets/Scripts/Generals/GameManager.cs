@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Current gameplay state
+/// <summary>
+/// Current gameplay state
+/// </summary>
 public enum GameState
 {
     Playing,
@@ -10,13 +12,18 @@ public enum GameState
     GameOver
 }
 
-// Current phase
+/// <summary>
+/// Represents which gameplay phase the player is currently in (Farm or Combat)
+/// </summary>
 public enum GamePhase
 {
     Farm,
     Combat
 }
 
+/// <summary>
+/// Core manager that coordinates game state, saving, and scene transitions
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
@@ -27,12 +34,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player player;                 // Reference to player
     [SerializeField] private FenceHealth fenceHealth;       // Reference to fence
 
-    // Current gameplay state (default = playing)
-    private GameState currentState = GameState.Playing;
+    private GameState currentState = GameState.Playing;     // Current gameplay state (default = playing)
+    private SaveData saveData;                              // Loaded save data (tracks current level + game phase)
 
-    // Loaded save data (tracks current level + game phase)
-    private SaveData saveData;
-
+    // ----------------------
+    // EVENT SUBSCRIPTION
+    // ----------------------
     private void OnEnable()
     {
         if (waveManager != null)
@@ -44,9 +51,15 @@ public class GameManager : MonoBehaviour
         {
             fenceHealth.OnFenceDestroy += HandleGameOver;
         }
-        gameInput.OnPause += TogglePause;
+        if (gameInput != null)
+        {
+            gameInput.OnPause += TogglePause;
+        }
     }
 
+    // ----------------------
+    // EVENT SUBSCRIPTION
+    // ----------------------
     private void OnDisable()
     {
         if (waveManager != null)
@@ -58,43 +71,35 @@ public class GameManager : MonoBehaviour
         {
             fenceHealth.OnFenceDestroy -= HandleGameOver;
         }
-        gameInput.OnPause -= TogglePause;
+        if (gameInput != null)
+        {
+            gameInput.OnPause -= TogglePause;
+        }
     }
 
+    // ------------------
+    // INITIALIZATION
+    // ------------------
     private void Awake()
     {
         // Load player progress from SaveSystem
         saveData = SaveSystem.LoadGame();
 
-        // Safety check
-        if (uiManager == null)
-        {
-            uiManager = FindFirstObjectByType<UIManager>();
-        }
-        if (waveManager == null)
-        {
-            waveManager = FindFirstObjectByType<WaveManager>();
-        }
-        if (player == null)
-        {
-            player = FindFirstObjectByType<Player>();
-        }
-        if (fenceHealth == null)
-        {
-            fenceHealth = FindFirstObjectByType<FenceHealth>();
-        }
-        if (gameInput == null)
-        {
-            gameInput = FindFirstObjectByType<GameInput>();
-        }
+        // Auto-find missing references
+        uiManager??=FindFirstObjectByType<UIManager>();
+        waveManager ??= FindFirstObjectByType<WaveManager>();
+        player ??= FindFirstObjectByType<Player>();
+        fenceHealth ??= FindFirstObjectByType<FenceHealth>();
+        gameInput ??= FindFirstObjectByType<GameInput>();
+
         CheckReferences();
     }
 
     private void Start()
     {
-        if (waveManager != null)
+        // Initialize the current level from the database
+        if (waveManager != null && levelDatabase != null) 
         {
-            // Load level from database
             LevelData currentLevelData = levelDatabase.GetLevelData(saveData.currentLevel);
             waveManager.SetLevel(currentLevelData);
         }
@@ -103,6 +108,9 @@ public class GameManager : MonoBehaviour
         uiManager.Show(UIScreen.HUD);
     }
 
+    // ----------------------
+    // SAFETY CHECK
+    // ----------------------
     private void CheckReferences()
     {
         if (uiManager == null)
@@ -131,6 +139,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // ----------------------
+    // GAME STATE LOGIC
+    // ----------------------
+
     /// <summary>
     /// Called when all enemies in the level are defeated.
     /// </summary>
@@ -141,12 +153,12 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // Change state to Victory
+        currentState = GameState.Victory;
+
         // Pause gameplay
         Time.timeScale = 0f;
-
-        // Show victory UI
         uiManager.Show(UIScreen.Victory);
-        currentState = GameState.Victory;
         saveData.currentLevel++;
         Debug.Log("Victory! All enemies defeated.");
 
@@ -181,17 +193,20 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Change state to gameover
+        // Change state to Gameover
         currentState = GameState.GameOver;
 
-        // Pause time
+        // Pause gameplay
         Time.timeScale = 0f;
         uiManager.Show(UIScreen.GameOver);
         Debug.Log("Game Over!");
     }
 
+    // ----------------------
+    // PAUSE SYSTEM
+    // ----------------------
     /// <summary>
-    /// Toggles between pause and resume when the player presses pause input.
+    /// Toggles between pause and resume when the player presses pause input
     /// </summary>
     private void TogglePause()
     {
@@ -227,8 +242,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("Unpaused");
     }
 
+    // ----------------------
+    // SCENE CONTROL
+    // ----------------------
+
     /// <summary>
-    /// Reloads the current scene from the start.
+    /// Reloads the current scene
     /// </summary>
     public void RestartLevel()
     {

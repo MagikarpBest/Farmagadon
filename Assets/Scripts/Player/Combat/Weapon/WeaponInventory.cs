@@ -9,7 +9,6 @@ using System.Collections.Generic;
 public class WeaponSlot
 {
     public WeaponData weaponData;
-
     public WeaponSlot(WeaponData data)
     {
         weaponData = data;
@@ -21,12 +20,18 @@ public class WeaponSlot
 /// </summary>
 public class WeaponInventory : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private WeaponDatabase weaponDatabase;
+    private AmmoInventory ammoInventory;                    // Reference to player's ammo inventory
+    private SaveData saveData;
+
+    [Header("Slot Settings")]
     [SerializeField] private int maxSlot = 4;               // Maximum number of weapon slots the player can have
-    [SerializeField] private int unlockedSlot = 2;          // How many weapon slots currently player have
+    [SerializeField] private int unlockedSlot = 1;          // How many weapon slots currently player have
     [SerializeField] private WeaponData[] startingWeapon;   // Weapons player start with
 
     private WeaponSlot[] weapons;                           // Assign weapon to slots, first assign = first slot
-    private AmmoInventory ammoInventory;                    // Reference to player's ammo inventory
+    private List<WeaponSlot> weaponStorage = new();         // Reserve weapons not equipped
     private int currentIndex = 0;                           // The index of current active weapon slot
 
     /// <summary>
@@ -49,6 +54,8 @@ public class WeaponInventory : MonoBehaviour
 
     private void Start()
     {
+        saveData = SaveSystem.LoadGame();
+        
         // Add all starting weapon to available slots
         foreach (var weapon in startingWeapon)
         {
@@ -63,6 +70,10 @@ public class WeaponInventory : MonoBehaviour
         OnWeaponChanged?.Invoke(weapons[currentIndex]);
     }
 
+    // ----------------------
+    // Slot Management
+    // ----------------------
+
     /// <summary>
     /// Unlocks one additional weapon slot (up to the max slot limit).
     /// </summary>
@@ -76,7 +87,7 @@ public class WeaponInventory : MonoBehaviour
 
     /// <summary>
     /// Adds a new weapon to the first available unlocked slot.
-    /// If all unlocked slots are full, logs a message instead.
+    /// If all unlocked slots are full, send to reserve inventory;
     /// </summary>
     public void AddWeapon(WeaponData newWeapon)
     {
@@ -91,7 +102,8 @@ public class WeaponInventory : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("All slots full. Need to swap!");
+        weaponStorage.Add(new WeaponSlot(newWeapon));
+        Debug.Log($"All equipped slot full! {newWeapon.weaponName} sent to reserve inventory.");
     }
 
     /// <summary>
@@ -181,4 +193,12 @@ public class WeaponInventory : MonoBehaviour
     /// Returns the index of the currently active weapon.
     /// </summary>
     public int GetCurrentWeaponIndex() => currentIndex;
+
+    // ----------------------
+    // Save System
+    // ----------------------
+
+    /// <summary>
+    /// Save equipped + reserve weapons to SaveData
+    /// </summary>
 }
