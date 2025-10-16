@@ -27,7 +27,7 @@ public class WeaponInventory : MonoBehaviour
 
     [Header("Slot Settings")]
     [SerializeField] private int maxSlot = 4;               // Maximum number of weapon slots the player can have
-    [SerializeField] private int unlockedSlot = 1;          // How many weapon slots currently player have
+    [SerializeField] private int unlockedSlots = 1;          // How many weapon slots currently player have
     [SerializeField] private WeaponData[] startingWeapon;   // Weapons player start with
 
     private WeaponSlot[] weapons;                           // Assign weapon to slots, first assign = first slot
@@ -79,9 +79,9 @@ public class WeaponInventory : MonoBehaviour
     /// </summary>
     public void UnlockSlot()
     {
-        if (unlockedSlot < maxSlot) 
+        if (unlockedSlots < maxSlot) 
         {
-            unlockedSlot++;
+            unlockedSlots++;
         }
     }
 
@@ -91,7 +91,27 @@ public class WeaponInventory : MonoBehaviour
     /// </summary>
     public void AddWeapon(WeaponData newWeapon)
     {
-        for (int i = 0; i < unlockedSlot; i++)
+        // Prevent duplicate weapons
+        foreach (var slot in GetEquippedWeapon())
+        {
+            if (slot.weaponData.weaponID == newWeapon.weaponID)
+            {
+                Debug.Log($"Weapon {newWeapon.weaponName} already equipped!");
+                return;
+            }
+        }
+
+        foreach (var weapon in weaponStorage)
+        {
+            if (weapon.weaponData.weaponID == newWeapon.weaponID)
+            {
+                Debug.Log($"Weapon {newWeapon.weaponName} already in reserve!");
+                return;
+            }
+        }
+
+        // Add normally
+        for (int i = 0; i < unlockedSlots; i++)
         {
             if (weapons[i] == null)
             {
@@ -111,7 +131,7 @@ public class WeaponInventory : MonoBehaviour
     /// </summary>
     public void SwapWeapon(int slotIndex, WeaponData newWeapon)
     {
-        if (slotIndex < unlockedSlot)
+        if (slotIndex < unlockedSlots)
         {
             weapons[slotIndex] = new WeaponSlot(newWeapon);
             currentIndex = slotIndex;
@@ -129,7 +149,7 @@ public class WeaponInventory : MonoBehaviour
         // Skip empty slots
         do
         {
-            currentIndex = (currentIndex + 1) % unlockedSlot;
+            currentIndex = (currentIndex + 1) % unlockedSlots;
         }
         while (weapons[currentIndex] == null && currentIndex != startIndex);
 
@@ -146,7 +166,7 @@ public class WeaponInventory : MonoBehaviour
         // Skip empty slots
         do
         {
-            currentIndex = (currentIndex - 1 + unlockedSlot) % unlockedSlot;
+            currentIndex = (currentIndex - 1 + unlockedSlots) % unlockedSlots;
         }
         while (weapons[currentIndex] == null && currentIndex != startIndex);
 
@@ -172,7 +192,7 @@ public class WeaponInventory : MonoBehaviour
     public List<WeaponSlot> GetEquippedWeapon()
     {
         var equipped= new List<WeaponSlot>();
-        for (int i = 0; i < unlockedSlot; i++)
+        for (int i = 0; i < unlockedSlots; i++)
         {
             if (weapons[i] != null && weapons[i].weaponData != null)
             {
@@ -183,11 +203,10 @@ public class WeaponInventory : MonoBehaviour
         return equipped;
     }
 
-
     /// <summary>
     /// Returns the number of unlocked slots.
     /// </summary>
-    public int UnlockedSlotCount => unlockedSlot;
+    public int UnlockedSlotCount => unlockedSlots;
 
     /// <summary>
     /// Returns the index of the currently active weapon.
@@ -199,6 +218,101 @@ public class WeaponInventory : MonoBehaviour
     // ----------------------
 
     /// <summary>
+    /// Starting weapon logic for new players and initialize from save
+    /// </summary>
+    public void InitializeFromSave(SaveData data)
+    {
+        saveData = data;
+        LoadWeaponFromSave();
+
+        // Give default weapon if empty (for first time player)
+        if (GetEquippedWeapon().Count == 0)
+        {
+            foreach (var weapon in startingWeapon)
+            {
+                if (weapon != null)
+                {
+                    AddWeapon(weapon);
+                }
+            }
+        }
+    }    
+
+    public void SaveToSaveData(SaveData data)
+    {
+        saveData = data;
+        SaveWeaponsToSaveData();
+    }
+
+    /// <summary>
     /// Save equipped + reserve weapons to SaveData
     /// </summary>
+    private void SaveWeaponsToSaveData()
+    {
+        saveData.ownedWeaponIDs.Clear();
+        saveData.equippedWeaponIDs.Clear();
+
+        HashSet<string> uniqueEquipped = new HashSet<string>();
+        HashSet<string> uniqueOwned = new HashSet<string>();
+
+        // Save equipped weapons (no duplicates)
+        foreach (var slot in GetEquippedWeapon())
+        {
+            if (slot.weaponData != null && uniqueEquipped.Add(slot.weaponData.weaponID))
+            {
+                saveData.equippedWeaponIDs.Add(slot.weaponData.weaponID);
+            }
+        }
+
+        // Save reserve weapons
+        foreach (var weapon in weaponStorage)
+        {
+            if (weapon.weaponData != null && uniqueOwned.Add(weapon.weaponData.weaponID))
+            {
+                saveData.ownedWeaponIDs.Add(weapon.weaponData.weaponID);
+            }
+        }
+
+        // Save unlocked slots
+        saveData.unlockedSlots = unlockedSlots;
+
+        SaveSystem.SaveGame(saveData);
+        Debug.Log("Weapons saved to SaveData.");
+    }
+
+    /// <summary>
+    /// Load equipped + reserve weapons from SaveData
+    /// </summary>
+    /// 
+    private void LoadWeaponFromSave()
+    {
+        if (saveData == null)
+        {
+            Debug.LogWarning("No save data found. Staring new inventory");
+            return;
+        }
+
+        unlockedSlots = saveData.unlockedSlots;
+
+        // Load equipped
+        for (int i = 0; i < saveData.equippedWeaponIDs.Count && i < unlockedSlots; i++) 
+        {
+            WeaponData weapon = weaponDatabase.GetWeaponByID(saveData.equippedWeaponIDs[i]);
+            if (weapon != null)
+            {
+                weapons[i]= new WeaponSlot(weapon);
+            }
+        }
+
+        // Load reserve
+        foreach (var id in saveData.ownedWeaponIDs)
+        {
+            WeaponData weapon = weaponDatabase.GetWeaponByID(id);
+            if (weapon != null)
+            {
+                weaponStorage.Add(new WeaponSlot(weapon));
+            }
+        }
+        Debug.Log("Weapons loaded from SaveData.");
+    }
 }

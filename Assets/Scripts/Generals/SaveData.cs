@@ -6,7 +6,7 @@ public class SaveData
 {
     public int currentLevel = 1;
     public GamePhase currentPhase = GamePhase.Farm;
-    public int unlockedSlot = 1;
+    public int unlockedSlots = 4;
     public List<string> ownedWeaponIDs = new();     // Store owned weapon ID/names
     public List<string> equippedWeaponIDs = new();  // What’s currently in active slots
 }

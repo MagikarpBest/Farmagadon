@@ -27,15 +27,17 @@ public enum GamePhase
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LevelDatabase levelDatabase;   // Assign the SO in inspector
-    [SerializeField] private GameInput gameInput;           // Player input
-    [SerializeField] private UIManager uiManager;           // Control UI
-    [SerializeField] private WaveManager waveManager;       // Manage enemy wave
-    [SerializeField] private Player player;                 // Reference to player
-    [SerializeField] private FenceHealth fenceHealth;       // Reference to fence
+    [SerializeField] private LevelDatabase levelDatabase;       // Assign the SO in inspector
+    [SerializeField] private WeaponInventory weaponInventory;   // Weapon Inventory
+    [SerializeField] private AmmoInventory ammoInventory;       // Ammo Inventory
+    [SerializeField] private GameInput gameInput;               // Player input
+    [SerializeField] private UIManager uiManager;               // Control UI
+    [SerializeField] private WaveManager waveManager;           // Manage enemy wave
+    [SerializeField] private Player player;                     // Reference to player
+    [SerializeField] private FenceHealth fenceHealth;           // Reference to fence
 
-    private GameState currentState = GameState.Playing;     // Current gameplay state (default = playing)
-    private SaveData saveData;                              // Loaded save data (tracks current level + game phase)
+    private GameState currentState = GameState.Playing;         // Current gameplay state (default = playing)
+    private SaveData saveData;                                  // Loaded save data (tracks current level + game phase)
 
     // ----------------------
     // EVENT SUBSCRIPTION
@@ -91,23 +93,11 @@ public class GameManager : MonoBehaviour
         player ??= FindFirstObjectByType<Player>();
         fenceHealth ??= FindFirstObjectByType<FenceHealth>();
         gameInput ??= FindFirstObjectByType<GameInput>();
+        weaponInventory ??= FindFirstObjectByType<WeaponInventory>();
+        ammoInventory ??= FindFirstObjectByType<AmmoInventory>();
 
         CheckReferences();
     }
-
-    private void Start()
-    {
-        // Initialize the current level from the database
-        if (waveManager != null && levelDatabase != null) 
-        {
-            LevelData currentLevelData = levelDatabase.GetLevelData(saveData.currentLevel);
-            waveManager.SetLevel(currentLevelData);
-        }
-        // Start game
-        Time.timeScale = 1f;
-        uiManager.Show(UIScreen.HUD);
-    }
-
     // ----------------------
     // SAFETY CHECK
     // ----------------------
@@ -137,7 +127,36 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning(" GameManager: GameInput reference missing — pause won't work.");
         }
+
+        if (weaponInventory == null)
+        {
+            Debug.LogWarning(" Weapon inventory reference missing");
+        }
+        if (ammoInventory == null)
+        {
+            Debug.LogWarning(" Ammo inventory reference missing");
+        }
     }
+
+    private void Start()
+    {
+        if (weaponInventory != null)
+        {
+            weaponInventory.InitializeFromSave(saveData);
+        }
+
+        // Initialize the current level from the database
+        if (waveManager != null && levelDatabase != null) 
+        {
+            LevelData currentLevelData = levelDatabase.GetLevelData(saveData.currentLevel);
+            waveManager.SetLevel(currentLevelData);
+        }
+        // Start game
+        Time.timeScale = 1f;
+        uiManager.Show(UIScreen.HUD);
+    }
+
+    
 
     // ----------------------
     // GAME STATE LOGIC
@@ -159,6 +178,7 @@ public class GameManager : MonoBehaviour
         // Pause gameplay
         Time.timeScale = 0f;
         uiManager.Show(UIScreen.Victory);
+
         saveData.currentLevel++;
         Debug.Log("Victory! All enemies defeated.");
 
@@ -179,7 +199,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Save progress 
-        SaveSystem.SaveGame(saveData);
+        saveAll();
         Debug.Log($"Progress saved. Next level: {saveData.currentLevel}, Next phase: {saveData.currentPhase}");
     }
 
@@ -240,6 +260,23 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         uiManager.Show(UIScreen.HUD);
         Debug.Log("Unpaused");
+    }
+
+    // ----------------------
+    // SAVE + LOAD
+    // ----------------------
+    private void saveAll()
+    {
+        if (saveData == null)
+        {
+            saveData = new SaveData();
+        }
+
+        if (weaponInventory != null)
+        {
+            weaponInventory.SaveToSaveData(saveData);
+        }
+        SaveSystem.SaveGame(saveData);
     }
 
     // ----------------------
