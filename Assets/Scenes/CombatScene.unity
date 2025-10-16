@@ -7380,6 +7380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0f87aa3517ffd48a13ee3e9b145d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoDatabase: {fileID: 11400000, guid: a587565bd46e56f44aef6e07189a2a3d, type: 2}
   startAmmoTypes:
   - {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
   - {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}
