@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48e94293501e3a746962d69a935b91db, type: 3}
-  m_Name: CornIconData
+  m_Name: PotatoIconData
   m_EditorClassIdentifier: 
-  ammoName: Corn
-  icon: {fileID: 21300000, guid: cad45563336f06546af05c0f7099f393, type: 3}
+  ammoID: ammo_potato
+  ammoName: Potato
+  icon: {fileID: 21300000, guid: 05397c80530cc2b4faca477d52d0e397, type: 3}

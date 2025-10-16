@@ -1,16 +1,25 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-public class AmmoDatabase : MonoBehaviour
+[CreateAssetMenu(fileName = "AmmoDatabase", menuName = "Game/Ammo Database")]
+public class AmmoDatabase : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("All Ammo Types")]
+    public AmmoData[] allAmmo;
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Finds and returns an ammo by its unique ID.
+    /// </summary>
+    public AmmoData GetAmmoByID(string id)
     {
-        
+        foreach (var ammo in allAmmo)
+        {
+            if (ammo != null && ammo.ammoID == id)
+            {
+                return ammo;
+            }
+        }
+        Debug.LogWarning($"Ammo with ID {id} not found in AmmoDatabase!");
+        return null;
     }
 }

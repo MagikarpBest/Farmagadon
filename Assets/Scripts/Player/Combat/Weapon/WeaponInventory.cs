@@ -216,6 +216,11 @@ public class WeaponInventory : MonoBehaviour
     // ----------------------
     // Save System
     // ----------------------
+    public void SaveToSaveData(SaveData data)
+    {
+        saveData = data;
+        SaveWeaponsToSaveData();
+    }
 
     /// <summary>
     /// Starting weapon logic for new players and initialize from save
@@ -236,12 +241,6 @@ public class WeaponInventory : MonoBehaviour
                 }
             }
         }
-    }    
-
-    public void SaveToSaveData(SaveData data)
-    {
-        saveData = data;
-        SaveWeaponsToSaveData();
     }
 
     /// <summary>
@@ -252,22 +251,22 @@ public class WeaponInventory : MonoBehaviour
         saveData.ownedWeaponIDs.Clear();
         saveData.equippedWeaponIDs.Clear();
 
-        HashSet<string> uniqueEquipped = new HashSet<string>();
-        HashSet<string> uniqueOwned = new HashSet<string>();
+        HashSet<string> uniqueIDs = new HashSet<string>();
 
         // Save equipped weapons (no duplicates)
         foreach (var slot in GetEquippedWeapon())
         {
-            if (slot.weaponData != null && uniqueEquipped.Add(slot.weaponData.weaponID))
+            if (slot.weaponData != null && uniqueIDs.Add(slot.weaponData.weaponID))
             {
                 saveData.equippedWeaponIDs.Add(slot.weaponData.weaponID);
+                saveData.ownedWeaponIDs.Add(slot.weaponData.weaponID);
             }
         }
 
         // Save reserve weapons
         foreach (var weapon in weaponStorage)
         {
-            if (weapon.weaponData != null && uniqueOwned.Add(weapon.weaponData.weaponID))
+            if (weapon.weaponData != null && uniqueIDs.Add(weapon.weaponData.weaponID))
             {
                 saveData.ownedWeaponIDs.Add(weapon.weaponData.weaponID);
             }
@@ -283,7 +282,6 @@ public class WeaponInventory : MonoBehaviour
     /// <summary>
     /// Load equipped + reserve weapons from SaveData
     /// </summary>
-    /// 
     private void LoadWeaponFromSave()
     {
         if (saveData == null)

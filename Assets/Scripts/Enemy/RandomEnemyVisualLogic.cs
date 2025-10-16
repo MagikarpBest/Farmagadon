@@ -56,7 +56,7 @@ public class RandomEnemyVisualLogic : MonoBehaviour
         // check if we have a flash sprite for this index
         if (flashVisuals != null && currentIndex < flashVisuals.Length && flashVisuals[currentIndex] != null)
         {
-            Debug.Log("flash sprite");
+            //Debug.Log("flash sprite");
             spriteRenderer.sprite = flashVisuals[currentIndex];
         }
 
@@ -65,7 +65,7 @@ public class RandomEnemyVisualLogic : MonoBehaviour
         // revert to normal
         if (normalVisuals != null && currentIndex < normalVisuals.Length && normalVisuals[currentIndex] != null)
         {
-            Debug.Log("normal sprite");
+            //Debug.Log("normal sprite");
             spriteRenderer.sprite = normalVisuals[currentIndex];
         }
 

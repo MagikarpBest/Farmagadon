@@ -2,16 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-
-/// <summary>
-/// Serializable structure for saving ammo information (since Unity can't save dictionaries).
-/// </summary>
-[System.Serializable]
-public class AmmoSaveEntry
-{
-    public string ammoID;
-    public int count;
-}
 /// <summary>
 /// All player data that needed to be saved
 /// </summary>
@@ -34,5 +24,14 @@ public class SaveData
     // --------------------------
     // Ammo Inventory
     // --------------------------
-    public List<AmmoSaveEntry> ammoInventory = new List<AmmoSaveEntry>();
+    public List<string> ownedAmmoIDs = new();
+    public List<int> ownedAmmoCounts = new();
+
+    // -----------------
+    // Constructor
+    // -----------------
+    public SaveData() 
+    { 
+    
+    }
 }

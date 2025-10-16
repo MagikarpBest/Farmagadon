@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+/// <summary>
+/// Represent ammo type and count
+/// </summary>
 [System.Serializable]
 public class AmmoSlot
 {
@@ -13,34 +16,63 @@ public class AmmoSlot
         ammoData = data;
         count = startingCount;
     }
-
 }
 
+/// <summary>
+/// Manages all ammo owned by Player
+/// Handles adding, consume and saving ammo
+/// </summary>
 public class AmmoInventory : MonoBehaviour
 {
     public event Action OnInventoryChanged;
 
+    [Header("Database Reference")]
+    [SerializeField] private AmmoDatabase ammoDatabase;
+
+    [Header("Starting Ammo (Debug)")]
     // Create a collection that store all ammo data
     [SerializeField] private AmmoData[] startAmmoTypes;
     [SerializeField] private int debugStartingAmmo = 50;
 
     // Runtime ammo data storage
     private Dictionary<AmmoData, int> ammoDict = new Dictionary<AmmoData, int>();
+    private SaveData saveData;
 
-    private SaveData SaveData;
-
+    // ----------------------
+    // Initialization
+    // ----------------------
     private void Start()
     {
-        foreach (var ammo in startAmmoTypes)
+        saveData = SaveSystem.LoadGame();
+
+        // Load saved ammo first
+
+        // Give debug starting ammo if empty (for testing)
+        if (ammoDict.Count == 0)
         {
-            if (ammo != null)
+            foreach (var ammo in startAmmoTypes)
             {
-                AddAmmo(ammo, debugStartingAmmo);
+                if (ammo != null)
+                {
+                    AddAmmo(ammo, debugStartingAmmo);
+                }
             }
         }
     }
+
+    // ----------------------
+    // Inventory Management
+    // ----------------------
+    /// <summary>
+    /// Add ammo into the inventory (could be use for after harvest etc etc)
+    /// </summary>
     public void AddAmmo(AmmoData ammo, int amount)
     {
+        if (ammo == null)
+        {
+            return;
+        }
+
         // Check if the dictionary added the ammo in or not, if not create new list?(idk whats the terms) and add ammo
         if (ammoDict.ContainsKey(ammo))
         {
@@ -53,8 +85,16 @@ public class AmmoInventory : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
+    /// <summary>
+    /// Consume ammo, used for weapon shooting
+    /// </summary>
     public bool ConsumeAmmo(AmmoData ammo, int amount)
     {
+        if (ammo == null)
+        {
+            return false;
+        }
+
         if (ammoDict.TryGetValue(ammo, out int current) && current >= amount)
         {
             ammoDict[ammo] -= amount;
@@ -69,9 +109,60 @@ public class AmmoInventory : MonoBehaviour
         ammoDict.TryGetValue (ammo, out int count);
         return count;
     }
-    
-    public void SaveToSaveData(SaveData saveData)
-    {
 
+    // ----------------------
+    // Save System
+    // ----------------------
+    public void SaveToSaveData(SaveData data)
+    {
+        saveData = data;
+
+        saveData.ownedAmmoIDs.Clear();
+        saveData.ownedAmmoCounts.Clear();
+
+        foreach (var kvp in ammoDict)
+        {
+            if (kvp.Key != null)
+            {
+                saveData.ownedAmmoIDs.Add(kvp.Key.ammoID);
+                saveData.ownedAmmoCounts.Add(kvp.Value);
+            }
+        }
+    }
+    /// <summary>
+    /// Starting ammo initialize from save
+    /// </summary>
+    public void InitializeFromSave(SaveData data)
+    {
+        saveData = data;
+        LoadAmmoFromSave();
+    }
+
+    /// <summary>
+    /// Load equipped + reserve ammo from SaveData
+    /// </summary>
+    private void LoadAmmoFromSave()
+    {
+        ammoDict.Clear();
+
+        if (saveData == null)
+        {
+            Debug.LogWarning("No save data found. Starting new ammo inventory.");
+            return;
+        }
+
+        for (int i = 0; i < saveData.ownedAmmoIDs.Count; i++)
+        {
+            string id = saveData.ownedAmmoIDs[i];
+            int count = saveData.ownedAmmoCounts[i];
+
+            AmmoData ammo = ammoDatabase.GetAmmoByID(id);
+            if (ammo != null)
+            {
+                ammoDict[ammo] = count;
+            }
+        }
+
+        Debug.Log("Ammo loaded from SaveData.");
     }
 }

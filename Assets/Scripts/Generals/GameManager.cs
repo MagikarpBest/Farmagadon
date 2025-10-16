@@ -145,6 +145,11 @@ public class GameManager : MonoBehaviour
             weaponInventory.InitializeFromSave(saveData);
         }
 
+        if (ammoInventory != null)
+        {
+            ammoInventory.InitializeFromSave(saveData);
+        }
+
         // Initialize the current level from the database
         if (waveManager != null && levelDatabase != null) 
         {
@@ -275,6 +280,11 @@ public class GameManager : MonoBehaviour
         if (weaponInventory != null)
         {
             weaponInventory.SaveToSaveData(saveData);
+        }
+
+        if (ammoInventory != null) 
+        {
+            ammoInventory.SaveToSaveData(saveData);
         }
         SaveSystem.SaveGame(saveData);
     }

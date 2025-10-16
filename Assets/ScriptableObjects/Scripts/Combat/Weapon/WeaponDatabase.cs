@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="WeaponDatabase",menuName ="Game/Weapon Database")]
 public class WeaponDatabase : ScriptableObject
 {
+    [Header("All Weapon Type")]
     public WeaponData[] allWeapons;
 
     /// <summary>
