@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject victoryUI;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject weaponChoiceUI;
 
     private Dictionary<UIScreen, GameObject> screens;
 

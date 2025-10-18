@@ -92,22 +92,9 @@ public class WeaponInventory : MonoBehaviour
     public void AddWeapon(WeaponData newWeapon)
     {
         // Prevent duplicate weapons
-        foreach (var slot in GetEquippedWeapon())
+        if (IsWeaponOwned(newWeapon.weaponID))
         {
-            if (slot.weaponData.weaponID == newWeapon.weaponID)
-            {
-                Debug.Log($"Weapon {newWeapon.weaponName} already equipped!");
-                return;
-            }
-        }
-
-        foreach (var weapon in weaponStorage)
-        {
-            if (weapon.weaponData.weaponID == newWeapon.weaponID)
-            {
-                Debug.Log($"Weapon {newWeapon.weaponName} already in reserve!");
-                return;
-            }
+            return;
         }
 
         // Add normally
@@ -118,7 +105,6 @@ public class WeaponInventory : MonoBehaviour
                 weapons[i] = new WeaponSlot(newWeapon);
                 currentIndex = i;
                 OnWeaponChanged?.Invoke(weapons[i]);
-
                 return;
             }
         }
@@ -212,6 +198,31 @@ public class WeaponInventory : MonoBehaviour
     /// Returns the index of the currently active weapon.
     /// </summary>
     public int GetCurrentWeaponIndex() => currentIndex;
+
+    /// <summary>
+    /// Check is the weapon requested for whatever usage already owned or not
+    /// </summary>
+    public bool IsWeaponOwned(string weaponID)
+    {
+        foreach (var slot in weapons)
+        {
+            if (slot.weaponData.weaponID == weaponID)
+            {
+                Debug.Log($"Weapon {slot.weaponData.weaponName} already equipped!");
+                return true;
+            }
+        }
+
+        foreach (var weapon in weaponStorage)
+        {
+            if (weapon.weaponData.weaponID == weaponID) 
+            {
+                Debug.Log($"Weapon {weapon.weaponData.weaponName} already reserved!");
+                return true;
+            }
+        }
+        return false;
+    }
 
     // ----------------------
     // Save System
