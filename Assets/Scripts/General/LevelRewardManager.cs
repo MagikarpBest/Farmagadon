@@ -88,9 +88,6 @@ public class LevelRewardManager : MonoBehaviour
                 }
             }
         }
-
-
-
     }
 
     /// <summary>
@@ -109,5 +106,22 @@ public class LevelRewardManager : MonoBehaviour
             }
         }
         return unowned;
+    }
+
+    /// <summary>
+    /// Called when player selects a weapon from the choice UI.
+    /// </summary>
+    private void OnWeaponChosen(string chosenID)
+    {
+        WeaponData weapon = weaponDatabase.GetWeaponByID(chosenID);
+        if (weapon != null)
+        {
+            weaponInventory.AddWeapon(weapon);
+            Debug.Log($"Player chose reward: {weapon.weaponName}");
+        }
+        else
+        {
+            Debug.LogWarning($"Invalid weapon ID chosen: {chosenID}");
+        }
     }
 }

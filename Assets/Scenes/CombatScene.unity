@@ -1037,6 +1037,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264548382}
   m_CullTransparentMesh: 1
+--- !u!1 &312844385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 312844386}
+  - component: {fileID: 312844387}
+  m_Layer: 0
+  m_Name: LevelRewardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &312844386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312844385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 334180103}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &312844387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312844385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2fbc0f2388e8e40963a68bebda13fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponInventory: {fileID: 0}
+  weaponDatabase: {fileID: 0}
+  uiManager: {fileID: 0}
+  rewardData: {fileID: 11400000, guid: 29e4e72c5ce5eca45aec0f72c6656571, type: 2}
 --- !u!1 &314664068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,8 +1375,57 @@ Transform:
   - {fileID: 1967877932}
   - {fileID: 1096103685}
   - {fileID: 83020717}
+  - {fileID: 312844386}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &342156430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342156431}
+  - component: {fileID: 342156432}
+  m_Layer: 0
+  m_Name: WeaponUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &342156431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342156430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1096103685}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &342156432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342156430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3b16fbf8d2f2e4cb2281f9e261168b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponInventory: {fileID: 1967877934}
+  leftWeaponImage: {fileID: 42532853}
+  centerWeaponImage: {fileID: 1155954289}
+  rightWeaponImage: {fileID: 543939854}
 --- !u!1 &363249408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,6 +1963,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 334180103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &446300591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 446300592}
+  - component: {fileID: 446300593}
+  m_Layer: 0
+  m_Name: AmmoUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &446300592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446300591}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1096103685}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &446300593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446300591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae6bc19462b81b46a99ee7d9d510768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoInventory: {fileID: 1967877933}
+  weaponInventory: {fileID: 1967877934}
+  ammoTexts:
+  - {fileID: 373948347}
+  - {fileID: 414751114}
+  - {fileID: 472735312}
+  - {fileID: 21081800}
+  ammoIcons:
+  - {fileID: 1019093724}
+  - {fileID: 1360378201}
+  - {fileID: 2124595368}
+  - {fileID: 2100609226}
 --- !u!1 &464787890
 GameObject:
   m_ObjectHideFlags: 0
@@ -4157,8 +4310,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1096103685}
   - component: {fileID: 1096103686}
-  - component: {fileID: 1096103687}
-  - component: {fileID: 1096103688}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -4178,7 +4329,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 446300592}
+  - {fileID: 342156431}
+  - {fileID: 1359784225}
   m_Father: {fileID: 334180103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1096103686
@@ -4197,46 +4351,7 @@ MonoBehaviour:
   victoryUI: {fileID: 1707150030}
   gameOverUI: {fileID: 1188224608}
   pauseUI: {fileID: 23026588}
---- !u!114 &1096103687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096103684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ae6bc19462b81b46a99ee7d9d510768, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoInventory: {fileID: 1967877933}
-  weaponInventory: {fileID: 1967877934}
-  ammoTexts:
-  - {fileID: 373948347}
-  - {fileID: 414751114}
-  - {fileID: 472735312}
-  - {fileID: 21081800}
-  ammoIcons:
-  - {fileID: 1019093724}
-  - {fileID: 1360378201}
-  - {fileID: 2124595368}
-  - {fileID: 2100609226}
---- !u!114 &1096103688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096103684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b3b16fbf8d2f2e4cb2281f9e261168b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponInventory: {fileID: 1967877934}
-  leftWeaponImage: {fileID: 42532853}
-  centerWeaponImage: {fileID: 1155954289}
-  rightWeaponImage: {fileID: 543939854}
+  weaponChoiceUI: {fileID: 0}
 --- !u!1 &1097618874
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,6 +5691,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303172889}
   m_CullTransparentMesh: 1
+--- !u!1 &1359784224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1359784225}
+  m_Layer: 0
+  m_Name: RewardUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1359784225
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359784224}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1096103685}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1360378199
 GameObject:
   m_ObjectHideFlags: 0

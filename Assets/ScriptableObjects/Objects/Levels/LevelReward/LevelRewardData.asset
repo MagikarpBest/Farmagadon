@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0796d755e12b54e92cb8e7f42f2a27, type: 3}
   m_Name: LevelRewardData
   m_EditorClassIdentifier: 
-  rewards: []
+  rewards:
+  - levelNumber: 0
+    rewardWeaponIDs: []
+    chooseOne: 0
+  - levelNumber: 0
+    rewardWeaponIDs: []
+    chooseOne: 0
