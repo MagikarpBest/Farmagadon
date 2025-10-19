@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
         saveAll();
 
         // Load next scene
-        sceneController?.LoadNextLevel(SaveData.currentLevel, SaveData.currentPhase);
+        sceneController?.LoadScene("CombatScene");
 
         Debug.Log($"Progress saved. Next level: {SaveData.currentLevel}, Next phase: {SaveData.currentPhase}");
     }

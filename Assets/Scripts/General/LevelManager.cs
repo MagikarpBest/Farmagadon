@@ -35,6 +35,5 @@ public class LevelManager : MonoBehaviour
 
         // Save runtime progress
         SaveSystem.SaveGame(saveData);
-        sceneController.LoadNextLevel(1,GamePhase.Combat);
     }
 }
