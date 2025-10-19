@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
     {
         
         // Give reward for current level
-        //rewardManager.GetRewardForLevel(saveData.currentLevel);
+        rewardManager.GetRewardForLevel(saveData.currentLevel);
 
         // If current phase is combat change to farm, if farm then change to combat
         saveData.currentPhase = saveData.currentPhase == GamePhase.Combat

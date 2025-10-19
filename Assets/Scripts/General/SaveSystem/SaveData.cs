@@ -11,7 +11,7 @@ public class SaveData
     // --------------------------
     // Progress Data
     // --------------------------
-    public int currentLevel = 1;
+    public int currentLevel = 1; 
     public GamePhase currentPhase = GamePhase.Farm;
 
     // --------------------------

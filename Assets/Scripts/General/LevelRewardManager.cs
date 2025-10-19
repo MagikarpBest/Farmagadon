@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Handles level completion reward (choose one or auto give)
@@ -13,7 +14,9 @@ public class LevelRewardManager : MonoBehaviour
     [SerializeField] private WeaponChoiceUI weaponChoiceUI;
 
     [Header("Rewards Data")]
-    [SerializeField] private LevelRewardData rewardData; // Optional, can be empty if you randomize
+    [SerializeField] private LevelRewardData rewardData;
+
+    public event Action OnRewardGiven;
 
     private void Awake()
     {
@@ -69,7 +72,7 @@ public class LevelRewardManager : MonoBehaviour
 
             for (int i = 0; i < choiceCount; i++)
             {
-                int randomIndex = Random.Range(0, pool.Count);
+                int randomIndex = UnityEngine.Random.Range(0, pool.Count);
                 randomChoices.Add(pool[randomIndex]);
                 pool.RemoveAt(randomIndex);
             }
@@ -79,6 +82,7 @@ public class LevelRewardManager : MonoBehaviour
         }
         else
         {
+            uiManager.Show(UIScreen.Victory);
             // Give all reward directly
             foreach (var id in availableRewards)
             {
@@ -120,6 +124,8 @@ public class LevelRewardManager : MonoBehaviour
         {
             weaponInventory.AddWeapon(weapon);
             Debug.Log($"Player chose reward: {weapon.weaponName}");
+
+            OnRewardGiven?.Invoke();
         }
         else
         {

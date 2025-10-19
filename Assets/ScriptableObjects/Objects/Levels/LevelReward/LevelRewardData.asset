@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: LevelRewardData
   m_EditorClassIdentifier: 
   rewards:
-  - levelNumber: 0
-    rewardWeaponIDs: []
-    chooseOne: 0
-  - levelNumber: 0
-    rewardWeaponIDs: []
+  - levelNumber: 1
+    rewardWeaponIDs:
+    - weapon_corn
+    - weapon_carrot
+    - weapon_potato
+    chooseOne: 1
+  - levelNumber: 2
+    rewardWeaponIDs:
+    - weapon_potato
     chooseOne: 0

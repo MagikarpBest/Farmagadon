@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SceneController sceneController;   // Change scenes
     [SerializeField] private WaveManager waveManager;           // Manage enemy wave
     [SerializeField] private FenceHealth fenceHealth;           // Reference to fence
-    [SerializeField] private GameStateManager gameStateManager; 
+    [SerializeField] private GameStateManager gameStateManager;
+    [SerializeField] private LevelRewardManager levelRewardManager;
+
 
 
     public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
@@ -39,6 +41,11 @@ public class GameManager : MonoBehaviour
         {
             UIManager.OnVictoryCompleted += OnVictoryUICompleted;
         }
+
+        if (levelRewardManager != null)
+        {
+            levelRewardManager.OnRewardGiven += OnVictoryUICompleted;
+        }
     }
     
 
@@ -61,6 +68,11 @@ public class GameManager : MonoBehaviour
         {
             UIManager.OnVictoryCompleted -= OnVictoryUICompleted;
         }
+
+        if (levelRewardManager != null)
+        {
+            levelRewardManager.OnRewardGiven -= OnVictoryUICompleted;
+        }
     }
 
     // ------------------
@@ -69,11 +81,15 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         // Auto-find missing references
-        UIManager ??=FindFirstObjectByType<UIManager>();
+        UIManager ??= FindFirstObjectByType<UIManager>();
         waveManager ??= FindFirstObjectByType<WaveManager>();
         fenceHealth ??= FindFirstObjectByType<FenceHealth>();
         weaponInventory ??= FindFirstObjectByType<WeaponInventory>();
         ammoInventory ??= FindFirstObjectByType<AmmoInventory>();
+        levelManager ??= FindFirstObjectByType<LevelManager>();
+        sceneController ??= FindFirstObjectByType<SceneController>();
+        gameStateManager ??= FindFirstObjectByType<GameStateManager>();
+        levelRewardManager ??= FindFirstObjectByType<LevelRewardManager>();
 
         CheckReferences();
     }
@@ -83,28 +99,31 @@ public class GameManager : MonoBehaviour
     private void CheckReferences()
     {
         if (UIManager == null)
-        {
-            Debug.LogError(" GameManager: Missing reference to UIManager!");
-        }
+            Debug.LogError("GameManager: Missing reference to UIManager!");
 
         if (waveManager == null)
-        {
-            Debug.LogWarning(" GameManager: WaveManager not found — waves won't trigger victory.");
-        }
+            Debug.LogWarning("GameManager: WaveManager not found — waves won't trigger victory.");
 
         if (fenceHealth == null)
-        {
-            Debug.LogWarning(" GameManager: FenceHealth not found — GameOver won't trigger.");
-        }
+            Debug.LogWarning("GameManager: FenceHealth not found — GameOver won't trigger.");
 
         if (weaponInventory == null)
-        {
-            Debug.LogWarning(" Weapon inventory reference missing");
-        }
+            Debug.LogWarning("GameManager: WeaponInventory reference missing.");
+
         if (ammoInventory == null)
-        {
-            Debug.LogWarning(" Ammo inventory reference missing");
-        }
+            Debug.LogWarning("GameManager: AmmoInventory reference missing.");
+
+        if (levelManager == null)
+            Debug.LogWarning("GameManager: LevelManager reference missing.");
+
+        if (sceneController == null)
+            Debug.LogWarning("GameManager: SceneController reference missing.");
+
+        if (gameStateManager == null)
+            Debug.LogWarning("GameManager: GameStateManager reference missing.");
+
+        if (levelRewardManager == null)
+            Debug.LogWarning("GameManager: LevelRewardManager reference missing! Rewards won't trigger properly.");
     }
 
     private void Start()
@@ -153,19 +172,14 @@ public class GameManager : MonoBehaviour
     {
         // 1 Complete level (give rewards, update progression)
         levelManager.CompleteLevel(); 
-
-        // 2 Save progress
-        saveAll();
-
-        // 3 Show Victory UI
-        UIManager.Show(UIScreen.Victory);
         // Load next scene
         //sceneController?.LoadScene("CombatScene");
     }
 
     public void OnVictoryUICompleted()
     {
-        Debug.Log($"Progress saved. Next level: {SaveData.currentLevel}, Next phase: {gameStateManager.CurrentPhase}");
+        saveAll();
+        Debug.Log($"Progress saved. Next level: {SaveData.currentLevel + 1}, Next phase: {gameStateManager.CurrentPhase}");
         sceneController.LoadScene(GetNextSceneName());
     }
 
@@ -211,7 +225,6 @@ public class GameManager : MonoBehaviour
         weaponInventory.SaveToSaveData(SaveData);
         ammoInventory.SaveToSaveData(SaveData);
         SaveSystem.SaveGame(SaveData);
+        Debug.Log(" Game saved after reward!");
     }
-
-    
 }
