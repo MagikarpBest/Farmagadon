@@ -139,12 +139,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void HandleVictory()
     {
-        // Give rewards
+        // 1 Complete level (give rewards, update progression)
         levelManager.CompleteLevel(); 
 
-        // Save progress
+        // 2 Save progress
         saveAll();
 
+        // 3 Show Victory UI
+        UIManager.Show(UIScreen.Victory);
         // Load next scene
         sceneController?.LoadScene("CombatScene");
 

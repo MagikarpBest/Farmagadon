@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    [SerializeField] private UIManager uiManager;
     [SerializeField] private GameStateManager gameStateManager;
 
     private GamePhase nextPhase;
