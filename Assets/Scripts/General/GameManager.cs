@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LevelManager levelManager;       // Assign the SO in inspector
+    [SerializeField] private LevelDatabase levelDatabase;        // Assign the SO in inspector
+    [SerializeField] private LevelManager levelManager;         // Level Manager
     [SerializeField] private WeaponInventory weaponInventory;   // Weapon Inventory
     [SerializeField] private AmmoInventory ammoInventory;       // Ammo Inventory
     [SerializeField] private UIManager UIManager;               // Control UI
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WaveManager waveManager;           // Manage enemy wave
     [SerializeField] private FenceHealth fenceHealth;           // Reference to fence
 
-    private GameState currentState = GameState.Playing;         // Current gameplay state (default = playing)
+
     public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
     
     // ----------------------
@@ -55,10 +56,6 @@ public class GameManager : MonoBehaviour
     // ------------------
     private void Awake()
     {
-        // Load player progress from SaveSystem
-        SaveData = SaveSystem.LoadGame();
-
-
         // Auto-find missing references
         UIManager ??=FindFirstObjectByType<UIManager>();
         waveManager ??= FindFirstObjectByType<WaveManager>();
@@ -100,27 +97,33 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (levelManager != null)
+        // Safety check
+        if (weaponInventory == null || ammoInventory == null || levelManager == null || waveManager == null || levelDatabase == null || UIManager == null)
         {
-            levelManager.InitializeFromSave(SaveData);
+            Debug.LogError("GameManager missing references!");
+            return;
         }
+        // Load player progress from SaveSystem
+        SaveData = SaveSystem.LoadGame();
+        if (SaveData == null)
+        {
+            SaveData = new SaveData(); // fallback for first time player
+        }
+        // Initialize inventories
+        weaponInventory.InitializeFromSave(SaveData);
+        ammoInventory.InitializeFromSave(SaveData);
 
-        if (weaponInventory != null)
-        {
-            weaponInventory.InitializeFromSave(SaveData);
-        }
+        // Initialize levelManager
+        levelManager.InitializeFromSave(SaveData);
 
-        if (ammoInventory != null)
-        {
-            ammoInventory.InitializeFromSave(SaveData);
-        }
         // Initialize the current level from the database
         if (waveManager != null && levelDatabase != null) 
         {
             LevelData currentLevelData = levelDatabase.GetLevelData(SaveData.currentLevel);
-            waveManager.SetLevel(currentLevelData);
+            waveManager.setLevel(currentLevelData);
         }
         // Start game
+        waveManager.BeginLevel();
         Time.timeScale = 1f;
         UIManager.Show(UIScreen.HUD);
     }
@@ -153,14 +156,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void HandleGameOver()
     {
-        if (currentState == GameState.Victory || currentState == GameState.GameOver) 
-        {
-            return;
-        }
-
-        // Change state to Gameover
-        currentState = GameState.GameOver;
-
         // Pause gameplay
         Time.timeScale = 0f;
         UIManager.Show(UIScreen.GameOver);
@@ -170,24 +165,12 @@ public class GameManager : MonoBehaviour
     
 
     // ----------------------
-    // SAVE + LOAD
+    // SAVE
     // ----------------------
     private void saveAll()
     {
-        if (SaveData == null)
-        {
-            SaveData = new SaveData();
-        }
-
-        if (weaponInventory != null)
-        {
-            weaponInventory.SaveToSaveData(SaveData);
-        }
-
-        if (ammoInventory != null) 
-        {
-            ammoInventory.SaveToSaveData(SaveData);
-        }
+        weaponInventory.SaveToSaveData(SaveData);
+        ammoInventory.SaveToSaveData(SaveData);
         SaveSystem.SaveGame(SaveData);
     }
 

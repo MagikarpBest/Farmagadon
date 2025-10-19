@@ -15,12 +15,28 @@ public class WaveManager : MonoBehaviour
     public event Action<float, float> OnTimeUpdated;
     public event Action OnLevelCompleted;
 
-    private void Start()
+    private Coroutine levelCoroutine;
+
+    public void setLevel(LevelData data)
     {
-        StartCoroutine(StartLevel());
+        levelData = data;
+    }
+    public void BeginLevel()
+    {
+        if (levelData == null)
+        {
+            Debug.LogError("WaveManager: LevelData not set before starting level!");
+            return;
+        }
+        if (levelCoroutine != null)
+        {
+            StopCoroutine(levelCoroutine);
+        }
+
+        levelCoroutine = StartCoroutine(LevelRoutine());
     }
 
-    private IEnumerator StartLevel()
+    private IEnumerator LevelRoutine()
     {
         elapsedTime = 0f;
         nextEventIndex = 0;
@@ -35,10 +51,8 @@ public class WaveManager : MonoBehaviour
             if (nextEventIndex < levelData.events.Length && elapsedTime >= levelData.events[nextEventIndex].time) 
             {
                 // Grab event from levelData
-                WaveEvent waveEvent = levelData.events[nextEventIndex];
-
                 // Start spawning enemy (how it works check below)
-                StartCoroutine(RunWaveEvent(waveEvent));
+                StartCoroutine(RunWaveEvent(levelData.events[nextEventIndex]));
                 nextEventIndex++;
             }
             elapsedTime += Time.deltaTime;
@@ -89,12 +103,8 @@ public class WaveManager : MonoBehaviour
 
     private void HandleEnemyDeath(Enemy deadEnemy)
     {
-        activeEnemies--;
+        activeEnemies = Mathf.Max(0, activeEnemies - 1);
         Debug.Log(activeEnemies);
-        if (activeEnemies < 0)
-        {
-            activeEnemies = 0;
-        }
 
         // All wave finished + no enemy alive
         if (activeEnemies == 0 && nextEventIndex >= levelData.events.Length)
@@ -102,10 +112,5 @@ public class WaveManager : MonoBehaviour
             OnLevelCompleted?.Invoke();
             Debug.Log("All enemy died");
         }
-    }
-
-    public void SetLevel(LevelData data)
-    {
-        levelData = data;
     }
 }

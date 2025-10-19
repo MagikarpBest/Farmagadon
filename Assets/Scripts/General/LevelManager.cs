@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] LevelRewardManager rewardManager;
+    [SerializeField] private LevelRewardManager rewardManager;
+    [SerializeField] private SceneController sceneController;
     private SaveData saveData;
 
     /// <summary>
@@ -18,8 +19,9 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void CompleteLevel()
     {
+        
         // Give reward for current level
-        rewardManager.GetRewardForLevel(saveData.currentLevel);
+        //rewardManager.GetRewardForLevel(saveData.currentLevel);
 
         // If current phase is combat change to farm, if farm then change to combat
         saveData.currentPhase = saveData.currentPhase == GamePhase.Combat
@@ -33,5 +35,6 @@ public class LevelManager : MonoBehaviour
 
         // Save runtime progress
         SaveSystem.SaveGame(saveData);
+        sceneController.LoadNextLevel(1,GamePhase.Combat);
     }
 }

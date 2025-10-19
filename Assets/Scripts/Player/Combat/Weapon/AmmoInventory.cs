@@ -43,21 +43,7 @@ public class AmmoInventory : MonoBehaviour
     // ----------------------
     private void Start()
     {
-        saveData = SaveSystem.LoadGame();
-
-        // Load saved ammo first
-
-        // Give debug starting ammo if empty (for testing)
-        if (ammoDict.Count == 0)
-        {
-            foreach (var ammo in startAmmoTypes)
-            {
-                if (ammo != null)
-                {
-                    AddAmmo(ammo, debugStartingAmmo);
-                }
-            }
-        }
+        
     }
 
     // ----------------------
@@ -134,8 +120,20 @@ public class AmmoInventory : MonoBehaviour
     /// </summary>
     public void InitializeFromSave(SaveData data)
     {
-        saveData = data;
+        saveData = data; // First, store the save data
+        // Load saved ammo first
         LoadAmmoFromSave();
+        // Give debug starting ammo if empty (for testing)
+        if (ammoDict.Count == 0)
+        {
+            foreach (var ammo in startAmmoTypes)
+            {
+                if (ammo != null)
+                {
+                    AddAmmo(ammo, debugStartingAmmo);
+                }
+            }
+        }
     }
 
     /// <summary>

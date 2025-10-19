@@ -22,14 +22,14 @@ public class WeaponInventory : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private WeaponDatabase weaponDatabase;
-    private AmmoInventory ammoInventory;                    // Reference to player's ammo inventory
-    private SaveData saveData;
+    [SerializeField] private AmmoInventory ammoInventory;                    // Reference to player's ammo inventory
 
     [Header("Slot Settings")]
     [SerializeField] private int maxSlot = 4;               // Maximum number of weapon slots the player can have
     [SerializeField] private int unlockedSlots = 1;          // How many weapon slots currently player have
     [SerializeField] private WeaponData[] startingWeapon;   // Weapons player start with
 
+    private SaveData saveData;
     private WeaponSlot[] weapons;                           // Assign weapon to slots, first assign = first slot
     private List<WeaponSlot> weaponStorage = new();         // Reserve weapons not equipped
     private int currentIndex = 0;                           // The index of current active weapon slot
@@ -44,8 +44,6 @@ public class WeaponInventory : MonoBehaviour
         // Initialize weapon slot array
         weapons = new WeaponSlot[maxSlot];
 
-        // Cache the player's ammo inventory component
-        ammoInventory = GetComponent<AmmoInventory>();
         if (ammoInventory == null)
         {
             Debug.LogError("No AmmoInventory found on player!");
@@ -206,7 +204,7 @@ public class WeaponInventory : MonoBehaviour
     {
         foreach (var slot in weapons)
         {
-            if (slot.weaponData.weaponID == weaponID)
+            if (slot != null && slot.weaponData != null && slot.weaponData.weaponID == weaponID)
             {
                 Debug.Log($"Weapon {slot.weaponData.weaponName} already equipped!");
                 return true;
@@ -215,7 +213,7 @@ public class WeaponInventory : MonoBehaviour
 
         foreach (var weapon in weaponStorage)
         {
-            if (weapon.weaponData.weaponID == weaponID) 
+            if (weapon != null && weapon.weaponData != null && weapon.weaponData.weaponID == weaponID)
             {
                 Debug.Log($"Weapon {weapon.weaponData.weaponName} already reserved!");
                 return true;
