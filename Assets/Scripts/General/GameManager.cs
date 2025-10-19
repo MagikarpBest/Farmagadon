@@ -7,14 +7,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LevelDatabase levelDatabase;        // Assign the SO in inspector
+    [SerializeField] private LevelDatabase levelDatabase;       // Assign the SO in inspector
     [SerializeField] private LevelManager levelManager;         // Level Manager
     [SerializeField] private WeaponInventory weaponInventory;   // Weapon Inventory
     [SerializeField] private AmmoInventory ammoInventory;       // Ammo Inventory
     [SerializeField] private UIManager UIManager;               // Control UI
-    [SerializeField] private SceneController sceneController;
+    [SerializeField] private SceneController sceneController;   // Change scenes
     [SerializeField] private WaveManager waveManager;           // Manage enemy wave
     [SerializeField] private FenceHealth fenceHealth;           // Reference to fence
+    [SerializeField] private GameStateManager gameStateManager; 
 
 
     public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
@@ -33,7 +34,13 @@ public class GameManager : MonoBehaviour
         {
             fenceHealth.OnFenceDestroy += HandleGameOver;
         }
+
+        if (UIManager!= null)
+        {
+            UIManager.OnVictoryCompleted += OnVictoryUICompleted;
+        }
     }
+    
 
     // ----------------------
     // EVENT SUBSCRIPTION
@@ -48,6 +55,11 @@ public class GameManager : MonoBehaviour
         if (fenceHealth != null)
         {
             fenceHealth.OnFenceDestroy -= HandleGameOver;
+        }
+
+        if (UIManager != null)
+        {
+            UIManager.OnVictoryCompleted -= OnVictoryUICompleted;
         }
     }
 
@@ -148,9 +160,13 @@ public class GameManager : MonoBehaviour
         // 3 Show Victory UI
         UIManager.Show(UIScreen.Victory);
         // Load next scene
-        sceneController?.LoadScene("CombatScene");
+        //sceneController?.LoadScene("CombatScene");
+    }
 
-        Debug.Log($"Progress saved. Next level: {SaveData.currentLevel}, Next phase: {SaveData.currentPhase}");
+    public void OnVictoryUICompleted()
+    {
+        Debug.Log($"Progress saved. Next level: {SaveData.currentLevel}, Next phase: {gameStateManager.CurrentPhase}");
+        sceneController.LoadScene(GetNextSceneName());
     }
 
     /// <summary>
@@ -163,8 +179,29 @@ public class GameManager : MonoBehaviour
         UIManager.Show(UIScreen.GameOver);
         Debug.Log("Game Over!");
     }
-
     
+    private string GetNextSceneName()
+    {
+        switch (gameStateManager.CurrentPhase)
+        {
+            case GamePhase.Farm:
+                gameStateManager.SetGamePhase(GamePhase.Loadout);
+                return "CombatScene";
+
+            case GamePhase.Loadout:
+                gameStateManager.SetGamePhase(GamePhase.Combat);
+                return "CombatScene";
+
+            case GamePhase.Combat:
+                gameStateManager.SetGamePhase(GamePhase.Farm);
+                return "CombatScene";
+
+            default:
+                return "FarmScene";
+        }
+    }
+
+
 
     // ----------------------
     // SAVE

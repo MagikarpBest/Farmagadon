@@ -18,6 +18,7 @@ public enum GameState
 public enum GamePhase
 {
     Farm,
+    Loadout,
     Combat
 }
 
@@ -36,6 +37,7 @@ public class GameStateManager : MonoBehaviour
             return;
         }
         CurrentState = newState;
+        Debug.Log($"Changed state to {CurrentState}");
         OnStateChanged?.Invoke(CurrentState);
     }
 
@@ -46,6 +48,7 @@ public class GameStateManager : MonoBehaviour
             return;
         }
         CurrentPhase = newPhase;
+        Debug.Log($"Changed phase to {CurrentPhase}");
         OnPhaseChanged?.Invoke(CurrentPhase);
     }
 }

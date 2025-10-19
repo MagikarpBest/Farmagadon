@@ -58,7 +58,7 @@ public class WaveManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("Level complete!");
+        Debug.Log("Level timer complete!");
     }
 
     private IEnumerator RunWaveEvent(WaveEvent waveEvent)

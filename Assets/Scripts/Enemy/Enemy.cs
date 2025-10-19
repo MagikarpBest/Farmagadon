@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             // Deal damage to fence based on enemy damage
             fence.TakeDamage(enemyData.damage);
-            Debug.Log($"{enemyData.enemyName} attacks fence for {enemyData.damage}");
+            //Debug.Log($"{enemyData.enemyName} attacks fence for {enemyData.damage}");
 
             // Wait attack cd time of enemy before attacking again
             yield return new WaitForSeconds(enemyData.attackInterval);

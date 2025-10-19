@@ -18,7 +18,7 @@ public class FenceHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth = Mathf.Max(currentHealth - damage, 0);
-        Debug.Log($"Health: {currentHealth}");
+        //Debug.Log($"Health: {currentHealth}");
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
