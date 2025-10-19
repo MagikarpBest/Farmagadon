@@ -10,6 +10,7 @@ public class LevelRewardManager : MonoBehaviour
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private WeaponDatabase weaponDatabase;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private WeaponChoiceUI weaponChoiceUI;
 
     [Header("Rewards Data")]
     [SerializeField] private LevelRewardData rewardData; // Optional, can be empty if you randomize
@@ -74,6 +75,7 @@ public class LevelRewardManager : MonoBehaviour
             }
 
             // Show a weapon choice popup
+            weaponChoiceUI.Show(randomChoices, OnWeaponChosen);
         }
         else
         {

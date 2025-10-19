@@ -2,43 +2,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Current gameplay state
-/// </summary>
-public enum GameState
-{
-    Playing,
-    Paused,
-    Victory,
-    GameOver
-}
-
-/// <summary>
-/// Represents which gameplay phase the player is currently in (Farm or Combat)
-/// </summary>
-public enum GamePhase
-{
-    Farm,
-    Combat
-}
-
-/// <summary>
 /// Core manager that coordinates game state, saving, and scene transitions
 /// </summary>
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LevelDatabase levelDatabase;       // Assign the SO in inspector
+    [SerializeField] private LevelManager levelManager;       // Assign the SO in inspector
     [SerializeField] private WeaponInventory weaponInventory;   // Weapon Inventory
     [SerializeField] private AmmoInventory ammoInventory;       // Ammo Inventory
-    [SerializeField] private GameInput gameInput;               // Player input
-    [SerializeField] private UIManager uiManager;               // Control UI
+    [SerializeField] private UIManager UIManager;               // Control UI
+    [SerializeField] private SceneController sceneController;
     [SerializeField] private WaveManager waveManager;           // Manage enemy wave
-    [SerializeField] private Player player;                     // Reference to player
     [SerializeField] private FenceHealth fenceHealth;           // Reference to fence
 
     private GameState currentState = GameState.Playing;         // Current gameplay state (default = playing)
-    private SaveData saveData;                                  // Loaded save data (tracks current level + game phase)
-
+    public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
+    
     // ----------------------
     // EVENT SUBSCRIPTION
     // ----------------------
@@ -52,10 +31,6 @@ public class GameManager : MonoBehaviour
         if (fenceHealth != null)
         {
             fenceHealth.OnFenceDestroy += HandleGameOver;
-        }
-        if (gameInput != null)
-        {
-            gameInput.OnPause += TogglePause;
         }
     }
 
@@ -73,10 +48,6 @@ public class GameManager : MonoBehaviour
         {
             fenceHealth.OnFenceDestroy -= HandleGameOver;
         }
-        if (gameInput != null)
-        {
-            gameInput.OnPause -= TogglePause;
-        }
     }
 
     // ------------------
@@ -85,14 +56,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         // Load player progress from SaveSystem
-        saveData = SaveSystem.LoadGame();
+        SaveData = SaveSystem.LoadGame();
+
 
         // Auto-find missing references
-        uiManager??=FindFirstObjectByType<UIManager>();
+        UIManager ??=FindFirstObjectByType<UIManager>();
         waveManager ??= FindFirstObjectByType<WaveManager>();
-        player ??= FindFirstObjectByType<Player>();
         fenceHealth ??= FindFirstObjectByType<FenceHealth>();
-        gameInput ??= FindFirstObjectByType<GameInput>();
         weaponInventory ??= FindFirstObjectByType<WeaponInventory>();
         ammoInventory ??= FindFirstObjectByType<AmmoInventory>();
 
@@ -103,7 +73,7 @@ public class GameManager : MonoBehaviour
     // ----------------------
     private void CheckReferences()
     {
-        if (uiManager == null)
+        if (UIManager == null)
         {
             Debug.LogError(" GameManager: Missing reference to UIManager!");
         }
@@ -118,16 +88,6 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning(" GameManager: FenceHealth not found — GameOver won't trigger.");
         }
 
-        if (player == null)
-        {
-            Debug.LogWarning(" GameManager: Player reference missing!");
-        }
-
-        if (gameInput == null)
-        {
-            Debug.LogWarning(" GameManager: GameInput reference missing — pause won't work.");
-        }
-
         if (weaponInventory == null)
         {
             Debug.LogWarning(" Weapon inventory reference missing");
@@ -140,25 +100,29 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (levelManager != null)
+        {
+            levelManager.InitializeFromSave(SaveData);
+        }
+
         if (weaponInventory != null)
         {
-            weaponInventory.InitializeFromSave(saveData);
+            weaponInventory.InitializeFromSave(SaveData);
         }
 
         if (ammoInventory != null)
         {
-            ammoInventory.InitializeFromSave(saveData);
+            ammoInventory.InitializeFromSave(SaveData);
         }
-
         // Initialize the current level from the database
         if (waveManager != null && levelDatabase != null) 
         {
-            LevelData currentLevelData = levelDatabase.GetLevelData(saveData.currentLevel);
+            LevelData currentLevelData = levelDatabase.GetLevelData(SaveData.currentLevel);
             waveManager.SetLevel(currentLevelData);
         }
         // Start game
         Time.timeScale = 1f;
-        uiManager.Show(UIScreen.HUD);
+        UIManager.Show(UIScreen.HUD);
     }
 
     
@@ -172,40 +136,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void HandleVictory()
     {
-        if (currentState == GameState.Victory || currentState == GameState.GameOver)
-        {
-            return;
-        }
+        // Give rewards
+        levelManager.CompleteLevel(); 
 
-        // Change state to Victory
-        currentState = GameState.Victory;
-
-        // Pause gameplay
-        Time.timeScale = 0f;
-        uiManager.Show(UIScreen.Victory);
-
-        saveData.currentLevel++;
-        Debug.Log("Victory! All enemies defeated.");
-
-        if (saveData == null)
-        {
-            Debug.LogWarning("SaveData is null — creating new.");
-            saveData = new SaveData();
-        }
-
-        // Save progress logic
-        if (saveData.currentPhase == GamePhase.Combat)
-        {
-            saveData.currentPhase = GamePhase.Farm;
-        }
-        else
-        {
-            saveData.currentPhase = GamePhase.Combat;
-        }
-
-        // Save progress 
+        // Save progress
         saveAll();
-        Debug.Log($"Progress saved. Next level: {saveData.currentLevel}, Next phase: {saveData.currentPhase}");
+
+        // Load next scene
+        sceneController?.LoadNextLevel(SaveData.currentLevel, SaveData.currentPhase);
+
+        Debug.Log($"Progress saved. Next level: {SaveData.currentLevel}, Next phase: {SaveData.currentPhase}");
     }
 
     /// <summary>
@@ -223,120 +163,33 @@ public class GameManager : MonoBehaviour
 
         // Pause gameplay
         Time.timeScale = 0f;
-        uiManager.Show(UIScreen.GameOver);
+        UIManager.Show(UIScreen.GameOver);
         Debug.Log("Game Over!");
     }
 
-    // ----------------------
-    // PAUSE SYSTEM
-    // ----------------------
-    /// <summary>
-    /// Toggles between pause and resume when the player presses pause input
-    /// </summary>
-    private void TogglePause()
-    {
-        if (currentState == GameState.Paused)
-        {
-            ResumeGame();
-        }
-        else if (currentState == GameState.Playing)
-        {
-            PauseGame();
-        }
-    }
-
-    /// <summary>
-    /// Freezes time and shows the pause menu.
-    /// </summary>
-    private void PauseGame()
-    {
-        currentState = GameState.Paused;
-        Time.timeScale = 0f;
-        uiManager.Show(UIScreen.Pause);
-        Debug.Log("Paused");
-    }
-
-    /// <summary>
-    /// Unfreezes time and shows the HUD.
-    /// </summary>
-    private void ResumeGame()
-    {
-        currentState = GameState.Playing;
-        Time.timeScale = 1f;
-        uiManager.Show(UIScreen.HUD);
-        Debug.Log("Unpaused");
-    }
+    
 
     // ----------------------
     // SAVE + LOAD
     // ----------------------
     private void saveAll()
     {
-        if (saveData == null)
+        if (SaveData == null)
         {
-            saveData = new SaveData();
+            SaveData = new SaveData();
         }
 
         if (weaponInventory != null)
         {
-            weaponInventory.SaveToSaveData(saveData);
+            weaponInventory.SaveToSaveData(SaveData);
         }
 
         if (ammoInventory != null) 
         {
-            ammoInventory.SaveToSaveData(saveData);
+            ammoInventory.SaveToSaveData(SaveData);
         }
-        SaveSystem.SaveGame(saveData);
+        SaveSystem.SaveGame(SaveData);
     }
 
-    // ----------------------
-    // SCENE CONTROL
-    // ----------------------
-
-    /// <summary>
-    /// Reloads the current scene
-    /// </summary>
-    public void RestartLevel()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    /// <summary>
-    /// Loads the next level or next phase (Farm > Combat or vice versa).
-    /// </summary>
-    public void LoadNextLevel()
-    {
-        if (saveData == null)
-        {
-            Debug.LogError("SaveData missing cannot load next level!");
-            return;
-        }
-
-        Time.timeScale = 1f;
-
-        // Decide scene name based on current phase
-        string nextScene;
-
-        if (saveData.currentPhase == GamePhase.Farm)
-        {
-            nextScene = $"Farm_{saveData.currentLevel}";
-        }
-        else
-        {
-            nextScene = $"Combat_{saveData.currentLevel}";
-        }
-
-        // Check if scene exists before trying to load
-        if (Application.CanStreamedLevelBeLoaded(nextScene))
-        {
-            Debug.Log($"Loading next scene{nextScene}");
-            SceneManager.LoadScene(nextScene);
-        }
-        else
-        {
-            Debug.LogWarning("Next level not found. Probably end game!");
-            uiManager.Show(UIScreen.Victory);
-        }
-    }
+    
 }
