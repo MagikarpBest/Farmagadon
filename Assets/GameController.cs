@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using Farm;
 public class GameController : MonoBehaviour
 {
-    [SerializeField] FarmUIController UIController;
-    [SerializeField] GridController gridController;
-    [SerializeField] AmmoInventory ammoInventory;
-    
+    [SerializeField] private GridController gridController;
+    [SerializeField] private AmmoInventory ammoInventory;
+
     public delegate void StartGame();
     public StartGame gameStart;
+    public delegate void CropFarmed();
+    public CropFarmed OnCropFarmed;
+    public delegate void SetRecommended(ENEMY_WEAKNESS[] placeholderParam);
+    public SetRecommended OnGetRecommended;
 
-    private int totalCorn = 0;
-    private int totalCarrot = 0;
-    private int totalPotato = 0;
+    
 
     private void Awake()
     {
@@ -26,26 +27,23 @@ public class GameController : MonoBehaviour
         if (cropNames == CROP_NAMES.Corn)
         {
             ammoInventory.AddAmmo(cornAmmo, dropAmount);
-            totalCorn = ammoInventory.GetAmmoCount(cornAmmo);
         }
         else if (cropNames == CROP_NAMES.Carrot)
         {
             ammoInventory.AddAmmo(carrotAmmo, dropAmount);
-            totalCarrot = ammoInventory.GetAmmoCount(carrotAmmo);
         }
         else if (cropNames == CROP_NAMES.Potato) 
         {
             ammoInventory.AddAmmo(potatoAmmo, dropAmount);
-            totalPotato = ammoInventory.GetAmmoCount(potatoAmmo);
         }
-        UIController.updateBulletCount(totalCorn, totalCarrot, totalPotato);
+        OnCropFarmed?.Invoke();
     }
     public void Start()
     {
-        cropFarmed(CROP_NAMES.Corn,0);
-        cropFarmed(CROP_NAMES.Carrot, 0);
-        cropFarmed(CROP_NAMES.Potato, 0);
         gameStart?.Invoke();
+        OnCropFarmed?.Invoke();
+        ENEMY_WEAKNESS[] testList = { ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice};
+        OnGetRecommended?.Invoke(testList);
     }
 
    
