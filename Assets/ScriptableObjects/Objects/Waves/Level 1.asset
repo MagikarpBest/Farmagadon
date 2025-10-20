@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee24ebf878ea4b4a9148ed36058ebf3, type: 3}
-  m_Name: EnemyNormalData
+  m_Script: {fileID: 11500000, guid: bd0833922945385488052b2d42f5e2c3, type: 3}
+  m_Name: Level 1
   m_EditorClassIdentifier: 
-  enemyName: Normal
-  maxHealth: 2
-  moveSpeed: 2
-  damage: 1
-  attackInterval: 1
+  totalDuration: 30
+  events:
+  - time: 0
+    wavePattern: {fileID: 11400000, guid: 838fb34a4e9397241891e339fdc39421, type: 2}

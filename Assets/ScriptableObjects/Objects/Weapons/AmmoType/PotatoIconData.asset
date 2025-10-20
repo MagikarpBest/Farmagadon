@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee24ebf878ea4b4a9148ed36058ebf3, type: 3}
-  m_Name: EnemyNormalData
+  m_Script: {fileID: 11500000, guid: 48e94293501e3a746962d69a935b91db, type: 3}
+  m_Name: PotatoIconData
   m_EditorClassIdentifier: 
-  enemyName: Normal
-  maxHealth: 2
-  moveSpeed: 2
-  damage: 1
-  attackInterval: 1
+  ammoName: Potato
+  icon: {fileID: 21300000, guid: 05397c80530cc2b4faca477d52d0e397, type: 3}

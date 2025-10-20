@@ -1,20 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using UnityEngine.InputSystem.Processors;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyData enemyData;
 
     public event Action<Enemy> OnDeath;
-    public event Action OnHit;
 
     private int currentHealth;
     private bool isAttackingFence = false;
-    private bool isDead = false;
     private Coroutine attackRoutine;
-
 
 
     private void Awake()
@@ -33,41 +29,24 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
-        OnHit?.Invoke();
         // Enemy take damage logic
-        if (isDead)
-        {
-            return;
-        }
-
         currentHealth -= damage;
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
         if (currentHealth <= 0)
         {
-            StartCoroutine(DieAfterDelay(0.1f));
+            Die();
         }
     }
 
-    private IEnumerator DieAfterDelay(float delay)
+    private void Die()
     {
-        if (isDead)
-        {
-            yield break;
-        }
-        isDead = true;
-
         Debug.Log(enemyData.enemyName + " died");
-
         // Stop attack if died
         if (attackRoutine != null)
         {
             StopCoroutine(attackRoutine);
         }
-
-        // Allow flash to show before actually destroying the object
-        yield return new WaitForSeconds(delay);
-
         OnDeath?.Invoke(this);
         Destroy(gameObject);
     }
@@ -95,7 +74,7 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             // Deal damage to fence based on enemy damage
             fence.TakeDamage(enemyData.damage);
-            //Debug.Log($"{enemyData.enemyName} attacks fence for {enemyData.damage}");
+            Debug.Log($"{enemyData.enemyName} attacks fence for {enemyData.damage}");
 
             // Wait attack cd time of enemy before attacking again
             yield return new WaitForSeconds(enemyData.attackInterval);

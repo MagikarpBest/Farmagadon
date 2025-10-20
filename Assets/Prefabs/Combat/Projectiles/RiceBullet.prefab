@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 8888737870056744563}
   - component: {fileID: 4625520886030960972}
   m_Layer: 3
-  m_Name: RiceBulletVisual
+  m_Name: RiceBulletVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8375275293410798388}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

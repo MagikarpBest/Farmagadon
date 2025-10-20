@@ -12,11 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee24ebf878ea4b4a9148ed36058ebf3, type: 3}
   m_Name: EnemyShieldData
   m_EditorClassIdentifier: 
-  enemyName: Shield
+  enemyName: Normal
   maxHealth: 20
   moveSpeed: 0
-  damage: 0
-  attackInterval: 0
-  useRandomSprite: 0
-  normalEnemySprite: []
-  defaultSprite: {fileID: 0}
+  damage: 1
+  attackInterval: 1
