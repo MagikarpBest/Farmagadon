@@ -8,12 +8,17 @@ public class PlayerFarmInput : MonoBehaviour
     [SerializeField] BoxCollider2D cropRadius;
     PlayerInput playerInput;
     private List<GameObject> plants = new List<GameObject>();
+
+    public delegate void FarmInputPerformed(bool farming);
+    public FarmInputPerformed OnFarmInput;
     private void Awake()
     {
         playerInput = new PlayerInput();
         playerInput.Player.Enable();
         playerInput.Player.Shoot.performed += Shoot_performed;
     }
+
+    
 
     private void OnDisable()
     {
@@ -26,6 +31,7 @@ public class PlayerFarmInput : MonoBehaviour
 
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        OnFarmInput?.Invoke(true);
         for (int i = plants.Count - 1; i >= 0; --i)
         {
             plants[i].GetComponent<plants>().destroySelf();
