@@ -9547,9 +9547,9 @@ MonoBehaviour:
   - {fileID: 2062896211}
   - {fileID: 1512309396}
   weaponNames:
-  - {fileID: 1872978586}
-  - {fileID: 971377254}
-  - {fileID: 734174394}
+  - {fileID: 2069031993}
+  - {fileID: 101801222}
+  - {fileID: 1701057821}
   weaponDatabase: {fileID: 11400000, guid: 27016c74377475649a0b1502fcf7906f, type: 2}
 --- !u!1 &1360378199
 GameObject:
