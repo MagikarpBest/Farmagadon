@@ -17,3 +17,6 @@ MonoBehaviour:
   moveSpeed: 2
   damage: 1
   attackInterval: 1
+  useRandomSprite: 0
+  normalEnemySprite: []
+  defaultSprite: {fileID: 0}

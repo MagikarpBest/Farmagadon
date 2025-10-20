@@ -27,14 +27,25 @@ public class WeaponUI : MonoBehaviour
             return;
         }
 
-        int currentIndex = weaponInventory.GetCurrentWeaponIndex();
+        // Get all non-empty weapon slots
+        var equippedWeapons = weaponInventory.GetEquippedWeapon();
+
+        if (equippedWeapons.Count == 0)
+        {
+            leftWeaponImage.gameObject.SetActive(false);
+            centerWeaponImage.gameObject.SetActive(false);
+            rightWeaponImage.gameObject.SetActive(false);
+            return;
+        }
+        // Find current index within equipped list
+        int currentIndex =equippedWeapons.IndexOf(currentSlot);
 
         // Get previous weapon index and next
-        int previousIndex = (currentIndex - 1 + weaponInventory.UnlockedSlotCount) % weaponInventory.UnlockedSlotCount;
-        int nextIndex = (currentIndex + 1) % weaponInventory.UnlockedSlotCount;
+        int previousIndex = (currentIndex - 1 + equippedWeapons.Count) % equippedWeapons.Count;
+        int nextIndex = (currentIndex + 1) % equippedWeapons.Count;
 
-        WeaponSlot previousWeapon = weaponInventory.GetWeaponSlot(previousIndex);
-        WeaponSlot nextWeapon = weaponInventory.GetWeaponSlot(nextIndex);
+        WeaponSlot previousWeapon = equippedWeapons[previousIndex];
+        WeaponSlot nextWeapon = equippedWeapons[nextIndex];
 
         // Assign sprites
         leftWeaponImage.sprite = previousWeapon?.weaponData?.weaponSprite;

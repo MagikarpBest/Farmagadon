@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Crops.meta
 guid: 5dd1cb70ec491cd48b73a7566469b823
+========
+guid: 68e37314a6a976440ae611498b81e959
+>>>>>>>> 21/10merge:Assets/Resources.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
