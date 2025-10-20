@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee24ebf878ea4b4a9148ed36058ebf3, type: 3}
   m_Name: EnemyTankData
   m_EditorClassIdentifier: 
-  enemyName: Normal
-  maxHealth: 5
-  moveSpeed: 2
+  enemyName: Tank
+  maxHealth: 10
+  moveSpeed: 1
   damage: 1
   attackInterval: 1
