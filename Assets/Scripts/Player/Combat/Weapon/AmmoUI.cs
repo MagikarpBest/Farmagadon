@@ -6,7 +6,7 @@ using TMPro;
 public class AmmoUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private AmmoInventory ammoInventory;
+    [SerializeField] private AmmoInventory ammoInventory; 
     [SerializeField] private WeaponInventory weaponInventory;
 
     [Header("UI Elements (match by slot index)")]
@@ -24,7 +24,7 @@ public class AmmoUI : MonoBehaviour
 
     private void Start()
     {
-        UpdateUI();
+        Invoke(nameof(UpdateUI), 0.1f);
     }
 
     /// <summary>

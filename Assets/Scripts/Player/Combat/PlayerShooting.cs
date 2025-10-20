@@ -91,7 +91,7 @@ public class PlayerShooting : MonoBehaviour
         GameObject bulletGameObject = Instantiate(weapon.bulletPrefab, firePoint.position, firePoint.rotation);
 
         Bullet bullet = bulletGameObject.GetComponent<Bullet>();
-        bullet.Fire(firePoint.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius, weapon.lifeTime, weapon.pierceCount);
+        bullet.Fire(firePoint.up * weapon.bulletSpeed, weapon);
     }
 
     private void ShotgunShoot(WeaponData weapon)
@@ -106,7 +106,7 @@ public class PlayerShooting : MonoBehaviour
 
             GameObject bulletGameObject = Instantiate(weapon.bulletPrefab, firePoint.position, spreadRot);
             Bullet bullet = bulletGameObject.GetComponent<Bullet>();
-            bullet.Fire(spreadRot * Vector2.up * weapon.bulletSpeed, weapon.damage, weapon.explosionRadius, weapon.lifeTime, weapon.pierceCount);
+            bullet.Fire(spreadRot * Vector2.up * weapon.bulletSpeed, weapon);
         }
     }
 }
