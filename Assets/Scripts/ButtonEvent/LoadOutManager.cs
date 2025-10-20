@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-/*using UnityEngine;
-=======
+
 using UnityEngine;
->>>>>>> Eunice2
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
@@ -78,14 +75,10 @@ public class LoadOutManager : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-    private IEnumerator RefreshLayout()
+
+    /*private IEnumerator RefreshLayout()
     {
         yield return null; // wait 1 frame
         LayoutRebuilder.ForceRebuildLayoutImmediate(loadoutPanel.GetComponent<RectTransform>());
-    }
+    }*/
 }
-*/
-=======
-}
->>>>>>> Eunice2
