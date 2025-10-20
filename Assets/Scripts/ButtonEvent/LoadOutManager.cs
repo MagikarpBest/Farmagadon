@@ -1,66 +1,82 @@
-<<<<<<< HEAD
 /*using UnityEngine;
-=======
-using UnityEngine;
->>>>>>> Eunice2
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class LoadOutManager : MonoBehaviour
 {
-    [SerializeField] private List<Button> loadoutSlots;
+    [SerializeField] private RectTransform loadoutPanel;
     [SerializeField] private GameObject loadoutSlotPrefab;
 
-    private int selectedIndex = 0;
-    private bool slotActive = false;
-    //list for slots
-    Dictionary<int, GameObject> slotItems = new Dictionary<int, GameObject>();
     private List<GameObject> currentLoadout = new List<GameObject>();
 
 
-    //private Color normalColor = Color.white;
-    //private Color selectedColor = Color.yellow;
+    private Color normalColor = Color.white;
+    private Color selectedColor = Color.yellow;
+
+    public void SelectSlot(Button slot)
+    {
+        // Deselect previous
+        if (selectedSlot != null)
+            SetSlotColor(selectedSlot, normalColor);
+
+        // Select new
+        selectedSlot = slot;
+        SetSlotColor(slot, selectedColor);
+        Debug.Log($"Selected slot: {slot.name}");
+    }
+
 
     public void AddToLoadout(string itemName)
     {
-        //debug
-        if (!slotActive)
+        if (selectedSlot == null)
         {
-            Debug.Log("No loadout slot selected");
+            Debug.Log("No loadout slot selected!");
             return;
         }
-
-        int index=selectedIndex;
 
         // Prevent double assignment
-        if (slotItems.ContainsKey(index))
+        if (slotToItem.ContainsKey(selectedSlot))
         {
-            Debug.Log("Slot already occupied");
+            Debug.Log("Slot already occupied!");
+            return;
+        }
+        
+        // limit number of loadout items (e.g., 4)
+        if (currentLoadout.Count >= 4)
+        {
+            Debug.Log("full");
             return;
         }
 
-        //// limit number of loadout items (e.g., 4)
-        //if (currentLoadout.Count >= 4)
-        //{
-        //    Debug.Log("full");
-        //    return;
-
-        Button targetSlot = loadoutSlots[index];
-        Transform slotTransform = targetSlot.transform;
+        GameObject buttonObj = EventSystem.current.currentSelectedGameObject;
+        if (buttonObj != null)
+        {
+            Button bagButton = buttonObj.GetComponent<Button>();
+            if (bagButton != null)
+            {
+                bagButton.interactable = false; // disable the inventory button
+            }
+        }
 
         // Create new slot button
-        //var slot = loadoutSlots;
-        GameObject icon = Instantiate(loadoutSlotPrefab, slotTransform);
+        GameObject slot = Instantiate(loadoutSlotPrefab, loadoutPanel);
+        Debug.Log($"Added {itemName} to {slot.transform.parent.name}");
+        //StartCoroutine(RefreshLayout());
+        //slot.transform.SetParent(loadoutPanel, false);
 
-        TextMeshProUGUI text = icon.GetComponentInChildren<TextMeshProUGUI>(true);
+
+        TextMeshProUGUI text = slot.GetComponentInChildren<TextMeshProUGUI>(true);
         text.text = itemName;
 
-        slotItems[index] = icon;
+        //Make sure prefab or its Button has Button component
+        Button slotButton = slot.GetComponentInChildren<Button>();
+        slotButton.onClick.AddListener(() => RemoveFromLoadout(slot, buttonObj));
 
-        currentLoadout.Add(icon);
+        currentLoadout.Add(slot);
         Debug.Log(currentLoadout.Count);
-        slotActive = false;
     }
 
     public void RemoveFromLoadout(GameObject slot, GameObject buttonObj)
@@ -78,7 +94,6 @@ public class LoadOutManager : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     private IEnumerator RefreshLayout()
     {
         yield return null; // wait 1 frame
@@ -86,6 +101,3 @@ public class LoadOutManager : MonoBehaviour
     }
 }
 */
-=======
-}
->>>>>>> Eunice2
