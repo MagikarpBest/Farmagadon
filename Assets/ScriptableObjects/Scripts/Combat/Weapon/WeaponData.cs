@@ -5,6 +5,7 @@ public class WeaponData : ScriptableObject
 {
     public string weaponID; 
     public string weaponName;
+    public string weaponDescription;
     public Sprite weaponSprite;
 
     [Header("Bullet Settings")]

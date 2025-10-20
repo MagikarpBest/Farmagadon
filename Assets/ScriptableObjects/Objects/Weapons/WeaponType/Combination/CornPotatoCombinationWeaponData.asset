@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponID: weapon_cornpotato
   weaponName: CornPotato
+  weaponDescription: Fires a spread of explosive corn-potato pellets that detonate
+    on impact, damaging all nearby enemies
   weaponSprite: {fileID: 21300000, guid: 139c073ad1b36784c90ce0758605d990, type: 3}
   bulletPrefab: {fileID: 6037540156501391096, guid: 0034eda3ffcf874448c9a5bef2a9c4c4, type: 3}
   ammoType: {fileID: 11400000, guid: ca16e71508f8a714d9a7de4ac000aef4, type: 2}

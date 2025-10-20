@@ -8,8 +8,11 @@ public class WeaponChoiceUI : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private GameObject panel;
-    [SerializeField] Button[] choiceButtons;
-    [SerializeField] TextMeshProUGUI[] labels;        // Display for weapon names
+    [SerializeField] private Button[] choiceButtons;
+    [SerializeField] private GameObject[] rewardCards;
+    [SerializeField] private Image[] rewardIcons;
+    [SerializeField] private TextMeshProUGUI[] labels;        // Display for weapon names
+    [SerializeField] private WeaponDatabase weaponDatabase;
 
     private Action<string> onWeaponChosen;
 
@@ -39,17 +42,24 @@ public class WeaponChoiceUI : MonoBehaviour
         panel.SetActive(true);
 
         // Setup button options
-        for (int i = 0; i < choiceButtons.Length; i++)
+        for (int i = 0; i < rewardCards.Length; i++)
         {
             if (i < weaponIDs.Count)
             {
                 string weaponID = weaponIDs[i];
-                choiceButtons[i].gameObject.SetActive(true);
+                var data = weaponDatabase.GetWeaponByID(weaponID);
+                rewardCards[i].SetActive(true);
 
                 // Update button label if available
                 if (labels != null && i < labels.Length && labels[i] != null)
                 {
-                    labels[i].text = weaponID;
+                    labels[i].text = data.weaponName;
+                }
+
+                // Set weapon icon from database
+                if (rewardIcons != null && i < rewardIcons.Length && data != null && data.weaponSprite)
+                {
+                    rewardIcons[i].sprite = data.weaponSprite;
                 }
 
                 // Reset previous listeners and add new one
@@ -58,7 +68,7 @@ public class WeaponChoiceUI : MonoBehaviour
             }
             else
             {
-                choiceButtons[i].gameObject.SetActive(false);
+                rewardCards[i].gameObject.SetActive(false);
             }
         }
     }
