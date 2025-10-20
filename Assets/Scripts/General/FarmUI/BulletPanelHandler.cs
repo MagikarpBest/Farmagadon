@@ -10,7 +10,7 @@ public class BulletPanelHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI potatoText;
 
 
-
+    /*
     private void OnEnable()
     {
         gameController.OnCropFarmed += updateAmmoList;
@@ -21,7 +21,7 @@ public class BulletPanelHandler : MonoBehaviour
     {
         gameController.OnCropFarmed -= updateAmmoList;
     }
-
+    
     private void updateAmmoList()
     {
         AmmoData carrotAmmo = ammoInv.StartAmmoTypes[0];
@@ -33,9 +33,10 @@ public class BulletPanelHandler : MonoBehaviour
         
 
     }
-
+   
     private void Start()
     {
         updateAmmoList();
     }
+     */
 }

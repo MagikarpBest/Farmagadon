@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     {
         
     }
+    /*
     public void cropFarmed(CROP_NAMES cropNames, int dropAmount)
     {
         AmmoData carrotAmmo = ammoInventory.StartAmmoTypes[0];
@@ -46,5 +47,5 @@ public class GameController : MonoBehaviour
         OnGetRecommended?.Invoke(testList);
     }
 
-   
+ */  
 }

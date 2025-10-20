@@ -40,12 +40,12 @@ namespace Farm
                     createPlant.GetComponent<plants>().DropAmount = getCrop.dropAmount;
                     createPlant.GetComponent<plants>().PlantName = getCrop.cropNames;
                     createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
-                    createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
+                    //createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
                     createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y/3, 0);
                 }
             }
         }
-
+            
         void event_Destroyed(Vector3 pos)
         {
 
@@ -60,7 +60,7 @@ namespace Farm
             createPlant.GetComponent<plants>().DropAmount = chooseCrop.dropAmount;
             createPlant.GetComponent<plants>().PlantName = chooseCrop.cropNames;
             createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
-            createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
+            //createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
             createPlant.transform.position = pos;
         }
 

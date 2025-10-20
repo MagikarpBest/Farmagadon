@@ -691,8 +691,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   gameInput: {fileID: 444733804}
-  minX: -4.2
-  maxX: 4.2
+  minX: -4.1
+  maxX: 4.1
 --- !u!114 &119839062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4505,7 +4505,7 @@ MonoBehaviour:
   weaponDatabase: {fileID: 11400000, guid: 27016c74377475649a0b1502fcf7906f, type: 2}
   ammoInventory: {fileID: 509612770}
   maxSlot: 4
-  unlockedSlots: 4
+  unlockedSlots: 1
   startingWeapon:
   - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
 --- !u!1 &643671473
@@ -7279,7 +7279,7 @@ MonoBehaviour:
   victoryUI: {fileID: 1707150030}
   gameOverUI: {fileID: 1188224608}
   pauseUI: {fileID: 23026588}
-  weaponChoiceUI: {fileID: 1359784224}
+  weaponChoiceUI: {fileID: 0}
 --- !u!1 &1097618874
 GameObject:
   m_ObjectHideFlags: 0
@@ -9762,10 +9762,7 @@ MonoBehaviour:
   - {fileID: 1695296756}
   - {fileID: 971424070}
   - {fileID: 665237519}
-  labels:
-  - {fileID: 1105550004}
-  - {fileID: 525049882}
-  - {fileID: 1141720680}
+  weaponNames: []
   weaponDatabase: {fileID: 11400000, guid: 27016c74377475649a0b1502fcf7906f, type: 2}
 --- !u!1 &1360378199
 GameObject:
