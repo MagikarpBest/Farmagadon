@@ -11,7 +11,7 @@ public class WeaponChoiceUI : MonoBehaviour
     [SerializeField] private Button[] choiceButtons;
     [SerializeField] private GameObject[] rewardCards;
     [SerializeField] private Image[] rewardIcons;
-    [SerializeField] private TextMeshProUGUI[] labels;        // Display for weapon names
+    [SerializeField] private TextMeshProUGUI[] weaponNames;        // Display for weapon names
     [SerializeField] private WeaponDatabase weaponDatabase;
 
     private Action<string> onWeaponChosen;
@@ -51,9 +51,9 @@ public class WeaponChoiceUI : MonoBehaviour
                 rewardCards[i].SetActive(true);
 
                 // Update button label if available
-                if (labels != null && i < labels.Length && labels[i] != null)
+                if (weaponNames != null && i < weaponNames.Length && weaponNames[i] != null)
                 {
-                    labels[i].text = data.weaponName;
+                    weaponNames[i].text = data.weaponName;
                 }
 
                 // Set weapon icon from database

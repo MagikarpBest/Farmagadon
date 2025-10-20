@@ -28,12 +28,13 @@ public class LevelManager : MonoBehaviour
                                                       ? GamePhase.Farm 
                                                       : GamePhase.Combat;
 
-        if (saveData.currentPhase == GamePhase.Combat)
+        if (saveData.currentPhase == GamePhase.Farm)
         {
             saveData.currentLevel++;
         }
 
         // Save runtime progress
         SaveSystem.SaveGame(saveData);
+        Debug.Log($"current level {saveData.currentLevel}");
     }
 }

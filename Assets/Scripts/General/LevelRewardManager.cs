@@ -36,7 +36,6 @@ public class LevelRewardManager : MonoBehaviour
         Debug.Assert(weaponInventory != null, $"{name}: Missing WeaponInventory reference!");
     }
 
-
     public void GetRewardForLevel(int level)
     {
         // Search the rewardData list and find the reward entry that matches the given level number
