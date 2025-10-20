@@ -17,11 +17,11 @@ MonoBehaviour:
     rewardWeaponIDs:
     - weapon_corn
     - weapon_carrot
-    - weapon_rice
+    - weapon_potato
     chooseOne: 1
   - levelNumber: 2
     rewardWeaponIDs:
-    - weapon_potato
+    - weapon_ricepotato
     chooseOne: 0
   - levelNumber: 3
     rewardWeaponIDs: []
