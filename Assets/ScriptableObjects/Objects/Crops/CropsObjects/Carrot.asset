@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: 
   cropPrefab: {fileID: 3122481257737259072, guid: f9f2d59f64206f848928158b139973a0, type: 3}
-  weaponData: {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
+  ammoData: {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
   cropName: 2
   cropWeightage: 70
   baseGrowChance: 0
