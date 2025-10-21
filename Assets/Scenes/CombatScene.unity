@@ -1288,6 +1288,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: UIManager
+      value: 
+      objectReference: {fileID: 7230259030125005739}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: fenceHealth
+      value: 
+      objectReference: {fileID: 1954484845}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: waveManager
+      value: 
+      objectReference: {fileID: 3235526272921209243}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 3790985073766807230}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: ammoInventory
+      value: 
+      objectReference: {fileID: 509612770}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: sceneController
+      value: 
+      objectReference: {fileID: 4830209285525369838}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: weaponInventory
+      value: 
+      objectReference: {fileID: 634675710}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: gameStateManager
+      value: 
+      objectReference: {fileID: 2799149751416996320}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: levelRewardManager
+      value: 
+      objectReference: {fileID: 5536410558682665588}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3882,7 +3918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5090578506888435212}
-  - component: {fileID: 7005121009570988159}
+  - component: {fileID: 5090578506888435213}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -9379,6 +9415,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 993819179667319251}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5090578506888435213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260221931414650514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0a63a32e749f394daa1b72b681ca964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateManager: {fileID: 2799149751416996320}
+  gameInput: {fileID: 3373378824887530278}
+  UIManager: {fileID: 7230259030125005739}
 --- !u!224 &5109288520562705226
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11986,18 +12037,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.023900002, y: 451.88}
   m_SizeDelta: {x: 1315.4299, y: 117.91}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7005121009570988159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1260221931414650514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cce4983e8f4ee84898dbfdbd8792021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7013822059761615519
 GameObject:
   m_ObjectHideFlags: 0
