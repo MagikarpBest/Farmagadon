@@ -51,13 +51,14 @@ public class AmmoInventory : MonoBehaviour
     // ----------------------
     /// <summary>
     /// Add ammo into the inventory (could be use for after harvest etc etc)
-    /// </summary>
+    /// </summary
     public void AddAmmo(AmmoData ammo, int amount)
     {
         if (ammo == null)
         {
             return;
         }
+        Debug.Log($"[AmmoInventory] Adding {amount}x {ammo.ammoName} ({ammo.GetInstanceID()})");
 
         // Check if the dictionary added the ammo in or not, if not create new list?(idk whats the terms) and add ammo
         if (ammoDict.ContainsKey(ammo))
@@ -123,6 +124,7 @@ public class AmmoInventory : MonoBehaviour
         saveData = data; // First, store the save data
         // Load saved ammo first
         LoadAmmoFromSave();
+
         // Give debug starting ammo if empty (for testing)
         if (ammoDict.Count == 0)
         {

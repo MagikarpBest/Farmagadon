@@ -22,17 +22,17 @@ public class WeaponInventory : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private WeaponDatabase weaponDatabase;
-    [SerializeField] private AmmoInventory ammoInventory;                    // Reference to player's ammo inventory
+    [SerializeField] private AmmoInventory ammoInventory;       // Reference to player's ammo inventory
 
     [Header("Slot Settings")]
-    [SerializeField] private int maxSlot = 4;               // Maximum number of weapon slots the player can have
-    [SerializeField] private int unlockedSlots = 1;          // How many weapon slots currently player have
-    [SerializeField] private WeaponData[] startingWeapon;   // Weapons player start with
+    [SerializeField] private int maxSlot = 4;                   // Maximum number of weapon slots the player can have
+    [SerializeField] private int unlockedSlots = 1;             // How many weapon slots currently player have
+    [SerializeField] private WeaponData[] startingWeapon;       // Weapons player start with
 
     private SaveData saveData;
-    private WeaponSlot[] weapons;                           // Assign weapon to slots, first assign = first slot
-    private List<WeaponSlot> weaponStorage = new();         // Reserve weapons not equipped
-    private int currentIndex = 0;                           // The index of current active weapon slot
+    private WeaponSlot[] weapons;                               // Assign weapon to slots, first assign = first slot
+    private List<WeaponSlot> weaponStorage = new();             // Reserve weapons not equipped
+    private int currentIndex = 0;                               // The index of current active weapon slot
 
     /// <summary>
     /// Event triggered whenever the currently equipped weapon changes.
