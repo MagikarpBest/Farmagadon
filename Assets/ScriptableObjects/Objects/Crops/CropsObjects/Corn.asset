@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Corn
   m_EditorClassIdentifier: 
   cropPrefab: {fileID: 3122481257737259072, guid: e77090680eab403498b99eb72a496d1b, type: 3}
-  weaponData: {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}
+  ammoData: {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}
   cropName: 0
   cropWeightage: 20
   baseGrowChance: 0
