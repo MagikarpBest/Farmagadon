@@ -12,9 +12,11 @@ public class LevelRewardManager : MonoBehaviour
     [SerializeField] private WeaponDatabase weaponDatabase;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private WeaponChoiceUI weaponChoiceUI;
+    [SerializeField] private AmmoInventory ammoInventory;      // To add ammo debug
 
     [Header("Rewards Data")]
     [SerializeField] private LevelRewardData rewardData;
+    [SerializeField] private int debugOnReceiveAmmoAmount = 50;
 
     public event Action OnRewardGiven;
 
@@ -32,8 +34,7 @@ public class LevelRewardManager : MonoBehaviour
         Debug.Assert(weaponDatabase != null, $"{name}: Missing WeaponDatabase reference!");
         Debug.Assert(uiManager != null, $"{name}: Missing UIManager reference!");
         Debug.Assert(rewardData != null, $"{name}: Missing LevelRewardData reference!");
-        Debug.Assert(weaponInventory != null, $"{name}: Missing WeaponInventory reference!");
-        Debug.Assert(weaponInventory != null, $"{name}: Missing WeaponInventory reference!");
+        Debug.Assert(ammoInventory != null, $"{name}: Missing Ammo reference!");
     }
 
     public void GetRewardForLevel(int level)
@@ -41,7 +42,7 @@ public class LevelRewardManager : MonoBehaviour
         // Search the rewardData list and find the reward entry that matches the given level number
         if (rewardData == null)
         {
-            Debug.LogError("RewardData is null — cannot give rewards!");
+            Debug.LogError("[Reward] RewardData is null — cannot give rewards!");
             return;
         }
 
@@ -49,14 +50,14 @@ public class LevelRewardManager : MonoBehaviour
         var reward = rewardData.rewards.Find(rewards => rewards.levelNumber == level);
         if (reward == null)
         {
-            Debug.LogWarning($"No reward set for this level{level}");
+            Debug.LogWarning($"[Reward] No reward set for this level{level}");
         }
 
         // Filter out already owned weapons
         var availableRewards = GetUnownedWeapons(reward.rewardWeaponIDs);
         if (availableRewards.Count == 0)
         {
-            Debug.Log($"Player already owned all rewards");
+            Debug.Log($"[Reward] Player already owned all rewards");
             return;
         }
 
@@ -82,15 +83,11 @@ public class LevelRewardManager : MonoBehaviour
         else
         {
             uiManager.Show(UIScreen.Victory);
+
             // Give all reward directly
             foreach (var id in availableRewards)
             {
-                WeaponData weapon = weaponDatabase.GetWeaponByID(id);
-                if (weapon != null)
-                {
-                    weaponInventory.AddWeapon(weapon);
-                    Debug.Log($"Granted weapon: {weapon.weaponName}");
-                }
+                GetWeaponReward(id);
             }
         }
     }
@@ -114,21 +111,36 @@ public class LevelRewardManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Handles actually giving the weapon and ammo reward.
+    /// Used by both auto and choice modes.
+    /// </summary>
+    private void GetWeaponReward(string weaponID)
+    {
+        WeaponData weapon = weaponDatabase.GetWeaponByID(weaponID);
+        if (weapon == null)
+        {
+            Debug.LogWarning("$[Reward] Invadlid weapon ID:{weapon");
+            return;
+        }
+
+        weaponInventory.AddWeapon(weapon);
+        Debug.Log($"[Reward] Granted weapon: {weapon.weaponName}");
+
+        // Debug test give ammo when receive weapon
+        // Set to 0 in final game   
+        if (weapon.ammoType != null)
+        {
+            Debug.Log($"[DEBUG] Giving {debugOnReceiveAmmoAmount}x Ammo for {weapon.ammoType.ammoName} ({weapon.weaponName})");
+            ammoInventory.AddAmmo(weapon.ammoType, debugOnReceiveAmmoAmount);
+        }
+    }
+
+    /// <summary>
     /// Called when player selects a weapon from the choice UI.
     /// </summary>
     private void OnWeaponChosen(string chosenID)
     {
-        WeaponData weapon = weaponDatabase.GetWeaponByID(chosenID);
-        if (weapon != null)
-        {
-            weaponInventory.AddWeapon(weapon);
-            Debug.Log($"Player chose reward: {weapon.weaponName}");
-
-            OnRewardGiven?.Invoke();
-        }
-        else
-        {
-            Debug.LogWarning($"Invalid weapon ID chosen: {chosenID}");
-        }
+        GetWeaponReward(chosenID);
+        OnRewardGiven?.Invoke();
     }
 }
