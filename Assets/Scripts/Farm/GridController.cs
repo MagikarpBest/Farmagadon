@@ -19,36 +19,49 @@ namespace Farm
         [SerializeField] Vector3Int playerStartPos;
         [SerializeField] CropsData[] cropData;
         [SerializeField] GameController gameController;
+        private List<GameObject> plants = new List<GameObject>();
         private float maxWeight = 100.0f;
-        private float growCooldown;
         public Grid Grid { get { return grid; } }
         public Tilemap TileMap { get { return tileMap; } }
         public Vector3Int PlayerStartPos { get { return playerStartPos; } }
         
         private void Awake()
         {
-           
+            gameController.gameStart += plantCrops;
+            gameController.gameEnd += destroyAllPlants; // when timer reaches zero
         }
-        void Start()
+
+        private void OnDisable()
         {
-            for (int y = tileMap.cellBounds.yMin; y<tileMap.cellBounds.yMax; ++y)
+            gameController.gameStart -= plantCrops;
+            gameController.gameEnd -= destroyAllPlants; 
+        }
+
+        private void plantCrops()
+        {
+            for (int y = tileMap.cellBounds.yMin; y < tileMap.cellBounds.yMax; ++y)
             {
-                for (int x = tileMap.cellBounds.xMin; x<tileMap.cellBounds.xMax; ++x)
+                for (int x = tileMap.cellBounds.xMin; x < tileMap.cellBounds.xMax; ++x)
                 {
                     CropsData getCrop = pickPlant();
                     GameObject createPlant = Instantiate(getCrop.cropPrefab);
+                    plants.Add(createPlant);
                     createPlant.GetComponent<plants>().DropAmount = getCrop.dropAmount;
                     createPlant.GetComponent<plants>().PlantName = getCrop.ammoData;
                     createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
                     createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
-                    createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y/3, 0);
+                    createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y / 3, 0);
+                    
                 }
             }
         }
             
         void event_Destroyed(Vector3 pos)
         {
-
+            if (gameController.StopGame) 
+            {
+                return; 
+            }
             StartCoroutine(createPlantHere(pos));
         }
 
@@ -57,11 +70,13 @@ namespace Farm
             CropsData chooseCrop = pickPlant();
             yield return new WaitForSeconds(chooseCrop.growRate);
             GameObject createPlant = Instantiate(chooseCrop.cropPrefab);
+            plants.Add(createPlant);
             createPlant.GetComponent<plants>().DropAmount = chooseCrop.dropAmount;
             createPlant.GetComponent<plants>().PlantName = chooseCrop.ammoData;
             createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
             createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
             createPlant.transform.position = pos;
+            
         }
 
         private CropsData pickPlant()
@@ -76,6 +91,14 @@ namespace Farm
             }
             return cropData[Random.Range(1, cropData.Length - 1)];
             
+        }
+
+        private void destroyAllPlants()
+        {
+            for (int i = plants.Count-1; i >= 0; i-- )
+            {
+                Destroy(plants[i]);
+            } 
         }
     }
 }
