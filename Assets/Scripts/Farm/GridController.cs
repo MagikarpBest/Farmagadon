@@ -27,13 +27,20 @@ namespace Farm
         
         private void Awake()
         {
-           
+            gameController.gameStart += plantCrops;
+
         }
-        void Start()
+
+        private void OnDisable()
         {
-            for (int y = tileMap.cellBounds.yMin; y<tileMap.cellBounds.yMax; ++y)
+            gameController.gameStart -= plantCrops;
+        }
+
+        private void plantCrops()
+        {
+            for (int y = tileMap.cellBounds.yMin; y < tileMap.cellBounds.yMax; ++y)
             {
-                for (int x = tileMap.cellBounds.xMin; x<tileMap.cellBounds.xMax; ++x)
+                for (int x = tileMap.cellBounds.xMin; x < tileMap.cellBounds.xMax; ++x)
                 {
                     CropsData getCrop = pickPlant();
                     GameObject createPlant = Instantiate(getCrop.cropPrefab);
@@ -41,7 +48,7 @@ namespace Farm
                     createPlant.GetComponent<plants>().PlantName = getCrop.ammoData;
                     createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
                     createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
-                    createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y/3, 0);
+                    createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y / 3, 0);
                 }
             }
         }

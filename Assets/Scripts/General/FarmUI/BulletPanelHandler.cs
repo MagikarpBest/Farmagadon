@@ -22,7 +22,7 @@ public class BulletPanelHandler : MonoBehaviour
         gameController.OnCropFarmed -= updateAmmoList;
     }
     
-    private void updateAmmoList(AmmoData cropName)
+    private void updateAmmoList()
     {
         AmmoInventory ammoInv = gameController.AmmoInventory;
         carrotText.text = "X " + ammoInv.GetAmmoCount(ammoDatabase.GetAmmoByID("ammo_carrot"));

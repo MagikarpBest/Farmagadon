@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 
     public delegate void StartGame();
     public StartGame gameStart;
-    public delegate void CropFarmed(AmmoData cropName);
+    public delegate void CropFarmed();
     public CropFarmed OnCropFarmed;
     public delegate void SetRecommended(ENEMY_WEAKNESS[] placeholderParam);
     public SetRecommended OnGetRecommended;
@@ -21,24 +21,23 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        saveData = SaveSystem.LoadGame();
+        saveData = SaveSystem.LoadGame(); // this one i just copy wat i saw from the game manager script
     }
     
     public void cropFarmed(AmmoData cropName, int dropAmount)
     {
-        print(cropName);
-        print(dropAmount);
-        ammoInventory.AddAmmo(cropName, dropAmount);
-        OnCropFarmed?.Invoke(cropName);
+        ammoInventory.AddAmmo(cropName, dropAmount); // add to ammo inv is here
+        OnCropFarmed?.Invoke(); // this one connects to BulletPanelHandler, just to update the UI
     }
+
     public void Start()
     {
-        gameStart?.Invoke();
-        ENEMY_WEAKNESS[] testList = { ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice};
-        OnGetRecommended?.Invoke(testList);
+        gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
+        //ENEMY_WEAKNESS[] testList = { ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice}; these 2 ignore for now. havent finished
+        //OnGetRecommended?.Invoke(testList);
     }
     
-    public void SavePlayerData()
+    public void SavePlayerData() // this one also copy from the gamemanager script
     {
         ammoInventory.SaveToSaveData(saveData);
         weaponInventory.SaveToSaveData(saveData);
