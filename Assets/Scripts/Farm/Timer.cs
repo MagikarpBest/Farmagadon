@@ -68,8 +68,9 @@ public class Timer : MonoBehaviour
     {
         if (currentTime <= 0.0f)
         {
-            //print("Im dead?");
             timerStarted = false;
+            gameController.StopGame = true; // stop game bool here
+            gameController.gameEnd?.Invoke();
         }
     }
     private void Update()

@@ -9,14 +9,18 @@ public class GameController : MonoBehaviour
     public AmmoInventory AmmoInventory { get { return ammoInventory; } }
     
     private SaveData saveData;
+    private bool stopGame = false; 
+    public bool StopGame { get { return stopGame; } set { stopGame = value; } }
 
     public delegate void StartGame();
     public StartGame gameStart;
+    public delegate void EndGame();
+    public EndGame gameEnd; // invoked from Timer.cs
     public delegate void CropFarmed();
-    public CropFarmed OnCropFarmed;
-    public delegate void SetRecommended(ENEMY_WEAKNESS[] placeholderParam);
+    public CropFarmed OnCropFarmed; // invoked from plants.cs -> GridController.cs
+    public delegate void SetRecommended(ENEMY_WEAKNESS[] placeholderParam); // ignore for now
     public SetRecommended OnGetRecommended;
-
+    
     
 
     private void Awake()
@@ -33,7 +37,7 @@ public class GameController : MonoBehaviour
     public void Start()
     {
         gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
-        //ENEMY_WEAKNESS[] testList = { ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice}; these 2 ignore for now. havent finished
+        //ENEMY_WEAKNESS[] testList = { ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice}; these 2 ignore for now. havent converted to SO yet
         //OnGetRecommended?.Invoke(testList);
     }
     
