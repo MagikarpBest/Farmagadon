@@ -9,13 +9,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LevelManager levelManager;         // Level Manager
-    [SerializeField] private WeaponInventory weaponInventory;   // Weapon Inventory
-    [SerializeField] private AmmoInventory ammoInventory;       // Ammo Inventory
-    [SerializeField] private UIManager UIManager;               // Control UI
-    [SerializeField] private SceneController sceneController;   // Change scenes
-    [SerializeField] private WaveManager waveManager;           // Manage enemy wave
-    [SerializeField] private FenceHealth fenceHealth;           // Reference to fence
+    [SerializeField] private LevelManager levelManager;             // Level Manager
+    [SerializeField] private WeaponInventory weaponInventory;       // Weapon Inventory
+    [SerializeField] private AmmoInventory ammoInventory;           // Ammo Inventory
+    [SerializeField] private UIManager UIManager;                   // Control UI
+    [SerializeField] private SceneController sceneController;       // Change scenes
+    [SerializeField] private WaveManager waveManager;               // Manage enemy wave
+    [SerializeField] private FenceHealth fenceHealth;               // Reference to fence
     [SerializeField] private GameStateManager gameStateManager;
     [SerializeField] private LevelRewardManager levelRewardManager;
     [SerializeField] private FarmController farmController;
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
 
         if (farmController != null)
         {
-            farmController.OnFarmEnd += OnFarmEnd;
+            farmController.gameEnd += OnFarmEnd;
         }
     }
 
@@ -232,6 +232,11 @@ public class GameManager : MonoBehaviour
         if (levelRewardManager != null)
         {
             levelRewardManager.OnRewardGiven -= OnVictoryUICompleted;
+        }
+
+        if (farmController != null)
+        {
+            farmController.gameEnd -= OnFarmEnd;
         }
     }
 

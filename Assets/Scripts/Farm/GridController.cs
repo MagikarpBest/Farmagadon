@@ -21,20 +21,21 @@ namespace Farm
         [SerializeField] FarmController gameController;
         private List<GameObject> plants = new List<GameObject>();
         private float maxWeight = 100.0f;
+
         public Grid Grid { get { return grid; } }
         public Tilemap TileMap { get { return tileMap; } }
         public Vector3Int PlayerStartPos { get { return playerStartPos; } }
-        
+
         private void Awake()
         {
-            gameController.OnFarmStart += plantCrops;
-            gameController.OnFarmEnd += destroyAllPlants; // when timer reaches zero
+            gameController.gameStart += plantCrops;
+            gameController.gameEnd += destroyAllPlants; // when timer reaches zero
         }
 
         private void OnDisable()
         {
-            gameController.OnFarmStart -= plantCrops;
-            gameController.OnFarmEnd -= destroyAllPlants; 
+            gameController.gameStart -= plantCrops;
+            gameController.gameEnd -= destroyAllPlants;
         }
 
         private void plantCrops()
@@ -51,16 +52,16 @@ namespace Farm
                     createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
                     createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
                     createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y / 3, 0);
-                    
+
                 }
             }
         }
-            
+
         void event_Destroyed(Vector3 pos)
         {
-            if (gameController.StopGame) 
+            if (gameController.StopGame)
             {
-                return; 
+                return;
             }
             StartCoroutine(createPlantHere(pos));
         }
@@ -76,7 +77,7 @@ namespace Farm
             createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
             createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
             createPlant.transform.position = pos;
-            
+
         }
 
         private CropsData pickPlant()
@@ -90,15 +91,15 @@ namespace Farm
                 }
             }
             return cropData[Random.Range(1, cropData.Length - 1)];
-            
+
         }
 
         private void destroyAllPlants()
         {
-            for (int i = plants.Count-1; i >= 0; i-- )
+            for (int i = plants.Count - 1; i >= 0; i--)
             {
                 Destroy(plants[i]);
-            } 
+            }
         }
     }
 }

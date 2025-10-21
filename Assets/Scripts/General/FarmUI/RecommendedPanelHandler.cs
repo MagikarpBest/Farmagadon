@@ -23,7 +23,7 @@ public class RecommendedPanelHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        if (gameController.OnFarmStart != null)
+        if (gameController.gameStart != null)
         {
             gameController.OnGetRecommended -= placeSprites;
         }

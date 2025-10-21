@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
@@ -29,20 +30,16 @@ public class Timer : MonoBehaviour
     {
         currentTime = maxDuration = dayTimeDuration;
         gameStartTime = Time.time;
-
-        
-        
     }
     private void OnEnable()
     {
-
-        farmController.OnFarmStart += startTime;
+        farmController.gameStart += startTime;
     }
     private void OnDisable()
     {
-        if (farmController.OnFarmStart != null)
+        if (farmController.gameStart != null)
         {
-            farmController.OnFarmStart -= startTime;
+            farmController.gameStart -= startTime;
         }   
     }
 
@@ -73,7 +70,7 @@ public class Timer : MonoBehaviour
         {
             timerStarted = false;
             farmController.StopGame = true; // stop game bool here
-            farmController.OnFarmEnd?.Invoke();
+            farmController.gameEnd?.Invoke();
             Debug.Log("Time delpleted");
         }
     }
