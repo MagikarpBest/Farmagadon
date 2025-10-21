@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] GameController gameController;
+    [SerializeField] FarmController farmController;
     public struct TimeData 
     {
         public float CurrentTime;
@@ -14,7 +14,6 @@ public class Timer : MonoBehaviour
             CurrentTime = currentTime;
             MaxDuration = maxDuration;
         }
-    
     }
 
     public delegate void TimeUpdateCallback(TimeData data);
@@ -30,16 +29,20 @@ public class Timer : MonoBehaviour
     {
         currentTime = maxDuration = dayTimeDuration;
         gameStartTime = Time.time;
-        
-        gameController.gameStart += startTime;
+
         
         
     }
+    private void OnEnable()
+    {
+
+        farmController.OnFarmStart += startTime;
+    }
     private void OnDisable()
     {
-        if (gameController.gameStart != null)
+        if (farmController.OnFarmStart != null)
         {
-            gameController.gameStart -= startTime;
+            farmController.OnFarmStart -= startTime;
         }   
     }
 
@@ -69,8 +72,9 @@ public class Timer : MonoBehaviour
         if (currentTime <= 0.0f)
         {
             timerStarted = false;
-            gameController.StopGame = true; // stop game bool here
-            gameController.gameEnd?.Invoke();
+            farmController.StopGame = true; // stop game bool here
+            farmController.OnFarmEnd?.Invoke();
+            Debug.Log("Time delpleted");
         }
     }
     private void Update()

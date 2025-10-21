@@ -18,7 +18,7 @@ namespace Farm
         [SerializeField] Tilemap tileMap;
         [SerializeField] Vector3Int playerStartPos;
         [SerializeField] CropsData[] cropData;
-        [SerializeField] GameController gameController;
+        [SerializeField] FarmController gameController;
         private List<GameObject> plants = new List<GameObject>();
         private float maxWeight = 100.0f;
         public Grid Grid { get { return grid; } }
@@ -27,14 +27,14 @@ namespace Farm
         
         private void Awake()
         {
-            gameController.gameStart += plantCrops;
-            gameController.gameEnd += destroyAllPlants; // when timer reaches zero
+            gameController.OnFarmStart += plantCrops;
+            gameController.OnFarmEnd += destroyAllPlants; // when timer reaches zero
         }
 
         private void OnDisable()
         {
-            gameController.gameStart -= plantCrops;
-            gameController.gameEnd -= destroyAllPlants; 
+            gameController.OnFarmStart -= plantCrops;
+            gameController.OnFarmEnd -= destroyAllPlants; 
         }
 
         private void plantCrops()

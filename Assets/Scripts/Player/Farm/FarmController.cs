@@ -1,31 +1,39 @@
 using UnityEngine;
-using System.Collections.Generic;
 using Farm;
-public class GameController : MonoBehaviour
+public class FarmController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GridController gridController;
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private AmmoInventory ammoInventory;
+    [SerializeField] private Timer farmTimer;
     public AmmoInventory AmmoInventory { get { return ammoInventory; } }
-    
+
     private SaveData saveData;
     private bool stopGame = false; 
     public bool StopGame { get { return stopGame; } set { stopGame = value; } }
 
     public delegate void StartGame();
-    public StartGame gameStart;
+    public StartGame OnFarmStart;
     public delegate void EndGame();
-    public EndGame gameEnd; // invoked from Timer.cs
+    public EndGame OnFarmEnd; // invoked from Timer.cs
     public delegate void CropFarmed();
     public CropFarmed OnCropFarmed; // invoked from plants.cs -> GridController.cs
     public delegate void SetRecommended(ENEMY_WEAKNESS[] placeholderParam); // ignore for now
     public SetRecommended OnGetRecommended;
-    
-    
 
-    private void Awake()
+
+    // ----------------------
+    // Initialization
+    // ----------------------
+    public void InitializeFromSave(SaveData data)
     {
-        saveData = SaveSystem.LoadGame(); // this one i just copy wat i saw from the game manager script
+        saveData = data;
+
+        ammoInventory?.InitializeFromSave(saveData);
+        weaponInventory?.InitializeFromSave(saveData);
+
+        Debug.Log("[FarmController] Initialized with SaveData.");
     }
     
     public void cropFarmed(AmmoData cropName, int dropAmount)
@@ -36,7 +44,7 @@ public class GameController : MonoBehaviour
 
     public void Start()
     {
-        gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
+        OnFarmStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
         //ENEMY_WEAKNESS[] testList = { ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice}; these 2 ignore for now. havent converted to SO yet
         //OnGetRecommended?.Invoke(testList);
     }

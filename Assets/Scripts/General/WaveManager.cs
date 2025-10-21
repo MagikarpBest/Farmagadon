@@ -6,6 +6,7 @@ public class WaveManager : MonoBehaviour
     // ScriptableObject that stores all wave events for this level
     [SerializeField] private Transform spawnPointA; 
     [SerializeField] private Transform spawnPointB;
+    [SerializeField] private LevelDatabase levelDatabase;
 
     private LevelData levelData;
     private float elapsedTime;
@@ -21,13 +22,22 @@ public class WaveManager : MonoBehaviour
     {
         levelData = data;
     }
-    public void BeginLevel()
+    public void BeginLevel(int levelIndex)
     {
+        if (levelDatabase == null)
+        {
+            Debug.LogError("WaveManager: LevelDatabase not set!");
+            return;
+        }
+
+        levelData = levelDatabase.GetLevelData(levelIndex);
+
         if (levelData == null)
         {
             Debug.LogError("WaveManager: LevelData not set before starting level!");
             return;
         }
+
         if (levelCoroutine != null)
         {
             StopCoroutine(levelCoroutine);

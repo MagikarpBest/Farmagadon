@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BulletPanelHandler : MonoBehaviour
 {
-    [SerializeField] private GameController gameController;
+    [SerializeField] private FarmController gameController;
     [SerializeField] private AmmoDatabase ammoDatabase;
     [SerializeField] private TextMeshProUGUI carrotText;
     [SerializeField] private TextMeshProUGUI cornText;

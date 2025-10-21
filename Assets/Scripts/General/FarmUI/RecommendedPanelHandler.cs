@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class RecommendedPanelHandler : MonoBehaviour
 {
-    [SerializeField] GameController gameController;
+    [SerializeField] FarmController gameController;
     [SerializeField] Image enemyImage1;
     [SerializeField] Image enemyImage2;
     [SerializeField] Image enemyImage3;
@@ -23,7 +23,7 @@ public class RecommendedPanelHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        if (gameController.gameStart != null)
+        if (gameController.OnFarmStart != null)
         {
             gameController.OnGetRecommended -= placeSprites;
         }

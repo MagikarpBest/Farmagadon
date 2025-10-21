@@ -39,14 +39,6 @@ public class AmmoInventory : MonoBehaviour
     private SaveData saveData;
 
     // ----------------------
-    // Initialization
-    // ----------------------
-    private void Start()
-    {
-        
-    }   
-
-    // ----------------------
     // Inventory Management
     // ----------------------
     /// <summary>
