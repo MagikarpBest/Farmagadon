@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 43128269}
   - component: {fileID: 43128271}
   - component: {fileID: 43128272}
+  - component: {fileID: 43128273}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -229,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridController: {fileID: 1980671683}
+  weaponInventory: {fileID: 43128273}
   ammoInventory: {fileID: 43128271}
 --- !u!4 &43128270
 Transform:
@@ -257,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0f87aa3517ffd48a13ee3e9b145d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoDatabase: {fileID: 11400000, guid: a587565bd46e56f44aef6e07189a2a3d, type: 2}
   startAmmoTypes:
   - {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
   - {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}
@@ -277,6 +280,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameController: {fileID: 43128269}
   dayTimeDuration: 60
+--- !u!114 &43128273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43128268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a61024661411eb34b9ad71baa3746bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDatabase: {fileID: 11400000, guid: 27016c74377475649a0b1502fcf7906f, type: 2}
+  ammoInventory: {fileID: 43128271}
+  maxSlot: 4
+  unlockedSlots: 1
+  startingWeapon: []
 --- !u!1 &71810740
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,7 +850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 43128269}
-  ammoInv: {fileID: 43128271}
+  ammoDatabase: {fileID: 11400000, guid: a587565bd46e56f44aef6e07189a2a3d, type: 2}
   carrotText: {fileID: 629392759}
   cornText: {fileID: 431937410}
   potatoText: {fileID: 71810742}

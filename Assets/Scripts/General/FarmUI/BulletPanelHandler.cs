@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class BulletPanelHandler : MonoBehaviour
 {
-    [SerializeField] GameController gameController;
-    [SerializeField] AmmoInventory ammoInv;
-    [SerializeField] TextMeshProUGUI carrotText;
-    [SerializeField] TextMeshProUGUI cornText;
-    [SerializeField] TextMeshProUGUI potatoText;
+    [SerializeField] private GameController gameController;
+    [SerializeField] private AmmoDatabase ammoDatabase;
+    [SerializeField] private TextMeshProUGUI carrotText;
+    [SerializeField] private TextMeshProUGUI cornText;
+    [SerializeField] private TextMeshProUGUI potatoText;
 
 
-    /*
+    
     private void OnEnable()
     {
         gameController.OnCropFarmed += updateAmmoList;
@@ -22,21 +22,21 @@ public class BulletPanelHandler : MonoBehaviour
         gameController.OnCropFarmed -= updateAmmoList;
     }
     
-    private void updateAmmoList()
+    private void updateAmmoList(AmmoData cropName)
     {
-        AmmoData carrotAmmo = ammoInv.StartAmmoTypes[0];
-        AmmoData cornAmmo = ammoInv.StartAmmoTypes[1];
-        AmmoData potatoAmmo = ammoInv.StartAmmoTypes[2];
-        carrotText.text = "X " + ammoInv.GetAmmoCount(carrotAmmo).ToString();
-        cornText.text = "X " + ammoInv.GetAmmoCount(cornAmmo).ToString();
-        potatoText.text = "X " + ammoInv.GetAmmoCount(potatoAmmo).ToString();
-        
+        AmmoInventory ammoInv = gameController.AmmoInventory;
+        carrotText.text = "X " + ammoInv.GetAmmoCount(ammoDatabase.GetAmmoByID("ammo_carrot"));
+        cornText.text = "X " + ammoInv.GetAmmoCount(ammoDatabase.GetAmmoByID("ammo_corn"));
+        potatoText.text = "X " + ammoInv.GetAmmoCount(ammoDatabase.GetAmmoByID("ammo_potato"));
 
     }
    
     private void Start()
     {
-        updateAmmoList();
+        AmmoInventory ammoInv = gameController.AmmoInventory;
+        carrotText.text = "X " + ammoInv.GetAmmoCount(ammoDatabase.GetAmmoByID("ammo_carrot"));
+        cornText.text = "X " + ammoInv.GetAmmoCount(ammoDatabase.GetAmmoByID("ammo_corn"));
+        potatoText.text = "X " + ammoInv.GetAmmoCount(ammoDatabase.GetAmmoByID("ammo_potato"));
     }
-     */
+     
 }
