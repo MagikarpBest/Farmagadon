@@ -24,7 +24,7 @@ public class SaveSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Load game function
+    /// If there is save file, load game, if not create a new save.
     /// </summary>
     public static SaveData LoadGame()
     {
@@ -46,7 +46,7 @@ public class SaveSystem : MonoBehaviour
         return new SaveData() 
         { 
             currentLevel = 1, 
-            currentPhase = GamePhase.Combat
+            currentPhase = GamePhase.Farm
         };
     }
 

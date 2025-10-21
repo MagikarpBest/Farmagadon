@@ -44,7 +44,7 @@ public class AmmoInventory : MonoBehaviour
     private void Start()
     {
         
-    }
+    }   
 
     // ----------------------
     // Inventory Management
@@ -58,7 +58,7 @@ public class AmmoInventory : MonoBehaviour
         {
             return;
         }
-        Debug.Log($"[AmmoInventory] Adding {amount}x {ammo.ammoName} ({ammo.GetInstanceID()})");
+        Debug.Log($"[AmmoInventory] Adding {amount}x {ammo.ammoName}");
 
         // Check if the dictionary added the ammo in or not, if not create new list?(idk whats the terms) and add ammo
         if (ammoDict.ContainsKey(ammo))

@@ -37,7 +37,7 @@ public class GameStateManager : MonoBehaviour
             return;
         }
         CurrentState = newState;
-        Debug.Log($"Changed state to {CurrentState}");
+        Debug.Log($"[GameState] Changed state to {CurrentState}");
         OnStateChanged?.Invoke(CurrentState);
     }
 
@@ -48,7 +48,7 @@ public class GameStateManager : MonoBehaviour
             return;
         }
         CurrentPhase = newPhase;
-        Debug.Log($"Changed phase to {CurrentPhase}");
+        Debug.Log($"[GameState] Changed phase to {CurrentPhase}");
         OnPhaseChanged?.Invoke(CurrentPhase);
     }
 }
