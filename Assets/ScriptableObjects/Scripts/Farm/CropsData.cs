@@ -11,7 +11,8 @@ public class CropsData : ScriptableObject
 {
     [Header("Crop Data")]
     [SerializeField] public GameObject cropPrefab;
-    public CROP_NAMES cropNames;
+    public AmmoData ammoData;
+    public CROP_NAMES cropName;
     public float cropWeightage = 1.0f;
     public float baseGrowChance;
     public int dropAmount;

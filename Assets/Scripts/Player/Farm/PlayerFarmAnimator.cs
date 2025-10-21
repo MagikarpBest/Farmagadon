@@ -19,7 +19,6 @@ public class PlayerFarmAnimator : MonoBehaviour
 
     public void farmBool()
     {
-        print("D");
         playerAnimator.SetBool("farming", false);
     }
 }
