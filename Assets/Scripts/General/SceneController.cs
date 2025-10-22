@@ -22,6 +22,7 @@ public class SceneController : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         Time.timeScale = 1f;
+        Debug.Log($"[SceneController] Loading next scene: {sceneName}");
         SceneManager.LoadScene(sceneName);
     }
 }

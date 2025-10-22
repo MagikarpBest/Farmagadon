@@ -207,9 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 43128270}
   - component: {fileID: 43128269}
-  - component: {fileID: 43128271}
   - component: {fileID: 43128272}
-  - component: {fileID: 43128273}
   m_Layer: 0
   m_Name: FarmController
   m_TagString: Untagged
@@ -230,8 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridController: {fileID: 1980671683}
-  weaponInventory: {fileID: 43128273}
-  ammoInventory: {fileID: 43128271}
+  weaponInventory: {fileID: 1257693881}
+  ammoInventory: {fileID: 399469383}
 --- !u!4 &43128270
 Transform:
   m_ObjectHideFlags: 0
@@ -247,21 +245,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &43128271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43128268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0f87aa3517ffd48a13ee3e9b145d78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoDatabase: {fileID: 11400000, guid: a587565bd46e56f44aef6e07189a2a3d, type: 2}
-  startAmmoTypes: []
-  debugStartingAmmo: 50
 --- !u!114 &43128272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,24 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   farmController: {fileID: 43128269}
-  dayTimeDuration: 5
---- !u!114 &43128273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43128268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a61024661411eb34b9ad71baa3746bf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponDatabase: {fileID: 11400000, guid: 27016c74377475649a0b1502fcf7906f, type: 2}
-  ammoInventory: {fileID: 43128271}
-  maxSlot: 4
-  unlockedSlots: 1
-  startingWeapon: []
+  dayTimeDuration: 3
 --- !u!1 &71810740
 GameObject:
   m_ObjectHideFlags: 0
@@ -5727,6 +5693,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2223375761742621204}
     m_Modifications:
+    - target: {fileID: 1872534726344032394, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
+      propertyPath: startAmmoTypes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872534726344032394, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
+      propertyPath: 'startAmmoTypes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
+    - target: {fileID: 1872534726344032394, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
+      propertyPath: 'startAmmoTypes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}
     - target: {fileID: 8009854303623058886, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

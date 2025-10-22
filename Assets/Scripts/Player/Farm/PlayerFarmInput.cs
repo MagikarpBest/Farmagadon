@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 public class PlayerFarmInput : MonoBehaviour
 {
     [SerializeField] BoxCollider2D cropRadius;
+
     PlayerInput playerInput;
     private List<GameObject> plants = new List<GameObject>();
 
@@ -17,8 +18,6 @@ public class PlayerFarmInput : MonoBehaviour
         playerInput.Player.Enable();
         playerInput.Player.Shoot.performed += Shoot_performed;
     }
-
-    
 
     private void OnDisable()
     {

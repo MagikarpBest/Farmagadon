@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 250cb8dbd9f840b47953152cc730d556
+guid: ed83bc885e12dec408e0228fb737a7ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6463046427550003920
-    second: bar outer frame 75x650 1_0
+      213: 1851638429888401142
+    second: fence 75_ 960x100_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bar outer frame 75x650 1_0
+      name: rice bullet_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 19
         y: 0
-        width: 75
-        height: 650
+        width: 26
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 18, y: 18, z: 18, w: 18}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0d2b9f0bb7a51b950800000000000000
-      internalID: 6463046427550003920
+      spriteID: 7465d3b976a7ad650800000000000000
+      internalID: 6258449217589433927
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5db1c943b176bdb49b05218929d2af7e
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bar outer frame 75x650 1_0: 6463046427550003920
+      rice bullet_0: 6258449217589433927
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
