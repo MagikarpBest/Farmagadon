@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameStateManager gameStateManager;
     [SerializeField] private LevelRewardManager levelRewardManager;
     [SerializeField] private FarmController farmController;
+    [SerializeField] private FarmDataBridge farmDataBridge;
 
     public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
 
@@ -94,11 +95,12 @@ public class GameManager : MonoBehaviour
     private void StartFarmPhase()
     {
         Debug.Log("[GameManager] Starting FARM phase.");
+        if (farmDataBridge != null)
+        {
+            farmDataBridge.Initialize(SaveData);
+        }
         UIManager?.Show(UIScreen.HUD);
 
-        // Initialize the current level from the database and start the game
-        waveManager?.BeginLevel(SaveData.currentLevel); 
-        Debug.Log($"spawning level");
     }
 
     private void StartLoadoutPhase()
@@ -157,7 +159,9 @@ public class GameManager : MonoBehaviour
 
     private void OnFarmEnd()
     {
+        farmDataBridge.SaveProgress();
         sceneController.LoadScene(GetNextSceneName());
+
     }
 
     private string GetNextSceneName()
