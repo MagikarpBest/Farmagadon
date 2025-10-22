@@ -16,5 +16,4 @@ public enum ENEMY_WEAKNESS
     Corn,
     Potato,
     Carrot,
-
 }

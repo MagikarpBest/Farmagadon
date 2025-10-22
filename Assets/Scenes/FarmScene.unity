@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   farmController: {fileID: 43128269}
-  dayTimeDuration: 15
+  dayTimeDuration: 5
 --- !u!114 &43128273
 MonoBehaviour:
   m_ObjectHideFlags: 0

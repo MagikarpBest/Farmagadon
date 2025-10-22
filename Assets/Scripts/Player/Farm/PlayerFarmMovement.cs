@@ -1,6 +1,3 @@
-using NUnit;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Farm
@@ -22,11 +19,11 @@ namespace Farm
             playerPos = gridController.PlayerStartPos;
             player.transform.position = gridController.TileMap.GetCellCenterWorld(playerPos);
             playerInput.Player.Enable();
-            playerInput.Player.Farm.performed += Farm_performed;
+            playerInput.Player.Farm.performed += OnFarmMovement;
             startTime = Time.time;
         }
 
-        private void Farm_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             if (movementDone) { return; }
             Vector2 inputVector = playerInput.Player.Farm.ReadValue<Vector2>().normalized;

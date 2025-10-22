@@ -81,5 +81,4 @@ public class Timer : MonoBehaviour
             decreaseTime();
         }
     }
-
 }
