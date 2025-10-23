@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Processors;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyData enemyData;
+    [SerializeField] private FlashEffect flashEffect;           // Go to flash effect to edit on hit flash setting
 
     public event Action<Enemy> OnDeath;
     public event Action OnHit;
@@ -40,7 +41,13 @@ public class Enemy : MonoBehaviour, IDamageable
             return;
         }
 
+        if (flashEffect == null)
+        {
+            Debug.LogWarning("Flash effect is null");
+        }
+
         currentHealth -= damage;
+        flashEffect.Flash();
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
         if (currentHealth <= 0)
