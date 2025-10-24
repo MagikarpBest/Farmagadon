@@ -3,6 +3,8 @@ using System;
 
 public class FenceHealth : MonoBehaviour
 {
+    [SerializeField] FlashEffect flashEffect;
+
     [SerializeField] private int maxHealth = 100;
 
     private int currentHealth;
