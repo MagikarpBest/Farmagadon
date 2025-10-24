@@ -237,7 +237,7 @@ public class GameManager : MonoBehaviour
 
         if (farmController != null)
         {
-            farmController.gameEnd += OnFarmEnd;
+            farmController.StopFarmCycle += OnFarmEnd;
         }
     }
 
@@ -265,7 +265,7 @@ public class GameManager : MonoBehaviour
 
         if (farmController != null)
         {
-            farmController.gameEnd -= OnFarmEnd;
+            farmController.StopFarmCycle -= OnFarmEnd;
         }
     }
 

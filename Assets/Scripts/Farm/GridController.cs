@@ -1,86 +1,114 @@
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Farm
 {
     public class GridController : MonoBehaviour
     {
+        [SerializeField] private static float maxWeight = 100.0f;
+        public struct plantData
+        {
+            private CropsData cropData;
+            private int cropDropAmount;
+            private float cropGrowChance;
+            private int cropGrowRate;
+            public plantData(CropsData data, int dropAmount, float growChance, int growRate)
+            {
+                cropData = data;
+                cropDropAmount = Mathf.Max(dropAmount, 1);
+                cropGrowChance = Mathf.Clamp(growChance, 1.0f, maxWeight);
+                cropGrowRate = Mathf.Max(growRate, 1);
+            }
+        };
         [SerializeField] Grid grid;
         [SerializeField] Tilemap tileMap;
         [SerializeField] Vector3Int playerStartPos;
         [SerializeField] CropsData[] cropData;
-        [SerializeField] FarmController gameController;
+        [SerializeField] FarmController farmController;
         private List<GameObject> plants = new List<GameObject>();
-        private float maxWeight = 100.0f;
+        private plantData[] levelPlantData;
 
         public Grid Grid { get { return grid; } }
         public Tilemap TileMap { get { return tileMap; } }
         public Vector3Int PlayerStartPos { get { return playerStartPos; } }
 
-        private void Awake()
+        private void OnEnable()
         {
-            gameController.gameStart += plantCrops;
-            gameController.gameEnd += destroyAllPlants; // when timer reaches zero
+            farmController.StartFarmCycle += PlantCrops;
+            farmController.StopFarmCycle += DestroyAllPlants; // when timer reaches zero
         }
 
         private void OnDisable()
         {
-            gameController.gameStart -= plantCrops;
-            gameController.gameEnd -= destroyAllPlants;
+            farmController.StartFarmCycle -= PlantCrops;
+            farmController.StopFarmCycle -= DestroyAllPlants;
         }
 
-        private void plantCrops()
+        private void StartGridController()
+        {
+         
+        }
+
+        private void PlantCrops()
         {
             for (int y = tileMap.cellBounds.yMin; y < tileMap.cellBounds.yMax; ++y)
             {
                 for (int x = tileMap.cellBounds.xMin; x < tileMap.cellBounds.xMax; ++x)
                 {
-                    CropsData getCrop = pickPlant();
+                    CropsData getCrop = PickPlant();
                     GameObject createPlant = Instantiate(getCrop.cropPrefab);
                     plants.Add(createPlant);
                     createPlant.GetComponent<plants>().DropAmount = getCrop.dropAmount;
                     createPlant.GetComponent<plants>().PlantName = getCrop.ammoData;
-                    createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
-                    createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
+                    createPlant.GetComponent<plants>().OnDestroyed += CropDestroyed;
+                    createPlant.GetComponent<plants>().OnFarmed += farmController.cropFarmed;
                     createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y / 3, 0);
-
                 }
             }
         }
 
-        void event_Destroyed(Vector3 pos)
+        private void CropDestroyed(Vector3 pos)
         {
-            if (gameController.StopGame)
+            if (farmController.StopGame)
             {
                 return;
             }
-            StartCoroutine(createPlantHere(pos));
+            StartCoroutine(CreatePlantHere(pos));
         }
 
-        IEnumerator createPlantHere(Vector3 pos)
+        private IEnumerator CreatePlantHere(Vector3 pos)
         {
-            CropsData chooseCrop = pickPlant();
+            CropsData chooseCrop = PickPlant();
             yield return new WaitForSeconds(chooseCrop.growRate);
             GameObject createPlant = Instantiate(chooseCrop.cropPrefab);
             plants.Add(createPlant);
             createPlant.GetComponent<plants>().DropAmount = chooseCrop.dropAmount;
             createPlant.GetComponent<plants>().PlantName = chooseCrop.ammoData;
-            createPlant.GetComponent<plants>().onDestroyed += event_Destroyed;
-            createPlant.GetComponent<plants>().onFarmed += gameController.cropFarmed;
+            createPlant.GetComponent<plants>().OnDestroyed += CropDestroyed;
+            createPlant.GetComponent<plants>().OnFarmed += farmController.cropFarmed;
             createPlant.transform.position = pos;
 
         }
 
-        private CropsData pickPlant()
+        /*
+        private plantData[] GetPlantData(DayCycleLevelData data)
+        {
+            plantData[] plantDataList = new plantData[data.cropsEntityList.Length];
+            for (int i = 0; i < data.cropsEntityList.Length; ++i)
+            {
+                CropsData cropData = data.cropsEntityList[i].cropData;
+                int cropDropAmount = data.cropsEntityList[i].cropDropAmount;
+                float cropGrowChance = data.cropsEntityList[i].cropGrowChance;
+                int cropGrowRate = data.cropsEntityList[i].cropGrowRate;
+                plantData newPlantData = new plantData(cropData, cropDropAmount, cropGrowChance, cropGrowRate);
+                plantDataList[i] = newPlantData;
+            }
+            return plantDataList;
+        } */
+
+        private CropsData PickPlant()
         {
             foreach (CropsData crop in cropData)
             {
@@ -94,7 +122,7 @@ namespace Farm
 
         }
 
-        private void destroyAllPlants()
+        private void DestroyAllPlants()
         {
             for (int i = plants.Count - 1; i >= 0; i--)
             {

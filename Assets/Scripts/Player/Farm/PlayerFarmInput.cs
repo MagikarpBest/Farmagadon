@@ -12,28 +12,30 @@ public class PlayerFarmInput : MonoBehaviour
 
     public delegate void FarmInputPerformed(bool farming);
     public FarmInputPerformed OnFarmInput;
+
     private void Awake()
     {
         playerInput = new PlayerInput();
         playerInput.Player.Enable();
-        playerInput.Player.Shoot.performed += Shoot_performed;
+        playerInput.Player.Shoot.performed += OnFarmPerformed;
     }
 
     private void OnDisable()
     {
         playerInput.Player.Disable();
     }
+
     private void OnDestroy()
     {
         playerInput.Player.Disable();
     }
 
-    private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void OnFarmPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnFarmInput?.Invoke(true);
         for (int i = plants.Count - 1; i >= 0; --i)
         {
-            plants[i].GetComponent<plants>().destroySelf();
+            plants[i].GetComponent<plants>().DestroySelf();
         }
         plants.Clear();
     }   

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48e94293501e3a746962d69a935b91db, type: 3}
-  m_Name: CornIconData
+  m_Script: {fileID: 11500000, guid: 0ea323dd5d41d354f81d1c3458136f1e, type: 3}
+  m_Name: TestPanel1
   m_EditorClassIdentifier: 
-  ammoID: ammo_corn
-  ammoName: Corn
-  icon: {fileID: 21300000, guid: cad45563336f06546af05c0f7099f393, type: 3}
-  cropIcon: {fileID: 21300000, guid: bf386a8e8c92bdb45a76731f61faed95, type: 3}
+  bulletPanel: {fileID: 4457058618060679294, guid: cb20af5c25b07144485621b87695fb48, type: 3}
+  ammoInvKey: ammo_carrot
+  weaponID: weapon_carrot
