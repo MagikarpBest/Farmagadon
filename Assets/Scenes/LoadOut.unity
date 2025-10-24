@@ -249,7 +249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -617.14294, y: -748}
+  m_AnchoredPosition: {x: 0, y: -439}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &86840353
@@ -757,18 +757,6 @@ MonoBehaviour:
           m_StringArgument: aaaaa
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1488935868}
-        m_TargetAssemblyTypeName: LoadOutManager, Assembly-CSharp
-        m_MethodName: AddToLoadout
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: test6
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &308021739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,7 +866,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: rice
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1392,7 +1380,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 6
+  m_text: test2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1567,18 +1555,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1488935868}
-        m_TargetAssemblyTypeName: LoadOutManager, Assembly-CSharp
-        m_MethodName: AddToLoadout
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Carrot
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &450979377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1688,7 +1664,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: test1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2224,7 +2200,7 @@ GameObject:
   - component: {fileID: 976979297}
   - component: {fileID: 976979296}
   m_Layer: 5
-  m_Name: WeaponText
+  m_Name: LoadoutText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2269,7 +2245,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Weapon
+  m_text: Loadout
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2359,7 +2335,7 @@ GameObject:
   - component: {fileID: 1053106025}
   - component: {fileID: 1053106024}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2622,18 +2598,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1488935868}
-        m_TargetAssemblyTypeName: LoadOutManager, Assembly-CSharp
-        m_MethodName: AddToLoadout
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Potato
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1073420305
@@ -2970,18 +2934,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1488935868}
-        m_TargetAssemblyTypeName: LoadOutManager, Assembly-CSharp
-        m_MethodName: AddToLoadout
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Corn
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1197413967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3128,18 +3080,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1488935868}
-        m_TargetAssemblyTypeName: LoadOutManager, Assembly-CSharp
-        m_MethodName: AddToLoadout
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: test5
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1213336817
@@ -3522,7 +3462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2
+  m_text: corn
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3655,6 +3595,13 @@ MonoBehaviour:
   - {fileID: 1285172652}
   - {fileID: 1881475855}
   - {fileID: 1762049360}
+  bagButtons:
+  - {fileID: 1974177614}
+  - {fileID: 1197413966}
+  - {fileID: 1073420304}
+  - {fileID: 450979376}
+  - {fileID: 1213336816}
+  - {fileID: 308021738}
   loadoutSlotPrefab: {fileID: 604357592078181102, guid: 4d16093b42bbc4841b62f93f305d298b, type: 3}
 --- !u!1 &1494183027
 GameObject:
@@ -4003,7 +3950,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: potato
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4260,7 +4207,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4
+  m_text: carrot
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4677,18 +4624,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1488935868}
-        m_TargetAssemblyTypeName: LoadOutManager, Assembly-CSharp
-        m_MethodName: AddToLoadout
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Rice
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1974177615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4788,5 +4723,5 @@ SceneRoots:
   - {fileID: 1601827930}
   - {fileID: 1488935867}
   - {fileID: 1223600727}
-  - {fileID: 1430272189}
   - {fileID: 1053106025}
+  - {fileID: 1430272189}
