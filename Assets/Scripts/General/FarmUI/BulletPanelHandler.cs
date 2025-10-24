@@ -49,7 +49,7 @@ public class BulletPanelHandler : MonoBehaviour
             
             Image bulletPanelPrefab = Instantiate(bulletPanelData.bulletPanel, this.transform);
             bulletPanels[i] = bulletPanelPrefab;
-            if (i>0)
+            if (i > 0) 
             {
                 bulletPanelPrefab.rectTransform.anchoredPosition = new Vector2(bulletPanelPrefab.rectTransform.anchoredPosition.x, bulletPanelPrefab.rectTransform.anchoredPosition.y + (yOffset * i));
             }

@@ -1590,7 +1590,7 @@ RectTransform:
   m_Father: {fileID: 1689687547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.8999996}
   m_SizeDelta: {x: -0.00042725, y: 16.912}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1741,6 +1741,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3404590894280522048, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
   m_PrefabInstance: {fileID: 1955230338}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1955230340 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+  m_PrefabInstance: {fileID: 1955230338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30b13f1eb034ae8439dceca1e6e2822e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1967877932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8009854303623058886, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
@@ -8135,7 +8146,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1955230340}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnVictoryUICompleted
         m_Mode: 1
@@ -9685,7 +9696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4983123522613157357
 MonoBehaviour:
   m_ObjectHideFlags: 0

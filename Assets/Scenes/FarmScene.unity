@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmController: {fileID: 43128269}
   slider: {fileID: 1376999756}
-  dayTimeDuration: 30
+  dayTimeDuration: 5
 --- !u!1 &249844771
 GameObject:
   m_ObjectHideFlags: 0
@@ -4279,7 +4279,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95b2f536f0335ef449337d16cdb9537d, type: 2}
   - {fileID: 11400000, guid: 7929126337943034abb6c1cd934887fb, type: 2}
   - {fileID: 11400000, guid: 369c5b88f7d41b44099a50cba425c109, type: 2}
-  farmController: {fileID: 0}
+  farmController: {fileID: 43128269}
 --- !u!1 &1992316744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6454645588647710531, guid: 5eb93ed005ab86d4e86fee34d0a1c915, type: 3}
