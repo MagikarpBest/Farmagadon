@@ -15,3 +15,4 @@ MonoBehaviour:
   ammoID: ammo_carrot
   ammoName: Carrot
   icon: {fileID: 21300000, guid: c177996f4d66fde4a8d757486f675271, type: 3}
+  cropIcon: {fileID: 21300000, guid: a4af4dba66a16634882793b3c8fed0ce, type: 3}

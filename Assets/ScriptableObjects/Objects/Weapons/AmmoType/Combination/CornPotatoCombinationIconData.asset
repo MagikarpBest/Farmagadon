@@ -15,3 +15,4 @@ MonoBehaviour:
   ammoID: ammo_cornpotato
   ammoName: CornPotato
   icon: {fileID: 21300000, guid: 139c073ad1b36784c90ce0758605d990, type: 3}
+  cropIcon: {fileID: 21300000, guid: bf386a8e8c92bdb45a76731f61faed95, type: 3}

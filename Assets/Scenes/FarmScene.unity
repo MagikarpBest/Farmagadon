@@ -129,9 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 43128270}
   - component: {fileID: 43128269}
-  - component: {fileID: 43128271}
   - component: {fileID: 43128272}
-  - component: {fileID: 43128273}
   m_Layer: 0
   m_Name: FarmController
   m_TagString: Untagged
@@ -152,8 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridController: {fileID: 1980671683}
-  weaponInventory: {fileID: 43128273}
-  ammoInventory: {fileID: 43128271}
+  weaponInventory: {fileID: 1257693881}
+  ammoInventory: {fileID: 399469383}
   dayCycleLevelManager: {fileID: 11400000, guid: 8df2d2002bface345847378b1955298d, type: 2}
   timer: {fileID: 43128272}
 --- !u!4 &43128270
@@ -171,21 +169,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &43128271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43128268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0f87aa3517ffd48a13ee3e9b145d78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoDatabase: {fileID: 11400000, guid: a587565bd46e56f44aef6e07189a2a3d, type: 2}
-  startAmmoTypes: []
-  debugStartingAmmo: 50
 --- !u!114 &43128272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,27 +184,6 @@ MonoBehaviour:
   farmController: {fileID: 43128269}
   slider: {fileID: 1376999756}
   dayTimeDuration: 30
---- !u!114 &43128273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43128268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a61024661411eb34b9ad71baa3746bf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponDatabase: {fileID: 11400000, guid: 27016c74377475649a0b1502fcf7906f, type: 2}
-  ammoInventory: {fileID: 43128271}
-  maxSlot: 4
-  unlockedSlots: 1
-  startingWeapon:
-  - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
-  - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
-  - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
-  - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
 --- !u!1 &249844771
 GameObject:
   m_ObjectHideFlags: 0
@@ -4317,7 +4279,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95b2f536f0335ef449337d16cdb9537d, type: 2}
   - {fileID: 11400000, guid: 7929126337943034abb6c1cd934887fb, type: 2}
   - {fileID: 11400000, guid: 369c5b88f7d41b44099a50cba425c109, type: 2}
-  gameController: {fileID: 43128269}
+  farmController: {fileID: 0}
 --- !u!1 &1992316744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6454645588647710531, guid: 5eb93ed005ab86d4e86fee34d0a1c915, type: 3}
