@@ -10,7 +10,6 @@ public class LoadOutManager : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private List<Button> loadoutSlots;
     [SerializeField] private List<Button> bagButtons;
-    [SerializeField] private GameObject loadoutSlotPrefab;
 
     private int selectedIndex = 0;
     private int selectedBagIndex = 0;
@@ -192,20 +191,4 @@ public class LoadOutManager : MonoBehaviour
         else
             currentLoadout[index] = targetSlot.gameObject;
     }
-
-    //public void RemoveFromLoadout(GameObject slot, GameObject buttonObj)
-    //{
-    //    currentLoadout.Remove(slot);
-    //    Destroy(slot);
-
-    //    if (buttonObj != null)
-    //    {
-    //        Button bagButton = buttonObj.GetComponent<Button>();
-    //        if (bagButton != null)
-    //        {
-    //            bagButton.interactable = true;
-    //        }
-    //    }
-    //}
-
 }
