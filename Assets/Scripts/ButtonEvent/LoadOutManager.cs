@@ -159,7 +159,14 @@ public class LoadOutManager : MonoBehaviour
     private void HighlightBag(int index, bool highlight)
     {
         if (index < 0 || index >= bagButtons.Count) return;
+
+        Button button = bagButtons[index];
         HighlightButton(bagButtons[index], highlight);
+        DescriptionManager descManager = button.GetComponent<DescriptionManager>();
+        if (descManager != null)
+        {
+            descManager.ShowDescription();
+        }
     }
 
     public void AddToLoadout(string itemName)
