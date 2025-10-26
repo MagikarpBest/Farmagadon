@@ -15,3 +15,4 @@ MonoBehaviour:
   ammoID: ammo_rice
   ammoName: Rice
   icon: {fileID: 21300000, guid: 46946d55282c9d84da09e07ab62135d2, type: 3}
+  cropIcon: {fileID: 21300000, guid: dc8b808d134d23d43b5b427cb2a1bdb7, type: 3}

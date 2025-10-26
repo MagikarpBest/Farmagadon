@@ -8,20 +8,16 @@ public class plants : MonoBehaviour
 
     public AmmoData PlantName { set { plantName = value; } }
     public int DropAmount { get { return dropAmount; } set { dropAmount = Mathf.Max(value, 1); } }
+
     public delegate void Destroyed(Vector3 pos);
-    public Destroyed onDestroyed;
+    public Destroyed OnDestroyed;
     public delegate void Farmed(AmmoData plantName, int dropAmount);
-    public Farmed onFarmed;
-
-    void Awake()
-    {
-    }
-
+    public Farmed OnFarmed;
     
-    public void destroySelf()
+    public void DestroySelf()
     {
-        onDestroyed?.Invoke(gameObject.transform.position);
-        onFarmed?.Invoke(plantName, dropAmount);
+        OnDestroyed?.Invoke(gameObject.transform.position);
+        OnFarmed?.Invoke(plantName, dropAmount);
         Destroy(gameObject);
     }
 }

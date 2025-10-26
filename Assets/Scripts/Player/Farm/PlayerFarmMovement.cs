@@ -23,6 +23,12 @@ namespace Farm
             startTime = Time.time;
         }
 
+        private void OnDisable()
+        {
+            playerInput.Player.Farm.performed -= OnFarmMovement;
+            playerInput.Player.Disable();
+        }
+
         private void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             if (movementDone) { return; }

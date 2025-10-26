@@ -1,25 +1,47 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Farm;
+using System;
 public class FarmController : MonoBehaviour
 {
     [SerializeField] private GridController gridController;
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private AmmoInventory ammoInventory;
+    [SerializeField] private DayCycleLevelManager dayCycleLevelManager;
+    [SerializeField] private FarmTimer timer;
     public AmmoInventory AmmoInventory { get { return ammoInventory; } }
+    public WeaponInventory WeaponInventory { get { return weaponInventory; } }
 
     private bool stopGame = false;
-    public bool StopGame { get { return stopGame; } set { stopGame = value; } }
+    public bool StopGame { get { return stopGame; } }
 
-    public delegate void StartGame();
-    public StartGame gameStart;
-    public delegate void EndGame();
-    public EndGame gameEnd; // invoked from Timer.cs
-    public delegate void CropFarmed();
-    public CropFarmed OnCropFarmed; // invoked from plants.cs -> GridController.cs
-    public delegate void SetRecommended(ENEMY_WEAKNESS[] placeholderParam); // ignore for now
-    public SetRecommended OnGetRecommended;
 
+    public event Action StartFarmCycle;
+    public event Action StopFarmCycle;
+    public event Action OnCropFarmed;
+
+    //public delegate void StartGame();
+    //public StartGame gameStart;
+    //public delegate void EndGame();
+    //public EndGame gameEnd; // invoked from Timer.cs
+    //public delegate void CropFarmed();
+    //public CropFarmed OnCropFarmed; // invoked from plants.cs -> GridController.cs
+
+    public void OnEnable()
+    {
+        timer.OnTimerEnded += EndFarmCycle;
+    }
+
+    public void OnDisable()
+    {
+        timer.OnTimerEnded -= EndFarmCycle;
+    }
+
+    public void Start()
+    {
+        //gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
+        StartFarmCycle?.Invoke();
+    }
 
 
     public void cropFarmed(AmmoData cropName, int dropAmount)
@@ -28,11 +50,20 @@ public class FarmController : MonoBehaviour
         OnCropFarmed?.Invoke(); // this one connects to BulletPanelHandler, just to update the UI
     }
 
-    public void Start()
+    public void BeginFarmCycle(int level)
     {
-        gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
-        //ENEMY_WEAKNESS[] testList = { ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice, ENEMY_WEAKNESS.Rice}; these 2 ignore for now. havent converted to SO yet
-        //OnGetRecommended?.Invoke(testList);
+        DayCycleLevelData levelData = dayCycleLevelManager.GetLevelData(level);
+        if (levelData == null) 
+        {
+            Debug.LogWarning("THERES NO LEVEL BRUH");
+            return; 
+        }
+
+    }
+    public void EndFarmCycle()
+    {
+        stopGame = true;
+        StopFarmCycle?.Invoke();
     }
 
     public void InitializeFromSave(SaveData data)

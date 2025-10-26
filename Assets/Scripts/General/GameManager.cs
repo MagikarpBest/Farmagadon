@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         InitializeSystem();
         CheckReferences();
         StartPhase(gameStateManager.CurrentPhase);
+        Debug.Log($"current phase = {SaveData.currentPhase} ");
     }
 
     private void OnDisable()
@@ -65,6 +66,10 @@ public class GameManager : MonoBehaviour
             levelManager.InitializeFromSave(SaveData);
         }
 
+        if (gameStateManager != null && SaveData != null)
+        {
+            gameStateManager.SetGamePhase(SaveData.currentPhase);
+        }
         // Events
         SubscribeEvent();
 
@@ -100,13 +105,18 @@ public class GameManager : MonoBehaviour
             farmDataBridge.Initialize(SaveData);
         }
         UIManager?.Show(UIScreen.HUD);
+        Time.timeScale = 1.0f;
 
+        // Initialize the current level from the database and start the game
+        waveManager?.BeginLevel(SaveData.currentLevel);
+        Debug.Log($"spawning level");
     }
 
     private void StartLoadoutPhase()
     {
         Debug.Log("[GameManager] Starting LOADOUT phase.");
         UIManager?.Show(UIScreen.HUD);
+        Time.timeScale = 1.0f;
 
         // Initialize the current level from the database and start the game
         waveManager?.BeginLevel(SaveData.currentLevel);
@@ -142,6 +152,7 @@ public class GameManager : MonoBehaviour
     public void OnVictoryUICompleted()
     {
         SaveAll();
+        Debug.Log($"[TEST] CurrentPhase before load: {gameStateManager.CurrentPhase}");
         Debug.Log($"[GameManager] Progress saved. Next level: {SaveData.currentLevel + 1}, Next phase: {gameStateManager.CurrentPhase}");
         sceneController.LoadScene(GetNextSceneName());
     }
@@ -157,6 +168,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] Game Over!");
     }
 
+    /// <summary>
+    /// Called when farm end to switch scene.
+    /// </summary>
     private void OnFarmEnd()
     {
         farmDataBridge.SaveProgress();
@@ -164,23 +178,34 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Use to get next scene name and change scene/
+    /// </summary>
     private string GetNextSceneName()
     {
         switch (gameStateManager.CurrentPhase)
         {
             case GamePhase.Farm:
+                SaveData.currentPhase = GamePhase.Loadout;
                 gameStateManager.SetGamePhase(GamePhase.Loadout);
-                return "CombatScene";
+                SaveSystem.SaveGame(SaveData);
+                return "LoadOut";
 
             case GamePhase.Loadout:
+                SaveData.currentPhase = GamePhase.Combat;
                 gameStateManager.SetGamePhase(GamePhase.Combat);
+                SaveSystem.SaveGame(SaveData);
                 return "CombatScene";
 
             case GamePhase.Combat:
+                SaveData.currentPhase = GamePhase.Farm;
                 gameStateManager.SetGamePhase(GamePhase.Farm);
+                SaveSystem.SaveGame(SaveData);
                 return "FarmScene";
 
             default:
+                SaveData.currentPhase = GamePhase.Farm;
+                SaveSystem.SaveGame(SaveData);
                 return "FarmScene";
         }
     }
@@ -212,7 +237,7 @@ public class GameManager : MonoBehaviour
 
         if (farmController != null)
         {
-            farmController.gameEnd += OnFarmEnd;
+            farmController.StopFarmCycle += OnFarmEnd;
         }
     }
 
@@ -240,7 +265,7 @@ public class GameManager : MonoBehaviour
 
         if (farmController != null)
         {
-            farmController.gameEnd -= OnFarmEnd;
+            farmController.StopFarmCycle -= OnFarmEnd;
         }
     }
 

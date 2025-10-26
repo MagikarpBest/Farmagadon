@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: -1748277552686560176}
   - component: {fileID: 2108004681978173586}
   - component: {fileID: 6146285259408673388}
+  - component: {fileID: 2245974255077608872}
   m_Layer: 0
   m_Name: EnemyNormal
   m_TagString: Enemy
@@ -210,6 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 88817375db5aa894c8e05987d8ac96da, type: 2}
+  flashEffect: {fileID: 2245974255077608872}
 --- !u!114 &6146285259408673388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,12 +230,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6d7caccdf1061744a919863d1df8acd5, type: 3}
   - {fileID: 21300000, guid: 607cd3a227a21fd408d71a6634ec85c8, type: 3}
   - {fileID: 21300000, guid: 17db2699a0765cc478693995d4cc16ae, type: 3}
-  flashVisuals:
-  - {fileID: 21300000, guid: 2526b896f99d8fd4b99586ca313f39f5, type: 3}
-  - {fileID: 21300000, guid: 211b3c56ab952c14ba8525d86425360d, type: 3}
-  - {fileID: 21300000, guid: 7fe8c5185154ebf4fbcd0eaf952bf59e, type: 3}
-  - {fileID: 21300000, guid: 2f1a0912f1cd26344a2d912683013a87, type: 3}
-  flashDuration: 0.1
+--- !u!114 &2245974255077608872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940379239426215094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 69203f5753470b946a57347061736015, type: 2}
+  spriteRenderer: {fileID: 1104957016568486172}
+  duration: 0.1
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +256,7 @@ GameObject:
   - component: {fileID: 5853396687044234735}
   - component: {fileID: 1104957016568486172}
   m_Layer: 0
-  m_Name: EnemyVIsual
+  m_Name: EnemyVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

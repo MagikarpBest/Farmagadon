@@ -6,4 +6,5 @@ public class AmmoData : ScriptableObject
     public string ammoID;
     public string ammoName;
     public Sprite icon;
+    public Sprite cropIcon;
 }
