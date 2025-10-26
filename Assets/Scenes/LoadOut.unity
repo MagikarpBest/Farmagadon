@@ -3605,8 +3605,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcda7985a1810f4980ef1d2a01381fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadoutSlots: []
-  loadoutSlotPrefab: {fileID: 604357592078181102, guid: 4d16093b42bbc4841b62f93f305d298b, type: 3}
+  gameInput: {fileID: 8489242888806506498}
+  loadoutSlots:
+  - {fileID: 1742573073}
+  - {fileID: 1285172652}
+  - {fileID: 1881475855}
+  - {fileID: 1762049360}
+  bagButtons:
+  - {fileID: 1974177614}
+  - {fileID: 1197413966}
+  - {fileID: 1073420304}
+  - {fileID: 450979376}
+  - {fileID: 1213336816}
+  - {fileID: 308021738}
 --- !u!1 &1494183027
 GameObject:
   m_ObjectHideFlags: 0
