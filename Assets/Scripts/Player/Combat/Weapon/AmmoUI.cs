@@ -71,7 +71,7 @@ public class AmmoUI : MonoBehaviour
             else
             {
                 // No weapon equipped on that slot
-                ammoTexts[i].text = "Empty Slot";
+                ammoTexts[i].text = "N/A";
                 if (ammoIcons != null && i < ammoIcons.Length)
                 {
                     ammoIcons[i].enabled = false;

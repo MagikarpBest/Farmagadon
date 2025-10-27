@@ -158,49 +158,12 @@ public class WeaponInventory : MonoBehaviour
         OnWeaponChanged?.Invoke(weapons[currentIndex]);
     }
 
-    /// <summary>
-    /// Returns the weapon slot at the specified index.
-    /// Returns null if the index is out of range.
-    /// </summary>
-    public WeaponSlot GetWeaponSlot(int index)
-    {
-        if (index >= 0 && index < weapons.Length)
-        {
-            return weapons[index];
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Returns a list of all non-empty (equipped) weapon slots.
-    /// </summary>
-    public List<WeaponSlot> GetEquippedWeapon()
-    {
-        var equipped = new List<WeaponSlot>();
-        for (int i = 0; i < unlockedSlots; i++)
-        {
-            if (weapons[i] != null && weapons[i].weaponData != null)
-            {
-                equipped.Add(weapons[i]);
-            }
-        }
-
-        return equipped;
-    }
-
-    /// <summary>
-    /// Returns the number of unlocked slots.
-    /// </summary>
-    public int UnlockedSlotCount => unlockedSlots;
-
-    /// <summary>
-    /// Returns the index of the currently active weapon.
-    /// </summary>
-    public int GetCurrentWeaponIndex() => currentIndex;
+ 
 
     /// <summary>
     /// Check is the weapon requested for whatever usage already owned or not
     /// </summary>
+    /// 
     public bool IsWeaponOwned(string weaponID)
     {
         foreach (var slot in weapons)
@@ -323,4 +286,46 @@ public class WeaponInventory : MonoBehaviour
         }
         Debug.Log("Weapons loaded from SaveData.");
     }
+
+    // Getters
+    /// <summary>
+    /// Returns the weapon slot at the specified index.
+    /// Returns null if the index is out of range.
+    /// </summary>
+    public WeaponSlot GetWeaponSlot(int index)
+    {
+        if (index >= 0 && index < weapons.Length)
+        {
+            return weapons[index];
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Returns a list of all non-empty (equipped) weapon slots.
+    /// </summary>
+    public List<WeaponSlot> GetEquippedWeapon()
+    {
+        var equipped = new List<WeaponSlot>();
+        for (int i = 0; i < unlockedSlots; i++)
+        {
+            if (weapons[i] != null && weapons[i].weaponData != null)
+            {
+                equipped.Add(weapons[i]);
+            }
+        }
+
+        return equipped;
+    }
+
+    /// <summary>
+    /// Returns the number of unlocked slots.
+    /// </summary>
+    public int UnlockedSlotCount => maxSlot;
+
+    /// <summary>
+    /// Returns the index of the currently active weapon.
+    /// </summary>
+    public int GetCurrentWeaponIndex() => currentIndex;
+
 }

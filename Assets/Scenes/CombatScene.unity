@@ -6518,7 +6518,7 @@ GameObject:
   - component: {fileID: 2064473768}
   - component: {fileID: 2064473767}
   m_Layer: 5
-  m_Name: RightWeaponImage
+  m_Name: BottomWeaponImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6563,7 +6563,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cad45563336f06546af05c0f7099f393, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f7b99cf116d7828459e2c438b4125a89, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6968,6 +6968,8 @@ MonoBehaviour:
   leftWeaponImage: {fileID: 6164465546361593928}
   centerWeaponImage: {fileID: 9221724609687639479}
   rightWeaponImage: {fileID: 3763042436980120427}
+  bottomWeaponImage: {fileID: 2064473767}
+  emptySlotSprite: {fileID: 21300000, guid: f7b99cf116d7828459e2c438b4125a89, type: 3}
 --- !u!1 &78467742553616875
 GameObject:
   m_ObjectHideFlags: 0
@@ -13950,6 +13952,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6500819870613848104}
     m_Modifications:
+    - target: {fileID: 1185385921424498916, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
+      propertyPath: unlockedSlots
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185385921424498916, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
+      propertyPath: startingWeapon.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185385921424498916, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
+      propertyPath: 'startingWeapon.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
     - target: {fileID: 8009854303623058886, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
