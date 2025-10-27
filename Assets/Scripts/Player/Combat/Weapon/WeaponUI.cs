@@ -4,9 +4,7 @@ using UnityEngine.UI;
 public class WeaponUI : MonoBehaviour
 {
     [SerializeField] private WeaponInventory weaponInventory;
-    [SerializeField] private Image leftWeaponImage;
-    [SerializeField] private Image centerWeaponImage;
-    [SerializeField] private Image rightWeaponImage;
+    [SerializeField] private Image[] weaponImages;
 
     private void OnEnable()
     {
@@ -17,13 +15,16 @@ public class WeaponUI : MonoBehaviour
         weaponInventory.OnWeaponChanged -= UpdateUI;
     }
 
+    private void Start()
+    {
+        UpdateUI
+    }
+
     private void UpdateUI(WeaponSlot currentSlot)
     {
         if (weaponInventory == null || currentSlot == null)  
         {
-            leftWeaponImage.gameObject.SetActive(false);
-            centerWeaponImage.gameObject.SetActive(false);
-            rightWeaponImage.gameObject.SetActive(false);
+            Debug.LogWarning("Weapon UI Error");
             return;
         }
 
@@ -38,7 +39,7 @@ public class WeaponUI : MonoBehaviour
             return;
         }
         // Find current index within equipped list
-        int currentIndex =equippedWeapons.IndexOf(currentSlot);
+        int currentIndex = equippedWeapons.IndexOf(currentSlot);
 
         // Get previous weapon index and next
         int previousIndex = (currentIndex - 1 + equippedWeapons.Count) % equippedWeapons.Count;
@@ -51,6 +52,7 @@ public class WeaponUI : MonoBehaviour
         leftWeaponImage.sprite = previousWeapon?.weaponData?.weaponSprite;
         centerWeaponImage.sprite = currentSlot.weaponData?.weaponSprite;
         rightWeaponImage.sprite = nextWeapon?.weaponData?.weaponSprite;
+
 
         // Enable only the images that have a sprite
         leftWeaponImage.gameObject.SetActive(leftWeaponImage.sprite != null);

@@ -176,7 +176,7 @@ public class WeaponInventory : MonoBehaviour
     /// </summary>
     public List<WeaponSlot> GetEquippedWeapon()
     {
-        var equipped= new List<WeaponSlot>();
+        var equipped = new List<WeaponSlot>();
         for (int i = 0; i < unlockedSlots; i++)
         {
             if (weapons[i] != null && weapons[i].weaponData != null)
