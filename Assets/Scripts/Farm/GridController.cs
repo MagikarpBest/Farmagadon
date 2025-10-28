@@ -8,13 +8,13 @@ namespace Farm
     public class GridController : MonoBehaviour
     {
         [SerializeField] private static float maxWeight = 100.0f;
-        public struct plantData
+        private struct PlantData
         {
-            private CropsData cropData;
-            private int cropDropAmount;
-            private float cropGrowChance;
-            private int cropGrowRate;
-            public plantData(CropsData data, int dropAmount, float growChance, int growRate)
+            public CropsData cropData;
+            public int cropDropAmount;
+            public float cropGrowChance;
+            public int cropGrowRate;
+            public PlantData(CropsData data, int dropAmount, float growChance, int growRate)
             {
                 cropData = data;
                 cropDropAmount = Mathf.Max(dropAmount, 1);
@@ -28,7 +28,7 @@ namespace Farm
         [SerializeField] CropsData[] cropData;
         [SerializeField] FarmController farmController;
         private List<GameObject> plants = new List<GameObject>();
-        private plantData[] levelPlantData;
+        private PlantData[] levelPlantRoster;
 
         public Grid Grid { get { return grid; } }
         public Tilemap TileMap { get { return tileMap; } }
@@ -36,19 +36,30 @@ namespace Farm
 
         private void OnEnable()
         {
-            farmController.StartFarmCycle += PlantCrops;
+            //farmController.StartFarmCycle += PlantCrops;
             farmController.StopFarmCycle += DestroyAllPlants; // when timer reaches zero
+            farmController.StartGridPlanting += StartGridController;
         }
 
         private void OnDisable()
         {
-            farmController.StartFarmCycle -= PlantCrops;
-            farmController.StopFarmCycle -= DestroyAllPlants;
+            //farmController.StartFarmCycle -= PlantCrops;
+            farmController.StopFarmCycle -= DestroyAllPlants; 
+            farmController.StartGridPlanting -= StartGridController;
         }
 
-        private void StartGridController()
+        private void StartGridController(DayCycleLevelData data)
         {
-         
+            if (data == null) return;
+            levelPlantRoster = new PlantData[data.cropsEntityList.Length];
+            for (int i = 0; i < data.cropsEntityList.Length; ++i) 
+            {
+                CropEntityData entityData = data.cropsEntityList[i];
+                if (entityData == null) return;
+                PlantData newPlantData = new(entityData.cropData, entityData.cropDropAmount, entityData.cropGrowChance, entityData.cropGrowRate);
+                levelPlantRoster[i] = newPlantData;
+            }
+            PlantCrops();
         }
 
         private void PlantCrops()
@@ -57,56 +68,43 @@ namespace Farm
             {
                 for (int x = tileMap.cellBounds.xMin; x < tileMap.cellBounds.xMax; ++x)
                 {
-                    CropsData getCrop = PickPlant();
-                    GameObject createPlant = Instantiate(getCrop.cropPrefab);
-                    plants.Add(createPlant);
-                    createPlant.GetComponent<plants>().DropAmount = getCrop.dropAmount;
-                    createPlant.GetComponent<plants>().PlantName = getCrop.ammoData;
-                    createPlant.GetComponent<plants>().OnDestroyed += CropDestroyed;
-                    createPlant.GetComponent<plants>().OnFarmed += farmController.cropFarmed;
-                    createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(x, y)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y / 3, 0);
+                    PlantData getPlant = GetPlantData();
+                    InstantiateCrop(getPlant, x, y);
                 }
             }
         }
 
-        private void CropDestroyed(Vector3 pos)
+        private void CropDestroyed(int posX, int posY)
         {
             if (farmController.StopGame)
             {
                 return;
             }
-            StartCoroutine(CreatePlantHere(pos));
+            StartCoroutine(CreatePlantHere(posX, posY));
         }
 
-        private IEnumerator CreatePlantHere(Vector3 pos)
+        private IEnumerator CreatePlantHere(int posX, int posY)
         {
-            CropsData chooseCrop = PickPlant();
-            yield return new WaitForSeconds(chooseCrop.growRate);
-            GameObject createPlant = Instantiate(chooseCrop.cropPrefab);
-            plants.Add(createPlant);
-            createPlant.GetComponent<plants>().DropAmount = chooseCrop.dropAmount;
-            createPlant.GetComponent<plants>().PlantName = chooseCrop.ammoData;
-            createPlant.GetComponent<plants>().OnDestroyed += CropDestroyed;
-            createPlant.GetComponent<plants>().OnFarmed += farmController.cropFarmed;
-            createPlant.transform.position = pos;
+            
+            PlantData plantData = GetPlantData();
+            yield return new WaitForSeconds(plantData.cropGrowRate);
+            InstantiateCrop(plantData, posX, posY);
 
         }
 
-        /*
-        private plantData[] GetPlantData(DayCycleLevelData data)
+        
+        private PlantData GetPlantData()
         {
-            plantData[] plantDataList = new plantData[data.cropsEntityList.Length];
-            for (int i = 0; i < data.cropsEntityList.Length; ++i)
+            foreach (PlantData plant in levelPlantRoster)
             {
-                CropsData cropData = data.cropsEntityList[i].cropData;
-                int cropDropAmount = data.cropsEntityList[i].cropDropAmount;
-                float cropGrowChance = data.cropsEntityList[i].cropGrowChance;
-                int cropGrowRate = data.cropsEntityList[i].cropGrowRate;
-                plantData newPlantData = new plantData(cropData, cropDropAmount, cropGrowChance, cropGrowRate);
-                plantDataList[i] = newPlantData;
+                float randomNum = Random.Range(0.0f, maxWeight);
+                if (plant.cropGrowChance >= randomNum)
+                {
+                    return plant;
+                }
             }
-            return plantDataList;
-        } */
+            return levelPlantRoster[Random.Range(0, levelPlantRoster.Length-1)];
+        } 
 
         private CropsData PickPlant()
         {
@@ -120,6 +118,19 @@ namespace Farm
             }
             return cropData[Random.Range(1, cropData.Length - 1)];
 
+        }
+
+        private void InstantiateCrop(PlantData data, int posX, int posY)
+        {
+            GameObject createPlant = Instantiate(data.cropData.cropPrefab);
+            plants.Add(createPlant);
+            createPlant.GetComponent<plants>().DropAmount = data.cropDropAmount;
+            createPlant.GetComponent<plants>().PlantAmmoData = data.cropData.ammoData;
+            createPlant.GetComponent<plants>().OnDestroyed += CropDestroyed;
+            createPlant.GetComponent<plants>().OnFarmed += farmController.cropFarmed;
+            createPlant.GetComponent<plants>().PosX = posX;
+            createPlant.GetComponent<plants>().PosY=  posY;
+            createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y / 3, 0);
         }
 
         private void DestroyAllPlants()

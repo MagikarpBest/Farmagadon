@@ -20,8 +20,8 @@ public class FarmController : MonoBehaviour
     public event Action StopFarmCycle;
     public event Action OnCropFarmed;
 
-    //public delegate void StartGame();
-    //public StartGame gameStart;
+    public delegate void GridEvent(DayCycleLevelData data);
+    public GridEvent StartGridPlanting;
     //public delegate void EndGame();
     //public EndGame gameEnd; // invoked from Timer.cs
     //public delegate void CropFarmed();
@@ -41,6 +41,7 @@ public class FarmController : MonoBehaviour
     {
         //gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
         StartFarmCycle?.Invoke();
+        BeginFarmCycle(0);
     }
 
 
@@ -58,7 +59,7 @@ public class FarmController : MonoBehaviour
             Debug.LogWarning("THERES NO LEVEL BRUH");
             return; 
         }
-
+        StartGridPlanting?.Invoke(levelData);
     }
     public void EndFarmCycle()
     {
