@@ -8,10 +8,10 @@ public class PlayerFarmAnimator : MonoBehaviour
 
     private void Awake()
     {
-        farmInput.OnFarmInput += setFarmBool;
+        farmInput.OnFarmInput += SetFarmBool;
     }
 
-    private void setFarmBool(bool farming)
+    private void SetFarmBool(bool farming)
     {
         playerAnimator.SetBool("farming", farming);
         

@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cropsEntityList:
   - cropData: {fileID: 11400000, guid: 95b2f536f0335ef449337d16cdb9537d, type: 2}
-    cropGrowChance: 100
-    cropDropAmount: 1
+    cropGrowChance: 50
+    cropGrowRate: 1
+    cropDropAmount: 10
+  - cropData: {fileID: 11400000, guid: 7929126337943034abb6c1cd934887fb, type: 2}
+    cropGrowChance: 50
+    cropGrowRate: 1
+    cropDropAmount: 10
   dayCycleDuration: 10

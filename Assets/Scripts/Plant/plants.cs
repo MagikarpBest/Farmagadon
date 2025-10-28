@@ -3,21 +3,24 @@ using UnityEngine.Tilemaps;
 
 public class plants : MonoBehaviour
 {
-    private AmmoData plantName;
+    private AmmoData plantAmmoData;
     private int dropAmount;
-
-    public AmmoData PlantName { set { plantName = value; } }
+    private int posX;
+    private int posY;
+    public AmmoData PlantAmmoData { set { plantAmmoData = value; } }
     public int DropAmount { get { return dropAmount; } set { dropAmount = Mathf.Max(value, 1); } }
+    public int PosX { set { posX = value; } }
+    public int PosY { set { posY = value; } }
 
-    public delegate void Destroyed(Vector3 pos);
+    public delegate void Destroyed(int posX, int posY);
     public Destroyed OnDestroyed;
     public delegate void Farmed(AmmoData plantName, int dropAmount);
     public Farmed OnFarmed;
     
     public void DestroySelf()
     {
-        OnDestroyed?.Invoke(gameObject.transform.position);
-        OnFarmed?.Invoke(plantName, dropAmount);
+        OnDestroyed?.Invoke(posX, posY);
+        OnFarmed?.Invoke(plantAmmoData, dropAmount);
         Destroy(gameObject);
     }
 }
