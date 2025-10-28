@@ -22,7 +22,7 @@ public class FenceHealth : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth - damage, 0);
         //Debug.Log($"Health: {currentHealth}");
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-
+        flashEffect.CallDamageFlash();
         if (currentHealth <= 0)
         {
             OnFenceDestroy?.Invoke();

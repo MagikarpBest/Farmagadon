@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48e94293501e3a746962d69a935b91db, type: 3}
-  m_Name: CornPotatoCombinationIconData
+  m_Name: CornPotatoCombinationAmmoData
   m_EditorClassIdentifier: 
   ammoID: ammo_cornpotato
   ammoName: CornPotato

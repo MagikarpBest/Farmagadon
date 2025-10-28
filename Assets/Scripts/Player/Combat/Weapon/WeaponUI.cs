@@ -7,10 +7,10 @@ public class WeaponUI : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private WeaponInventory weaponInventory;
-    [SerializeField] private Image leftWeaponImage;
+    [SerializeField] private Image leftWeaponImage;// 4th slot 
     [SerializeField] private Image centerWeaponImage;
     [SerializeField] private Image rightWeaponImage;
-    [SerializeField] private Image bottomWeaponImage; // 4th slot 
+    [SerializeField] private Image bottomWeaponImage;     
     [SerializeField] private Sprite emptySlotSprite;
 
     private void OnEnable()

@@ -1,54 +1,98 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-// Script from
-// https://github.com/BarthaSzabolcs/Tutorial-SpriteFlash/blob/main/Assets/Scripts/FlashEffects/SimpleFlash.cs
 
 public class FlashEffect : MonoBehaviour
 {
     [Header("Reference")]
-    [SerializeField] private Material flashMaterial;
-    [SerializeField] private SpriteRenderer spriteRenderer; 
+    private Material[] material;
+    private SpriteRenderer[] spriteRenderer;
 
     [Header("Flash Settings")]
-    [SerializeField] private float duration;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color flashColor = Color.white;
+    [SerializeField] private float flashTimer = 0.1f;
+    [SerializeField] private float flashCooldown = 0.15f;
+    [SerializeField] private AnimationCurve flashSpeedCurve;
 
-    private Material originalMaterial;
-    private Coroutine flashRoutine;
-
-    void Start()
+    private Coroutine damageFlashCoroutine;
+    private bool canFlash = true;
+    private void Awake()
     {
-        // Get the material that the SpriteRenderer uses, 
-        // so we can switch back to it after the flash ended.
-        originalMaterial = spriteRenderer.material;
+        spriteRenderer = GetComponentsInChildren<SpriteRenderer>();
+
+        Initialize();
     }
 
-    public void Flash()
+    private void Initialize()
     {
-        // If the flashRoutine is not null, then it is currently running.
-        if (flashRoutine != null)
+        material = new Material[spriteRenderer.Length];
+
+        for (int i = 0; i < material.Length; i++)
         {
-            // In this case, we should stop it first.
-            // Multiple FlashRoutines the same time would cause bugs.
-            StopCoroutine(flashRoutine);
+            material[i] = spriteRenderer[i].material;
+        }
+    }
+
+    public void CallDamageFlash()
+    {
+        if (!canFlash)
+        {
+            return;
+        }
+        if (damageFlashCoroutine != null)
+        {
+            StopCoroutine(damageFlashCoroutine);
         }
 
-        // Start the Coroutine, and store the reference for it.
-        flashRoutine = StartCoroutine(FlashRoutine());
+        damageFlashCoroutine = StartCoroutine(DamageFlasher());
     }
 
-    private IEnumerator FlashRoutine()
+    private IEnumerator DamageFlasher()
     {
-        // Swap to the flashMaterial.
-        spriteRenderer.material = flashMaterial;
+        canFlash = false;
+        // Set the color
+        SetFlashColor();
 
-        // Pause the execution of this function for "duration" seconds.
-        yield return new WaitForSeconds(duration);
+        // Lerp the flash amount
+        float currentFlashAmount = 0f;
+        float elapsedTime = 0f;
+        while (elapsedTime < flashTimer)
+        {
+            // Iterate elapsedTime
+            elapsedTime += Time.deltaTime;
+             
+            // Lerp the flash amount
+            currentFlashAmount = Mathf.Lerp(1.0f, flashSpeedCurve.Evaluate(elapsedTime), (elapsedTime / flashTimer));
+            SetFlashAmount(currentFlashAmount);
 
-        // After the pause, swap back to the original material.
-        spriteRenderer.material = originalMaterial;
+            yield return null;
+        }
+        SetFlashAmount(0f);
+        damageFlashCoroutine = null;
 
-        // Set the routine to null, signaling that it's finished.
-        flashRoutine = null;
+        // cooldown before allowing next flash
+        yield return new WaitForSeconds(flashCooldown);
+        canFlash = true;
+    }
+
+    private void SetFlashColor()
+    {
+        // Set the color
+        for (int i = 0; i < material.Length; i++)
+        {
+            material[i].SetColor("_FlashColor", flashColor);
+        }
+    }
+
+    private void SetFlashAmount(float amount)
+    {
+        // Set the flash amount
+        for (int i = 0; i < material.Length; i++)
+        {
+            material[i].SetFloat("_FlashAmount", amount);
+        }
+;
     }
 }

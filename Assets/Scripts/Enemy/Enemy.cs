@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour, IDamageable
         }
 
         currentHealth -= damage;
-        flashEffect.Flash();
+        flashEffect.CallDamageFlash();
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
         if (currentHealth <= 0)
