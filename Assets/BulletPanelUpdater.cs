@@ -25,7 +25,6 @@ public class BulletPanelUpdater : MonoBehaviour
     }
     public void UpdateSelf()
     {
-        print("I HAPPEN!!");
         ammoText.text = "X " + ammoInventory.GetAmmoCount(ammoData);
     }
 }

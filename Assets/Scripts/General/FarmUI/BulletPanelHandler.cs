@@ -35,8 +35,9 @@ public class BulletPanelHandler : MonoBehaviour
         {
             
             WeaponSlot wepSlot = wepInv.GetWeaponSlot(i);
-            if (wepSlot.weaponData.weaponID == "weapon_rice") { removeOffset = -1; continue; }
+
             if (wepSlot == null) { continue; }
+            if (wepSlot.weaponData.weaponID == "weapon_rice") { removeOffset = -1; continue; }
             WeaponData wepData = wepInv.GetWeaponSlot(i).weaponData;
             if (wepData == null) { break; }
 
