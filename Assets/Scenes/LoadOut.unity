@@ -674,6 +674,7 @@ GameObject:
   - component: {fileID: 308021739}
   - component: {fileID: 308021738}
   - component: {fileID: 308021741}
+  - component: {fileID: 308021742}
   m_Layer: 5
   m_Name: BagButton6
   m_TagString: Untagged
@@ -821,6 +822,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 885109690}
   description: test6
+--- !u!114 &308021742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308021736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &309845604
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1500,7 @@ GameObject:
   - component: {fileID: 450979377}
   - component: {fileID: 450979376}
   - component: {fileID: 450979379}
+  - component: {fileID: 450979380}
   m_Layer: 5
   m_Name: BagButton4
   m_TagString: Untagged
@@ -1631,6 +1648,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 885109690}
   description: carrot description
+--- !u!114 &450979380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450979374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &664490542
 GameObject:
   m_ObjectHideFlags: 0
@@ -2497,6 +2529,7 @@ GameObject:
   - component: {fileID: 1073420305}
   - component: {fileID: 1073420304}
   - component: {fileID: 1073420307}
+  - component: {fileID: 1073420308}
   m_Layer: 5
   m_Name: BagButton3
   m_TagString: Untagged
@@ -2644,6 +2677,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 885109690}
   description: 'potatoooooo description '
+--- !u!114 &1073420308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073420302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1159965653
 GameObject:
   m_ObjectHideFlags: 0
@@ -2843,6 +2891,7 @@ GameObject:
   - component: {fileID: 1197413967}
   - component: {fileID: 1197413966}
   - component: {fileID: 1197413969}
+  - component: {fileID: 1197413970}
   m_Layer: 5
   m_Name: BagButton2
   m_TagString: Untagged
@@ -2990,6 +3039,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 885109690}
   description: 'corn description '
+--- !u!114 &1197413970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197413964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1213336814
 GameObject:
   m_ObjectHideFlags: 0
@@ -3003,6 +3067,7 @@ GameObject:
   - component: {fileID: 1213336817}
   - component: {fileID: 1213336816}
   - component: {fileID: 1213336819}
+  - component: {fileID: 1213336820}
   m_Layer: 5
   m_Name: BagButton5
   m_TagString: Untagged
@@ -3150,6 +3215,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 885109690}
   description: test5
+--- !u!114 &1213336820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213336814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1223600725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3207,6 +3287,7 @@ GameObject:
   - component: {fileID: 1285172654}
   - component: {fileID: 1285172653}
   - component: {fileID: 1285172652}
+  - component: {fileID: 1285172655}
   m_Layer: 5
   m_Name: LoadoutSlot2
   m_TagString: Untagged
@@ -3316,6 +3397,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285172650}
   m_CullTransparentMesh: 1
+--- !u!114 &1285172655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285172650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1430272188
 GameObject:
   m_ObjectHideFlags: 0
@@ -3977,6 +4073,7 @@ GameObject:
   - component: {fileID: 1742573075}
   - component: {fileID: 1742573074}
   - component: {fileID: 1742573073}
+  - component: {fileID: 1742573076}
   m_Layer: 5
   m_Name: LoadoutSlot1
   m_TagString: Untagged
@@ -4086,6 +4183,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742573071}
   m_CullTransparentMesh: 1
+--- !u!114 &1742573076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742573071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1753231775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4234,6 +4346,7 @@ GameObject:
   - component: {fileID: 1762049362}
   - component: {fileID: 1762049361}
   - component: {fileID: 1762049360}
+  - component: {fileID: 1762049363}
   m_Layer: 5
   m_Name: LoadoutSlot4
   m_TagString: Untagged
@@ -4343,6 +4456,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762049358}
   m_CullTransparentMesh: 1
+--- !u!114 &1762049363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762049358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1881475853
 GameObject:
   m_ObjectHideFlags: 0
@@ -4355,6 +4483,7 @@ GameObject:
   - component: {fileID: 1881475857}
   - component: {fileID: 1881475856}
   - component: {fileID: 1881475855}
+  - component: {fileID: 1881475858}
   m_Layer: 5
   m_Name: LoadoutSlot3
   m_TagString: Untagged
@@ -4464,6 +4593,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881475853}
   m_CullTransparentMesh: 1
+--- !u!114 &1881475858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881475853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1974177612
 GameObject:
   m_ObjectHideFlags: 0
@@ -4477,6 +4621,7 @@ GameObject:
   - component: {fileID: 1974177615}
   - component: {fileID: 1974177614}
   - component: {fileID: 1974177617}
+  - component: {fileID: 1974177618}
   m_Layer: 5
   m_Name: BagButton1
   m_TagString: Untagged
@@ -4624,6 +4769,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionText: {fileID: 885109690}
   description: rice description
+--- !u!114 &1974177618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974177612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.9622642, b: 0.56141454, a: 0.5}
+  m_EffectDistance: {x: 12, y: 12}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2062251347
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,10 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using TMPro;
-using UnityEngine.InputSystem;
 using System.Xml.Serialization;
+using TMPro;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class LoadOutManager : MonoBehaviour
 {
@@ -24,6 +25,21 @@ public class LoadOutManager : MonoBehaviour
 
     private void Start()
     {
+        for(int i = 0; i < loadoutSlots.Count; i++)
+        {
+            Button button = loadoutSlots[i];
+            Outline outline = button.GetComponent<Outline>();
+            if (outline != null)
+                outline.enabled = false;
+        }
+        for (int i = 0; i < bagButtons.Count; i++)
+        {
+            Button button = bagButtons[i];
+            Outline outline = button.GetComponent<Outline>();
+            if (outline != null)
+                outline.enabled = false;
+        }
+
         //highlight first slot
         HighlightSlot(selectedIndex, true);
     }
@@ -138,9 +154,10 @@ public class LoadOutManager : MonoBehaviour
     private void HighlightButton(Button button, bool highlight)
     {
         if (button == null) return;
-        Image img = button.GetComponent<Image>();
-        if (img != null)
-            img.color = highlight ? Color.yellow : Color.white;
+
+        Outline outline = button.GetComponent<Outline>();
+        if (outline != null)
+            outline.enabled = highlight;
     }
 
     private void UpdateHighlights()
