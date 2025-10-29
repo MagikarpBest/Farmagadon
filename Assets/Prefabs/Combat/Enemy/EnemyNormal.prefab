@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 2108004681978173586}
   - component: {fileID: 6146285259408673388}
   - component: {fileID: 2245974255077608872}
+  - component: {fileID: 631939030531806449}
   m_Layer: 0
   m_Name: EnemyNormal
   m_TagString: Enemy
@@ -210,8 +211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca9bc2313d279742a31444acc5e812b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyVisualHandler: {fileID: 631939030531806449}
   enemyData: {fileID: 11400000, guid: 88817375db5aa894c8e05987d8ac96da, type: 2}
   flashEffect: {fileID: 2245974255077608872}
+  fadeDuration: 0.5
 --- !u!114 &6146285259408673388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +248,19 @@ MonoBehaviour:
   flashColor: {r: 1.7207954, g: 1.7207954, b: 1.7207954, a: 1}
   flashTimer: 0.2
   flashCooldown: 0
+--- !u!114 &631939030531806449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940379239426215094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffectDuration: 0.5
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0
