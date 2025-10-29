@@ -1,13 +1,23 @@
 using UnityEngine;
 using System;
 
+
 public class FenceHealth : MonoBehaviour
 {
-    [SerializeField] FlashEffect flashEffect;
+    [Header("References")]
+    [SerializeField] private FlashEffect flashEffect;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
+    [Header("Health Settings")]
     [SerializeField] private int maxHealth = 100;
-
     private int currentHealth;
+
+    [Header("Fence Sprites")]
+    [SerializeField] private Sprite healthySprite;
+    [SerializeField] private Sprite damaged75Sprite;
+    [SerializeField] private Sprite damaged50Sprite;
+    [SerializeField] private Sprite damaged25Sprite;
+    [SerializeField] private Sprite destroyedSprite;
 
     public event Action<int, int> OnHealthChanged; // current, max
     public event Action OnFenceDestroy;
@@ -15,14 +25,19 @@ public class FenceHealth : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
+        UpdateFenceSprite();
     }
 
     public void TakeDamage(int damage)
     {
+        
         currentHealth = Mathf.Max(currentHealth - damage, 0);
-        //Debug.Log($"Health: {currentHealth}");
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        flashEffect.CallDamageFlash();
+
+        Debug.Log($"{currentHealth}");
+        // Trigger flash, sprite update happens after flash
+        flashEffect.CallDamageFlash(UpdateFenceSprite);
+
         if (currentHealth <= 0)
         {
             OnFenceDestroy?.Invoke();
@@ -30,13 +45,22 @@ public class FenceHealth : MonoBehaviour
         }
     }
 
-    public int GetHealth()
+    private void UpdateFenceSprite()
     {
-        return currentHealth;
+        float healthPercent = (float)currentHealth / maxHealth;
+        Debug.Log("Update fence sprite");
+        if (healthPercent <= 0f)
+            spriteRenderer.sprite = destroyedSprite;
+        else if (healthPercent <= 0.25f)
+            spriteRenderer.sprite = damaged25Sprite;
+        else if (healthPercent <= 0.50f)
+            spriteRenderer.sprite = damaged50Sprite;
+        else if (healthPercent <= 0.75f)
+            spriteRenderer.sprite = damaged75Sprite;
+        else
+            spriteRenderer.sprite = healthySprite;
     }
 
-    public int GetMaxHealth()
-    {
-        return maxHealth;
-    }
+    public int GetHealth() => currentHealth;
+    public int GetMaxHealth() => maxHealth;
 }

@@ -17,3 +17,4 @@ MonoBehaviour:
   moveSpeed: 1
   damage: 1
   attackInterval: 1
+  enemyWeakness: 0

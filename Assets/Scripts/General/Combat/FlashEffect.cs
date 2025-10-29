@@ -1,98 +1,89 @@
 using UnityEngine;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-
 
 public class FlashEffect : MonoBehaviour
 {
-    [Header("Reference")]
-    private Material[] material;
-    private SpriteRenderer[] spriteRenderer;
+    [Header("References")]
+    private Material[] materials;
+    private SpriteRenderer[] spriteRenderers;
 
     [Header("Flash Settings")]
     [ColorUsage(true, true)]
     [SerializeField] private Color flashColor = Color.white;
     [SerializeField] private float flashTimer = 0.1f;
-    [SerializeField] private float flashCooldown = 0.15f;
-    [SerializeField] private AnimationCurve flashSpeedCurve;
+    [SerializeField] public float flashCooldown = 0.15f;
 
     private Coroutine damageFlashCoroutine;
     private bool canFlash = true;
+
     private void Awake()
     {
-        spriteRenderer = GetComponentsInChildren<SpriteRenderer>();
-
-        Initialize();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        InitializeMaterials();
     }
 
-    private void Initialize()
+    private void InitializeMaterials()
     {
-        material = new Material[spriteRenderer.Length];
-
-        for (int i = 0; i < material.Length; i++)
+        materials = new Material[spriteRenderers.Length];
+        for (int i = 0; i < materials.Length; i++)
         {
-            material[i] = spriteRenderer[i].material;
+            materials[i] = spriteRenderers[i].material;
         }
     }
 
-    public void CallDamageFlash()
+    /// <summary>
+    /// Trigger a flash. Optional callback fires when the flash completes.
+    /// If on cooldown, flash is skipped entirely.
+    /// </summary>
+    public void CallDamageFlash(Action onFlashComplete = null)
     {
         if (!canFlash)
         {
+            // Skip flash if on cooldown
             return;
         }
-        if (damageFlashCoroutine != null)
-        {
-            StopCoroutine(damageFlashCoroutine);
-        }
 
-        damageFlashCoroutine = StartCoroutine(DamageFlasher());
+        if (damageFlashCoroutine == null)
+        {
+            Debug.Log("Flash occur");
+            damageFlashCoroutine = StartCoroutine(DamageFlasher(onFlashComplete));
+        }
     }
 
-    private IEnumerator DamageFlasher()
+    private IEnumerator DamageFlasher(Action onFlashComplete)
     {
         canFlash = false;
-        // Set the color
-        SetFlashColor();
 
-        // Lerp the flash amount
-        float currentFlashAmount = 0f;
+        // Set flash color
+        for (int i = 0; i < materials.Length; i++)
+            materials[i].SetColor("_FlashColor", flashColor);
+
+        // Lerp flash from 1 to 0 over flashTimer
         float elapsedTime = 0f;
         while (elapsedTime < flashTimer)
         {
-            // Iterate elapsedTime
             elapsedTime += Time.deltaTime;
-             
-            // Lerp the flash amount
-            currentFlashAmount = Mathf.Lerp(1.0f, flashSpeedCurve.Evaluate(elapsedTime), (elapsedTime / flashTimer));
-            SetFlashAmount(currentFlashAmount);
+            float time = Mathf.Clamp01(elapsedTime / flashTimer);
+            float flashAmount = Mathf.Lerp(1f, 0f, time);
+
+            for (int i = 0; i < materials.Length; i++)
+                materials[i].SetFloat("_FlashAmount", flashAmount);
 
             yield return null;
         }
-        SetFlashAmount(0f);
+
+        // Ensure flash ends at 0
+        for (int i = 0; i < materials.Length; i++)
+            materials[i].SetFloat("_FlashAmount", 0f);
+
+        // Wait cooldown
+        yield return new WaitForSeconds(flashCooldown);
+
+        canFlash = true;
         damageFlashCoroutine = null;
 
-        // cooldown before allowing next flash
-        yield return new WaitForSeconds(flashCooldown);
-        canFlash = true;
-    }
-
-    private void SetFlashColor()
-    {
-        // Set the color
-        for (int i = 0; i < material.Length; i++)
-        {
-            material[i].SetColor("_FlashColor", flashColor);
-        }
-    }
-
-    private void SetFlashAmount(float amount)
-    {
-        // Set the flash amount
-        for (int i = 0; i < material.Length; i++)
-        {
-            material[i].SetFloat("_FlashAmount", amount);
-        }
-;
+        // Callback for FenceHealth or other systems
+        onFlashComplete?.Invoke();
     }
 }

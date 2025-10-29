@@ -243,32 +243,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1.7207954, g: 1.7207954, b: 1.7207954, a: 1}
-  flashTimer: 0.15
-  flashCooldown: 0.15
-  flashSpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -5
-      outSlope: -5
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.2
-      value: 0
-      inSlope: -5
-      outSlope: -5
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  flashTimer: 0.2
+  flashCooldown: 0
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0
