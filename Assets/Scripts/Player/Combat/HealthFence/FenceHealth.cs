@@ -7,6 +7,7 @@ public class FenceHealth : MonoBehaviour
     [Header("References")]
     [SerializeField] private FlashEffect flashEffect;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] FenceVisualManager fenceVisualManager;
 
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 100;
@@ -30,13 +31,19 @@ public class FenceHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        
         currentHealth = Mathf.Max(currentHealth - damage, 0);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         Debug.Log($"{currentHealth}");
         // Trigger flash, sprite update happens after flash
-        flashEffect.CallDamageFlash(UpdateFenceSprite);
+        flashEffect.CallDamageFlash(
+            onFlashStart: () =>
+            {
+                fenceVisualManager.CallHitAnimation(flashEffect.flashCooldown);
+                UpdateFenceSprite();
+            }
+        );
+
 
         if (currentHealth <= 0)
         {

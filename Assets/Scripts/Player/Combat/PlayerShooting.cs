@@ -38,7 +38,7 @@ public class PlayerShooting : MonoBehaviour
     {
         weaponInventory.PreviousWeapon();
     }
-    private void HandleWeaponChange(WeaponSlot slot)
+    private void HandleWeaponChange(WeaponSlot slot, WeaponSwitchDirection direction)
     {
         currentSlot = slot;
         if (slot != null && slot.weaponData != null)

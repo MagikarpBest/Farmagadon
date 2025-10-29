@@ -16,7 +16,7 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bottomWeaponText;
     [SerializeField] private TextMeshProUGUI leftWeaponText;    // 4th slot 
 
-    private Action<WeaponSlot> weaponChangedHandler;
+    private Action<WeaponSlot, WeaponSwitchDirection> weaponChangedHandler;
 
     private void OnEnable()
     {
@@ -28,7 +28,7 @@ public class AmmoUI : MonoBehaviour
         if (weaponInventory!=null)  
         {
             // Store the lambda reference to remove later
-            weaponChangedHandler = (slot) => UpdateUI();
+            weaponChangedHandler = (slot, dir) => UpdateUI();
             weaponInventory.OnWeaponChanged += weaponChangedHandler;
         }
     }

@@ -24,10 +24,13 @@ public class EnemyVisualHandler : MonoBehaviour
         for (int i = 0; i < spriteRenderer.Length; i++)
         {
             // Stop any ongoing tweens (optional safety)
-            // 1 — small shake (impact pop)
+            transform.DOKill();
+            spriteRenderer[i].DOKill();
+
+            // 1 — Small shake (impact pop)
             transform.DOShakePosition(0.3f, 0.15f, 10, 90, false, true);
 
-            // 2 — fade out + shrink
+            // 2 — Fade out + shrink
             spriteRenderer[i].DOFade(0f, deathEffectDuration).SetEase(Ease.InOutSine);
             transform.DOScale(Vector3.zero, deathEffectDuration).SetEase(Ease.InBack);
 

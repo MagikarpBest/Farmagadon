@@ -33,10 +33,12 @@ public class FlashEffect : MonoBehaviour
     }
 
     /// <summary>
-    /// Trigger a flash. Optional callback fires when the flash completes.
-    /// If on cooldown, flash is skipped entirely.
+    /// Triggers a flash effect.
+    /// Optional: 
+    /// onFlashStart > called immediately when flash starts.
+    /// onFlashComplete > called when flash finishes.
     /// </summary>
-    public void CallDamageFlash(Action onFlashComplete = null)
+    public void CallDamageFlash(Action onFlashStart = null, Action onFlashComplete = null)
     {
         if (!canFlash)
         {
@@ -47,17 +49,22 @@ public class FlashEffect : MonoBehaviour
         if (damageFlashCoroutine == null)
         {
             Debug.Log("Flash occur");
-            damageFlashCoroutine = StartCoroutine(DamageFlasher(onFlashComplete));
+            damageFlashCoroutine = StartCoroutine(DamageFlasher(onFlashStart, onFlashComplete));
         }
     }
 
-    private IEnumerator DamageFlasher(Action onFlashComplete)
+    private IEnumerator DamageFlasher(Action onFlashStart, Action onFlashComplete)
     {
         canFlash = false;
 
+        // Immediately trigger start callback
+        onFlashStart?.Invoke();
+
         // Set flash color
         for (int i = 0; i < materials.Length; i++)
+        {
             materials[i].SetColor("_FlashColor", flashColor);
+        }
 
         // Lerp flash from 1 to 0 over flashTimer
         float elapsedTime = 0f;
@@ -68,22 +75,26 @@ public class FlashEffect : MonoBehaviour
             float flashAmount = Mathf.Lerp(1f, 0f, time);
 
             for (int i = 0; i < materials.Length; i++)
+            {
                 materials[i].SetFloat("_FlashAmount", flashAmount);
+            }
 
             yield return null;
         }
 
         // Ensure flash ends at 0
         for (int i = 0; i < materials.Length; i++)
+        {
             materials[i].SetFloat("_FlashAmount", 0f);
+        }
+
+        // Callback for FenceHealth or other systems
+        onFlashComplete?.Invoke();
 
         // Wait cooldown
         yield return new WaitForSeconds(flashCooldown);
 
         canFlash = true;
         damageFlashCoroutine = null;
-
-        // Callback for FenceHealth or other systems
-        onFlashComplete?.Invoke();
     }
 }
