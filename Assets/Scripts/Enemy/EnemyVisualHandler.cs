@@ -14,6 +14,7 @@ public class EnemyVisualHandler : MonoBehaviour
         spriteRenderer = GetComponentsInChildren<SpriteRenderer>();
     }
 
+
     public IEnumerator PlayDeathAnimation()
     {
         if (spriteRenderer == null)

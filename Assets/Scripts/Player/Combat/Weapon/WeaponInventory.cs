@@ -47,8 +47,8 @@ public class WeaponInventory : MonoBehaviour
 
     /// <summary>
     /// Event triggered whenever the currently equipped weapon changes.
-    /// </summary>
-    public event Action<WeaponSlot,WeaponSwitchDirection> OnWeaponChanged;
+    /// </summary>  
+    public event Action<WeaponSlot, WeaponSwitchDirection> OnWeaponChanged;
 
     private void Awake()
     {
@@ -64,19 +64,7 @@ public class WeaponInventory : MonoBehaviour
     private void Start()
     {
         saveData = SaveSystem.LoadGame();
-        
-        // Add all starting weapon to available slots
-        foreach (var weapon in startingWeapon)
-        {
-            if (weapon != null)
-            {
-                AddWeapon(weapon);
-            }
-        }
 
-        // Set first weapon (slots 0) as the default active weapon
-        currentIndex = 0;
-        OnWeaponChanged?.Invoke(weapons[currentIndex], WeaponSwitchDirection.None);
     }
 
     // ----------------------
@@ -113,6 +101,10 @@ public class WeaponInventory : MonoBehaviour
             {
                 weapons[i] = new WeaponSlot(newWeapon);
                 currentIndex = i;
+                if (currentIndex == i)
+                {
+                    OnWeaponChanged?.Invoke(weapons[currentIndex], WeaponSwitchDirection.None);
+                }
                 return;
             }
         }
@@ -320,6 +312,16 @@ public class WeaponInventory : MonoBehaviour
             }
         }
         Debug.Log("Weapons loaded from SaveData.");
+
+        if (weapons != null && weapons[0] != null && weapons[0].weaponData != null)
+        {
+            currentIndex = 0;
+            OnWeaponChanged?.Invoke(weapons[currentIndex], WeaponSwitchDirection.None);
+        }
+        else
+        {
+            Debug.LogWarning("[WeaponInventory] No valid weapon found after loading save data.");
+        }
     }
 
     // Getters
@@ -366,5 +368,5 @@ public class WeaponInventory : MonoBehaviour
     /// </summary>
     public int GetCurrentWeaponIndex() => currentIndex;
     public int getWeaponsSize() => weapons.Length;
-
+    public bool CanSwitchWeapon => canSwitchWeapon; // Read-only
 }

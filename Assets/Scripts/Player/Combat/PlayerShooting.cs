@@ -53,6 +53,13 @@ public class PlayerShooting : MonoBehaviour
 
     private void HandleShoot()
     {
+        // Block shooting while swapping weapons
+        if (!weaponInventory.CanSwitchWeapon)
+        {
+            // Prevent shooting during weapon swap animation
+            return;
+        }
+
         if (currentSlot == null || currentSlot.weaponData == null) 
         {
             return;
@@ -83,7 +90,6 @@ public class PlayerShooting : MonoBehaviour
         }
 
         Debug.Log(currentSlot.weaponData.weaponName + " fired. Ammo left: " + currentSlot.weaponData.ammoType);
-
     }
 
     private void Shoot(WeaponData weapon)

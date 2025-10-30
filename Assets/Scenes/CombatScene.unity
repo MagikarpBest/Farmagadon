@@ -473,7 +473,7 @@ Transform:
   m_GameObject: {fileID: 119839057}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.59, y: -4.32, z: 0}
+  m_LocalPosition: {x: -8.52, y: -4.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   gameInput: {fileID: 3373378824887530278}
-  minX: -8.2
+  minX: -8.5
   maxX: 1.91
 --- !u!114 &119839062
 MonoBehaviour:
@@ -583,7 +583,6 @@ RectTransform:
   - {fileID: 5779390113681927818}
   - {fileID: 537314388121917254}
   - {fileID: 1414893687}
-  - {fileID: 814999184}
   m_Father: {fileID: 4407026032115867114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -812,7 +811,6 @@ RectTransform:
   - {fileID: 48380789}
   - {fileID: 902548286}
   - {fileID: 282536094}
-  - {fileID: 1027456897}
   m_Father: {fileID: 4407026032115867114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2380,7 +2378,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 177874259}
+  m_Father: {fileID: 4407026032115867114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2891,12 +2889,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 320472547}
+  m_Father: {fileID: 4407026032115867114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 740.10004, y: -767.6}
-  m_SizeDelta: {x: 77.3877, y: 46.5743}
+  m_SizeDelta: {x: 77.3877, y: 77.3877}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1027456898
 MonoBehaviour:
@@ -3072,7 +3070,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1632883915}
+  m_Father: {fileID: 4407026032115867114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5183,7 +5181,6 @@ RectTransform:
   - {fileID: 4179664746224607039}
   - {fileID: 927822405655436056}
   - {fileID: 1207034412}
-  - {fileID: 1063191447}
   m_Father: {fileID: 4407026032115867114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8120,6 +8117,8 @@ MonoBehaviour:
   rightWeaponText: {fileID: 814999185}
   bottomWeaponText: {fileID: 1027456898}
   leftWeaponText: {fileID: 1063191448}
+  rotateDuration: 0.4
+  rotateEase: 28
 --- !u!1 &685750671428880436
 GameObject:
   m_ObjectHideFlags: 0
@@ -8163,15 +8162,15 @@ RectTransform:
   m_GameObject: {fileID: 458093039538974412}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4407026032115867114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 740.00037, y: -545.9811}
-  m_SizeDelta: {x: 190.4522, y: 71.39}
+  m_SizeDelta: {x: 77.3877, y: 77.3877}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &750827273676265000
 GameObject:
@@ -9374,7 +9373,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 31
+  m_text: 676
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9be831e413babfc49ab97a3ec83fd12b, type: 2}
   m_sharedMaterial: {fileID: 6679035452488174421, guid: 9be831e413babfc49ab97a3ec83fd12b, type: 2}
@@ -9401,8 +9400,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11856,7 +11855,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 123123123
       objectReference: {fileID: 0}
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: healthySprite
@@ -13937,6 +13936,9 @@ RectTransform:
   - {fileID: 7683580638349319308}
   - {fileID: 2064473766}
   - {fileID: 8300876679260175500}
+  - {fileID: 1063191447}
+  - {fileID: 814999184}
+  - {fileID: 1027456897}
   - {fileID: 696706901705397445}
   m_Father: {fileID: 1841881697}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14269,11 +14271,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1185385921424498916, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
       propertyPath: unlockedSlots
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1185385921424498916, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
       propertyPath: startingWeapon.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1185385921424498916, guid: 3a5c18885f55bd841ba16a981f8c252c, type: 3}
       propertyPath: 'startingWeapon.Array.data[0]'

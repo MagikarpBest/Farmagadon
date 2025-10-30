@@ -37,7 +37,7 @@ public class AmmoUI : MonoBehaviour
     {
         if(ammoInventory!=null)
         { 
-            ammoInventory.OnInventoryChanged += UpdateUI;
+            ammoInventory.OnInventoryChanged += UpdateUITextOnly;
         }
         
         if (weaponInventory!=null)  
@@ -51,7 +51,7 @@ public class AmmoUI : MonoBehaviour
     {
         if (ammoInventory != null)
         {
-            ammoInventory.OnInventoryChanged -= UpdateUI;
+            ammoInventory.OnInventoryChanged -= UpdateUITextOnly;
         }
 
         if (weaponInventory != null)
@@ -72,8 +72,8 @@ public class AmmoUI : MonoBehaviour
         DOTween.KillAll();
 
         // Save size
-        originalSize = leftWeaponText.rectTransform.sizeDelta;
-        centerBigSize = centerWeaponText.rectTransform.sizeDelta;
+        originalSize = leftWeaponText.rectTransform.localScale;
+        centerBigSize = centerWeaponText.rectTransform.localScale;
 
 
         if (weaponInventory != null)
@@ -142,6 +142,34 @@ public class AmmoUI : MonoBehaviour
             RotateAnimation_Four(direction == WeaponSwitchDirection.Next);
         }
     }
+    
+    private void UpdateUITextOnly()
+    {
+        if (weaponInventory == null || ammoInventory == null)
+        {
+            return;
+        }
+
+        // Update all four text slots
+        WeaponSlot centerSlot = weaponInventory.GetWeaponSlot(weaponInventory.GetCurrentWeaponIndex());
+
+        // Update only the center text
+        SetText(centerWeaponText, centerSlot);
+
+        CenterTextAnimation();
+    }
+
+    private void CenterTextAnimation()
+    {
+        if (centerWeaponText == null)
+        {
+            return;
+        }
+
+        // Scale punch animation (like a quick pop)
+        centerWeaponText.rectTransform.DOPunchScale(Vector3.one * 0.3f, 0.3f, 1, 1f).SetEase(Ease.OutBack);
+
+    }
 
     /// <summary>
     /// Handles rotation animation when 2 weapons are unlocked.
@@ -157,8 +185,8 @@ public class AmmoUI : MonoBehaviour
         seq.Join(center.DOAnchorPos(rightPosition, rotateDuration).SetEase(rotateEase));
         seq.Join(right.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
 
-        seq.Join(center.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-        seq.Join(right.DOSizeDelta(centerBigSize, rotateDuration).SetEase(rotateEase));
+        seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+        seq.Join(right.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
 
         seq.OnComplete(() =>
         {
@@ -193,9 +221,9 @@ public class AmmoUI : MonoBehaviour
             seq.Join(right.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
 
             // Adjust sizes 
-            seq.Join(center.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(bottom.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(right.DOSizeDelta(centerBigSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
 
             seq.OnComplete(() =>
             {
@@ -216,9 +244,9 @@ public class AmmoUI : MonoBehaviour
             seq.Join(right.DOAnchorPos(bottomPosition, rotateDuration).SetEase(rotateEase));
             seq.Join(bottom.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
 
-            seq.Join(center.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(right.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(bottom.DOSizeDelta(centerBigSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
 
             seq.OnComplete(() =>
             {
@@ -255,10 +283,10 @@ public class AmmoUI : MonoBehaviour
             seq.Join(center.DOAnchorPos(leftPosition, rotateDuration).SetEase(rotateEase));
 
             // Tween sizes
-            seq.Join(left.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(bottom.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(right.DOSizeDelta(centerBigSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(center.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(left.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
 
             seq.OnComplete(() =>
             {
@@ -282,14 +310,14 @@ public class AmmoUI : MonoBehaviour
             seq.Join(bottom.DOAnchorPos(leftPosition, rotateDuration).SetEase(rotateEase));
 
             // Tween sizes
-            seq.Join(left.DOSizeDelta(centerBigSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(center.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(right.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
-            seq.Join(bottom.DOSizeDelta(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(left.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
 
             seq.OnComplete(() =>
             {
-                TextMeshProUGUI+ temp = leftWeaponText;
+                TextMeshProUGUI temp = leftWeaponText;
                 leftWeaponText = bottomWeaponText;
                 bottomWeaponText = rightWeaponText;
                 rightWeaponText = centerWeaponText;
@@ -298,6 +326,22 @@ public class AmmoUI : MonoBehaviour
                 ResetSizes();
             });
         }
+    }
+
+    private void ResetPositions()
+    {
+        leftWeaponText.rectTransform.anchoredPosition = leftPosition;
+        centerWeaponText.rectTransform.anchoredPosition = centerPosition;
+        rightWeaponText.rectTransform.anchoredPosition = rightPosition;
+        bottomWeaponText.rectTransform.anchoredPosition = bottomPosition;
+    }
+
+    private void ResetSizes()
+    {
+        leftWeaponText.rectTransform.localScale = originalSize;
+        centerWeaponText.rectTransform.localScale = centerBigSize;
+        rightWeaponText.rectTransform.localScale = originalSize;
+        bottomWeaponText.rectTransform.localScale = originalSize;
     }
 
     /// <summary>
