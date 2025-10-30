@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using TableForge.Demo;
 
 /// <summary>
 /// Represents a weapon slot that holds a specific weapon data.
@@ -35,7 +36,7 @@ public class WeaponInventory : MonoBehaviour
     [SerializeField] private int maxSlot = 4;                   // Maximum number of weapon slots the player can have
     [SerializeField] private int unlockedSlots = 1;             // How many weapon slots currently player have
     [SerializeField] private WeaponData[] startingWeapon;       // Weapons player start with
-    [SerializeField] private float swapDelay = 0.25f;
+    [SerializeField] private float swapDelay = 0.25f;           // Follow swap animation
 
     private SaveData saveData;
     private WeaponSlot[] weapons;                               // Assign weapon to slots, first assign = first slot
@@ -112,7 +113,6 @@ public class WeaponInventory : MonoBehaviour
             {
                 weapons[i] = new WeaponSlot(newWeapon);
                 currentIndex = i;
-                OnWeaponChanged?.Invoke(weapons[i], WeaponSwitchDirection.None);
                 return;
             }
         }
@@ -341,8 +341,11 @@ public class WeaponInventory : MonoBehaviour
     /// </summary>
     public List<WeaponSlot> GetEquippedWeapon()
     {
+        if (weapons == null || weapons.Length == 0)
+            return new List<WeaponSlot>();
+
         var equipped = new List<WeaponSlot>();
-        for (int i = 0; i < unlockedSlots; i++)
+        for (int i = 0; i < Mathf.Min(unlockedSlots, weapons.Length); i++)
         {
             if (weapons[i] != null && weapons[i].weaponData != null)
             {
@@ -356,7 +359,7 @@ public class WeaponInventory : MonoBehaviour
     /// <summary>
     /// Returns the number of unlocked slots.
     /// </summary>
-    public int UnlockedSlotCount => maxSlot;
+    public int UnlockedSlotCount => unlockedSlots;
 
     /// <summary>
     /// Returns the index of the currently active weapon.

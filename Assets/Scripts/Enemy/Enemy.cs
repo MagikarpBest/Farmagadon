@@ -10,9 +10,6 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private FlashEffect flashEffect;           // Go to flash effect to edit on hit flash setting
 
-    [Header("Tween settings")]
-    [SerializeField] float fadeDuration = 0.5f;
-
     public event Action<Enemy> OnDeath;
     public event Action OnHit;
 

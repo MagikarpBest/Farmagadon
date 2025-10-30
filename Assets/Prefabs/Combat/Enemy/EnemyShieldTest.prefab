@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5484860592480514761}
   - component: {fileID: 201345576916837954}
   - component: {fileID: 8649020495048018723}
+  - component: {fileID: 2575680224560203483}
+  - component: {fileID: 7172020342127600527}
   m_Layer: 0
   m_Name: EnemyShield
   m_TagString: Enemy
@@ -120,7 +122,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca9bc2313d279742a31444acc5e812b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyVisualHandler: {fileID: 2575680224560203483}
   enemyData: {fileID: 11400000, guid: 6510fbe58ad350741a845c6b37a36dd7, type: 2}
+  flashEffect: {fileID: 7172020342127600527}
+--- !u!114 &2575680224560203483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214345657147760057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffectDuration: 0.5
+  spriteRenderer:
+  - {fileID: 3171474576470571282}
+--- !u!114 &7172020342127600527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214345657147760057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderers: []
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashTimer: 0.2
+  flashCooldown: 0
 --- !u!1 &1076357976633803017
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +211,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 7e3ee7c0a954ec34897d673d67db2d97, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -197,8 +232,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 0.3518058, b: 0.23113209, a: 1}
+  m_Sprite: {fileID: -5998797548565674896, guid: 4c84886e554f1ae4f9dfb34b87b49ef4, type: 3}
+  m_Color: {r: 0.7735849, g: 0.014002724, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -221,6 +256,8 @@ GameObject:
   - component: {fileID: -1748277552686560176}
   - component: {fileID: 2108004681978173586}
   - component: {fileID: 5440389394654593888}
+  - component: {fileID: 8948866146548805567}
+  - component: {fileID: 6198712676741713122}
   m_Layer: 0
   m_Name: EnemyShieldTest
   m_TagString: Enemy
@@ -331,7 +368,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca9bc2313d279742a31444acc5e812b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyVisualHandler: {fileID: 6198712676741713122}
   enemyData: {fileID: 11400000, guid: 33a8d280d9329c44e8a8c54710789575, type: 2}
+  flashEffect: {fileID: 8948866146548805567}
 --- !u!114 &5440389394654593888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,9 +386,37 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1104957016568486172}
   normalVisuals:
   - {fileID: 21300000, guid: acbbfc6f420e45c4f8bb6ea6c2b79e25, type: 3}
-  flashVisuals:
-  - {fileID: 21300000, guid: 8a883b72023acfe4195ca5f9f90b0227, type: 3}
-  flashDuration: 0.1
+--- !u!114 &8948866146548805567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940379239426215094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderers: []
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashTimer: 0.2
+  flashCooldown: 0
+--- !u!114 &6198712676741713122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940379239426215094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffectDuration: 0.5
+  spriteRenderer:
+  - {fileID: 1104957016568486172}
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +472,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 7e3ee7c0a954ec34897d673d67db2d97, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

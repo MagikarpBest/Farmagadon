@@ -58,7 +58,7 @@ public class PauseManger : MonoBehaviour
     {
         stateManager.SetGameState(GameState.Playing);
         Time.timeScale = 1f;
-        UIManager.Show(UIScreen.HUD);
+        UIManager.Hide(UIScreen.Pause);
         Debug.Log("Unpaused");
     }
 }

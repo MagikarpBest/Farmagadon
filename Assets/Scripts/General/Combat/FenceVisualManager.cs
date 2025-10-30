@@ -31,7 +31,7 @@ public class FenceVisualManager : MonoBehaviour
         spriteRenderer.DOKill();
 
         // 1 — Small shake (impact pop)
-        transform.DOShakePosition(0.3f, 0.10f, 10, 90, false, true);
+        transform.DOShakePosition(fenceHitEffectDuration, 0.10f, 10, 90, false, true);
 
         // Wait until done
         yield return new WaitForSeconds(1.5f);

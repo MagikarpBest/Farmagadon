@@ -100,6 +100,8 @@ GameObject:
   - component: {fileID: -1748277552686560176}
   - component: {fileID: 2108004681978173586}
   - component: {fileID: 2559840546818825639}
+  - component: {fileID: 4720210101423255396}
+  - component: {fileID: 8154638399408860453}
   m_Layer: 0
   m_Name: EnemyTankTest
   m_TagString: Enemy
@@ -209,7 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca9bc2313d279742a31444acc5e812b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyVisualHandler: {fileID: 8154638399408860453}
   enemyData: {fileID: 11400000, guid: 75b4b7c60637f0f4289d012fc4376b13, type: 2}
+  flashEffect: {fileID: 4720210101423255396}
 --- !u!114 &2559840546818825639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,9 +229,35 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1104957016568486172}
   normalVisuals:
   - {fileID: 21300000, guid: 86d63b7bb3b59934196d5e3b5f34e019, type: 3}
-  flashVisuals:
-  - {fileID: 21300000, guid: 41d44fcbba724894784cb0d511876dd4, type: 3}
-  flashDuration: 0.1
+--- !u!114 &4720210101423255396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940379239426215094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderers: []
+  flashColor: {r: 2.297397, g: 2.297397, b: 2.297397, a: 1}
+  flashTimer: 0.2
+  flashCooldown: 0
+--- !u!114 &8154638399408860453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940379239426215094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffectDuration: 0.5
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +313,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 7e3ee7c0a954ec34897d673d67db2d97, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
