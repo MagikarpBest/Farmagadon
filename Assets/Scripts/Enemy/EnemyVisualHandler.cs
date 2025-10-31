@@ -18,7 +18,6 @@ public class EnemyVisualHandler : MonoBehaviour
     [SerializeField] private float squishAmount = 0.07f;  // how much it squishes vertically
     [SerializeField] private float jitterAmount = 0.02f;  // small positional jitter
 
-    private bool supressMove = false;
     private SpriteRenderer[] spriteRenderer;
     private Vector3 basePosition;
     private Vector3 baseScale;
@@ -39,10 +38,7 @@ public class EnemyVisualHandler : MonoBehaviour
 
     private void Update()
     {
-        if (! supressMove)
-        {
-            PlayMoveAnimation();
-        }
+        PlayMoveAnimation();
     }
 
     private void InitializeVisuals()
@@ -97,12 +93,11 @@ public class EnemyVisualHandler : MonoBehaviour
 
         // Stop any ongoing tweens (optional safety)
         hitEffectRoot.DOKill();
+        hitEffectRoot.localPosition = basePosition;
 
-        supressMove = true;
-        hitEffectRoot.DOShakePosition(0.3f, 0.15f, 10, 90, false, true);
+        hitEffectRoot.DOShakePosition(0.3f, 0.15f, 9, 90, false, true);
         //visualRoot.DOPunchPosition(Vector3.one * 0.10f, 0.2f, 10, 1f).SetEase(Ease.OutQuad);
         yield return new WaitForSeconds(0.3f);
-        supressMove = false;
     }
 
     public IEnumerator PlayDeathAnimation()
