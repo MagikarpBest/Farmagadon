@@ -168,7 +168,6 @@ public class AmmoUI : MonoBehaviour
 
         // Scale punch animation (like a quick pop)
         centerWeaponText.rectTransform.DOPunchScale(Vector3.one * 0.3f, 0.3f, 1, 1f).SetEase(Ease.OutBack);
-
     }
 
     /// <summary>
