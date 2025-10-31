@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmController: {fileID: 43128269}
   slider: {fileID: 1376999756}
-  dayTimeDuration: 2
+  dayTimeDuration: 4
 --- !u!1 &249844771
 GameObject:
   m_ObjectHideFlags: 0
