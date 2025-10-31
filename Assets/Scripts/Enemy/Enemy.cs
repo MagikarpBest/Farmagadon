@@ -1,32 +1,35 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using UnityEngine.InputSystem.Processors;
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    [Header("References")]
+    [SerializeField] private EnemyVisualHandler enemyVisualHandler;
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private FlashEffect flashEffect;           // Go to flash effect to edit on hit flash setting
 
     public event Action<Enemy> OnDeath;
     public event Action OnHit;
 
+    private Collider2D[] colliders;
+    private SpriteRenderer[] spriteRenderer;
     private int currentHealth;
     private bool isAttackingFence = false;
     private bool isDead = false;
     private Coroutine attackRoutine;
-
-
-
     private void Awake()
     {
         currentHealth = enemyData.maxHealth;
+        spriteRenderer = GetComponentsInChildren<SpriteRenderer>();
+        colliders = GetComponentsInChildren<Collider2D>();
     }
 
     private void Update()
     {
-        // Move if not attacking
-        if (!isAttackingFence)
+        // Move if not attacking and dead
+        if (!isAttackingFence && !isDead) 
         {
             transform.Translate(Vector2.down * enemyData.moveSpeed * Time.deltaTime);
         }
@@ -47,7 +50,7 @@ public class Enemy : MonoBehaviour, IDamageable
         }
 
         currentHealth -= damage;
-        flashEffect.Flash();
+        flashEffect.CallDamageFlash();
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
         if (currentHealth <= 0)
@@ -66,15 +69,22 @@ public class Enemy : MonoBehaviour, IDamageable
 
         Debug.Log(enemyData.enemyName + " died");
 
+        foreach (var collider in colliders)
+        {
+            collider.enabled = false;
+        }
+
         // Stop attack if died
         if (attackRoutine != null)
         {
             StopCoroutine(attackRoutine);
         }
 
-        // Allow flash to show before actually destroying the object
-        yield return new WaitForSeconds(delay);
-
+        if (enemyVisualHandler != null)
+        {
+            yield return enemyVisualHandler.PlayDeathAnimation();
+        }
+        
         OnDeath?.Invoke(this);
         Destroy(gameObject);
     }

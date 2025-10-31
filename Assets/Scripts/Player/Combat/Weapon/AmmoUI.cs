@@ -1,6 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System;
 using TMPro;
+using System.Collections.Generic;
+using DG.Tweening;
 
 
 public class AmmoUI : MonoBehaviour
@@ -9,74 +11,367 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private AmmoInventory ammoInventory; 
     [SerializeField] private WeaponInventory weaponInventory;
 
-    [Header("UI Elements (match by slot index)")]
-    [SerializeField] private TextMeshProUGUI[] ammoTexts; // Array of text fields (1 per weapon slot)
-    [SerializeField] private Image[] ammoIcons;           // Array of icons (1 per weapon slot)
+    [Header("UI Elements (slot order: Center, Right, Bottom, Left)")]
+    [SerializeField] private TextMeshProUGUI centerWeaponText;
+    [SerializeField] private TextMeshProUGUI rightWeaponText;
+    [SerializeField] private TextMeshProUGUI bottomWeaponText;
+    [SerializeField] private TextMeshProUGUI leftWeaponText;    // 4th slot 
+
+    [Header("Animation Settings")]
+    [SerializeField] private float rotateDuration = 0.25f;
+    [SerializeField] private Ease rotateEase = Ease.OutQuad;
+
+    // Cached original positions
+    private Vector3 leftPosition;
+    private Vector3 centerPosition;
+    private Vector3 rightPosition;
+    private Vector3 bottomPosition;
+
+    // Cached slot sizes for scaling during animation
+    private Vector2 originalSize;
+    private Vector2 centerBigSize;
+
+    private Action<WeaponSlot, WeaponSwitchDirection> weaponChangedHandler;
 
     private void OnEnable()
     {
-        ammoInventory.OnInventoryChanged += UpdateUI;
+        if(ammoInventory!=null)
+        { 
+            ammoInventory.OnInventoryChanged += UpdateUITextOnly;
+        }
+        
+        if (weaponInventory!=null)  
+        {
+            // Store the lambda reference to remove later
+            weaponInventory.OnWeaponChanged += UpdateUI;
+        }
     }
+    
     private void OnDisable()
     {
-        ammoInventory.OnInventoryChanged -= UpdateUI;
+        if (ammoInventory != null)
+        {
+            ammoInventory.OnInventoryChanged -= UpdateUITextOnly;
+        }
+
+        if (weaponInventory != null)
+        {
+            weaponInventory.OnWeaponChanged -= weaponChangedHandler;
+        }
     }
 
     private void Start()
     {
-        Invoke(nameof(UpdateUI), 0.1f);
+        // Save original position for animation references
+        leftPosition = leftWeaponText.rectTransform.anchoredPosition;
+        centerPosition = centerWeaponText.rectTransform.anchoredPosition;
+        rightPosition = rightWeaponText.rectTransform.anchoredPosition;
+        bottomPosition = bottomWeaponText.rectTransform.anchoredPosition;
+
+        // Prevent any stray tween movement
+        DOTween.KillAll();
+
+        // Save size
+        originalSize = leftWeaponText.rectTransform.localScale;
+        centerBigSize = centerWeaponText.rectTransform.localScale;
+
+
+        if (weaponInventory != null)
+        {
+            InitializeAmmoText();
+        }
+    }
+
+    private void InitializeAmmoText()
+    {
+        // Always show all slots (up to max)
+        int unlocked = weaponInventory.UnlockedSlotCount;
+        List<WeaponSlot> allSlots = new();
+
+        // Add all unlocked weapon slots
+        for (int i = 0; i < unlocked; i++)
+        {
+            allSlots.Add(weaponInventory.GetWeaponSlot(i)); // may include nulls (locked or empty)
+        }
+
+        // If no weapons equipped, display all as empty
+        if (allSlots.Count == 0)
+        {
+            SetEmptyAll();
+            return;
+        }
+
+        int currentIndex = weaponInventory.GetCurrentWeaponIndex();
+
+        // Wrap around logic using only unlocked slots
+        WeaponSlot centerSlot = allSlots[currentIndex];
+        WeaponSlot rightSlot = (unlocked > 1) ? allSlots[(currentIndex + 1) % unlocked] : null;
+        WeaponSlot bottomSlot = (unlocked > 2) ? allSlots[(currentIndex + 2) % unlocked] : null;
+        WeaponSlot leftSlot = (unlocked > 3) ? allSlots[(currentIndex + 3) % unlocked] : null;
+
+        // Assign Text
+        SetText(centerWeaponText, centerSlot);
+        SetText(rightWeaponText, rightSlot);
+        SetText(bottomWeaponText, bottomSlot);
+        SetText(leftWeaponText, leftSlot);
     }
 
     /// <summary>
     /// Updates all ammo slot UI elements to match the player's current weapons and ammo counts.
     /// </summary>
-    private void UpdateUI()
+    private void UpdateUI(WeaponSlot weaponSlot, WeaponSwitchDirection direction)
     {
-        // Loop through all weapon slots
-        for (int i = 0; i < ammoTexts.Length; i++)
+        if (weaponInventory == null || ammoInventory == null) 
         {
-            // Get weapon currently equipped in this slot
-            WeaponSlot weaponSlot = weaponInventory.GetWeaponSlot(i);
-
-            if (weaponSlot != null && weaponSlot.weaponData != null)
-            {
-                // Check which ammo this weapon uses
-                AmmoData ammoType = weaponSlot.weaponData.ammoType;
-
-                if (ammoType != null)
-                {
-                    // Get current ammo count from inventory
-                    int count = ammoInventory.GetAmmoCount(ammoType);
-
-                    // Update text with ammo name and count
-                    ammoTexts[i].text = $"{count}";
-
-                    // Update ammo icon
-                    if (ammoIcons != null && i < ammoIcons.Length)
-                    {
-                        ammoIcons[i].enabled = true;
-                        ammoIcons[i].sprite = ammoType.icon;
-                    }
-                }
-                else
-                {
-                    // Weapon has no ammo assigned
-                    ammoTexts[i].text = "No Ammo";
-                    if (ammoIcons != null && i < ammoIcons.Length)
-                    {
-                        ammoIcons[i].enabled = false;
-                    }
-                }
-            }
-            else
-            {
-                // No weapon equipped on that slot
-                ammoTexts[i].text = "N/A";
-                if (ammoIcons != null && i < ammoIcons.Length)
-                {
-                    ammoIcons[i].enabled = false;
-                }
-            }
+            Debug.LogWarning("[AmmoUI] Missing inventory reference.");
+            return;
         }
+
+        int unlockedCount = weaponInventory.UnlockedSlotCount;
+
+        if (unlockedCount == 2)
+        {
+            RotateAnimation_Two();
+        }
+        else if (unlockedCount == 3)
+        {
+            RotateAnimation_Three(direction == WeaponSwitchDirection.Next);
+        }
+        else if (unlockedCount >= 4)
+        {
+            RotateAnimation_Four(direction == WeaponSwitchDirection.Next);
+        }
+    }
+    
+    private void UpdateUITextOnly()
+    {
+        if (weaponInventory == null || ammoInventory == null)
+        {
+            return;
+        }
+
+        // Update all four text slots
+        WeaponSlot centerSlot = weaponInventory.GetWeaponSlot(weaponInventory.GetCurrentWeaponIndex());
+
+        // Update only the center text
+        SetText(centerWeaponText, centerSlot);
+
+        CenterTextAnimation();
+    }
+
+    private void CenterTextAnimation()
+    {
+        if (centerWeaponText == null)
+        {
+            return;
+        }
+
+        // Scale punch animation (like a quick pop)
+        centerWeaponText.rectTransform.DOPunchScale(Vector3.one * 0.3f, 0.3f, 1, 1f).SetEase(Ease.OutBack);
+    }
+
+    /// <summary>
+    /// Handles rotation animation when 2 weapons are unlocked.
+    /// Simply swaps center and right icons.
+    /// </summary>
+    private void RotateAnimation_Two()
+    {
+        var center = centerWeaponText.rectTransform;
+        var right = rightWeaponText.rectTransform;
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.Join(center.DOAnchorPos(rightPosition, rotateDuration).SetEase(rotateEase));
+        seq.Join(right.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
+
+        seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+        seq.Join(right.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
+
+        seq.OnComplete(() =>
+        {
+            // Swap references
+            TextMeshProUGUI temp = centerWeaponText;
+            centerWeaponText = rightWeaponText;
+            rightWeaponText = temp;
+
+            ResetPositions();
+            ResetSizes();
+        });
+    }
+
+    /// <summary>
+    /// Handles rotation animation when 3 weapons are unlocked.
+    /// Cycles between center, right, and bottom positions.
+    /// </summary>
+    private void RotateAnimation_Three(bool clockwise)
+    {
+        var center = centerWeaponText.rectTransform;
+        var right = rightWeaponText.rectTransform;
+        var bottom = bottomWeaponText.rectTransform;
+
+        Sequence seq = DOTween.Sequence();
+
+        // When Q pressed
+        if (clockwise)
+        {
+            // center -> bottom, bottom -> right, right -> center
+            seq.Join(center.DOAnchorPos(bottomPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOAnchorPos(rightPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
+
+            // Adjust sizes 
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
+
+            seq.OnComplete(() =>
+            {
+                // Rotate references
+                TextMeshProUGUI temp = centerWeaponText;
+                centerWeaponText = rightWeaponText;
+                rightWeaponText = bottomWeaponText;
+                bottomWeaponText = temp;
+                ResetPositions();
+                ResetSizes();
+            });
+        }
+        // When E pressed
+        else
+        {
+            // center -> right, right -> bottom, bottom -> center
+            seq.Join(center.DOAnchorPos(rightPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOAnchorPos(bottomPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
+
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
+
+            seq.OnComplete(() =>
+            {
+                TextMeshProUGUI temp = centerWeaponText;
+                centerWeaponText = bottomWeaponText;
+                bottomWeaponText = rightWeaponText;
+                rightWeaponText = temp;
+                ResetPositions();
+                ResetSizes();
+            });
+        }
+    }
+
+    /// <summary>
+    /// Handles rotation animation when 4 weapons are unlocked.
+    /// Fully rotates through all four positions (left, bottom, right, center).
+    /// </summary>
+    private void RotateAnimation_Four(bool clockwise)
+    {
+        var left = leftWeaponText.rectTransform;
+        var center = centerWeaponText.rectTransform;
+        var right = rightWeaponText.rectTransform;
+        var bottom = bottomWeaponText.rectTransform;
+
+        Sequence seq = DOTween.Sequence();
+
+        if (clockwise)
+        {
+            // Anti Clockwise, When E pressed, move icon to left
+            // Move positions
+            seq.Join(left.DOAnchorPos(bottomPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOAnchorPos(rightPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOAnchorPos(leftPosition, rotateDuration).SetEase(rotateEase));
+
+            // Tween sizes
+            seq.Join(left.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+
+            seq.OnComplete(() =>
+            {
+                TextMeshProUGUI temp = leftWeaponText;
+                leftWeaponText = centerWeaponText;
+                centerWeaponText = rightWeaponText;
+                rightWeaponText = bottomWeaponText;
+                bottomWeaponText = temp;
+                ResetPositions();
+                ResetSizes();
+            });
+
+        }
+        else
+        {
+            // Clockwise, When Q pressed, move icon to right
+            // Move positions
+            seq.Join(left.DOAnchorPos(centerPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOAnchorPos(rightPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOAnchorPos(bottomPosition, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOAnchorPos(leftPosition, rotateDuration).SetEase(rotateEase));
+
+            // Tween sizes
+            seq.Join(left.DOScale(centerBigSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(center.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(right.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+            seq.Join(bottom.DOScale(originalSize, rotateDuration).SetEase(rotateEase));
+
+            seq.OnComplete(() =>
+            {
+                TextMeshProUGUI temp = leftWeaponText;
+                leftWeaponText = bottomWeaponText;
+                bottomWeaponText = rightWeaponText;
+                rightWeaponText = centerWeaponText;
+                centerWeaponText = temp;
+                ResetPositions();
+                ResetSizes();
+            });
+        }
+    }
+
+    private void ResetPositions()
+    {
+        leftWeaponText.rectTransform.anchoredPosition = leftPosition;
+        centerWeaponText.rectTransform.anchoredPosition = centerPosition;
+        rightWeaponText.rectTransform.anchoredPosition = rightPosition;
+        bottomWeaponText.rectTransform.anchoredPosition = bottomPosition;
+    }
+
+    private void ResetSizes()
+    {
+        leftWeaponText.rectTransform.localScale = originalSize;
+        centerWeaponText.rectTransform.localScale = centerBigSize;
+        rightWeaponText.rectTransform.localScale = originalSize;
+        bottomWeaponText.rectTransform.localScale = originalSize;
+    }
+
+    /// <summary>
+    /// Sets text for a specific slot (shows ammo count or N/A)
+    /// </summary>
+    private void SetText(TextMeshProUGUI textElement, WeaponSlot slot)
+    {
+        if (textElement == null)
+        {
+            return;
+        }
+
+        if (slot != null && slot.weaponData != null && slot.weaponData.ammoType != null) 
+        {
+            int count = ammoInventory.GetAmmoCount(slot.weaponData.ammoType);
+            textElement.text = $"{count}";
+        }
+        else
+        {
+            textElement.text = "N/A";
+        }
+    }
+
+    /// <summary>
+    /// Set every text in ammoUi to N/A
+    /// </summary>
+    private void SetEmptyAll()
+    {
+        if (centerWeaponText != null) centerWeaponText.text = "N/A";
+        if (rightWeaponText != null) rightWeaponText.text = "N/A";
+        if (bottomWeaponText != null) bottomWeaponText.text = "N/A";
+        if (leftWeaponText != null) leftWeaponText.text = "N/A";
     }
 }

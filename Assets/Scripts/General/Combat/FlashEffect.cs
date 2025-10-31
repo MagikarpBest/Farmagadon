@@ -1,54 +1,100 @@
 using UnityEngine;
+using System;
 using System.Collections;
-
-// Script from
-// https://github.com/BarthaSzabolcs/Tutorial-SpriteFlash/blob/main/Assets/Scripts/FlashEffects/SimpleFlash.cs
 
 public class FlashEffect : MonoBehaviour
 {
-    [Header("Reference")]
-    [SerializeField] private Material flashMaterial;
-    [SerializeField] private SpriteRenderer spriteRenderer; 
+    [Header("References")]
+    private Material[] materials;
+    private SpriteRenderer[] spriteRenderers;
 
     [Header("Flash Settings")]
-    [SerializeField] private float duration;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color flashColor = Color.white;
+    [SerializeField] private float flashTimer = 0.1f;
+    [SerializeField] public float flashCooldown = 0.15f;
 
-    private Material originalMaterial;
-    private Coroutine flashRoutine;
+    private Coroutine damageFlashCoroutine;
+    private bool canFlash = true;
 
-    void Start()
+    private void Awake()
     {
-        // Get the material that the SpriteRenderer uses, 
-        // so we can switch back to it after the flash ended.
-        originalMaterial = spriteRenderer.material;
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        InitializeMaterials();
     }
 
-    public void Flash()
+    private void InitializeMaterials()
     {
-        // If the flashRoutine is not null, then it is currently running.
-        if (flashRoutine != null)
+        materials = new Material[spriteRenderers.Length];
+        for (int i = 0; i < materials.Length; i++)
         {
-            // In this case, we should stop it first.
-            // Multiple FlashRoutines the same time would cause bugs.
-            StopCoroutine(flashRoutine);
+            materials[i] = spriteRenderers[i].material;
+        }
+    }
+
+    /// <summary>
+    /// Triggers a flash effect.
+    /// Optional: 
+    /// onFlashStart > called immediately when flash starts.
+    /// onFlashComplete > called when flash finishes.
+    /// </summary>
+    public void CallDamageFlash(Action onFlashStart = null, Action onFlashComplete = null)
+    {
+        if (!canFlash)
+        {
+            // Skip flash if on cooldown
+            return;
         }
 
-        // Start the Coroutine, and store the reference for it.
-        flashRoutine = StartCoroutine(FlashRoutine());
+        if (damageFlashCoroutine == null)
+        {
+            Debug.Log("Flash occur");
+            damageFlashCoroutine = StartCoroutine(DamageFlasher(onFlashStart, onFlashComplete));
+        }
     }
 
-    private IEnumerator FlashRoutine()
+    private IEnumerator DamageFlasher(Action onFlashStart, Action onFlashComplete)
     {
-        // Swap to the flashMaterial.
-        spriteRenderer.material = flashMaterial;
+        canFlash = false;
 
-        // Pause the execution of this function for "duration" seconds.
-        yield return new WaitForSeconds(duration);
+        // Immediately trigger start callback
+        onFlashStart?.Invoke();
 
-        // After the pause, swap back to the original material.
-        spriteRenderer.material = originalMaterial;
+        // Set flash color
+        for (int i = 0; i < materials.Length; i++)
+        {
+            materials[i].SetColor("_FlashColor", flashColor);
+        }
 
-        // Set the routine to null, signaling that it's finished.
-        flashRoutine = null;
+        // Lerp flash from 1 to 0 over flashTimer
+        float elapsedTime = 0f;
+        while (elapsedTime < flashTimer)
+        {
+            elapsedTime += Time.deltaTime;
+            float time = Mathf.Clamp01(elapsedTime / flashTimer);
+            float flashAmount = Mathf.Lerp(1f, 0f, time);
+
+            for (int i = 0; i < materials.Length; i++)
+            {
+                materials[i].SetFloat("_FlashAmount", flashAmount);
+            }
+
+            yield return null;
+        }
+
+        // Ensure flash ends at 0
+        for (int i = 0; i < materials.Length; i++)
+        {
+            materials[i].SetFloat("_FlashAmount", 0f);
+        }
+
+        // Callback for FenceHealth or other systems
+        onFlashComplete?.Invoke();
+
+        // Wait cooldown
+        yield return new WaitForSeconds(flashCooldown);
+
+        canFlash = true;
+        damageFlashCoroutine = null;
     }
 }

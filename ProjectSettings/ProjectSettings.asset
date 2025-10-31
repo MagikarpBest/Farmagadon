@@ -672,26 +672,29 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: SORTIFY
-    EmbeddedLinux: SORTIFY
-    GameCoreScarlett: SORTIFY
-    GameCoreXboxOne: SORTIFY
-    Kepler: SORTIFY
-    LinuxHeadlessSimulation: SORTIFY
-    Nintendo Switch: SORTIFY
-    Nintendo Switch 2: SORTIFY
-    PS4: SORTIFY
-    PS5: SORTIFY
-    QNX: SORTIFY
-    Standalone: SORTIFY
-    VisionOS: SORTIFY
-    WebGL: SORTIFY
-    XboxOne: SORTIFY
-    tvOS: SORTIFY
+    Android: SORTIFY;DOTWEEN
+    EmbeddedLinux: SORTIFY;DOTWEEN
+    GameCoreScarlett: SORTIFY;DOTWEEN
+    GameCoreXboxOne: SORTIFY;DOTWEEN
+    Kepler: SORTIFY;DOTWEEN
+    LinuxHeadlessSimulation: SORTIFY;DOTWEEN
+    Nintendo Switch: SORTIFY;DOTWEEN
+    Nintendo Switch 2: SORTIFY;DOTWEEN
+    PS4: SORTIFY;DOTWEEN
+    PS5: SORTIFY;DOTWEEN
+    QNX: SORTIFY;DOTWEEN
+    Standalone: SORTIFY;DOTWEEN
+    VisionOS: SORTIFY;DOTWEEN
+    WebGL: SORTIFY;DOTWEEN
+    Windows Store Apps: DOTWEEN
+    XboxOne: SORTIFY;DOTWEEN
+    iPhone: DOTWEEN
+    tvOS: SORTIFY;DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   il2cppStacktraceInformation: {}

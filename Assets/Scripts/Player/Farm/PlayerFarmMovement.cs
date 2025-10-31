@@ -13,6 +13,9 @@ namespace Farm
         private Vector3 playerFinalPos = Vector3.zero;
         private float startTime = 0;
         private float t = 0;
+
+        public delegate void MovementEvent(Vector2 movementVector);
+        public MovementEvent OnMovementEvent;
         private void Awake()
         {
             playerInput = new PlayerInput();
@@ -33,6 +36,7 @@ namespace Farm
         {
             if (movementDone) { return; }
             Vector2 inputVector = playerInput.Player.Farm.ReadValue<Vector2>().normalized;
+            OnMovementEvent?.Invoke(inputVector);
             int x = (int)inputVector.x;
             int y = (int)inputVector.y;
             playerInitialPos = gridController.Grid.GetCellCenterWorld(playerPos);
@@ -49,14 +53,6 @@ namespace Farm
             movementDone = true;
         }
 
-        
-
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
         void Update()
         {
             if (movementDone)
