@@ -241,7 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderers: []
   flashColor: {r: 2.297397, g: 2.297397, b: 2.297397, a: 1}
   flashTimer: 0.2
   flashCooldown: 0
@@ -258,6 +257,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffectDuration: 0.5
+  visualRoot: {fileID: 5853396687044234735}
+  bobSpeed: 1
+  bobAmount: 0
+  swaySpeed: 1
+  swayAmount: 0.1
+  tiltSpeed: 3
+  tiltAmount: 5
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0

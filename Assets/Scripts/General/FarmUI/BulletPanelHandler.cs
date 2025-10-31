@@ -14,6 +14,7 @@ public class BulletPanelHandler : MonoBehaviour
 
     private void OnEnable()
     {
+
         farmController.StartFarmCycle += UpdateAmmoList;
     }
 

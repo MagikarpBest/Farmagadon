@@ -34,7 +34,7 @@ public class FenceHealth : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth - damage, 0);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        Debug.Log($"{currentHealth}");
+        //Debug.Log($"{currentHealth}");
         // Trigger flash, sprite update happens after flash
         flashEffect.CallDamageFlash(
             onFlashStart: () =>

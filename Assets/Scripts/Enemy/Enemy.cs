@@ -37,6 +37,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        if (enemyVisualHandler == null)
+            Debug.LogWarning($"{enemyData.enemyName} has no EnemyVisualHandler reference!", this);
+
         OnHit?.Invoke();
         // Enemy take damage logic
         if (isDead)
@@ -51,15 +54,16 @@ public class Enemy : MonoBehaviour, IDamageable
 
         currentHealth -= damage;
         flashEffect.CallDamageFlash();
+        StartCoroutine(enemyVisualHandler.PlayHitAnimation());
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
         if (currentHealth <= 0)
         {
-            StartCoroutine(DieAfterDelay(0.1f));
+            StartCoroutine(DieAfterDelay());
         }
     }
 
-    private IEnumerator DieAfterDelay(float delay)
+    private IEnumerator DieAfterDelay()
     {
         if (isDead)
         {
