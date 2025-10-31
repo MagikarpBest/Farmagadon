@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f845f27c3b9ccd04c881113210de32eb, type: 3}
+  m_Name: Level1EnemiesData
+  m_EditorClassIdentifier: 
+  upcomingEnemyDatas:
+  - enemySprite: {fileID: 21300000, guid: acbbfc6f420e45c4f8bb6ea6c2b79e25, type: 3}
+    density: 1
+    enemyWeakness: {fileID: 21300000, guid: a4af4dba66a16634882793b3c8fed0ce, type: 3}
+  - enemySprite: {fileID: 21300000, guid: 86d63b7bb3b59934196d5e3b5f34e019, type: 3}
+    density: 2
+    enemyWeakness: {fileID: 21300000, guid: bf386a8e8c92bdb45a76731f61faed95, type: 3}
+  - enemySprite: {fileID: 21300000, guid: 6d7caccdf1061744a919863d1df8acd5, type: 3}
+    density: 3
+    enemyWeakness: {fileID: 21300000, guid: 05397c80530cc2b4faca477d52d0e397, type: 3}

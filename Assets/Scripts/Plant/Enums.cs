@@ -17,3 +17,11 @@ public enum ENEMY_WEAKNESS
     Potato,
     Carrot,
 }
+
+public enum ENEMY_DENSITY
+{
+    Small=0,
+    Moderate=1,
+    Large=2,
+    Army=3
+}

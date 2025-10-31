@@ -20,12 +20,10 @@ public class FarmController : MonoBehaviour
     public event Action StopFarmCycle;
     public event Action OnCropFarmed;
 
-    public delegate void GridEvent(DayCycleLevelData data);
-    public GridEvent StartGridPlanting;
-    //public delegate void EndGame();
-    //public EndGame gameEnd; // invoked from Timer.cs
-    //public delegate void CropFarmed();
-    //public CropFarmed OnCropFarmed; // invoked from plants.cs -> GridController.cs
+    public delegate void FarmStarted(DayCycleLevelData data);
+    public FarmStarted StartGridPlanting;
+    public FarmStarted SetUpcomingEnemies;
+    
 
     public void OnEnable()
     {
@@ -60,6 +58,7 @@ public class FarmController : MonoBehaviour
             return; 
         }
         StartGridPlanting?.Invoke(levelData);
+        SetUpcomingEnemies?.Invoke(levelData);
     }
     public void EndFarmCycle()
     {
