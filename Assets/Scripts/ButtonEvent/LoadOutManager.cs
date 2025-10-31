@@ -1,3 +1,4 @@
+using Farm;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using TMPro;
@@ -9,6 +10,8 @@ using UnityEngine.UI;
 public class LoadOutManager : MonoBehaviour
 {
     [SerializeField] private GameInput gameInput;
+    [SerializeField] private int loadoutColumn = 2;
+    [SerializeField] private int bagColumn = 4;
     [SerializeField] private List<Button> loadoutSlots;
     [SerializeField] private List<Button> bagButtons;
 
@@ -16,6 +19,7 @@ public class LoadOutManager : MonoBehaviour
     private int selectedBagIndex = 0;
     private bool selectingBag = false;
     private bool slotActive = false;
+    private bool isColumn = false;
     //list for slots
     Dictionary<int, GameObject> slotItems = new Dictionary<int, GameObject>();
     private List<GameObject> currentLoadout = new List<GameObject>();
@@ -49,6 +53,8 @@ public class LoadOutManager : MonoBehaviour
         if(gameInput != null)
         {
             gameInput.OnShootAction += ComfirmSelection;
+
+            
         }
     }
 
@@ -62,21 +68,44 @@ public class LoadOutManager : MonoBehaviour
 
     private void Update()
     {
-        HandleKeyboardNavigation();
+        MovementInput();
     }
 
-    private void HandleKeyboardNavigation()
+    public void MovementInput()
     {
         if (gameInput == null) return;
 
         Vector2 moveInput = gameInput.GetMovementVectorNormalized();
 
+        //horizontal
         if (Mathf.Abs(moveInput.x) > 0.5f && Time.time - lastMoveTime > moveCooldown)
         {
+            isColumn = false;
             if (moveInput.x > 0)
-                MoveSelection(1); // D / Right
+                MoveSelection(1); // D
             else
-                MoveSelection(-1); // A / Left
+                MoveSelection(-1); // A
+
+            lastMoveTime = Time.time;
+        }
+
+        if (Mathf.Abs(moveInput.y) > 0.5f && Time.time - lastMoveTime > moveCooldown)
+        {
+            isColumn = true;
+            if (selectingBag)
+            {
+                if (moveInput.y > 0)
+                    MoveSelection(-bagColumn); // W
+                else
+                    MoveSelection(bagColumn); // S
+            }
+            else
+            {
+                if (moveInput.y > 0)
+                    MoveSelection(-loadoutColumn); // W
+                else
+                    MoveSelection(loadoutColumn); // S
+            }
 
             lastMoveTime = Time.time;
         }
@@ -92,8 +121,30 @@ public class LoadOutManager : MonoBehaviour
             HighlightSlot(selectedIndex, false);
             selectedIndex += direction;
 
-            if (selectedIndex < 0) selectedIndex = loadoutSlots.Count - 1;
-            else if (selectedIndex >= loadoutSlots.Count) selectedIndex = 0;
+            if (isColumn)
+            {
+                Debug.Log(selectedIndex % loadoutColumn); 
+                if (selectedIndex < 0)
+                {
+                    selectedIndex += loadoutColumn;
+                }
+                else if (selectedIndex >= loadoutSlots.Count) //works
+                {
+                    selectedIndex %= loadoutColumn;
+                }
+            }
+            else 
+            {
+                Debug.Log(selectedIndex % loadoutColumn);
+                if ((selectedIndex % loadoutColumn) < 0)
+                {
+                    selectedIndex = selectedIndex % loadoutColumn;
+                }
+                else if (selectedIndex%loadoutColumn < loadoutColumn)
+                {
+                    selectedIndex = selectedIndex % loadoutColumn;
+                }
+            }
 
             HighlightSlot(selectedIndex, true);
             Debug.Log($"Selected loadout slot {selectedIndex}");
@@ -106,8 +157,30 @@ public class LoadOutManager : MonoBehaviour
             HighlightBag(selectedBagIndex, false);
             selectedBagIndex += direction;
 
-            if (selectedBagIndex < 0) selectedBagIndex = bagButtons.Count - 1;
-            else if (selectedBagIndex >= bagButtons.Count) selectedBagIndex = 0;
+            if (isColumn)
+            {
+                if (selectedBagIndex < 0)
+                {
+                    selectedBagIndex += bagColumn; //broken now
+                }
+                else if (selectedBagIndex >= bagButtons.Count)
+                {
+                    selectedBagIndex %= bagColumn; //works
+                }
+            }
+            else
+            {
+                if ((selectedBagIndex % bagColumn) < 0) //this one works already don't touch first
+                {
+                    Debug.Log(selectedBagIndex % bagColumn);
+                    selectedBagIndex += bagColumn;
+                }
+                else if ((selectedBagIndex % bagColumn)-1 >3 || (selectedBagIndex % bagColumn) -1 < -1)  //still broken
+                {
+                    Debug.Log(selectedBagIndex % bagColumn);
+                    selectedBagIndex -= bagColumn;
+                }
+            }
 
             HighlightBag(selectedBagIndex, true);
             Debug.Log($"Selected bag item {selectedBagIndex}");

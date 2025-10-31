@@ -29,7 +29,7 @@ namespace Farm
             playerInput.Player.Disable();
         }
 
-        private void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        public void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             if (movementDone) { return; }
             Vector2 inputVector = playerInput.Player.Farm.ReadValue<Vector2>().normalized;
