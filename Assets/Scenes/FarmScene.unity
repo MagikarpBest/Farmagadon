@@ -835,6 +835,7 @@ GameObject:
   - component: {fileID: 447416738}
   - component: {fileID: 447416737}
   - component: {fileID: 447416736}
+  - component: {fileID: 447416740}
   m_Layer: 5
   m_Name: RecommendedPanel
   m_TagString: Untagged
@@ -938,6 +939,28 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &447416740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447416734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd7f7176a03e8e4981c9d131fa990c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  farmController: {fileID: 43128269}
+  enemyIconPrefab: {fileID: 8597545748276133870, guid: 852d20a1a32736b4fad35b27bd698f39, type: 3}
+  enemyImages:
+  - {fileID: 904418734}
+  - {fileID: 1515619289}
+  - {fileID: 1290547908}
+  bulletImages:
+  - {fileID: 2037771592}
+  - {fileID: 399744082}
+  - {fileID: 973394930}
 --- !u!1 &494717172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,7 +1572,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -125.3, y: 56.3}
+  m_AnchoredPosition: {x: -125.3, y: 56.300003}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &904418734
@@ -1573,7 +1596,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: acbbfc6f420e45c4f8bb6ea6c2b79e25, type: 3}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

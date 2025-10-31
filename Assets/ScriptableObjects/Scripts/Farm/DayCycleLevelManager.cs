@@ -9,7 +9,7 @@ public class DayCycleLevelManager : ScriptableObject
 
     public DayCycleLevelData GetLevelData(int level)
     {
+        if (dayLevels.Length <= 0) { return null; }
         return dayLevels[Mathf.Clamp(level, 0, dayLevels.Length-1)];
-        
     }
 }

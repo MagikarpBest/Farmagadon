@@ -22,3 +22,4 @@ MonoBehaviour:
     cropGrowRate: 1
     cropDropAmount: 10
   dayCycleDuration: 10
+  upcomingEnemyDatas: {fileID: 11400000, guid: 73d013eb60bb9f44f919f9dc441b8781, type: 2}

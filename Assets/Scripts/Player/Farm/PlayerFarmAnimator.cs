@@ -62,7 +62,7 @@ public class PlayerFarmAnimator : MonoBehaviour
         }
         bufferTime = clips[1].length + 0.15f;
         prevTime = Time.time;
-        //idleBuffer = true;
+
     }
 
     public void AnimStarted()
@@ -73,7 +73,6 @@ public class PlayerFarmAnimator : MonoBehaviour
     public void AnimEnded(AnimState endedAnimState)
     {
         playerAnimator.SetBool(animDict[endedAnimState], false);
-        //PlayAnim(AnimState.Idle);
     }
 
     private void PlayAnim(AnimState currAnimState)
@@ -98,7 +97,6 @@ public class PlayerFarmAnimator : MonoBehaviour
         
         if (Time.time - prevTime >= bufferTime)
         {
-            //idleBuffer = false;
             PlayAnim(AnimState.Idle);
         }
         
