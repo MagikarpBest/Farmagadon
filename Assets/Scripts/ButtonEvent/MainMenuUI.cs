@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-public class MenuUI : MonoBehaviour
+public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] public GameObject Menu;
     [SerializeField] public GameObject Blocker;
