@@ -1,9 +1,11 @@
 using Farm;
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -14,7 +16,6 @@ public class LoadOutManager : MonoBehaviour
     [SerializeField] private int bagColumn = 4;
     [SerializeField] private List<Button> loadoutSlots;
     [SerializeField] private List<Button> bagButtons;
-
     private int selectedIndex = 0;
     private int selectedBagIndex = 0;
     private bool selectingBag = false;
@@ -24,7 +25,7 @@ public class LoadOutManager : MonoBehaviour
     Dictionary<int, GameObject> slotItems = new Dictionary<int, GameObject>();
     private List<GameObject> currentLoadout = new List<GameObject>();
 
-    private float moveCooldown = 0.2f;
+    private float moveCooldown = 0.1f;
     private float lastMoveTime = 0f;
 
     private void Start()
@@ -43,7 +44,6 @@ public class LoadOutManager : MonoBehaviour
             if (outline != null)
                 outline.enabled = false;
         }
-
         //highlight first slot
         HighlightSlot(selectedIndex, true);
     }
@@ -113,75 +113,54 @@ public class LoadOutManager : MonoBehaviour
 
     private void MoveSelection(int direction)
     {
+
         if (!selectingBag)
         {
-            // Move between loadout slots
             if (loadoutSlots.Count == 0) return;
+            
+            int nextIndex = selectedIndex + direction;
 
-            HighlightSlot(selectedIndex, false);
-            selectedIndex += direction;
+            //just stop moving when it reach the edge
+            // up down
 
             if (isColumn)
             {
-                Debug.Log(selectedIndex % loadoutColumn); 
-                if (selectedIndex < 0)
-                {
-                    selectedIndex += loadoutColumn;
-                }
-                else if (selectedIndex >= loadoutSlots.Count) //works
-                {
-                    selectedIndex %= loadoutColumn;
-                }
+                if (nextIndex < 0 || nextIndex >= loadoutSlots.Count) return;
             }
-            else 
+            else //left right
             {
-                Debug.Log(selectedIndex % loadoutColumn);
-                if ((selectedIndex % loadoutColumn) < 0)
-                {
-                    selectedIndex = selectedIndex % loadoutColumn;
-                }
-                else if (selectedIndex%loadoutColumn < loadoutColumn)
-                {
-                    selectedIndex = selectedIndex % loadoutColumn;
-                }
+                int currentRow = selectedIndex / loadoutColumn;
+                int nextRow = nextIndex / loadoutColumn;
+                if (nextRow != currentRow || nextIndex < 0 || nextIndex >= loadoutSlots.Count) return;
             }
 
+            HighlightSlot(selectedIndex, false);
+            selectedIndex = nextIndex;
             HighlightSlot(selectedIndex, true);
             Debug.Log($"Selected loadout slot {selectedIndex}");
         }
         else
         {
-            // Move between bag items
+            //move at inventory
             if (bagButtons.Count == 0) return;
 
+            //HighlightBag(selectedBagIndex, false);
+            int nextBagIndex = selectedBagIndex + direction;
+
+            if (isColumn) //up down
+            {
+                if (nextBagIndex < 0 || nextBagIndex >= bagButtons.Count) return;
+            }
+            else //left right
+            {
+                int currentRow = selectedBagIndex / bagColumn;
+                int nextRow = nextBagIndex / bagColumn;
+                if (nextRow != currentRow || nextBagIndex < 0 || nextBagIndex >= bagButtons.Count) return;
+            }
+
+            
             HighlightBag(selectedBagIndex, false);
-            selectedBagIndex += direction;
-
-            if (isColumn)
-            {
-                if (selectedBagIndex < 0)
-                {
-                    selectedBagIndex += bagColumn; //broken now
-                }
-                else if (selectedBagIndex >= bagButtons.Count)
-                {
-                    selectedBagIndex %= bagColumn; //works
-                }
-            }
-            else
-            {
-                if ((selectedBagIndex % bagColumn) < 0) //this one works already don't touch first
-                {
-                    Debug.Log(selectedBagIndex % bagColumn);
-                    selectedBagIndex += bagColumn;
-                }
-                else if ((selectedBagIndex % bagColumn)-1 >3 || (selectedBagIndex % bagColumn) -1 < -1)  //still broken
-                {
-                    Debug.Log(selectedBagIndex % bagColumn);
-                    selectedBagIndex -= bagColumn;
-                }
-            }
-
+            selectedBagIndex = nextBagIndex;
             HighlightBag(selectedBagIndex, true);
             Debug.Log($"Selected bag item {selectedBagIndex}");
         }
@@ -193,7 +172,6 @@ public class LoadOutManager : MonoBehaviour
         {
             slotActive = true;
             selectingBag = true;
-
             selectedBagIndex = 0;
             UpdateHighlights();
 
