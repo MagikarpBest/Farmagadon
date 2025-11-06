@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 214345657147760057}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.288, z: 0}
+  m_LocalPosition: {x: 0, y: -0.2880001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -137,9 +137,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualRoot: {fileID: 0}
+  hitEffectRoot: {fileID: 0}
   deathEffectDuration: 0.5
-  spriteRenderer:
-  - {fileID: 3171474576470571282}
+  wiggleSpeed: 15
+  wiggleAmount: 3
+  squishSpeed: 8
+  squishAmount: 0.07
+  jitterAmount: 0.02
 --- !u!114 &7172020342127600527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,8 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderers: []
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColor: {r: 2.297397, g: 2.297397, b: 2.297397, a: 1}
   flashTimer: 0.2
   flashCooldown: 0
 --- !u!1 &1076357976633803017
@@ -255,7 +259,6 @@ GameObject:
   - component: {fileID: 3270376632214626398}
   - component: {fileID: -1748277552686560176}
   - component: {fileID: 2108004681978173586}
-  - component: {fileID: 5440389394654593888}
   - component: {fileID: 8948866146548805567}
   - component: {fileID: 6198712676741713122}
   m_Layer: 0
@@ -371,21 +374,6 @@ MonoBehaviour:
   enemyVisualHandler: {fileID: 6198712676741713122}
   enemyData: {fileID: 11400000, guid: 33a8d280d9329c44e8a8c54710789575, type: 2}
   flashEffect: {fileID: 8948866146548805567}
---- !u!114 &5440389394654593888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1940379239426215094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10b34e4072fb20a49a4a475672644ae6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 1104957016568486172}
-  normalVisuals:
-  - {fileID: 21300000, guid: acbbfc6f420e45c4f8bb6ea6c2b79e25, type: 3}
 --- !u!114 &8948866146548805567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,8 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderers: []
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColor: {r: 2.297397, g: 2.297397, b: 2.297397, a: 1}
   flashTimer: 0.2
   flashCooldown: 0
 --- !u!114 &6198712676741713122
@@ -414,9 +401,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualRoot: {fileID: 5853396687044234735}
+  hitEffectRoot: {fileID: 0}
   deathEffectDuration: 0.5
-  spriteRenderer:
-  - {fileID: 1104957016568486172}
+  wiggleSpeed: 15
+  wiggleAmount: 3
+  squishSpeed: 8
+  squishAmount: 0.07
+  jitterAmount: 0.02
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,12 +485,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: acbbfc6f420e45c4f8bb6ea6c2b79e25, type: 3}
+  m_Sprite: {fileID: 4369315618931253590, guid: ed02e921923745b49a0ff3fa9bf3912c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.1, y: 2.66}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

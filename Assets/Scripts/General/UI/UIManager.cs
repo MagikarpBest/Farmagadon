@@ -9,6 +9,7 @@ public enum UIScreen
     Victory,
     GameOver,
     Pause,
+    Settings,
 }
 
 public class UIManager : MonoBehaviour
@@ -17,14 +18,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject hudPanel;           // Main HUD for both Farm & Combat & Loadout
     [SerializeField] private GameObject victoryPanel;       // Combat victory new crops
     [SerializeField] private GameObject gameOverPanel;      // Dead UI
-    [SerializeField] private GameObject pausePanel;
-    [SerializeField] private GameObject weaponChoicePanel;
+    [SerializeField] private GameObject pausePanel;         // Pause UI
+    [SerializeField] private GameObject weaponChoicePanel;  // Victory UI for recipe pick
+    [SerializeField] private GameObject settingsPanel;       // Pause setting UI
 
     public event Action OnVictoryCompleted;
 
     private void Awake()
     {
-        hudPanel?.SetActive(true);
+        if (hudPanel != null)
+        {
+            ShowHUD();
+        }
     }
 
     // ----------------------
@@ -33,43 +38,108 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Shows a screen. Pause can overlay HUD.
     /// </summary>
-    public void Show(UIScreen screen)
+    private void Show(UIScreen screen)
     {
         switch (screen)
         {
             case UIScreen.HUD:
-                hudPanel?.SetActive(true);
+                SafeShow(hudPanel);
                 break;
+
             case UIScreen.Victory:
+                SafeShow(victoryPanel);
                 HideAllExcept(screen);
-                victoryPanel?.SetActive(true);
                 break;
+
             case UIScreen.GameOver:
                 HideAllExcept(screen);
-                gameOverPanel?.SetActive(true);
+                SafeShow(gameOverPanel);
                 break;
+
             case UIScreen.Pause:
-                pausePanel?.SetActive(true); // overlay, do not hide HUD
+                SafeShow(pausePanel);
+                break;
+
+            case UIScreen.Settings:
+                SafeHide(pausePanel, true);
+                SafeShow(settingsPanel);
                 break;
         }
     }
 
-    public void Hide(UIScreen screen)
+    private void Hide(UIScreen screen, bool rememberNavigation = false)
     {
         switch (screen)
         {
-            case UIScreen.HUD: hudPanel?.SetActive(false); 
-                 break;
-
-            case UIScreen.Victory: victoryPanel?.SetActive(false); 
+            case UIScreen.HUD:
+                SafeHide(hudPanel);
                 break;
 
-            case UIScreen.GameOver: gameOverPanel?.SetActive(false); 
+            case UIScreen.Victory:
+                SafeHide(victoryPanel);
                 break;
 
-            case UIScreen.Pause: pausePanel?.SetActive(false); 
+            case UIScreen.GameOver:
+                SafeHide(gameOverPanel);
+                break;
+
+            case UIScreen.Pause:
+                SafeHide(pausePanel);
+                break;
+
+            case UIScreen.Settings:
+                SafeHide(settingsPanel);
+                ShowPause(true);
                 break;
         }
+    }
+
+
+
+    // Navigations helpers
+    /// <summary>
+    /// Start first selected navigation and save last selected memory
+    /// </summary>
+    private void SafeShow(GameObject panel, bool resetMemory = false)
+    {
+        if (panel == null)
+        {
+            return;
+        }
+
+        var navigation = panel.GetComponent<UINavigationMemory>();
+        if (resetMemory)
+        {
+            navigation?.ResetMemory();
+        }
+
+        panel.SetActive(true);
+        navigation?.ActivateUI();
+    }
+
+    /// <summary>
+    ///  If memory remember is ticked, when menu close it will remember.
+    /// </summary>
+    private void SafeHide(GameObject panel, bool remember = false)
+    {
+        if (panel == null) 
+        { 
+            return; 
+        }
+
+        var navigation = panel.GetComponent<UINavigationMemory>();
+        if (navigation != null)
+        {
+            if (remember)
+            {
+                navigation.DeactivateUI();
+            }
+            else 
+            {
+                navigation.ResetMemory();
+            }
+        }
+        panel.SetActive(false);
     }
 
     /// <summary>
@@ -83,6 +153,9 @@ public class UIManager : MonoBehaviour
         // pausePanel is never hidden here to allow overlay
     }
 
+    // ===========================
+    // HELPERS / EVENTS
+    // ===========================
     /// <summary>
     /// Called when player clicks "Next" on Victory screen
     /// </summary>
@@ -96,5 +169,9 @@ public class UIManager : MonoBehaviour
     public void ShowHUD() => Show(UIScreen.HUD);
     public void ShowVictory() => Show(UIScreen.Victory);
     public void ShowGameOver() => Show(UIScreen.GameOver);
-    public void ShowPause() => Show(UIScreen.Pause);
+    public void ShowPause(bool rememberNavigation = false) => Show(UIScreen.Pause);
+    public void ShowSettings() => Show(UIScreen.Settings);
+    public void HideSettings() => Hide(UIScreen.Settings);
+    public void HideVictory() => Hide(UIScreen.Victory);
+    public void HidePause(bool rememberNavigation = false) => Hide(UIScreen.Pause, rememberNavigation);
 }

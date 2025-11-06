@@ -166,8 +166,16 @@ public class AmmoUI : MonoBehaviour
             return;
         }
 
-        // Scale punch animation (like a quick pop)
-        centerWeaponText.rectTransform.DOPunchScale(Vector3.one * 0.3f, 0.3f, 1, 1f).SetEase(Ease.OutBack);
+        var rect = centerWeaponText.rectTransform;
+
+        // 1. Stop any ongoing tween on this target
+        rect.DOKill();
+
+        // 2. Reset to base scale (so it doesn’t keep stacking)
+        rect.localScale = centerBigSize;
+
+        // 3. Apply the punch
+        rect.DOPunchScale(Vector3.one * 0.3f, 0.3f, 1, 1f).SetEase(Ease.OutBack);
     }
 
     /// <summary>

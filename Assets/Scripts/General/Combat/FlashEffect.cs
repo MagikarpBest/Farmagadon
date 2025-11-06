@@ -48,7 +48,7 @@ public class FlashEffect : MonoBehaviour
 
         if (damageFlashCoroutine == null)
         {
-            Debug.Log("Flash occur");
+            //Debug.Log("Flash occur");
             damageFlashCoroutine = StartCoroutine(DamageFlasher(onFlashStart, onFlashComplete));
         }
     }

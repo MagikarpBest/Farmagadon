@@ -3,6 +3,7 @@
 [CreateAssetMenu(menuName = "Wave System/Level Data", fileName = "NewLevel")]
 public class LevelData : ScriptableObject
 {
+    public string levelName;
     public float totalDuration = 90f; // Whole level length
     public WaveEvent[] events; // timeline of wave
 }
