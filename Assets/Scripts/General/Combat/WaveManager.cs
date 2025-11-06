@@ -4,9 +4,11 @@ using System.Collections;
 public class WaveManager : MonoBehaviour
 {
     // ScriptableObject that stores all wave events for this level
+    [Header("References")]
     [SerializeField] private Transform spawnPointA; 
     [SerializeField] private Transform spawnPointB;
     [SerializeField] private LevelDatabase levelDatabase;
+    [SerializeField] private LevelIntroUI levelIntroUI;
 
     private LevelData levelData;
     private float elapsedTime;
@@ -15,13 +17,8 @@ public class WaveManager : MonoBehaviour
 
     public event Action<float, float> OnTimeUpdated;
     public event Action OnLevelCompleted;
-
     private Coroutine levelCoroutine;
 
-    public void setLevel(LevelData data)
-    {
-        levelData = data;
-    }
     public void BeginLevel(int levelIndex)
     {
         if (levelDatabase == null)
@@ -43,11 +40,16 @@ public class WaveManager : MonoBehaviour
             StopCoroutine(levelCoroutine);
         }
 
-        levelCoroutine = StartCoroutine(LevelRoutine());
+        levelCoroutine = StartCoroutine(LevelRoutine(levelIndex));
     }
 
-    private IEnumerator LevelRoutine()
+    private IEnumerator LevelRoutine(int levelIndex)
     {
+        if (levelIntroUI != null)
+        {
+            Debug.Log("Played level intro");
+            yield return StartCoroutine(levelIntroUI.PlayLevelIntro(levelIndex, levelData.levelName));
+        }
         elapsedTime = 0f;
         nextEventIndex = 0;
 

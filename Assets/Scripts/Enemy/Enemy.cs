@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using DG.Tweening;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
@@ -11,18 +10,16 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private FlashEffect flashEffect;           // Go to flash effect to edit on hit flash setting
 
     public event Action<Enemy> OnDeath;
-    public event Action OnHit;
 
     private Collider2D[] colliders;
-    private SpriteRenderer[] spriteRenderer;
     private int currentHealth;
     private bool isAttackingFence = false;
     private bool isDead = false;
     private Coroutine attackRoutine;
+
     private void Awake()
     {
         currentHealth = enemyData.maxHealth;
-        spriteRenderer = GetComponentsInChildren<SpriteRenderer>();
         colliders = GetComponentsInChildren<Collider2D>();
     }
 
@@ -32,12 +29,17 @@ public class Enemy : MonoBehaviour, IDamageable
         if (!isAttackingFence && !isDead) 
         {
             transform.Translate(Vector2.down * enemyData.moveSpeed * Time.deltaTime);
+            enemyVisualHandler.PlayMoveAnimation();
         }
     }
 
     public void TakeDamage(int damage)
     {
-        OnHit?.Invoke();
+        if (enemyVisualHandler == null)
+        {
+            Debug.LogWarning($"{enemyData.enemyName} has no EnemyVisualHandler reference!", this);
+        }
+
         // Enemy take damage logic
         if (isDead)
         {
@@ -51,15 +53,16 @@ public class Enemy : MonoBehaviour, IDamageable
 
         currentHealth -= damage;
         flashEffect.CallDamageFlash();
+        StartCoroutine(enemyVisualHandler.PlayHitAnimation());
         Debug.Log(enemyData.enemyName + " took " + damage + " damage. HP left " + currentHealth);
 
         if (currentHealth <= 0)
         {
-            StartCoroutine(DieAfterDelay(0.1f));
+            StartCoroutine(DieAfterDelay());
         }
     }
 
-    private IEnumerator DieAfterDelay(float delay)
+    private IEnumerator DieAfterDelay()
     {
         if (isDead)
         {
@@ -110,12 +113,15 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         while (fence != null && fence.GetHealth() > 0)
         {
-            // Deal damage to fence based on enemy damage
-            fence.TakeDamage(enemyData.damage);
-            //Debug.Log($"{enemyData.enemyName} attacks fence for {enemyData.damage}");
+            StartCoroutine(enemyVisualHandler.PlayAttackAnimation(enemyData.attackInterval));
 
-            // Wait attack cd time of enemy before attacking again
-            yield return new WaitForSeconds(enemyData.attackInterval);
+            // Wait until the hit frame
+            yield return new WaitForSeconds(enemyVisualHandler.GetHitTiming(enemyData.attackInterval));
+            fence.TakeDamage(enemyData.damage);
+
+            // Wait remaining recovery time
+            yield return new WaitForSeconds(enemyVisualHandler.GetRecoverTiming(enemyData.attackInterval));
+            //Debug.Log($"{enemyData.enemyName} attacks fence for {enemyData.damage}");
         }
         // Stop attack if fence is destroyed
         isAttackingFence = false;

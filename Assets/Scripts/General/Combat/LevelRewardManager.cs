@@ -82,7 +82,7 @@ public class LevelRewardManager : MonoBehaviour
         }
         else
         {
-            uiManager.Show(UIScreen.Victory);
+            uiManager.ShowVictory();
 
             // Give all reward directly
             foreach (var id in availableRewards)

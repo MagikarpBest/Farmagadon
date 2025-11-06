@@ -34,7 +34,7 @@ public class FenceVisualManager : MonoBehaviour
         transform.DOShakePosition(fenceHitEffectDuration, 0.10f, 10, 90, false, true);
 
         // Wait until done
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(waitDuration);
         hitAnimationCoroutine = null;
     }
 }

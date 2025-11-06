@@ -34,7 +34,7 @@ public class FenceHealth : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth - damage, 0);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        Debug.Log($"{currentHealth}");
+        //Debug.Log($"{currentHealth}");
         // Trigger flash, sprite update happens after flash
         flashEffect.CallDamageFlash(
             onFlashStart: () =>
@@ -55,7 +55,7 @@ public class FenceHealth : MonoBehaviour
     private void UpdateFenceSprite()
     {
         float healthPercent = (float)currentHealth / maxHealth;
-        Debug.Log("Update fence sprite");
+        //Debug.Log("Update fence sprite");
         if (healthPercent <= 0f)
             spriteRenderer.sprite = destroyedSprite;
         else if (healthPercent <= 0.25f)
