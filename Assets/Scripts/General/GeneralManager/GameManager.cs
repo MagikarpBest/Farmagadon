@@ -97,10 +97,10 @@ public class GameManager : MonoBehaviour
     private void StartFarmPhase()
     {
         Debug.Log("[GameManager] Starting FARM phase.");
-        if (farmDataBridge != null)
-        {
-            farmDataBridge.Initialize(SaveData);
-        }
+        //if (farmDataBridge != null)
+        //{
+        //    farmDataBridge.Initialize(SaveData);
+        //}
         UIManager?.ShowHUD();
         Time.timeScale = 1.0f;
 
@@ -165,15 +165,6 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Called when farm end to switch scene.
-    /// </summary>
-    private void OnFarmEnd()
-    {
-        farmDataBridge.SaveProgress();
-        sceneController.LoadScene(GetNextSceneName());
-    }
-
-    /// <summary>
     /// Use to get next scene name and change scene/
     /// </summary>
     private string GetNextSceneName()
@@ -231,7 +222,7 @@ public class GameManager : MonoBehaviour
 
         if (farmController != null)
         {
-            farmController.StopFarmCycle += OnFarmEnd;
+            farmController.StopFarmCycle += SaveAll;
         }
     }
 
@@ -255,11 +246,6 @@ public class GameManager : MonoBehaviour
         if (levelRewardManager != null)
         {
             levelRewardManager.OnRewardGiven -= OnVictoryUICompleted;
-        }
-
-        if (farmController != null)
-        {
-            farmController.StopFarmCycle -= OnFarmEnd;
         }
     }
     #endregion
