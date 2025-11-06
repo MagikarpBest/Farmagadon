@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmController: {fileID: 43128269}
   slider: {fileID: 1376999756}
-  dayTimeDuration: 4
+  dayTimeDuration: 15
 --- !u!1 &249844771
 GameObject:
   m_ObjectHideFlags: 0
@@ -5104,7 +5104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateManager: {fileID: 8904007196397482407}
   gameInput: {fileID: 6776002790584438959}
-  UIManager: {fileID: 2065459253}
+  UiManager: {fileID: 0}
+  resumeButton: {fileID: 0}
+  quitButton: {fileID: 0}
 --- !u!4 &8423369960247033806
 Transform:
   m_ObjectHideFlags: 0
