@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections;
 
 public class WeaponChoiceUI : MonoBehaviour
 {
@@ -70,6 +72,17 @@ public class WeaponChoiceUI : MonoBehaviour
             {
                 rewardCards[i].gameObject.SetActive(false);
             }
+        }
+        StartCoroutine(SelectAfterFrame());
+    }
+    private IEnumerator SelectAfterFrame()
+    {
+        if (choiceButtons.Length > 0 && choiceButtons[0] != null)
+        {
+            yield return null;
+            EventSystem.current.SetSelectedGameObject(null); // Clear old selection
+            EventSystem.current.SetSelectedGameObject(choiceButtons[0].gameObject); // Force-select first button
+            Debug.Log("Default reward button selected: " + choiceButtons[0].name);
         }
     }
 

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: SessionCache
   m_EditorClassIdentifier: 
   openTabs:
-    values: []
+    values:
+    - {fileID: 11400000, guid: 168dc659fc03beb44b2f3115a18b09a7, type: 2}

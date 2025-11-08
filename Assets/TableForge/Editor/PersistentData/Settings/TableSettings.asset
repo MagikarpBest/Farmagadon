@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pollingInterval: 0.5
   enablePolling: 0
-  removeFormulaOnCellValueChange: 0
+  removeFormulaOnCellValueChange: 1
   rowHeaderVisibility: 7
   columnHeaderVisibility: 6
