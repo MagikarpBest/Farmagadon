@@ -73,6 +73,7 @@ public class WeaponChoiceUI : MonoBehaviour
                 rewardCards[i].gameObject.SetActive(false);
             }
         }
+        // Delay and force select 1 frame after cuz fuck unity ui garbage bug
         StartCoroutine(SelectAfterFrame());
     }
     private IEnumerator SelectAfterFrame()
