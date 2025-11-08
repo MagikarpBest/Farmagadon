@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmController: {fileID: 43128269}
   slider: {fileID: 1376999756}
-  dayTimeDuration: 10
+  dayTimeDuration: 100
 --- !u!1 &249844771
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,15 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9005473033cc715429c16a3326f60ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  farmController: {fileID: 43128269}
-  saveData:
-    currentLevel: 1
-    currentPhase: 0
-    unlockedSlots: 4
-    ownedWeaponIDs: []
-    equippedWeaponIDs: []
-    ownedAmmoIDs: []
-    ownedAmmoCounts: 
 --- !u!1001 &272366454
 PrefabInstance:
   m_ObjectHideFlags: 0

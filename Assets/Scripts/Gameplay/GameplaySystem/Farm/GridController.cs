@@ -104,7 +104,7 @@ namespace Farm
             flyingCropSprite.transform.position = startPos;
             Vector3[] curvePath = new[] { startPos, startPos + new Vector3(0.5f, 4.0f), startPos + new Vector3(2.0f, 4.0f), endPos };
             Sequence flyingSequence = DOTween.Sequence();
-            flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.CatmullRom).SetEase(Ease.InCirc));
+            flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.CatmullRom).SetEase(Ease.InQuint));
             flyingSequence.Append(flyingCropSprite.transform.DOScale(0.5f, 0.2f));
             
             yield return new WaitForSeconds(flyingSequence.Duration());
