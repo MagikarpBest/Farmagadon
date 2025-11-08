@@ -10,8 +10,18 @@ public class BulletPanelHandler : MonoBehaviour
     [SerializeField] private Image bulletPanelPrefab;
     [SerializeField] private VerticalLayoutGroup verticalLayoutGroup;
 
-    private Image[] bulletPanels = new Image[4];
+    private static PanelData[] bulletPanels = new PanelData[4];
+    private struct PanelData
+    {
+        public Image bulletPanel;
+        public AmmoData ammoData;
 
+        public PanelData(Image panel, AmmoData data)
+        {
+            bulletPanel = panel;
+            ammoData = data;
+        }
+    }
     private void OnEnable()
     {
 
@@ -23,11 +33,23 @@ public class BulletPanelHandler : MonoBehaviour
         farmController.StartFarmCycle -= UpdateAmmoList;
     }
 
+    public static Image GetBulletPanel(AmmoData data)
+    {
+        foreach (var panelData in bulletPanels)
+        {
+            if (panelData.ammoData == data)
+            {
+                return panelData.bulletPanel;
+            }
+        }
+        return null;
+    }
+
     private void UpdateAmmoList()
     {
         if (bulletPanels.Length > 0)
         {
-            DeleteBulletPanels();
+            //DeleteBulletPanels();
         }
 
         WeaponInventory wepInv = farmController.WeaponInventory;
@@ -44,12 +66,13 @@ public class BulletPanelHandler : MonoBehaviour
 
 
             Image bulletPanelObject = Instantiate(bulletPanelPrefab, verticalLayoutGroup.transform);
-            bulletPanels[i] = bulletPanelObject;
+            bulletPanels[i] = new PanelData(bulletPanelObject, wepData.ammoType);
             bulletPanelObject.GetComponent<BulletPanelUpdater>().AmmoData = wepData.ammoType;
             bulletPanelObject.GetComponent<BulletPanelUpdater>().AmmoInventory = ammoInv;
             bulletPanelObject.GetComponent<BulletPanelUpdater>().SetImage(wepData.ammoType.cropIcon);
             farmController.OnCropFarmed += bulletPanelObject.GetComponent<BulletPanelUpdater>().UpdateSelf;
             bulletPanelObject.GetComponent<BulletPanelUpdater>().UpdateSelf();
+
         }
     }
 
@@ -58,10 +81,12 @@ public class BulletPanelHandler : MonoBehaviour
         if (bulletPanels.Length <= 0) { return; }
         for (int i = bulletPanels.Length - 1; i >= 0; --i)
         {
-            Destroy(bulletPanels[i]);
+            if (bulletPanels[i].bulletPanel == null) { continue; }
+            Destroy(bulletPanels[i].bulletPanel);
         }
-        bulletPanels = new Image[4];
+        bulletPanels = new PanelData[4];
     }
+
 
 
 }

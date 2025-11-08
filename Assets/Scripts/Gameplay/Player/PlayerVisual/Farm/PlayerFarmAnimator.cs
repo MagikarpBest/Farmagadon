@@ -6,7 +6,6 @@ public class PlayerFarmAnimator : MonoBehaviour
 {
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerFarmInput farmInput;
-    [SerializeField] private PlayerFarmMovement playerFarmMovement;
 
     [SerializeField] private AnimationClip[] clips;
     public enum AnimState
@@ -23,13 +22,13 @@ public class PlayerFarmAnimator : MonoBehaviour
     private void OnEnable()
     {
         farmInput.OnFarmInput += FarmPressed;
-        playerFarmMovement.OnMovementEvent += MovementPressed;
+        farmInput.OnMovementEvent += MovementPressed;
     }
 
     private void OnDisable()
     {
         farmInput.OnFarmInput -= FarmPressed;
-        playerFarmMovement.OnMovementEvent -= MovementPressed;
+        farmInput.OnMovementEvent -= MovementPressed;
     }
 
     private void Awake()
@@ -56,6 +55,7 @@ public class PlayerFarmAnimator : MonoBehaviour
     private void MovementPressed(Vector2 move)
     {
         StopIdle();
+        SetAllAnimsFalse();
         if (move.x != 0)
         {
             PlayAnim(move.x < 0 ? AnimState.Walk_Left : AnimState.Walk_Right);

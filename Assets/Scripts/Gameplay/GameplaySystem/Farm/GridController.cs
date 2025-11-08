@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Farm
     public class GridController : MonoBehaviour
     {
         [SerializeField] private static float maxWeight = 100.0f;
+        [SerializeField] private SpriteRenderer flyingCropPrefab;
         private struct PlantData
         {
             public CropsData cropData;
@@ -74,13 +76,16 @@ namespace Farm
             }
         }
 
-        private void CropDestroyed(int posX, int posY)
+        private void CropDestroyed(int posX, int posY, Vector3 endPos, AmmoData data, float duration)
         {
             if (farmController.StopGame)
             {
                 return;
             }
+            Vector3 startPos = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY));
+            StartCoroutine(PlayFlyingCrop(startPos, endPos, data, duration));
             StartCoroutine(CreatePlantHere(posX, posY));
+            
         }
 
         private IEnumerator CreatePlantHere(int posX, int posY)
@@ -92,7 +97,21 @@ namespace Farm
 
         }
 
-        
+        private IEnumerator PlayFlyingCrop(Vector3 startPos, Vector3 endPos, AmmoData data, float duration)
+        {
+            SpriteRenderer flyingCropSprite = Instantiate(flyingCropPrefab);
+            flyingCropSprite.sprite = data.cropIcon;
+            flyingCropSprite.transform.position = startPos;
+            Vector3[] curvePath = new[] { startPos, startPos + new Vector3(0.5f, 4.0f), startPos + new Vector3(2.0f, 4.0f), endPos };
+            Sequence flyingSequence = DOTween.Sequence();
+            flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.CatmullRom).SetEase(Ease.InCirc));
+            flyingSequence.Append(flyingCropSprite.transform.DOScale(0.5f, 0.2f));
+            
+            yield return new WaitForSeconds(flyingSequence.Duration());
+            Destroy(flyingCropSprite);
+        }
+
+
         private PlantData GetPlantData()
         {
             foreach (PlantData plant in levelPlantRoster)
@@ -106,20 +125,6 @@ namespace Farm
             return levelPlantRoster[Random.Range(0, levelPlantRoster.Length-1)];
         } 
 
-        private CropsData PickPlant()
-        {
-            foreach (CropsData crop in cropData)
-            {
-                float randomNum = Random.Range(1, maxWeight);
-                if (crop.cropWeightage >= randomNum)
-                {
-                    return crop;
-                }
-            }
-            return cropData[Random.Range(1, cropData.Length - 1)];
-
-        }
-
         private void InstantiateCrop(PlantData data, int posX, int posY)
         {
             GameObject createPlant = Instantiate(data.cropData.cropPrefab);
@@ -130,7 +135,7 @@ namespace Farm
             createPlant.GetComponent<plants>().OnFarmed += farmController.cropFarmed;
             createPlant.GetComponent<plants>().PosX = posX;
             createPlant.GetComponent<plants>().PosY=  posY;
-            createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY)) + new Vector3(0, createPlant.GetComponent<SpriteRenderer>().size.y / 3, 0);
+            createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY)) + new Vector3(0, createPlant.GetComponentInChildren<SpriteRenderer>().size.y / 3, 0);
         }
 
         private void DestroyAllPlants()
@@ -139,6 +144,7 @@ namespace Farm
             {
                 Destroy(plants[i]);
             }
+            
         }
     }
 }
