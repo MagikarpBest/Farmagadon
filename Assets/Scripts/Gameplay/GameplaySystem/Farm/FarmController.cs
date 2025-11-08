@@ -66,28 +66,4 @@ public class FarmController : MonoBehaviour
         StopFarmCycle?.Invoke();
     }
 
-    public void InitializeFromSave(SaveData data)
-    {
-        // store reference to SaveData if you want
-        // or just call your inventory init methods
-        if (ammoInventory != null)
-            ammoInventory.InitializeFromSave(data); // should populate ammo from SaveData. See note below.
-
-        if (weaponInventory != null)
-            weaponInventory.InitializeFromSave(data);
-
-        Debug.Log("[FarmController] Initialized from SaveData.");
-    }
-
-    // When farm ends, copy runtime inventory state back to SaveData
-    public void ApplyProgressToSave(SaveData data)
-    {
-        if (ammoInventory != null)
-            ammoInventory.SaveToSaveData(data); // writes lists into SaveData. See note below.
-
-        if (weaponInventory != null)
-            weaponInventory.SaveToSaveData(data);
-
-        Debug.Log("[FarmController] Applied farm progress to SaveData.");
-    }
 }

@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameStateManager gameStateManager;
     [SerializeField] private LevelRewardManager levelRewardManager;
     [SerializeField] private FarmController farmController;
-    [SerializeField] private FarmDataBridge farmDataBridge;
 
     public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
 
@@ -132,10 +131,16 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game Flow Control
+    private void OnFarmEnd()
+    {
+        SaveAll();
+        Debug.Log("[GameManager] Farm level completed!");
+        sceneController.LoadScene(GetNextSceneName());
+    }
     /// <summary>
     /// Called when all enemies in the level are defeated.
     /// </summary>
-    private void HandleVictory()
+    private void OnCombatVictory()
     {
         // Complete level (give rewards, update progression)
         Debug.Log("[GameManager] Level completed!");
@@ -156,7 +161,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Called when the player loses (e.g. fence destroyed).
     /// </summary>
-    private void HandleGameOver()
+    private void OnCombatGameOver()
     {
         // Pause gameplay
         Time.timeScale = 0f;
@@ -202,12 +207,12 @@ public class GameManager : MonoBehaviour
     {
         if (waveManager != null)
         {
-            waveManager.OnLevelCompleted += HandleVictory;
+            waveManager.OnLevelCompleted += OnCombatVictory;
         }
 
         if (fenceHealth != null)
         {
-            fenceHealth.OnFenceDestroy += HandleGameOver;
+            fenceHealth.OnFenceDestroy += OnCombatGameOver;
         }
 
         if (UIManager != null)
@@ -222,7 +227,7 @@ public class GameManager : MonoBehaviour
 
         if (farmController != null)
         {
-            farmController.StopFarmCycle += SaveAll;
+            farmController.StopFarmCycle += OnFarmEnd;
         }
     }
 
@@ -230,12 +235,12 @@ public class GameManager : MonoBehaviour
     {
         if (waveManager != null)
         {
-            waveManager.OnLevelCompleted -= HandleVictory;
+            waveManager.OnLevelCompleted -= OnCombatVictory;
         }
 
         if (fenceHealth != null)
         {
-            fenceHealth.OnFenceDestroy -= HandleGameOver;
+            fenceHealth.OnFenceDestroy -= OnCombatGameOver;
         }
 
         if (UIManager != null)
@@ -246,6 +251,11 @@ public class GameManager : MonoBehaviour
         if (levelRewardManager != null)
         {
             levelRewardManager.OnRewardGiven -= OnVictoryUICompleted;
+        }
+
+        if (farmController != null)
+        {
+            farmController.StopFarmCycle -= OnFarmEnd;
         }
     }
     #endregion
