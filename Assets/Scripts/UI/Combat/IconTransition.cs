@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class CircleTransition : MonoBehaviour
 {
@@ -7,34 +8,38 @@ public class CircleTransition : MonoBehaviour
     [SerializeField] private RectTransform circleTransition;
     [SerializeField] private float transitionDuration = 0.8f;
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
         // Press O to open (expand)
         if (Input.GetKeyDown(KeyCode.O))
         {
-            OpenTransition();
+            StartCoroutine(OpenTransition());
         }
 
         // Press P to close (shrink)
         if (Input.GetKeyDown(KeyCode.P))
         {
-            CloseTransition();
+            StartCoroutine(CloseTransition());
         }
     }
 
-
-    public void OpenTransition()
+    public IEnumerator OpenTransition()
     {
-        circleTransition.DOScale(1f, transitionDuration).SetEase(Ease.InOutQuad); // expand outward
-
+        circleTransition.DOScale(1f, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // expand outward
+        yield return new WaitForSecondsRealtime(transitionDuration);
     }
-    public void CloseTransition()
+
+    public IEnumerator CloseTransition()
     {
-        circleTransition.DOScale(0f, transitionDuration).SetEase(Ease.InOutQuad); // shrink inward }
+        Debug.Log("close transition");
+        circleTransition.DOScale(0f, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // shrink inward }
+        yield return new WaitForSecondsRealtime(transitionDuration);
+    }
+
+    public IEnumerator FullTransition()
+    {
+        yield return OpenTransition();
+
+        yield return CloseTransition();
     }
 }

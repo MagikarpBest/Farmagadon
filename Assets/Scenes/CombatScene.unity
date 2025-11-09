@@ -4285,9 +4285,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 1
-
-    Dawn before storm'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9be831e413babfc49ab97a3ec83fd12b, type: 2}
   m_sharedMaterial: {fileID: 6679035452488174421, guid: 9be831e413babfc49ab97a3ec83fd12b, type: 2}
@@ -13180,6 +13178,10 @@ PrefabInstance:
       propertyPath: weaponInventory
       value: 
       objectReference: {fileID: 634675710}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: circleTransition
+      value: 
+      objectReference: {fileID: 1380595730}
     - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
       propertyPath: gameStateManager
       value: 

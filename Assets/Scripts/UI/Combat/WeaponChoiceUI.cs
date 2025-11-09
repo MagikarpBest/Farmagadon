@@ -98,7 +98,6 @@ public class WeaponChoiceUI : MonoBehaviour
     /// </summary>
     private void ChooseWeapon(string weaponID)
     {
-        panel.SetActive(false);
         onWeaponChosen.Invoke(weaponID);
         onWeaponChosen = null;
     }
