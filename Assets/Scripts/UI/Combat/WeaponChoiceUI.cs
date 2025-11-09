@@ -9,11 +9,12 @@ using System.Collections;
 public class WeaponChoiceUI : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject panel;                     // Reward choice panel
     [SerializeField] private Button[] choiceButtons;
-    [SerializeField] private GameObject[] rewardCards;
-    [SerializeField] private Image[] rewardIcons;
+    [SerializeField] private GameObject[] rewardCards;             // Display for reward cards
+    [SerializeField] private Image[] rewardIcons;                  // Display for weapon icon
     [SerializeField] private TextMeshProUGUI[] weaponNames;        // Display for weapon names
+    [SerializeField] private TextMeshProUGUI[] weaponDescription;
     [SerializeField] private WeaponDatabase weaponDatabase;
 
     private Action<string> onWeaponChosen;
@@ -53,15 +54,20 @@ public class WeaponChoiceUI : MonoBehaviour
                 rewardCards[i].SetActive(true);
 
                 // Update button label if available
-                if (weaponNames != null && i < weaponNames.Length && weaponNames[i] != null)
+                if (weaponNames != null && i < weaponNames.Length && weaponNames[i] != null && data != null) 
                 {
                     weaponNames[i].text = data.weaponName;
                 }
 
                 // Set weapon icon from database
-                if (rewardIcons != null && i < rewardIcons.Length && data != null && data.weaponSprite)
+                if (rewardIcons != null && i < rewardIcons.Length && rewardIcons[i] != null && data != null && data.weaponSprite != null) 
                 {
                     rewardIcons[i].sprite = data.weaponSprite;
+                }
+
+                if (weaponDescription != null && i < weaponDescription.Length && weaponDescription[i] != null && data != null)
+                {
+                    weaponDescription[i].text = data.weaponDescription;
                 }
 
                 // Reset previous listeners and add new one

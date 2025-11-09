@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponID: weapon_ricepotato
   weaponName: RicePotato
-  weaponDescription: Explodes on impact, scattering sharp rice shrapnel that damages
-    nearby enemies
+  weaponDescription: Explodes on impact, scattering shrapnel in all directions.
   weaponSprite: {fileID: 21300000, guid: f73a4408ca7571748ad828b48a529dae, type: 3}
   bulletPrefab: {fileID: 3267392343543207434, guid: d22e0389198fdb84bae98a806d8cb4b9, type: 3}
   ammoType: {fileID: 11400000, guid: 3f5081983a75611418362d67acf7bea4, type: 2}

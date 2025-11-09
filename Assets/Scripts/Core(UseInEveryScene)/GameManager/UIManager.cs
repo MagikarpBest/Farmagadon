@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;         // Pause UI
     [SerializeField] private GameObject settingsPanel;       // Pause setting UI
 
+
     public event Action OnVictoryCompleted;
 
     private void Awake()
@@ -31,6 +32,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    #region Show/Hide
     // ----------------------
     // Show / Hide Methods
     // ----------------------
@@ -93,8 +95,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
-
     // Navigations helpers
     /// <summary>
     /// Start first selected navigation and save last selected memory
@@ -152,6 +152,7 @@ public class UIManager : MonoBehaviour
         // pausePanel is never hidden here to allow overlay
     }
 
+    #endregion
     // ===========================
     // HELPERS / EVENTS
     // ===========================
