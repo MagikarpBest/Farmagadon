@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmController: {fileID: 43128269}
   slider: {fileID: 1376999756}
-  dayTimeDuration: 15
+  dayTimeDuration: 100
 --- !u!1 &249844771
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9005473033cc715429c16a3326f60ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  farmController: {fileID: 43128269}
 --- !u!1001 &272366454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1661,7 +1660,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0419311f78d164342a5782f32512d9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 957074648}
   cropRadius: {fileID: 957074650}
+  gridController: {fileID: 1980671683}
+  farmActionCooldown: 1
 --- !u!61 &957074650
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2021,8 +2023,8 @@ Canvas:
   m_GameObject: {fileID: 1060748744}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 567394941}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2898,7 +2900,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 1544569708}
   farmInput: {fileID: 957074649}
-  playerFarmMovement: {fileID: 1980671682}
   clips:
   - {fileID: 7400000, guid: 50e1729184927e2498e2f38e99052cd2, type: 2}
   - {fileID: 7400000, guid: c7f8b73415c28674fafda7ebbaed35f3, type: 2}
@@ -4321,7 +4322,6 @@ GameObject:
   - component: {fileID: 1980671681}
   - component: {fileID: 1980671680}
   - component: {fileID: 1980671683}
-  - component: {fileID: 1980671682}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -4357,20 +4357,6 @@ Transform:
   - {fileID: 1844978969}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1980671682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1980671679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92696d4ce93bcab47b3a943faa0d6bb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 957074646}
-  gridController: {fileID: 1980671683}
 --- !u!114 &1980671683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4383,6 +4369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd729adedacf91b4d9442fb7cdcfb1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flyingCropPrefab: {fileID: 9164064668460752072, guid: 6d96d9ec49720954ba05a7b2b14a14ef, type: 3}
   grid: {fileID: 1980671680}
   tileMap: {fileID: 1844978971}
   playerStartPos: {x: -2, y: -2, z: 0}
