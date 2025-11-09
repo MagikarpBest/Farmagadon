@@ -46,25 +46,25 @@ public class LoadOutManager : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < loadoutSlots.Count; i++)
-        {
-            Button button = loadoutSlots[i];
-            Outline outline = button.GetComponent<Outline>();
-            if (outline != null)
-                outline.enabled = false;
-        }
-        for (int i = 0; i < bagButtons.Count; i++)
-        {
-            Button button = bagButtons[i];
-            Outline outline = button.GetComponent<Outline>();
-            if (outline != null)
-                outline.enabled = false;
-        }
-        Outline outlineBattle = battleButton.GetComponent<Outline>();
-        if (outlineBattle != null)
-            outlineBattle.enabled = false;
-        //highlight first slot
-        HighlightSlot(selectedIndex, true);
+        //for(int i = 0; i < loadoutSlots.Count; i++)
+        //{
+        //    Button button = loadoutSlots[i];
+        //    Outline outline = button.GetComponent<Outline>();
+        //    if (outline != null)
+        //        outline.enabled = false;
+        //}
+        //for (int i = 0; i < bagButtons.Count; i++)
+        //{
+        //    Button button = bagButtons[i];
+        //    Outline outline = button.GetComponent<Outline>();
+        //    if (outline != null)
+        //        outline.enabled = false;
+        //}
+        //Outline outlineBattle = battleButton.GetComponent<Outline>();
+        //if (outlineBattle != null)
+        //    outlineBattle.enabled = false;
+        ////highlight first slot
+        //HighlightSlot(selectedIndex, true);
     }
 
     private void OnEnable()
@@ -143,11 +143,11 @@ public class LoadOutManager : MonoBehaviour
         {
             int nextIndex = popupIndex + direction;
             if (nextIndex < 0 || nextIndex >= popupButtons.Count) return;
-            HighlightButton(popupButtons[popupIndex], false);
+            //HighlightButton(popupButtons[popupIndex], false);
             popupIndex = nextIndex;
             
             Debug.Log(popupIndex);
-            HighlightButton(popupButtons[popupIndex], true);
+            //HighlightButton(popupButtons[popupIndex], true);
             return;
         }
 
@@ -171,9 +171,9 @@ public class LoadOutManager : MonoBehaviour
                 if (nextRow != currentRow || nextIndex < 0 || nextIndex >= loadoutSlots.Count) return;
             }
 
-            HighlightSlot(selectedIndex, false);
+            //HighlightSlot(selectedIndex, false);
             selectedIndex = nextIndex;
-            HighlightSlot(selectedIndex, true);
+            //HighlightSlot(selectedIndex, true);
             Debug.Log($"Selected loadout slot {selectedIndex}");
         }
         else
@@ -203,9 +203,9 @@ public class LoadOutManager : MonoBehaviour
                 
             }
 
-            HighlightBag(selectedBagIndex, false);
+            //HighlightBag(selectedBagIndex, false);
             selectedBagIndex = nextBagIndex;
-            HighlightBag(selectedBagIndex, true);
+           // HighlightBag(selectedBagIndex, true);
             Debug.Log($"Selected bag item {selectedBagIndex}");
         }
     }
@@ -217,7 +217,7 @@ public class LoadOutManager : MonoBehaviour
             slotActive = true;
             selectingBag = true;
             selectedBagIndex = 0;
-            UpdateHighlights();
+            //UpdateHighlights();
 
             return;
         }
@@ -249,9 +249,7 @@ public class LoadOutManager : MonoBehaviour
                 isPopupActive = true;
                 StartCoroutine(PopupSetup());
             }
-
-            
-            UpdateHighlights();
+            //UpdateHighlights();
         }
 
         
@@ -335,7 +333,7 @@ public class LoadOutManager : MonoBehaviour
                 isPopupActive = true;
                 StartCoroutine(PopupSetup());
                 Debug.Log(popupIndex);
-                //HighlightButton(popupButtons[popupIndex], true);
+                HighlightButton(popupButtons[popupIndex], true);
             }
             isCraft = false;
             Debug.Log("Closed craft popup using Pause key");
@@ -379,10 +377,14 @@ public class LoadOutManager : MonoBehaviour
 
     public void AddToLoadout(string itemName)
     {
+        // prevent duplicates based on sprite instead of text
+        Button bagButton = bagButtons[selectedBagIndex];
+        Image bagIcon = bagButton.GetComponentInChildren<Image>();
+
         for (int i = 0; i < loadoutSlots.Count; i++)
         {
-            TextMeshProUGUI texts = loadoutSlots[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (texts != null && texts.text == itemName)
+            Image checkIcon = loadoutSlots[i].GetComponentInChildren<Image>();
+            if (checkIcon != null && checkIcon.sprite == bagIcon.sprite)
                 return; // already in loadout
         }
 
@@ -394,16 +396,20 @@ public class LoadOutManager : MonoBehaviour
 
         int index = selectedIndex;
         Button targetSlot = loadoutSlots[index];
-        TextMeshProUGUI slotText = targetSlot.GetComponentInChildren<TextMeshProUGUI>();
+        Image slotIcon = targetSlot.GetComponentInChildren<Image>();
 
-        if (slotText != null)
+        if (slotIcon != null)
         {
-            slotText.text = itemName;
+            slotIcon.sprite = bagIcon.sprite;
         }
 
         if (currentLoadout.Count <= index)
+        {
             currentLoadout.Add(targetSlot.gameObject);
+        }
         else
+        {
             currentLoadout[index] = targetSlot.gameObject;
+        }
     }
 }
