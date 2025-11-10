@@ -8,6 +8,10 @@ public class CircleTransition : MonoBehaviour
     [SerializeField] private RectTransform circleTransition;
     [SerializeField] private float transitionDuration = 0.8f;
 
+    [Header("Size Settings")]
+    [SerializeField] private Vector2 openSize = new Vector2(3000, 3000);
+    [SerializeField] private Vector2 closeSize = new Vector2(0,0);
+
     private void Update()
     {
         // Press O to open (expand)
@@ -25,14 +29,15 @@ public class CircleTransition : MonoBehaviour
 
     public IEnumerator OpenTransition()
     {
-        circleTransition.DOScale(1f, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // expand outward
+        Debug.Log("close transition");
+        circleTransition.DOSizeDelta(closeSize, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // shrink inward }
         yield return new WaitForSecondsRealtime(transitionDuration);
+
     }
 
     public IEnumerator CloseTransition()
     {
-        Debug.Log("close transition");
-        circleTransition.DOScale(0f, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // shrink inward }
+        circleTransition.DOSizeDelta(openSize, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // expand outward
         yield return new WaitForSecondsRealtime(transitionDuration);
     }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
@@ -6,10 +7,12 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private AmmoInventory ammoInventory;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private PlayerMovement playerMovement; // Make it stop while shooting
+    [SerializeField] private PlayerVisualHandler playerVisualHandler;
 
     private WeaponSlot currentSlot;
     private float nextFireTime;
-
+    private bool isShooting = false;
 
     private void OnEnable()
     {
@@ -38,6 +41,7 @@ public class PlayerShooting : MonoBehaviour
     {
         weaponInventory.PreviousWeapon();
     }
+        
     private void HandleWeaponChange(WeaponSlot slot, WeaponSwitchDirection direction)
     {
         currentSlot = slot;
@@ -53,33 +57,52 @@ public class PlayerShooting : MonoBehaviour
 
     private void HandleShoot()
     {
-        // Block shooting while swapping weapons
+        if (isShooting)
+        {   
+            // Make player can only stop and shoot
+            return;
+        }
+
         if (!weaponInventory.CanSwitchWeapon)
         {
             // Prevent shooting during weapon swap animation
             return;
         }
 
-        if (currentSlot == null || currentSlot.weaponData == null) 
+        if (currentSlot == null || currentSlot.weaponData == null)
         {
             return;
         }
 
-        // Fire rate check
         if (Time.time < nextFireTime)
         {
+            // Fire rate check
             return;
         }
-
         // Reduce ammo after shoot
-        if (!ammoInventory.ConsumeAmmo(currentSlot.weaponData.ammoType, 1))  
+        if (!ammoInventory.ConsumeAmmo(currentSlot.weaponData.ammoType, 1))
         {
             Debug.Log("Out of ammo for: " + currentSlot.weaponData.weaponName);
             return;
         }
 
+        StartCoroutine(ShootRoutine(currentSlot.weaponData));
+    }
+
+    private IEnumerator ShootRoutine(WeaponData weapon)
+    {
+        isShooting = true;
+
+        if (playerMovement != null)
+        {
+            playerMovement.canMove = false;
+        }
+
+        StartCoroutine(playerVisualHandler.PlayShootAnimation());
+        
         nextFireTime = Time.time + currentSlot.weaponData.fireRate;
 
+        yield return new WaitForSeconds(0.15f);
         if (currentSlot.weaponData.pelletCount > 1)
         {
             ShotgunShoot(currentSlot.weaponData);
@@ -89,6 +112,15 @@ public class PlayerShooting : MonoBehaviour
             Shoot(currentSlot.weaponData);
         }
 
+        // Wait for the weapon's fire rate duration
+        yield return new WaitForSeconds(weapon.fireRate);
+
+        if (playerMovement != null)
+        {
+            playerMovement.canMove = true;
+        }
+
+        isShooting = false; 
         Debug.Log(currentSlot.weaponData.weaponName + " fired. Ammo left: " + currentSlot.weaponData.ammoType);
     }
 
