@@ -318,7 +318,7 @@ public class WeaponUI : MonoBehaviour
     /// <summary>
     /// Sets the given image sprite to the weapon icon or empty slot if null.
     /// </summary>
-    private void SetImage(Image image, WeaponSlot slot)
+    public void SetImage(Image image, WeaponSlot slot)
     {
         if (image == null)
         {
