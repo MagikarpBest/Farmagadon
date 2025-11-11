@@ -17,9 +17,18 @@ public class LoadOutManager : MonoBehaviour
     [SerializeField] private int bagColumn = 4;
     [SerializeField] private List<Button> loadoutSlots;
     [SerializeField] private List<Button> bagButtons;
+    [SerializeField] private List<TextMeshProUGUI> ammoText; 
     [SerializeField] private Button battleButton;
+    [SerializeField] private CraftManager craftManager;
+    [SerializeField] private WeaponInventory weaponInventory;
+    [SerializeField] private AmmoInventory ammoInventory;
+    //[SerializeField] private WeaponUI weaponUI;
+    //[SerializeField] private AmmoUI ammoUI;
     [SerializeField] private GameObject prefabLoadoutPopup;
     [SerializeField] private GameObject prefabCraftingPopup;
+    [SerializeField] private Sprite emptySlotSprite;
+    [SerializeField] private List<Image> slotImage;
+    [SerializeField] private List<Image> bagImage;
 
     private int selectedIndex = 0;
     private int selectedBagIndex = 0;
@@ -27,8 +36,6 @@ public class LoadOutManager : MonoBehaviour
     private bool slotActive = false;
     //movement check
     private bool isColumn = false;
-    //battle button
-    private bool isBattle = false;
     //popup
     private List<Button> popupButtons;
     private int popupIndex = 0;
@@ -37,34 +44,26 @@ public class LoadOutManager : MonoBehaviour
     private bool isPopupActive = false;
     private bool isCraft = false;
 
+    private WeaponSlot[] weapons;
+
+
+
     //lists for both slots
     Dictionary<int, GameObject> slotItems = new Dictionary<int, GameObject>();
     private List<GameObject> currentLoadout = new List<GameObject>();
 
-    private float moveCooldown = 0.15f;
-    private float lastMoveTime = 0f;
+    //private float moveCooldown = 0.15f;
+    //private float lastMoveTime = 0f;
 
-    private void Start()
+    private IEnumerator Start()
     {
-        for(int i = 0; i < loadoutSlots.Count; i++)
+        yield return null;
+        for (int i = 0; i < loadoutSlots.Count; i++) 
         {
-            Button button = loadoutSlots[i];
-            Outline outline = button.GetComponent<Outline>();
-            if (outline != null)
-                outline.enabled = false;
+            slotImage[i].enabled = false;
         }
-        for (int i = 0; i < bagButtons.Count; i++)
-        {
-            Button button = bagButtons[i];
-            Outline outline = button.GetComponent<Outline>();
-            if (outline != null)
-                outline.enabled = false;
-        }
-        Outline outlineBattle = battleButton.GetComponent<Outline>();
-        if (outlineBattle != null)
-            outlineBattle.enabled = false;
-        //highlight first slot
-        HighlightSlot(selectedIndex, true);
+        
+        
     }
 
     private void OnEnable()
@@ -87,69 +86,12 @@ public class LoadOutManager : MonoBehaviour
 
     private void Update()
     {
-        MovementInput();
-    }
-
-    public void MovementInput()
-    {
-        if (gameInput == null) return;
-
-        Vector2 moveInput = gameInput.GetMovementVectorNormalized();
-
-        //horizontal
-        if (!isPopupActive && Mathf.Abs(moveInput.x) > 0.5f && Time.time - lastMoveTime > moveCooldown)
-        {
-            isColumn = false;
-            if (moveInput.x > 0)
-                MoveSelection(1); // D
-            else
-                MoveSelection(-1); // A
-
-            lastMoveTime = Time.time;
-        }
-
-        if (Mathf.Abs(moveInput.y) > 0.5f && Time.time - lastMoveTime > moveCooldown)
-        {
-            isColumn = true;
-            if (isPopupActive)
-            {
-                if (moveInput.y > 0)
-                    MoveSelection(-1); // W
-                else
-                    MoveSelection(1); // S
-            }
-            else if (selectingBag)
-            {
-                if (moveInput.y > 0)
-                    MoveSelection(-bagColumn); // W
-                else
-                    MoveSelection(bagColumn); // S
-            }
-            else
-            {
-                if (moveInput.y > 0)
-                    MoveSelection(-loadoutColumn); // W
-                else
-                    MoveSelection(loadoutColumn); // S
-            }
-
-            lastMoveTime = Time.time;
-        }
+        ShowAmmoCount();
     }
 
     private void MoveSelection(int direction)
     {
-        if (isPopupActive && popupButtons.Count > 0 && isColumn)
-        {
-            int nextIndex = popupIndex + direction;
-            if (nextIndex < 0 || nextIndex >= popupButtons.Count) return;
-            HighlightButton(popupButtons[popupIndex], false);
-            popupIndex = nextIndex;
-            
-            Debug.Log(popupIndex);
-            HighlightButton(popupButtons[popupIndex], true);
-            return;
-        }
+        
 
         if (!selectingBag)
         {
@@ -157,23 +99,8 @@ public class LoadOutManager : MonoBehaviour
             
             int nextIndex = selectedIndex + direction;
 
-            //just stop moving when it reach the edge
-            // up down
-
-            if (isColumn)
-            {
-                if (nextIndex < 0 || nextIndex >= loadoutSlots.Count) return;
-            }
-            else //left right
-            {
-                int currentRow = selectedIndex / loadoutColumn;
-                int nextRow = nextIndex / loadoutColumn;
-                if (nextRow != currentRow || nextIndex < 0 || nextIndex >= loadoutSlots.Count) return;
-            }
-
-            HighlightSlot(selectedIndex, false);
             selectedIndex = nextIndex;
-            HighlightSlot(selectedIndex, true);
+
             Debug.Log($"Selected loadout slot {selectedIndex}");
         }
         else
@@ -203,58 +130,95 @@ public class LoadOutManager : MonoBehaviour
                 
             }
 
-            HighlightBag(selectedBagIndex, false);
+            //HighlightBag(selectedBagIndex, false);
             selectedBagIndex = nextBagIndex;
-            HighlightBag(selectedBagIndex, true);
+           // HighlightBag(selectedBagIndex, true);
             Debug.Log($"Selected bag item {selectedBagIndex}");
         }
     }
 
-    private void ComfirmSelection()
+    private void ShowAmmoCount()
     {
-        if (!selectingBag)
-        {
-            slotActive = true;
-            selectingBag = true;
-            selectedBagIndex = 0;
-            UpdateHighlights();
+        if(weaponInventory == null || ammoInventory == null) return;
+        if (ammoText == null || ammoText.Count == 0) return;
 
+        int slotCount = ammoText.Count;
+        for (int i = 0; i < ammoText.Count; i++)
+        {
+            //assign ammocount to each slot text
+            TextMeshProUGUI textField = ammoText[i];
+            
+
+            if (textField == null) continue;
+
+            //assign slot
+            WeaponSlot slot = weaponInventory.GetWeaponSlot(i);
+
+            if (slot != null && slot.weaponData != null && slot.weaponData.ammoType != null)
+            {
+                int count = ammoInventory.GetAmmoCount(slot.weaponData.ammoType);
+                SetImage(bagImage[i],slot);
+                textField.text = $"{count}";
+            }
+            else if(slot==null)
+            {
+                textField.text = "N/A";
+                SetImage(bagImage[i], null);
+            }
+        }
+        
+    }
+
+    private void SetImage(Image image, WeaponSlot slot)
+    {
+        if (image == null)
+        {
             return;
         }
 
-        if (slotActive && selectingBag)
+        if (slot != null && slot.weaponData != null && slot.weaponData.weaponSprite != null)
         {
-            Button bagButton = bagButtons[selectedBagIndex];
-            
-            if (isPopupActive)
-            {
-                PopupSelect();
-                ClosePopup();
-                return;
-            }
-            if (prefabLoadoutPopup != null && !isPopupActive)
-            {
-                //get canvas and spawn under canvas as last object, so it wont be behind buttons
-                Canvas canvas = FindAnyObjectByType<Canvas>();
+            image.sprite = slot.weaponData.weaponSprite;
+        }
+        else if(slot==null)
+        {
+            image.sprite = emptySlotSprite;
+        }
+    }
+    private void ComfirmSelection()
+    {
 
-                popup = Instantiate(prefabLoadoutPopup, canvas.transform);
-
-                //set position
-                RectTransform bagRect = bagButtons[selectedBagIndex].GetComponent<RectTransform>();
-                RectTransform popupRect = popup.GetComponent<RectTransform>();
-                popup.transform.SetAsLastSibling();
-                Debug.Log(bagRect.position);
-                popupRect.position = bagRect.position + new Vector3(180f, 0f, 0f);
-
-                isPopupActive = true;
-                StartCoroutine(PopupSetup());
-            }
-
-            
-            UpdateHighlights();
+        Button bagButton = bagButtons[selectedBagIndex];
+        
+        DescriptionManager descManager = bagButton.GetComponent<DescriptionManager>();
+        if (descManager != null)
+        {
+            descManager.ShowDescription();
+        }
+        if (isPopupActive)
+        {
+            EventSystem.current.SetSelectedGameObject(popupButtons[popupIndex].gameObject);
+            PopupSelect();
+            ClosePopup();
+            return;
         }
 
-        
+        if (prefabLoadoutPopup != null && !isPopupActive)
+        {
+            Canvas canvas = FindAnyObjectByType<Canvas>();
+            popup = Instantiate(prefabLoadoutPopup, canvas.transform);
+
+            RectTransform bagRect = bagButtons[selectedBagIndex].GetComponent<RectTransform>();
+            RectTransform popupRect = popup.GetComponent<RectTransform>();
+            popup.transform.SetAsLastSibling();
+
+            popupRect.position = bagRect.position + new Vector3(180f, 0f, 0f);
+
+            isPopupActive = true;
+            StartCoroutine(PopupSetup());
+        }
+
+
         Debug.Log(currentLoadout.Count);
     }
 
@@ -282,21 +246,20 @@ public class LoadOutManager : MonoBehaviour
         {
             popupIndex = 0;
         }
-
+        
         foreach (Button button in popupButtons)
         {
             Outline outline = button.GetComponent<Outline>();
             if (outline != null)
                 outline.enabled = false;
         }
-        HighlightButton(popupButtons[popupIndex], true);
     }
 
     private void PopupSelect()
     {
         Button bagButton = bagButtons[selectedBagIndex];
         TextMeshProUGUI textComponent = bagButton.GetComponentInChildren<TextMeshProUGUI>();
-
+        
         if (popupIndex == 1 && !isCraft)
         {
             Canvas canvas = FindAnyObjectByType<Canvas>();
@@ -317,10 +280,8 @@ public class LoadOutManager : MonoBehaviour
             string itemName = textComponent.text;
             AddToLoadout(itemName);
             selectingBag = false;
-            HighlightButton(bagButtons[selectedBagIndex], false);
             Debug.Log("Added");
             isPopupActive = false;
-            UpdateHighlights ();
         }
     }
 
@@ -335,54 +296,22 @@ public class LoadOutManager : MonoBehaviour
                 isPopupActive = true;
                 StartCoroutine(PopupSetup());
                 Debug.Log(popupIndex);
-                //HighlightButton(popupButtons[popupIndex], true);
             }
             isCraft = false;
             Debug.Log("Closed craft popup using Pause key");
         }
     }
 
-    private void HighlightButton(Button button, bool highlight)
-    {
-        if (button == null) return;
-
-        Outline outline = button.GetComponent<Outline>();
-        if (outline != null)
-            outline.enabled = highlight;
-    }
-
-    private void UpdateHighlights()
-    {
-        //Highlight active place
-        HighlightSlot(selectedIndex, !selectingBag);
-        HighlightBag(selectedBagIndex, selectingBag);
-    }
-
-    private void HighlightSlot(int index, bool highlight)
-    {
-        if (index < 0 || index >= loadoutSlots.Count) return;
-        HighlightButton(loadoutSlots[index], highlight);
-    }
-
-    private void HighlightBag(int index, bool highlight)
-    {
-        if (index < 0 || index >= bagButtons.Count) return;
-
-        Button button = bagButtons[index];
-        HighlightButton(bagButtons[index], highlight);
-        DescriptionManager descManager = button.GetComponent<DescriptionManager>();
-        if (descManager != null)
-        {
-            descManager.ShowDescription();
-        }
-    }
-
     public void AddToLoadout(string itemName)
     {
+        // prevent duplicates based on sprite instead of text
+        Button bagButton = bagButtons[selectedBagIndex];
+        Image bagIcon = bagButton.GetComponentInChildren<Image>();
+
         for (int i = 0; i < loadoutSlots.Count; i++)
         {
-            TextMeshProUGUI texts = loadoutSlots[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (texts != null && texts.text == itemName)
+            Image checkIcon = loadoutSlots[i].GetComponentInChildren<Image>();
+            if (checkIcon != null && checkIcon.sprite == bagIcon.sprite)
                 return; // already in loadout
         }
 
@@ -394,16 +323,20 @@ public class LoadOutManager : MonoBehaviour
 
         int index = selectedIndex;
         Button targetSlot = loadoutSlots[index];
-        TextMeshProUGUI slotText = targetSlot.GetComponentInChildren<TextMeshProUGUI>();
+        Image slotIcon = targetSlot.GetComponentInChildren<Image>();
 
-        if (slotText != null)
+        if (slotIcon != null)
         {
-            slotText.text = itemName;
+            slotIcon.sprite = bagIcon.sprite;
         }
 
         if (currentLoadout.Count <= index)
+        {
             currentLoadout.Add(targetSlot.gameObject);
+        }
         else
+        {
             currentLoadout[index] = targetSlot.gameObject;
+        }
     }
 }
