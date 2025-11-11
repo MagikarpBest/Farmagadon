@@ -102,7 +102,7 @@ public class PlayerShooting : MonoBehaviour
         
         nextFireTime = Time.time + currentSlot.weaponData.fireRate;
 
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.5f);
         if (currentSlot.weaponData.pelletCount > 1)
         {
             ShotgunShoot(currentSlot.weaponData);
