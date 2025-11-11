@@ -37,7 +37,16 @@ public class plants : MonoBehaviour
         
 
         Image panel = BulletPanelHandler.GetBulletPanel(plantAmmoData);
-        Vector3 panelPos = panel.transform.position;
+        //
+        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
+        //
+        //
+        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
+        //
+        //
+        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
+        //
+        Vector3 panelPos = Vector3.zero;
         
         OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData, 1.0f);
         StartCoroutine(destroyAfter(plantShrink.Duration()));

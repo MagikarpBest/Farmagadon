@@ -81,7 +81,7 @@ public class PlayerFarmInput : MonoBehaviour
 
         playerPos = moveDir;
         movementDone = true;
-        player.DOMove(playerFinalPos, 1.2f).SetEase(Ease.InOutQuint);
+        player.DOMove(playerFinalPos, 0.6f).SetEase(Ease.InOutQuint);
         StartCoroutine(MovementInternalCooldown());
     }
 
