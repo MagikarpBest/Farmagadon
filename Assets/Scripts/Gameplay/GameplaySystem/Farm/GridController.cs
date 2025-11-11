@@ -10,6 +10,7 @@ namespace Farm
     {
         [SerializeField] private static float maxWeight = 100.0f;
         [SerializeField] private SpriteRenderer flyingCropPrefab;
+        [SerializeField] private SpriteRenderer flashTilePrefab;
         private struct PlantData
         {
             public CropsData cropData;
@@ -26,15 +27,15 @@ namespace Farm
         };
         [SerializeField] Grid grid;
         [SerializeField] Tilemap tileMap;
-        [SerializeField] Vector3Int playerStartPos;
         [SerializeField] CropsData[] cropData;
         [SerializeField] FarmController farmController;
+        [SerializeField] PlayerFarmInput playerFarmInput;
+
         private List<GameObject> plants = new List<GameObject>();
         private PlantData[] levelPlantRoster;
 
         public Grid Grid { get { return grid; } }
         public Tilemap TileMap { get { return tileMap; } }
-        public Vector3Int PlayerStartPos { get { return playerStartPos; } }
 
         private void OnEnable()
         {
@@ -85,7 +86,16 @@ namespace Farm
             Vector3 startPos = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY));
             StartCoroutine(PlayFlyingCrop(startPos, endPos, data, duration));
             StartCoroutine(CreatePlantHere(posX, posY));
+            StartCoroutine(CreateFlashTile(posX, posY));
             
+        }
+
+        private IEnumerator CreateFlashTile(int posX, int posY)
+        {
+            Vector3 startPos = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY));
+            SpriteRenderer flashTile = Instantiate(flashTilePrefab, startPos, Quaternion.identity);
+            flashTile.GetComponent<FlashTile>().DoFlash();
+            yield return null; 
         }
 
         private IEnumerator CreatePlantHere(int posX, int posY)
@@ -102,13 +112,19 @@ namespace Farm
             SpriteRenderer flyingCropSprite = Instantiate(flyingCropPrefab);
             flyingCropSprite.sprite = data.cropIcon;
             flyingCropSprite.transform.position = startPos;
-            Vector3[] curvePath = new[] { startPos, startPos + new Vector3(0.5f, 4.0f), startPos + new Vector3(2.0f, 4.0f), endPos };
+            float offset = 4.0f;
+            float midpoint = ((endPos - startPos) / 2.0f).x;
+            int posY = playerFarmInput.PlayerPos.y;
+
+            offset = Mathf.Abs(posY * 0.5f) + 0.5f;
+            
+            Vector3[] curvePath = new[] { startPos, startPos + new Vector3(midpoint/3, offset), startPos + new Vector3(midpoint/2, offset), startPos + new Vector3(midpoint, offset), endPos };
             Sequence flyingSequence = DOTween.Sequence();
-            flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.CatmullRom).SetEase(Ease.InQuint));
+            flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.Linear).SetEase(Ease.InOutSine));
             flyingSequence.Append(flyingCropSprite.transform.DOScale(0.5f, 0.2f));
             
-            yield return new WaitForSeconds(flyingSequence.Duration());
-            Destroy(flyingCropSprite);
+            yield return new WaitForSeconds(flyingSequence.Duration()+0.2f);
+            Destroy(flyingCropSprite.gameObject);
         }
 
 

@@ -1,5 +1,9 @@
+using DG.Tweening;
 using Farm;
+using NUnit.Framework.Internal;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class PlayerFarmAnimator : MonoBehaviour
@@ -8,17 +12,24 @@ public class PlayerFarmAnimator : MonoBehaviour
     [SerializeField] private PlayerFarmInput farmInput;
 
     [SerializeField] private AnimationClip[] clips;
+
     public enum AnimState
     {
         Idle = 0,
         Digging,
         Walk_Left,
-        Walk_Right
+        Walk_Right,
+        Walk_Up,
+        Walk_Down
     }
 
     private Dictionary<AnimState, string> animDict = new Dictionary<AnimState, string>();
     private float bufferTime = 0.0f;
     private float prevTime = 0.0f;
+
+    public delegate void OnGroundPound();
+    public OnGroundPound AnimReachedGroundPound;
+
     private void OnEnable()
     {
         farmInput.OnFarmInput += FarmPressed;
@@ -37,6 +48,8 @@ public class PlayerFarmAnimator : MonoBehaviour
         animDict.Add(AnimState.Digging, "digBool");
         animDict.Add(AnimState.Walk_Left, "leftMoveBool");
         animDict.Add(AnimState.Walk_Right, "rightMoveBool");
+        animDict.Add(AnimState.Walk_Down, "downMoveBool");
+        animDict.Add(AnimState.Walk_Up, "upMoveBool");
     }
 
     private void Start()
@@ -60,14 +73,20 @@ public class PlayerFarmAnimator : MonoBehaviour
         {
             PlayAnim(move.x < 0 ? AnimState.Walk_Left : AnimState.Walk_Right);
         }
+        if (move.y != 0)
+        {
+            PlayAnim(move.y < 0 ? AnimState.Walk_Down : AnimState.Walk_Up);
+        }
         bufferTime = clips[1].length + 0.15f;
         prevTime = Time.time;
 
     }
 
-    public void AnimStarted()
+    public void GroundPound()
     {
-
+        print(AnimReachedGroundPound);
+        Camera.main.transform.DOShakePosition(0.1f, 0.1f);
+        AnimReachedGroundPound?.Invoke();
     }
 
     public void AnimEnded(AnimState endedAnimState)
