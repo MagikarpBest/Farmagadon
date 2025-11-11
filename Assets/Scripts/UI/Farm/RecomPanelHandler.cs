@@ -6,7 +6,6 @@ public class RecomPanelHandler : MonoBehaviour
 {
     [SerializeField] private FarmController farmController;
     [SerializeField] private Image enemyIconPrefab;
-    [SerializeField] private Image[] enemyImages;
     [SerializeField] private Image[] bulletImages;
     private UpcomingEnemyData upcomingEnemyData;
 
@@ -18,13 +17,14 @@ public class RecomPanelHandler : MonoBehaviour
     private void UpdateRecomPanel(DayCycleLevelData data)
     {
         upcomingEnemyData = data.upcomingEnemyDatas;
-        for (int i = 0; i < enemyImages.Length; ++i)
+        for (int i = 0; i < bulletImages.Length; ++i)
         {
-            HandleEnemyIcons(i);
+            //HandleEnemyIcons(i);
             bulletImages[i].sprite = upcomingEnemyData.upcomingEnemyDatas[i].enemyWeakness;
         }
     }
 
+    /*
     private void HandleEnemyIcons(int index)
     {
         UpcomersData[] data = upcomingEnemyData.upcomingEnemyDatas;
@@ -36,5 +36,5 @@ public class RecomPanelHandler : MonoBehaviour
             
         }
         enemyImages[index].sprite = data[index].enemySprite;
-    }
+    }*/
 }

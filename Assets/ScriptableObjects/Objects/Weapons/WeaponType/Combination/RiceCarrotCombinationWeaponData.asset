@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponID: weapon_ricecarrot
   weaponName: RiceCarrot
-  weaponDescription: Fires a piercing rice-carrot shot that passes through all targets
-    in its path
+  weaponDescription: Shoots a piercing shot that passes through all enemies.
   weaponSprite: {fileID: 21300000, guid: 61022bdfb679bcc44995548ba019fdc2, type: 3}
   bulletPrefab: {fileID: 6108739619576341720, guid: 9093ef80a3d89a747aaf932e4e2841ce, type: 3}
   ammoType: {fileID: 11400000, guid: db599a4bb595ee943b9b9cb3951a3d69, type: 2}

@@ -3,29 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class PlayerFarmInput : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] private BoxCollider2D cropRadius;
+    [SerializeField] private PolygonCollider2D cropRadius;
     [SerializeField] private GridController gridController;
+    [SerializeField] private PlayerFarmAnimator playerFarmAnimator;
     [SerializeField] private float farmActionCooldown = 1.0f;
 
+    public PolygonCollider2D CropRadius { get { return cropRadius; } }
     
     private List<GameObject> plants = new List<GameObject>();
 
     private bool movementDone = false;
     private bool farmDone = false;
-    
-    private float startTime = 0;
-    private float t = 0;
+
     private float faCD = 0.0f;
     private float moveCD = 0.0f;
 
     private PlayerInput playerInput;
-    Vector3Int playerPos = new();
+    private Vector3Int playerPos = Vector3Int.zero;
     private Vector3 playerInitialPos = Vector3.zero;
     private Vector3 playerFinalPos = Vector3.zero;
+
+    public Vector3Int PlayerPos { get { return playerPos; } }
 
     public delegate void MovementEvent(Vector2 movementVector);
     public MovementEvent OnMovementEvent;
@@ -43,9 +46,21 @@ public class PlayerFarmInput : MonoBehaviour
 
     private void OnDestroy()
     {
+        playerInput.Player.Disable();
         playerInput.Player.Shoot.performed -= OnFarmPerformed;
         playerInput.Player.Move.performed -= OnFarmMovement;
 
+    }
+
+    private void OnEnable()
+    {
+        playerFarmAnimator.AnimReachedGroundPound += GrabPlants;
+        
+    }
+
+    private void OnDisable()
+    {
+        playerFarmAnimator.AnimReachedGroundPound -= GrabPlants;
     }
     private void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
@@ -66,76 +81,55 @@ public class PlayerFarmInput : MonoBehaviour
 
         playerPos = moveDir;
         movementDone = true;
-        player.DOMove(playerFinalPos, 0.5f).SetEase(Ease.InOutQuint); 
+        player.DOMove(playerFinalPos, 0.6f).SetEase(Ease.InOutQuint);
         StartCoroutine(MovementInternalCooldown());
     }
 
     private IEnumerator MovementInternalCooldown() 
     {
-        moveCD = farmActionCooldown;
+        moveCD = 1.2f;
 
-        while (moveCD >= 0)
-        {
-            moveCD -= Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(moveCD);
 
         movementDone = false;
     }
 
-
-    private void Update()
-    {
-        /*
-        if (movementDone)
-        {
-            if (Time.time - startTime >= 0.05f)
-            {
-                t += 0.2f;
-                startTime = Time.time;
-                
-                player.position = Vector3.Lerp(playerInitialPos, playerFinalPos, t);
-            }
-            if (t >= 1.0f)
-            {
-                t -= 1.0f;
-                movementDone = false;
-            }
-        } */
-    }
     private void OnFarmPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         if (movementDone) { return; }
         if (farmDone) { return; }
         farmDone = true;
         StartCoroutine(FarmInternalCooldown());
+
         OnFarmInput?.Invoke(true);
+
+    }   
+
+    private void GrabPlants()
+    {
         for (int i = plants.Count - 1; i >= 0; --i)
         {
             plants[i].GetComponent<plants>().DestroySelf();
         }
         plants.Clear();
-        
-    }   
+    }
 
     private IEnumerator FarmInternalCooldown()
     {
-        faCD = farmActionCooldown;
-        
-        while (faCD >= 0.0f)
-        {
-            faCD -= Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(farmActionCooldown);
         farmDone = false;
     }
 
+
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!plants.Contains(other.gameObject))
         {
             plants.Add(other.gameObject);
         }
+        
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -146,4 +140,5 @@ public class PlayerFarmInput : MonoBehaviour
             plants.Remove(collision.gameObject);
         }
     }
+    
 }

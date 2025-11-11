@@ -1,16 +1,23 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] GameInput gameInput;
+    [SerializeField] PlayerVisualHandler playerVisualHandler;
+
 
     [Header("Movement Bounds")]
     [SerializeField] float minX = 0f;
     [SerializeField] float maxX = 0f;
+
+    public bool canMove = true;
     private void Update()
     {
-        HandleMovement();
+        if (canMove)
+        {
+            HandleMovement();
+        }
     }
 
     // Function that handle movement logics, i just separate incase theres extra extend to movement in future
@@ -18,9 +25,10 @@ public class Player : MonoBehaviour
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
-        Vector3 moveDir = new Vector3(inputVector.x, inputVector.y, 0f);
+        Vector3 moveDir = new Vector3(inputVector.x, 0.0f, 0f);
 
         transform.position += moveDir * moveSpeed * Time.deltaTime;
+        playerVisualHandler.PlayRotateAnimation(-inputVector.x * Time.deltaTime);
 
         ClampPosition();
     }

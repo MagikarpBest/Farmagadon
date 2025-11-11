@@ -1,7 +1,5 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Core manager that coordinates game state, saving, and scene transitions.
@@ -14,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeaponInventory weaponInventory;       // Weapon Inventory
     [SerializeField] private AmmoInventory ammoInventory;           // Ammo Inventory
     [SerializeField] private UIManager UIManager;                   // Control UI
+    [SerializeField] private CircleTransition circleTransition;
     [SerializeField] private SceneController sceneController;       // Change scenes
     [SerializeField] private WaveManager waveManager;               // Manage enemy wave
     [SerializeField] private FenceHealth fenceHealth;               // Reference to fence
@@ -80,50 +79,58 @@ public class GameManager : MonoBehaviour
         switch (phase)
         {
             case GamePhase.Farm:
-                StartFarmPhase();
+                StartCoroutine(StartFarmPhase());
                 break;
 
             case GamePhase.Loadout:
-                StartLoadoutPhase();
+                StartCoroutine(StartLoadoutPhase());
                 break;
 
             case GamePhase.Combat:
-                StartCombatPhase();
+                StartCoroutine(StartCombatPhase());
                 break;
         }
     }
 
-    private void StartFarmPhase()
+    private IEnumerator StartFarmPhase()
     {
+        yield return null;
         Debug.Log("[GameManager] Starting FARM phase.");
-        //if (farmDataBridge != null)
-        //{
-        //    farmDataBridge.Initialize(SaveData);
-        //}
         UIManager?.ShowHUD();
-        Time.timeScale = 1.0f;
+        Time.timeScale = 0.0f;
+        //yield return circleTransition.CloseTransition();
 
+        // Just debug, remove in ltr
         // Initialize the current level from the database and start the game
         waveManager?.BeginLevel(SaveData.currentLevel);
-        Debug.Log($"spawning level");
+        Debug.Log($"Starting farm level");
+        Time.timeScale = 1.0f;
     }
 
-    private void StartLoadoutPhase()
+    private IEnumerator StartLoadoutPhase()
     {
+        yield return null;
         Debug.Log("[GameManager] Starting LOADOUT phase.");
         UIManager?.ShowHUD();
-        Time.timeScale = 1.0f;
+        Time.timeScale = 0.0f;
+        //yield return circleTransition.CloseTransition();
 
+        // Just debug, remove in ltr
         // Initialize the current level from the database and start the game
         waveManager?.BeginLevel(SaveData.currentLevel);
-        Debug.Log($"spawning level");
+        Debug.Log($"Starting loadout level");
+        Time.timeScale = 1.0f;
     }
 
-    private void StartCombatPhase()
+    private IEnumerator StartCombatPhase()
     {
+        yield return null;
         Debug.Log("[GameManager] Starting COMBAT phase.");
-
+        UIManager?.ShowHUD();
+        Time.timeScale = 0.0f;
+        yield return circleTransition.CloseTransition();
         // Initialize the current level from the database and start the game
+
         waveManager?.BeginLevel(SaveData.currentLevel);
         Debug.Log($"spawning level");
         Time.timeScale = 1.0f;
@@ -142,19 +149,33 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void OnCombatVictory()
     {
+        // i have to do this or else i have to refractor alot of event linking which is smtg im lazy to do
+        StartCoroutine(HandleCombatVictory());
+    }
+    private IEnumerator HandleCombatVictory()
+    {
         // Complete level (give rewards, update progression)
         Debug.Log("[GameManager] Level completed!");
+        yield return circleTransition.OpenTransition();
         levelManager.CompleteLevel();
+        yield return circleTransition.CloseTransition();
     }
 
     /// <summary>
     /// Called when player selected reward or press next in combat.
     /// </summary>
-    public void OnVictoryUICompleted()
+    private void OnVictoryUICompleted()
+    {
+        // i have to do this or else i have to refractor alot of event linking which is smtg im lazy to do
+        StartCoroutine(HandleVictoryUIComplete());
+    }
+
+    private IEnumerator HandleVictoryUIComplete()
     {
         SaveAll();
         Debug.Log($"[TEST] CurrentPhase before load: {gameStateManager.CurrentPhase}");
         Debug.Log($"[GameManager] Progress saved. Next level: {SaveData.currentLevel + 1}, Next phase: {gameStateManager.CurrentPhase}");
+        yield return circleTransition.OpenTransition();
         sceneController.LoadScene(GetNextSceneName());
     }
 

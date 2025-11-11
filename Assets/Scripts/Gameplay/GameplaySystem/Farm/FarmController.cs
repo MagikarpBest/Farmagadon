@@ -15,6 +15,7 @@ public class FarmController : MonoBehaviour
     private bool stopGame = false;
     public bool StopGame { get { return stopGame; } }
 
+    private SaveData saveData;
 
     public event Action StartFarmCycle;
     public event Action StopFarmCycle;
@@ -28,6 +29,7 @@ public class FarmController : MonoBehaviour
     public void OnEnable()
     {
         timer.OnTimerEnded += EndFarmCycle;
+        
     }
 
     public void OnDisable()
@@ -38,8 +40,9 @@ public class FarmController : MonoBehaviour
     public void Start()
     {
         //gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
+        saveData = SaveSystem.LoadGame();
         StartFarmCycle?.Invoke();
-        BeginFarmCycle(0);
+        BeginFarmCycle(saveData.currentLevel-1);
     }
 
 

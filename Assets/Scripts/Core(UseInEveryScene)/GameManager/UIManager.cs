@@ -19,8 +19,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject victoryPanel;       // Combat victory new crops
     [SerializeField] private GameObject gameOverPanel;      // Dead UI
     [SerializeField] private GameObject pausePanel;         // Pause UI
-    [SerializeField] private GameObject weaponChoicePanel;  // Victory UI for recipe pick
     [SerializeField] private GameObject settingsPanel;       // Pause setting UI
+
 
     public event Action OnVictoryCompleted;
 
@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    #region Show/Hide
     // ----------------------
     // Show / Hide Methods
     // ----------------------
@@ -94,8 +95,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
-
     // Navigations helpers
     /// <summary>
     /// Start first selected navigation and save last selected memory
@@ -153,6 +152,7 @@ public class UIManager : MonoBehaviour
         // pausePanel is never hidden here to allow overlay
     }
 
+    #endregion
     // ===========================
     // HELPERS / EVENTS
     // ===========================
@@ -161,7 +161,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void PlayerPressedVictoryNext()
     {
-        victoryPanel.SetActive(false);  // Hide victory panel
+        //victoryPanel.SetActive(false);  // Hide victory panel
         OnVictoryCompleted?.Invoke();// Fire event so GameManager knows
     }
 

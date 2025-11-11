@@ -29,16 +29,27 @@ public class plants : MonoBehaviour
     {
         
         OnFarmed?.Invoke(plantAmmoData, dropAmount);
-        transform.DOPunchPosition(new Vector3(0.1f, 0.0f, 0.0f), 0.5f);
         flashEffect.CallDamageFlash();
-        GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.5f);
-        transform.DOScale(0, 0.5f);
+        Sequence plantShrink = DOTween.Sequence();
+        plantShrink.Prepend(transform.DOPunchPosition(new Vector3(0.1f, 0.0f, 0.0f), 0.5f));
+        plantShrink.Prepend(GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.5f));
+        plantShrink.Prepend(transform.DOScale(0, 0.5f));
+        
 
         Image panel = BulletPanelHandler.GetBulletPanel(plantAmmoData);
-        Vector3 panelPos = panel.transform.position;
+        //
+        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
+        //
+        //
+        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
+        //
+        //
+        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
+        //
+        Vector3 panelPos = Vector3.zero;
         
         OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData, 1.0f);
-        StartCoroutine(destroyAfter(0.5f));
+        StartCoroutine(destroyAfter(plantShrink.Duration()));
     }
 
     private IEnumerator destroyAfter(float seconds)

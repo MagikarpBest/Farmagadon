@@ -64,7 +64,6 @@ public class WeaponInventory : MonoBehaviour
     private void Start()
     {
         saveData = SaveSystem.LoadGame();
-
     }
 
     // ----------------------
