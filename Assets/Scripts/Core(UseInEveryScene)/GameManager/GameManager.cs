@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] Starting FARM phase.");
         UIManager?.ShowHUD();
         Time.timeScale = 0.0f;
-        yield return circleTransition.CloseTransition();
+        //yield return circleTransition.CloseTransition();
 
         // Just debug, remove in ltr
         // Initialize the current level from the database and start the game
@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] Starting LOADOUT phase.");
         UIManager?.ShowHUD();
         Time.timeScale = 0.0f;
-        yield return circleTransition.CloseTransition();
+        //yield return circleTransition.CloseTransition();
 
         // Just debug, remove in ltr
         // Initialize the current level from the database and start the game
