@@ -20049,7 +20049,7 @@ MonoBehaviour:
   weaponChoiceUI: {fileID: 8399746315875593089}
   ammoInventory: {fileID: 509612770}
   rewardData: {fileID: 11400000, guid: 29e4e72c5ce5eca45aec0f72c6656571, type: 2}
-  debugOnReceiveAmmoAmount: 50
+  debugOnReceiveAmmoAmount: 500
 --- !u!224 &5585226408467980445
 RectTransform:
   m_ObjectHideFlags: 0
