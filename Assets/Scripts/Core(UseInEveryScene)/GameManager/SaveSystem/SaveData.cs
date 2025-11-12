@@ -31,7 +31,17 @@ public class SaveData
     // Constructor
     // -----------------
     public SaveData() 
-    { 
-    
+    {
+        // Default weapon on new game
+        string starterWeapon = "weapon_rice";
+        ownedWeaponIDs.Add(starterWeapon);
+        equippedWeaponIDs.Add(starterWeapon);  
+
+        // Give starting ammo (unlimited
+        string starterAmmo = "ammo_rice";
+        int starterAmmoCount = 99999;
+
+        ownedAmmoIDs.Add(starterAmmo);
+        ownedAmmoCounts.Add(starterAmmoCount);
     }
 }
