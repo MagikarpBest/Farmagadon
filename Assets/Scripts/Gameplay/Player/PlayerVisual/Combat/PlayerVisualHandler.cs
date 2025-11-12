@@ -6,8 +6,8 @@ public class PlayerVisualHandler : MonoBehaviour
 {
     [SerializeField] GameObject playerSprite;
     [SerializeField] private Animator animator;
+
     [Header("Visual Settings")]
-    [SerializeField] float rotationSpeed = 400f;
     [SerializeField] float recoilDistance = 0.2f;
     [SerializeField] float recoilDuration = 0.15f;
 
@@ -22,20 +22,16 @@ public class PlayerVisualHandler : MonoBehaviour
 
     public void PlayMoveAnimation(int direction)
     {
-        if (direction == 0)
+        animator.SetBool("IsMovingLeft", false);
+        animator.SetBool("IsMovingRight", false);
+
+        if (direction > 0)
         {
-            animator.SetBool("IsMovingLeft", false);
-            animator.SetBool("IsMovingRight", false);
-        }
-        else if (direction == 1)
-        {
-            animator.SetBool("IsMovingLeft", false);
             animator.SetBool("IsMovingRight", true);
         }
-        else
+        else if (direction < 0)
         {
             animator.SetBool("IsMovingLeft", true);
-            animator.SetBool("IsMovingRight", false);
         }
 
     }
@@ -43,33 +39,36 @@ public class PlayerVisualHandler : MonoBehaviour
     public IEnumerator PlayShootAnimation()
     {
         // Trigger shooting animator
-        animator.SetTrigger("IsShooting");
+        animator.SetBool("IsMovingLeft", false);
+        animator.SetBool("IsMovingRight", false);
+        animator.SetBool("IsShooting", true);
 
         // --- SUCK-IN / CHARGE PHASE ---
         // Slightly move down/back and squash
         Vector3 suckPosition = originalPosition + Vector3.down * 0.1f;
         Vector3 suckScale = originalScale * 1.1f; // slightly bigger, stretching
-        Tween suckMove = playerSprite.transform.DOLocalMove(suckPosition, 0.25f).SetEase(Ease.OutSine);
-        Tween suckScaleTween = playerSprite.transform.DOScale(suckScale, 0.25f).SetEase(Ease.OutSine);
 
+        Sequence suckSeq = DOTween.Sequence()
+            .Join(playerSprite.transform.DOLocalMove(suckPosition, 0.25f).SetEase(Ease.OutSine))
+            .Join(playerSprite.transform.DOScale(suckScale, 0.25f).SetEase(Ease.OutSine));
         
-        yield return DOTween.Sequence().Join(suckMove).Join(suckScaleTween).WaitForCompletion();
-
+        yield return suckSeq.WaitForCompletion();
+        animator.SetBool("IsShooting", false);
 
         // --- SHOOT / RECOIL PHASE ---
         // Quick upward recoil and squash/stretch to feel impact
         Vector3 recoilPosition = originalPosition + Vector3.up * recoilDistance;
         Vector3 recoilScale = originalScale * 0.9f; // slightly smaller, compressing
-        Tween recoilMove = playerSprite.transform.DOLocalMove(recoilPosition, recoilDuration).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutSine);
-        Tween recoilScaleTween = playerSprite.transform.DOScale(recoilScale, recoilDuration).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutSine);
 
-        yield return DOTween.Sequence().Join(recoilMove).Join(recoilScaleTween).WaitForCompletion();
+        Sequence recoilSeq = DOTween.Sequence()
+            .Join(playerSprite.transform.DOLocalMove(recoilPosition, recoilDuration).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutSine))
+            .Join(playerSprite.transform.DOScale(recoilScale, recoilDuration).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutSine));
+
+        yield return recoilSeq.WaitForCompletion();
 
         // --- RESET ---
         playerSprite.transform.localPosition = originalPosition;
         playerSprite.transform.localScale = originalScale;
         playerSprite.transform.DOLocalRotate(Vector3.zero, 0.1f); // optional rotation reset
-
-
     }
 }

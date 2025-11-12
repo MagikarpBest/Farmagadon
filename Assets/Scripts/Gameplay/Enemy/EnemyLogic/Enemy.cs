@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEditor.ShaderGraph.Internal;
+using Unity.VisualScripting;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
@@ -12,13 +14,21 @@ public class Enemy : MonoBehaviour, IDamageable
     public event Action<Enemy> OnDeath;
 
     private Collider2D[] colliders;
+    private float originalMoveSpeed;
+    private float currentMoveSpeed;
     private int currentHealth;
     private bool isAttackingFence = false;
     private bool isDead = false;
+
+    private Coroutine slowRoutine;
     private Coroutine attackRoutine;
 
     private void Awake()
     {
+        // Save movementspeed to modify later
+        originalMoveSpeed = enemyData.moveSpeed;
+        currentMoveSpeed = originalMoveSpeed;
+
         currentHealth = enemyData.maxHealth;
         colliders = GetComponentsInChildren<Collider2D>();
     }
@@ -28,11 +38,31 @@ public class Enemy : MonoBehaviour, IDamageable
         // Move if not attacking and dead
         if (!isAttackingFence && !isDead) 
         {
-            transform.Translate(Vector2.down * enemyData.moveSpeed * Time.deltaTime);
+            transform.Translate(Vector2.down * currentMoveSpeed * Time.deltaTime);
             enemyVisualHandler.PlayMoveAnimation();
         }
     }
 
+    public void ApplySlow(float slowMultiplier, float duration)
+    {
+        if (slowRoutine != null)
+        {
+            StopCoroutine(slowRoutine);
+        }
+        slowRoutine = StartCoroutine(SlowRoutine(slowMultiplier, duration));
+    }
+
+    private IEnumerator SlowRoutine(float slowMultiplier, float duration)
+    {
+        currentMoveSpeed = originalMoveSpeed * Mathf.Clamp(slowMultiplier, 0f, 1f);
+
+        yield return new WaitForSeconds(duration);
+
+        currentMoveSpeed = originalMoveSpeed;
+
+        slowRoutine = null;
+    }
+    #region Attack
     public void TakeDamage(int damage)
     {
         if (enemyVisualHandler == null)
@@ -127,4 +157,5 @@ public class Enemy : MonoBehaviour, IDamageable
         isAttackingFence = false;
         attackRoutine = null;
     }
+    #endregion Attack
 }

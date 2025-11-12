@@ -27,11 +27,16 @@ MonoBehaviour:
   pelletCount: 1
   spread: 0
   shrapnel:
+    enable: 1
+    count: 5
+    bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
+    shrapnelWeaponData: {fileID: 11400000, guid: 4faf61cf99ff0c54888ce28775298c98, type: 2}
+  slowEffect:
+    enable: 1
+    slowAmount: 0.734
+    duration: 1
+  split:
     enable: 0
     bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
-    count: 5
-    bulletSpeed: 10
-    damage: 1
-    pierceCount: 1
-    explosionRadius: 0
-    lifeTime: 3
+    splitWeaponData: {fileID: 11400000, guid: 966e3dd4527721d43b8261856af9446a, type: 2}
+    spreadAngle: 180

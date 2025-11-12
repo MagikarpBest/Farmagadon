@@ -28,16 +28,36 @@ public class WeaponData : ScriptableObject
     {
         [Header("Shrapnel Settings (special combination)")]
         public bool enable = false;
-        public GameObject bulletPrefab; // Which bullet prefab to shoot (eg rice after explode)
         public int count = 0;
-        public float bulletSpeed = 10f;
-        public float damage = 1f;
-        public int pierceCount = 1;
-        public float explosionRadius = 0f; // Edit if explosive weapon
-        public float lifeTime = 0f;
+        public GameObject bulletPrefab; // Which bullet prefab to shoot (eg rice after explode)
+        public WeaponData shrapnelWeaponData;
     }
 
     [Header("Explosion / Shrapnel Settings")]
     public ShrapnelSettings shrapnel = new ShrapnelSettings();
 
+    [System.Serializable]
+    public class SlowExplosion
+    {
+        [Header("Slow effects")]
+        public bool enable = false;
+        [Range(0f, 1f)] public float slowAmount = 0.5f;
+        public float duration = 1.0f;
+    }
+
+    [Header("Slow Zone Effect")]
+    public SlowExplosion slowEffect = new SlowExplosion();
+
+    [System.Serializable]
+    public class SplitSettings
+    {
+        [Header("Split-on-Hit")]
+        public bool enable = false;
+        public GameObject bulletPrefab; // Which bullet prefab to shoot (eg rice after explode)
+        public WeaponData splitWeaponData;
+        public float spreadAngle = 45f;
+    }
+
+    [Header("Split Settings")]
+    public SplitSettings split = new SplitSettings();
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.U2D;
 
 public class Bullet : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Bullet : MonoBehaviour
     private int pierceCountRemaining;
     private SpriteRenderer spriteRender;
     private HashSet<Collider2D> hitEnemies= new HashSet<Collider2D>();
+    private HashSet<Collider2D> ignoredColliders= new HashSet<Collider2D>();
 
     private void Awake()
     {
@@ -37,6 +39,35 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, data.lifeTime);
     }
 
+    private void HitEnemy(Collider2D other)
+    {
+        if (hitEnemies.Contains(other))
+        {
+            return;
+        }
+
+        Debug.Log($"{name} hit {other.name}, pierceRemaining={pierceCountRemaining}");
+
+        hitEnemies.Add(other);
+
+        if (other.TryGetComponent<IDamageable>(out var damageable))
+        {
+            damageable.TakeDamage(Mathf.RoundToInt(weaponData.damage));
+        }
+
+        // Apply any special effects (slow, split, etc.)
+        HandleSpecialEffects();
+
+        pierceCountRemaining--;
+        if (weaponData.pierceCount > 0)
+        {
+            if (pierceCountRemaining <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
     private void Explode()
     {
         // Stop movement immediately
@@ -52,6 +83,7 @@ public class Bullet : MonoBehaviour
         // Check every enemy in zone and reduce HP
         foreach (var hit in hits)
         {
+
             if (hit.CompareTag("Enemy"))
             {
                 IDamageable damageable = hit.GetComponent<IDamageable>();
@@ -61,17 +93,31 @@ public class Bullet : MonoBehaviour
                 }
             }
         }
+        HandleSpecialEffects();
+    }
 
-        // Check if we should spawn shrapnel
-        if (weaponData.shrapnel != null && weaponData.shrapnel.enable && weaponData.shrapnel.count > 0)
+    private IEnumerator ReenableCollision(Collider2D collider, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (collider != null)
         {
-            // Start a coroutine that will spawn shrapnel and THEN destroy this bullet
-            StartCoroutine(SpawnShrapnelDelayed());
+            collider.enabled = true;
         }
-        else
+    }
+
+    private void HandleSpecialEffects()
+    {
+        if (weaponData.shrapnel != null && weaponData.shrapnel.enable) 
         {
-            // If no shrapnel, just destroy immediately
-            Destroy(gameObject);
+            StartCoroutine(SpawnShrapnelDelayed());
+        }   
+        if (weaponData.split != null && weaponData.split.enable)
+        {
+            StartCoroutine(ShootSplitBullets());
+        }
+        if (weaponData.slowEffect != null && weaponData.slowEffect.enable)
+        {
+            StartCoroutine(ApplySlowEffect());
         }
     }
 
@@ -103,7 +149,7 @@ public class Bullet : MonoBehaviour
             Vector2 direction = rotation * Vector2.up;
 
             // Spawn bullet prefab
-            Vector3 spawnPos = transform.position + (Vector3)(direction * spawnOffset);
+            Vector3 spawnPos = transform.position + (Vector3)(direction * spawnOffset) + new Vector3(0f, 0.5f, 0f);
             GameObject bulletGO = Instantiate(shrapnel.bulletPrefab, spawnPos, rotation);
 
             // Get its Bullet component
@@ -115,13 +161,15 @@ public class Bullet : MonoBehaviour
             }
 
             //  Properly create a temporary ScriptableObject for shrapnel stats
-            WeaponData shrapnelData = ScriptableObject.CreateInstance<WeaponData>();
-            shrapnelData.damage = shrapnel.damage;
-            shrapnelData.lifeTime = (shrapnel.lifeTime > 0 ? shrapnel.lifeTime : weaponData.lifeTime);
-            shrapnelData.bulletSpeed = shrapnel.bulletSpeed;
+            bullet.Fire(direction.normalized * shrapnel.shrapnelWeaponData.bulletSpeed, shrapnel.shrapnelWeaponData);
 
-            // Fire with its independent settings
-            bullet.Fire(direction * shrapnel.bulletSpeed, shrapnelData);
+            // Immediately ignore colliders after instantiation
+            Collider2D collider = bullet.GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+                bullet.StartCoroutine(ReenableCollision(collider, 0.15f));
+            }
         }
         Debug.Log($"Spawned {shrapnel.count} shrapnel bullets for {weaponData.weaponName}");
 
@@ -129,6 +177,69 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private IEnumerator ShootSplitBullets()
+    {
+        var split = weaponData.split;
+        if (split.bulletPrefab == null)
+        {
+            Debug.LogWarning($"Split bullet prefab missing for {weaponData.weaponName}");
+            yield return null;
+        }
+
+        float halfAngle = split.spreadAngle * 0.5f;
+
+        // Spawn left/right bullets
+        SplitBulletLogic(halfAngle);
+        SplitBulletLogic(-halfAngle);
+    }
+
+    private void SplitBulletLogic(float angle)
+    {
+        var split = weaponData.split;
+        Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, transform.eulerAngles.z + angle);
+        Vector2 direction = rotation * Vector2.up;
+
+        GameObject bulletGO = Instantiate(split.bulletPrefab, transform.position+new Vector3(0f,0.3f,0f) , rotation);
+        Bullet bullet = bulletGO.GetComponent<Bullet>();
+        if (bullet == null)
+        {
+            Debug.LogError("Split bullet prefab has no Bullet script!");
+            return;
+        }
+
+        // Make temp weapon data for split bullets
+        bullet.Fire(direction.normalized * split.splitWeaponData.bulletSpeed, split.splitWeaponData);
+
+        // Immediately ignore colliders after instantiation
+        Collider2D collider = bullet.GetComponent<Collider2D>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+            bullet.StartCoroutine(ReenableCollision(collider, 0.15f));
+        }
+    }
+
+    private IEnumerator ApplySlowEffect()
+    {
+        var slow = weaponData.slowEffect;
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, weaponData.explosionRadius);
+
+        // Check every enemy in zone and reduce HP
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.ApplySlow(slow.slowAmount, slow.duration);
+                    Debug.Log($"Applied slow {slow.slowAmount * 100f}% for {slow.duration}s to {enemy.name}");
+                }
+            }
+        }
+        yield return null;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -143,38 +254,11 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-
             HitEnemy(other);
         }
     }
 
-    private void HitEnemy(Collider2D other)
-    {
-        if (hitEnemies.Contains(other))
-        {
-            return;
-        }
 
-        Debug.Log($"{name} hit {other.name}, pierceRemaining={pierceCountRemaining}");
-
-        hitEnemies.Add(other);
-
-        if (other.TryGetComponent<IDamageable>(out var damageable))
-        {
-            damageable.TakeDamage(Mathf.RoundToInt(weaponData.damage));
-        }
-
-
-        pierceCountRemaining--;
-        if (weaponData.pierceCount > 0)
-        {
-            if (pierceCountRemaining <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-    }
     private void OnDrawGizmos()
     {
         if (weaponData == null)
