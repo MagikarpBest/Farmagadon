@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] Starting COMBAT phase.");
         UIManager?.ShowHUD();
         Time.timeScale = 0.0f;
-        yield return circleTransition.CloseTransition();
+        //yield return circleTransition.CloseTransition();
         // Initialize the current level from the database and start the game
 
         waveManager?.BeginLevel(SaveData.currentLevel);
