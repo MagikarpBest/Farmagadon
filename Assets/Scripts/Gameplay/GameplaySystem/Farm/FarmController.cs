@@ -46,10 +46,10 @@ public class FarmController : MonoBehaviour
     }
 
 
-    public void cropFarmed(AmmoData cropName, int dropAmount)
+    public void CropFarmed(AmmoData cropName, int dropAmount)
     {
         ammoInventory.AddAmmo(cropName, dropAmount); // add to ammo inv is here
-        OnCropFarmed?.Invoke(); // this one connects to BulletPanelHandler, just to update the UI
+        //OnCropFarmed?.Invoke(); // this one connects to BulletPanelHandler, just to update the UI
     }
 
     public void BeginFarmCycle(int level)
