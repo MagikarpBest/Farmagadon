@@ -33,7 +33,7 @@ MonoBehaviour:
     shrapnelWeaponData: {fileID: 11400000, guid: 4faf61cf99ff0c54888ce28775298c98, type: 2}
   slowEffect:
     enable: 1
-    slowAmount: 0.734
+    slowAmount: 0.174
     duration: 1
   split:
     enable: 0
