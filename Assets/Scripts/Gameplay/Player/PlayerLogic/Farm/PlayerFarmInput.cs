@@ -64,6 +64,7 @@ public class PlayerFarmInput : MonoBehaviour
     }
     private void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        if (playerFarmAnimator.PlayerAnimator.GetBool("digBool") == true) { return; }
         if (movementDone) { return; }
         Vector2 dir = playerInput.Player.Move.ReadValue<Vector2>().normalized;
         OnMovementEvent?.Invoke(dir);
@@ -81,13 +82,13 @@ public class PlayerFarmInput : MonoBehaviour
 
         playerPos = moveDir;
         movementDone = true;
-        player.DOMove(playerFinalPos, 0.6f).SetEase(Ease.InOutQuint);
+        player.DOMove(playerFinalPos, 0.833f).SetEase(Ease.InOutQuint);
         StartCoroutine(MovementInternalCooldown());
     }
 
     private IEnumerator MovementInternalCooldown() 
     {
-        moveCD = 1.2f;
+        moveCD = 0.9f;
 
         yield return new WaitForSeconds(moveCD);
 

@@ -102,7 +102,8 @@ namespace Farm
         {
             
             PlantData plantData = GetPlantData();
-            yield return new WaitForSeconds(plantData.cropGrowRate);
+            
+            yield return new WaitForSeconds(plantData.cropGrowRate + Random.Range(Mathf.Max(1, plantData.cropGrowRate-3),3));
             InstantiateCrop(plantData, posX, posY);
 
         }
@@ -117,7 +118,7 @@ namespace Farm
             int posY = playerFarmInput.PlayerPos.y;
 
             offset = Mathf.Abs(posY * 0.5f) + 0.5f;
-            
+            endPos.x -= 0.7f;
             Vector3[] curvePath = new[] { startPos, startPos + new Vector3(midpoint/3, offset), startPos + new Vector3(midpoint/2, offset), startPos + new Vector3(midpoint, offset), endPos };
             Sequence flyingSequence = DOTween.Sequence();
             flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.Linear).SetEase(Ease.InOutSine));

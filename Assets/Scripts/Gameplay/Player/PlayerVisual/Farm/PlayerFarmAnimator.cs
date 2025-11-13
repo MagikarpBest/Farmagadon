@@ -10,7 +10,6 @@ public class PlayerFarmAnimator : MonoBehaviour
 {
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerFarmInput farmInput;
-
     [SerializeField] private AnimationClip[] clips;
 
     public enum AnimState
@@ -29,6 +28,8 @@ public class PlayerFarmAnimator : MonoBehaviour
 
     public delegate void OnGroundPound();
     public OnGroundPound AnimReachedGroundPound;
+
+    public Animator PlayerAnimator => playerAnimator;
 
     private void OnEnable()
     {
@@ -67,6 +68,7 @@ public class PlayerFarmAnimator : MonoBehaviour
 
     private void MovementPressed(Vector2 move)
     {
+        if (playerAnimator.GetBool("digBool") == true) { return; }
         StopIdle();
         SetAllAnimsFalse();
         if (move.x != 0)

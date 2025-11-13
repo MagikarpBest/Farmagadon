@@ -34,19 +34,14 @@ public class plants : MonoBehaviour
         plantShrink.Prepend(transform.DOPunchPosition(new Vector3(0.1f, 0.0f, 0.0f), 0.5f));
         plantShrink.Prepend(GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.5f));
         plantShrink.Prepend(transform.DOScale(0, 0.5f));
-        
 
+        Vector3 panelPos = Vector2.zero;
         Image panel = BulletPanelHandler.GetBulletPanel(plantAmmoData);
-        //
-        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
-        //
-        //
-        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
-        //
-        //
-        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
-        //
-        Vector3 panelPos = Vector3.zero;
+
+        if (panel != null) 
+        {
+            panelPos = panel.transform.position;
+        }
         
         OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData, 1.0f);
         StartCoroutine(destroyAfter(plantShrink.Duration()));
