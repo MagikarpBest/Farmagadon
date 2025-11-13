@@ -115,7 +115,6 @@ public class PlayerShooting : MonoBehaviour
 
         // Wait for the weapon's fire rate duration
         yield return visualAnimation;
-        //yield return new WaitForSeconds(weapon.fireRate);
 
         if (playerMovement != null)
         {
