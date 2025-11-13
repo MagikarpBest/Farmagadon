@@ -43,6 +43,12 @@ public class FarmController : MonoBehaviour
         saveData = SaveSystem.LoadGame();
         StartFarmCycle?.Invoke();
         BeginFarmCycle(saveData.currentLevel-1);
+
+        UnityAudioManager unityAudioManagerPrefab = Resources.Load<UnityAudioManager>("UnityAudioManager");
+        UnityAudioManager unityAudioManagerInstance = GameObject.Instantiate(unityAudioManagerPrefab);
+        unityAudioManagerInstance.Initiallize();
+        unityAudioManagerInstance.name = "AudioManager";
+        AudioService.SetAudioManager(unityAudioManagerInstance);
     }
 
 

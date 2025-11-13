@@ -11,6 +11,7 @@ public class PlayerFarmAnimator : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerFarmInput farmInput;
     [SerializeField] private AnimationClip[] clips;
+    [SerializeField] private AudioClip clip;
 
     public enum AnimState
     {
@@ -88,6 +89,7 @@ public class PlayerFarmAnimator : MonoBehaviour
     {
         print(AnimReachedGroundPound);
         Camera.main.transform.DOShakePosition(0.1f, 0.1f);
+        AudioService.AudioManager.PlayOneShot(clip, 1.0f);
         AnimReachedGroundPound?.Invoke();
     }
 
