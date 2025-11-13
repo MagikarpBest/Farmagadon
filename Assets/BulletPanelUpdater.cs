@@ -10,14 +10,13 @@ public class BulletPanelUpdater : MonoBehaviour
     public AmmoData AmmoData {  set { ammoData = value; } }
     private AmmoInventory ammoInventory;
     public AmmoInventory AmmoInventory { set { ammoInventory = value; } }
-    private Image ammoImage;
+    [SerializeField] private Image ammoImage;
     private TextMeshProUGUI ammoText;
 
     private bool scaleCD = false;
     private bool firstRun = true;
     private void Awake()
     {
-        ammoImage = GetComponentsInChildren<Image>()[2];
         
         ammoText = GetComponentInChildren<TextMeshProUGUI>();
     }
