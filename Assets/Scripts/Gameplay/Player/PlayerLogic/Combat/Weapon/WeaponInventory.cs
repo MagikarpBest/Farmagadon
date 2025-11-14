@@ -357,6 +357,11 @@ public class WeaponInventory : MonoBehaviour
         return equipped;
     }
 
+    public List<WeaponSlot> GetAllOwnedWeapons()
+    {
+        return weaponStorage;
+    }
+
     /// <summary>
     /// Returns the number of unlocked slots.
     /// </summary>

@@ -403,6 +403,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -425,7 +429,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Corn
@@ -688,6 +692,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -710,7 +718,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton7
@@ -861,6 +869,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -883,7 +895,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton10
@@ -1664,6 +1676,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -1686,7 +1702,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Potato
@@ -1819,6 +1835,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -1841,7 +1861,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton12
@@ -1935,7 +1955,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 69ae904611b0ab844a69085ae9ee6523, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9d02cbe0debada449c9505e4a7e3f21, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2437,6 +2457,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -2459,7 +2483,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Carrot
@@ -2926,6 +2950,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -2948,7 +2976,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton11
@@ -3144,6 +3172,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultFirstSelected: {fileID: 2617671002725687705}
   rememberLastPosition: 1
+--- !u!1 &1463827372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1463827373}
+  - component: {fileID: 1463827374}
+  m_Layer: 0
+  m_Name: LoadoutVisualManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1463827373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463827372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5170010915690137350}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1463827374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463827372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19277d362f0085c40abb1173a7e34b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponInventory: {fileID: 1185385922134049834}
+  ammoInventory: {fileID: 1872534726785164356}
+  inventoryImages:
+  - {fileID: 145527087}
+  - {fileID: 853363799}
+  - {fileID: 21913264}
+  - {fileID: 603260525}
+  equippedImages:
+  - {fileID: 450292046}
+  - {fileID: 1248252285}
+  - {fileID: 1468764382}
+  - {fileID: 575615820}
+  ammoTexts:
+  - {fileID: 2617671002725687706}
+  - {fileID: 68833090}
+  - {fileID: 1154995134}
+  - {fileID: 823923660}
+  weaponDescription:
+  - {fileID: 885109690}
+  emptySlotSprite: {fileID: 21300000, guid: 7d4132e6b621fb545a42d32110963fb8, type: 3}
 --- !u!114 &1466076589 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1002755787554602893, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
@@ -3209,14 +3301,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488935866}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dcda7985a1810f4980ef1d2a01381fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 8489242888806506498}
-  loadoutColumn: 2
-  bagColumn: 4
+  craftManager: {fileID: 1070782128}
+  weaponInventory: {fileID: 1185385922134049834}
+  ammoInventory: {fileID: 1872534726785164356}
+  battleButton: {fileID: 61907560}
   loadoutSlots:
   - {fileID: 1742573073}
   - {fileID: 1254591121}
@@ -3248,13 +3342,6 @@ MonoBehaviour:
   - {fileID: 139746861}
   - {fileID: 1267943300}
   - {fileID: 841508424}
-  battleButton: {fileID: 61907560}
-  craftManager: {fileID: 1070782128}
-  weaponInventory: {fileID: 1185385922134049834}
-  ammoInventory: {fileID: 1872534726785164356}
-  prefabLoadoutPopup: {fileID: 6106527648872877890, guid: 6c080585d407ad94d988b807048157f4, type: 3}
-  prefabCraftingPopup: {fileID: 4767056239128855920, guid: 19c3d6841b458f14d9b7104aa4ac9b39, type: 3}
-  emptySlotSprite: {fileID: 21300000, guid: bb0605ed30fffdc4aba2abff6505d45b, type: 3}
   slotImage:
   - {fileID: 450292046}
   - {fileID: 1248252285}
@@ -3273,6 +3360,22 @@ MonoBehaviour:
   - {fileID: 1945085339}
   - {fileID: 1591736582}
   - {fileID: 1466076589}
+  emptySlotSprite: {fileID: 21300000, guid: bb0605ed30fffdc4aba2abff6505d45b, type: 3}
+  prefabLoadoutPopup: {fileID: 6106527648872877890, guid: 6c080585d407ad94d988b807048157f4, type: 3}
+  prefabCraftingPopup: {fileID: 4767056239128855920, guid: 19c3d6841b458f14d9b7104aa4ac9b39, type: 3}
+  selectedIndex: 0
+  selectedBagIndex: 0
+  selectingBag: 0
+  slotActive: 0
+  popupButtons: []
+  popupIndex: 0
+  popup: {fileID: 0}
+  craftPopup: {fileID: 0}
+  isPopupActive: 0
+  isEquipped: 0
+  isCraft: 0
+  weapons: []
+  currentLoadout: []
 --- !u!1001 &1493666956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3362,6 +3465,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -3384,7 +3491,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton9
@@ -3513,6 +3620,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -3535,7 +3646,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton5
@@ -3653,6 +3764,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -3675,7 +3790,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton8
@@ -4507,6 +4622,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -4529,7 +4648,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3894441717241758045, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Name
       value: BagButton6
@@ -4624,8 +4743,7 @@ MonoBehaviour:
   ammoInventory: {fileID: 1872534726785164356}
   maxSlot: 4
   unlockedSlots: 1
-  startingWeapon:
-  - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
+  startingWeapon: []
   swapDelay: 0.25
 --- !u!4 &1288029174612492927
 Transform:
@@ -4672,8 +4790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoDatabase: {fileID: 11400000, guid: a587565bd46e56f44aef6e07189a2a3d, type: 2}
-  startAmmoTypes:
-  - {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
+  startAmmoTypes: []
   debugStartingAmmo: 50
 --- !u!4 &1874658864655731235
 Transform:
@@ -4824,6 +4941,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Navigation.m_Mode
       value: 4
       objectReference: {fileID: 0}
@@ -4846,7 +4967,7 @@ PrefabInstance:
     - target: {fileID: 2148072015258211121, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1488935868}
+      objectReference: {fileID: 0}
     - target: {fileID: 3173569279982367513, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -5020,10 +5141,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6855386380013244259}
   - {fileID: 3404590893028413907}
   - {fileID: 4899978054246125028}
   - {fileID: 5709507847142221880}
-  - {fileID: 6855386380013244259}
   - {fileID: 8933307824251706300}
   - {fileID: 4075441116594420553}
   - {fileID: 8209625928221785513}
@@ -5253,6 +5374,7 @@ Transform:
   m_Children:
   - {fileID: 294183906012548799}
   - {fileID: 1288029174612492927}
+  - {fileID: 1463827373}
   m_Father: {fileID: 6855386380013244259}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5237807521202603404
