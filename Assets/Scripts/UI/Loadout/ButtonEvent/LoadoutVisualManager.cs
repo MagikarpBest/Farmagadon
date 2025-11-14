@@ -22,7 +22,7 @@ public class LoadoutVisual : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.3f);
         
         // Get all owned weapon and put into a list
         allOwned = weaponInventory.GetAllOwnedWeapons();
