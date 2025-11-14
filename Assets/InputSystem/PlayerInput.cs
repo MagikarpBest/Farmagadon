@@ -160,6 +160,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""up"",
+                    ""id"": ""996bde19-0bdb-4b63-82dd-230232fa38b9"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""left"",
                     ""id"": ""3495aa1d-535b-4f43-b951-7c51c3ef2cf3"",
                     ""path"": ""<Keyboard>/a"",
@@ -174,6 +185,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""right"",
                     ""id"": ""15092218-cfdd-4ca8-b63d-2903de4c1fc3"",
                     ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""5a33bbb1-8b07-4199-98e2-4ea006b2aca6"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -224,28 +246,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Farm"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""996bde19-0bdb-4b63-82dd-230232fa38b9"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Farm"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""5a33bbb1-8b07-4199-98e2-4ea006b2aca6"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Farm"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
