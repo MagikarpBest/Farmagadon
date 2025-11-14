@@ -27,21 +27,23 @@ public class MainMenuUI : MonoBehaviour
 
     public void CreditActive()
     {
+        GameObject creditClose = creditCloseButton.gameObject;
         creditMenu.SetActive(true);
         blocker.SetActive(true);
+        StartCoroutine(SelectOnNextFrame(creditClose));
     }
     public void OptionActive()
     {
         optionMenu.SetActive(true);
         blocker.SetActive(true);
         StartCoroutine(SelectOnNextFrame(volumeSlider));
-        Debug.Log("option");
     }
     public void CreditInactive()
     {
+        GameObject creditBtn = creditButton.gameObject;
         creditMenu.SetActive(false);
         blocker.SetActive(false);
-        
+        StartCoroutine(SelectOnNextFrame(creditBtn));
     }
     public void OptionInactive()
     {
