@@ -13,8 +13,6 @@ using UnityEngine.UI;
 public class LoadOutManager : MonoBehaviour
 {
     [SerializeField] private GameInput gameInput;
-    [SerializeField] private int loadoutColumn = 2;
-    [SerializeField] private int bagColumn = 4;
     [SerializeField] private List<Button> loadoutSlots;
     [SerializeField] private List<Button> bagButtons;
     [SerializeField] private List<TextMeshProUGUI> ammoText; 
@@ -62,8 +60,6 @@ public class LoadOutManager : MonoBehaviour
         {
             slotImage[i].enabled = false;
         }
-        
-        
     }
 
     private void OnEnable()
@@ -89,53 +85,53 @@ public class LoadOutManager : MonoBehaviour
         ShowAmmoCount();
     }
 
-    private void MoveSelection(int direction)
-    {
+    //private void MoveSelection(int direction)
+    //{
         
 
-        if (!selectingBag)
-        {
-            if (loadoutSlots.Count == 0) return;
+    //    if (!selectingBag)
+    //    {
+    //        if (loadoutSlots.Count == 0) return;
             
-            int nextIndex = selectedIndex + direction;
+    //        int nextIndex = selectedIndex + direction;
 
-            selectedIndex = nextIndex;
+    //        selectedIndex = nextIndex;
 
-            Debug.Log($"Selected loadout slot {selectedIndex}");
-        }
-        else
-        {
-            //move at inventory
-            if (bagButtons.Count == 0) return;
+    //        Debug.Log($"Selected loadout slot {selectedIndex}");
+    //    }
+    //    else
+    //    {
+    //        //move at inventory
+    //        if (bagButtons.Count == 0) return;
 
-            //HighlightBag(selectedBagIndex, false);
-            int nextBagIndex = selectedBagIndex + direction;
+    //        //HighlightBag(selectedBagIndex, false);
+    //        int nextBagIndex = selectedBagIndex + direction;
 
-            if (isColumn) //up down
-            {
-                if (nextBagIndex < 0 || nextBagIndex >= bagButtons.Count) return;
-            }
-            else //left right
-            {
-                //Check if there's still any popup and close it
-                if (isPopupActive && popup != null || craftPopup != null)
-                {
-                    ClosePopup();
-                    CloseCraftPopup();
-                }
-                int currentRow = selectedBagIndex / bagColumn;
-                int nextRow = nextBagIndex / bagColumn;
-                if (nextRow != currentRow || nextBagIndex < 0 || nextBagIndex >= bagButtons.Count) return;
+    //        if (isColumn) //up down
+    //        {
+    //            if (nextBagIndex < 0 || nextBagIndex >= bagButtons.Count) return;
+    //        }
+    //        else //left right
+    //        {
+    //            //Check if there's still any popup and close it
+    //            if (isPopupActive && popup != null || craftPopup != null)
+    //            {
+    //                ClosePopup();
+    //                CloseCraftPopup();
+    //            }
+    //            int currentRow = selectedBagIndex / bagColumn;
+    //            int nextRow = nextBagIndex / bagColumn;
+    //            if (nextRow != currentRow || nextBagIndex < 0 || nextBagIndex >= bagButtons.Count) return;
 
                 
-            }
+    //        }
 
-            //HighlightBag(selectedBagIndex, false);
-            selectedBagIndex = nextBagIndex;
-           // HighlightBag(selectedBagIndex, true);
-            Debug.Log($"Selected bag item {selectedBagIndex}");
-        }
-    }
+    //        //HighlightBag(selectedBagIndex, false);
+    //        selectedBagIndex = nextBagIndex;
+    //       // HighlightBag(selectedBagIndex, true);
+    //        Debug.Log($"Selected bag item {selectedBagIndex}");
+    //    }
+    //}
 
     private void ShowAmmoCount()
     {
@@ -185,19 +181,21 @@ public class LoadOutManager : MonoBehaviour
             image.sprite = emptySlotSprite;
         }
     }
+
+    
     private void ComfirmSelection()
     {
-
-        Button bagButton = bagButtons[selectedBagIndex];
+        GameObject selectedBtn = EventSystem.current.currentSelectedGameObject;
         
-        DescriptionManager descManager = bagButton.GetComponent<DescriptionManager>();
+        Debug.Log(selectedBagIndex);
+
+        DescriptionManager descManager = selectedBtn.GetComponent<DescriptionManager>();
         if (descManager != null)
         {
             descManager.ShowDescription();
         }
         if (isPopupActive)
         {
-            EventSystem.current.SetSelectedGameObject(popupButtons[popupIndex].gameObject);
             PopupSelect();
             ClosePopup();
             return;
@@ -208,12 +206,12 @@ public class LoadOutManager : MonoBehaviour
             Canvas canvas = FindAnyObjectByType<Canvas>();
             popup = Instantiate(prefabLoadoutPopup, canvas.transform);
 
-            RectTransform bagRect = bagButtons[selectedBagIndex].GetComponent<RectTransform>();
+            
+            RectTransform bagRect = selectedBtn.GetComponent<RectTransform>();
             RectTransform popupRect = popup.GetComponent<RectTransform>();
             popup.transform.SetAsLastSibling();
 
-            popupRect.position = bagRect.position + new Vector3(180f, 0f, 0f);
-
+            popupRect.position = bagRect.position + new Vector3(200f, 0f, 0f);
             isPopupActive = true;
             StartCoroutine(PopupSetup());
         }
@@ -242,24 +240,20 @@ public class LoadOutManager : MonoBehaviour
         {
             popupButtons = new List<Button>(popup.GetComponentsInChildren<Button>(true));
         }
-        if (popupIndex < 0 || popupIndex >= popupButtons.Count)
-        {
-            popupIndex = 0;
-        }
-        
+
+        EventSystem.current.SetSelectedGameObject(popupButtons[0].gameObject);
         foreach (Button button in popupButtons)
         {
-            Outline outline = button.GetComponent<Outline>();
-            if (outline != null)
-                outline.enabled = false;
+            button.onClick.AddListener(PopupSelect);
         }
     }
 
     private void PopupSelect()
     {
         Button bagButton = bagButtons[selectedBagIndex];
-        TextMeshProUGUI textComponent = bagButton.GetComponentInChildren<TextMeshProUGUI>();
-        
+        WeaponSlot slot = weaponInventory.GetWeaponSlot(selectedBagIndex);
+        string itemName = slot.weaponData.weaponID;
+
         if (popupIndex == 1 && !isCraft)
         {
             Canvas canvas = FindAnyObjectByType<Canvas>();
@@ -277,10 +271,10 @@ public class LoadOutManager : MonoBehaviour
         }
         else if (isPopupActive && popupIndex==0)
         {
-            string itemName = textComponent.text;
             AddToLoadout(itemName);
             selectingBag = false;
             Debug.Log("Added");
+            Debug.Log(itemName);
             isPopupActive = false;
         }
     }
@@ -300,13 +294,14 @@ public class LoadOutManager : MonoBehaviour
             isCraft = false;
             Debug.Log("Closed craft popup using Pause key");
         }
+        EventSystem.current.SetSelectedGameObject(bagButtons[selectedBagIndex].gameObject);
     }
 
     public void AddToLoadout(string itemName)
     {
         // prevent duplicates based on sprite instead of text
-        Button bagButton = bagButtons[selectedBagIndex];
-        Image bagIcon = bagButton.GetComponentInChildren<Image>();
+        GameObject selectedBtn = EventSystem.current.currentSelectedGameObject;
+        Image bagIcon = selectedBtn.GetComponentInChildren<Image>();
 
         for (int i = 0; i < loadoutSlots.Count; i++)
         {
@@ -315,11 +310,11 @@ public class LoadOutManager : MonoBehaviour
                 return; // already in loadout
         }
 
-        if (!slotActive)
-        {
-            Debug.Log("No loadout slot selected");
-            return;
-        }
+        //if (!slotActive)
+        //{
+        //    Debug.Log("No loadout slot selected");
+        //    return;
+        //}
 
         int index = selectedIndex;
         Button targetSlot = loadoutSlots[index];
@@ -338,5 +333,10 @@ public class LoadOutManager : MonoBehaviour
         {
             currentLoadout[index] = targetSlot.gameObject;
         }
+    }
+
+    private void RemoveFromLoadout()
+    {
+        
     }
 }
