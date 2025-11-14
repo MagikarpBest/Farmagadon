@@ -41,14 +41,6 @@ public class FarmController : MonoBehaviour
     {
         //gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
         saveData = SaveSystem.LoadGame();
-        StartFarmCycle?.Invoke();
-        BeginFarmCycle(saveData.currentLevel-1);
-
-        UnityAudioManager unityAudioManagerPrefab = Resources.Load<UnityAudioManager>("UnityAudioManager");
-        UnityAudioManager unityAudioManagerInstance = GameObject.Instantiate(unityAudioManagerPrefab);
-        unityAudioManagerInstance.Initiallize();
-        unityAudioManagerInstance.name = "AudioManager";
-        AudioService.SetAudioManager(unityAudioManagerInstance);
     }
 
 
@@ -66,6 +58,7 @@ public class FarmController : MonoBehaviour
             Debug.LogWarning("THERES NO LEVEL BRUH");
             return; 
         }
+        StartFarmCycle?.Invoke();
         StartGridPlanting?.Invoke(levelData);
         SetUpcomingEnemies?.Invoke(levelData);
     }
