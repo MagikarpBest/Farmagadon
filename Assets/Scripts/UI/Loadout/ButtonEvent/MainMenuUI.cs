@@ -10,19 +10,26 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button creditCloseButton;
     [SerializeField] private Button optionCloseButton;
 
+    [SerializeField] private Button startButton;
     [SerializeField] private Button creditButton;
     [SerializeField] private Button optionButton;
     [SerializeField] private GameObject volumeSlider;
+
     public void Start()
     {
         creditMenu.SetActive(false);
         optionMenu.SetActive(false);
         blocker.SetActive(false);
+        startButton.onClick.AddListener(StartActive);
         creditButton.onClick.AddListener(CreditActive);
         optionButton.onClick.AddListener(OptionActive);
-        Debug.Log("aaaaaaaaaa");
         creditCloseButton.onClick.AddListener(CreditInactive);
         optionCloseButton.onClick.AddListener(OptionInactive);
+    }
+
+    public void StartActive()
+    {
+        SaveSystem.ClearSave();
     }
 
     public void CreditActive()
