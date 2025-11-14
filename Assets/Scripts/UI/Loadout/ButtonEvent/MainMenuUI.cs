@@ -1,25 +1,60 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField] public GameObject Menu;
-    [SerializeField] public GameObject Blocker;
-    [SerializeField] public Button closeButton;
+    [SerializeField] private GameObject creditMenu;
+    [SerializeField] private GameObject optionMenu;
+    [SerializeField] private GameObject blocker;
+    [SerializeField] private Button creditCloseButton;
+    [SerializeField] private Button optionCloseButton;
+
+    [SerializeField] private Button creditButton;
+    [SerializeField] private Button optionButton;
+    [SerializeField] private GameObject volumeSlider;
     public void Start()
     {
-        Menu.SetActive(false);
-        Blocker.SetActive(false);
-        closeButton.onClick.AddListener(Inactive);
+        creditMenu.SetActive(false);
+        optionMenu.SetActive(false);
+        blocker.SetActive(false);
+        creditButton.onClick.AddListener(CreditActive);
+        optionButton.onClick.AddListener(OptionActive);
+        Debug.Log("aaaaaaaaaa");
+        creditCloseButton.onClick.AddListener(CreditInactive);
+        optionCloseButton.onClick.AddListener(OptionInactive);
     }
 
-    public void Active()
+    public void CreditActive()
     {
-        Menu.SetActive(true);
-        Blocker.SetActive(true);
+        creditMenu.SetActive(true);
+        blocker.SetActive(true);
     }
-    public void Inactive()
+    public void OptionActive()
     {
-        Menu.SetActive(false);
-        Blocker.SetActive(false);
+        optionMenu.SetActive(true);
+        blocker.SetActive(true);
+        StartCoroutine(SelectOnNextFrame(volumeSlider));
+        Debug.Log("option");
+    }
+    public void CreditInactive()
+    {
+        creditMenu.SetActive(false);
+        blocker.SetActive(false);
+        
+    }
+    public void OptionInactive()
+    {
+        GameObject optionBtn = optionButton.gameObject;
+        optionMenu.SetActive(false);
+        blocker.SetActive(false);
+        StartCoroutine(SelectOnNextFrame(optionBtn));
+        
+    }
+
+    private IEnumerator SelectOnNextFrame(GameObject obj)
+    {
+        yield return null; // wait 1 frame
+        EventSystem.current.SetSelectedGameObject(obj);
     }
 }
