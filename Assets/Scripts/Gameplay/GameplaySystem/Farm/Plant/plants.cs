@@ -40,7 +40,7 @@ public class plants : MonoBehaviour
 
         if (panel != null) 
         {
-            panelPos = panel.transform.position;
+            panelPos = panel.GetComponent<BulletPanelUpdater>().AmmoImage.position;
         }
         
         OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData,panel.GetComponent<BulletPanelUpdater>(), 1.0f, dropAmount);

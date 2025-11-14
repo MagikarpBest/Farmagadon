@@ -13,8 +13,12 @@ public class BulletPanelUpdater : MonoBehaviour
     [SerializeField] private Image ammoImage;
     private TextMeshProUGUI ammoText;
 
+
     private bool scaleCD = false;
     private bool firstRun = true;
+
+    public Transform AmmoImage => ammoImage.transform;
+
     private void Awake()
     {
         

@@ -118,10 +118,11 @@ namespace Farm
             int posY = playerFarmInput.PlayerPos.y;
 
             offset = Mathf.Abs(posY * 0.5f) + 0.5f;
-            endPos.x -= 0.7f;
+            
             Vector3[] curvePath = new[] { startPos, startPos + new Vector3(midpoint/3, offset), startPos + new Vector3(midpoint/2, offset), startPos + new Vector3(midpoint, offset), endPos };
             Sequence flyingSequence = DOTween.Sequence();
-            flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.Linear).SetEase(Ease.InOutSine));
+            flyingSequence.Append(flyingCropSprite.transform.DOMove(endPos, 1.0f));
+            //flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.Linear));
             flyingSequence.Append(flyingCropSprite.transform.DOScale(0.5f, 0.2f));
             
             yield return new WaitForSeconds(flyingSequence.Duration()+0.2f);
