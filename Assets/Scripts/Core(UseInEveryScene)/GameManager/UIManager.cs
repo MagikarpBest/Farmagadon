@@ -10,6 +10,7 @@ public enum UIScreen
     GameOver,
     Pause,
     Settings,
+    FarmTutorial
 }
 
 public class UIManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;      // Dead UI
     [SerializeField] private GameObject pausePanel;         // Pause UI
     [SerializeField] private GameObject settingsPanel;       // Pause setting UI
+    [SerializeField] private GameObject farmTutorialPanel;      // Tutorial UI
 
 
     public event Action OnVictoryCompleted;
@@ -65,6 +67,9 @@ public class UIManager : MonoBehaviour
                 SafeHide(pausePanel, true);
                 SafeShow(settingsPanel);
                 break;
+            case UIScreen.FarmTutorial:
+                SafeShow(farmTutorialPanel);
+                break;
         }
     }
 
@@ -91,6 +96,9 @@ public class UIManager : MonoBehaviour
             case UIScreen.Settings:
                 SafeHide(settingsPanel);
                 ShowPause(true);
+                break;
+            case UIScreen.FarmTutorial:
+                SafeHide(farmTutorialPanel);
                 break;
         }
     }
@@ -171,7 +179,9 @@ public class UIManager : MonoBehaviour
     public void ShowGameOver() => Show(UIScreen.GameOver);
     public void ShowPause(bool rememberNavigation = false) => Show(UIScreen.Pause);
     public void ShowSettings() => Show(UIScreen.Settings);
+    public void ShowFarmTutorial() => Show(UIScreen.FarmTutorial);
     public void HideSettings() => Hide(UIScreen.Settings);
     public void HideVictory() => Hide(UIScreen.Victory);
     public void HidePause(bool rememberNavigation = false) => Hide(UIScreen.Pause, rememberNavigation);
+    public void HideFarmTutorial() => Hide(UIScreen.FarmTutorial);
 }

@@ -111,6 +111,10 @@ public class GameManager : MonoBehaviour
         farmController.BeginFarmCycle(SaveData.currentLevel - 1);
         Debug.Log($"Starting farm level");
         Time.timeScale = 1.0f;
+        if (SaveData.currentLevel == 1)
+        {
+            UIManager.ShowFarmTutorial();
+        }
     }
 
     private IEnumerator StartLoadoutPhase()

@@ -9,6 +9,7 @@ public class FarmController : MonoBehaviour
     [SerializeField] private AmmoInventory ammoInventory;
     [SerializeField] private DayCycleLevelManager dayCycleLevelManager;
     [SerializeField] private FarmTimer timer;
+    [SerializeField] private AudioClip debugMusic;
     public AmmoInventory AmmoInventory { get { return ammoInventory; } }
     public WeaponInventory WeaponInventory { get { return weaponInventory; } }
 
@@ -61,6 +62,8 @@ public class FarmController : MonoBehaviour
         StartFarmCycle?.Invoke();
         StartGridPlanting?.Invoke(levelData);
         SetUpcomingEnemies?.Invoke(levelData);
+        //AudioService.AudioManager.PlayOneShot(debugMusic);
+        //AudioService.AudioManager.SetVolume(0.1f);
     }
     public void EndFarmCycle()
     {
