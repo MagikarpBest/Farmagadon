@@ -16,3 +16,10 @@ MonoBehaviour:
   ammoName: RiceCarrot
   icon: {fileID: 21300000, guid: 61022bdfb679bcc44995548ba019fdc2, type: 3}
   cropIcon: {fileID: 21300000, guid: dc8b808d134d23d43b5b427cb2a1bdb7, type: 3}
+  canBeCrafted: 1
+  amountProduced: 2
+  craftingRequirements:
+  - ammo: {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
+    amountNeeded: 1
+  - ammo: {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
+    amountNeeded: 1

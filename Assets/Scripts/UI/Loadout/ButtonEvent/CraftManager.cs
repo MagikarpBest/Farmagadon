@@ -1,65 +1,70 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CraftManager : MonoBehaviour
 {
-    [SerializeField] private AmmoInventory ammoInventory;
-    [SerializeField] private WeaponInventory weaponInventory;
-    [SerializeField] private List<CraftingRecipe> recipes;
-    [SerializeField] private Button craftButton;
+    [SerializeField] private AmmoInventory inventory;
 
-    private CraftingRecipe currentRecipe;
+    [SerializeField] private Image[] ammoImages;
+    [SerializeField] private TextMeshProUGUI[] ammoText;
+    private AmmoData currentSelectedAmmo;
 
-    private void Start()
+    public void OpenCraft(AmmoData currentSlot)
     {
-        SelectRecipe(recipes[0]);
-        if (craftButton != null)
-            craftButton.onClick.AddListener(TryCraft);
+        currentSelectedAmmo = currentSlot;
+        Debug.Log("Crafting popup opened for: " + currentSelectedAmmo.ammoName);
     }
 
-    public void SelectRecipe(CraftingRecipe recipe)
+    public void Craft()
     {
-        currentRecipe = recipe;
-    }
-    public int GetAmmoCountBySlot(WeaponSlot slot)
-    {
-        if (slot == null || slot.weaponData == null || slot.weaponData.ammoType == null)
-            return 0;
-
-        return ammoInventory.GetAmmoCount(slot.weaponData.ammoType);
-    }
-    private void TryCraft()
-    {
-        Debug.Log("try harder");
-        if (currentRecipe == null)
+        if (currentSelectedAmmo == null)
         {
-            Debug.Log("recipe null");
+            Debug.LogWarning("[CraftManager] Get no ammodata");
             return;
         }
 
-        for (int i = 0; i < currentRecipe.requiredAmmo.Count; i++)
+        if (!currentSelectedAmmo.canBeCrafted)
         {
-            AmmoData ammo = currentRecipe.requiredAmmo[i];
-            int requiredCount = currentRecipe.requiredCounts[i];
+            Debug.Log(currentSelectedAmmo.ammoName + " cannot be crafted.");
+            return;
+        }
 
-            if (ammoInventory.GetAmmoCount(ammo) < requiredCount)
+        // Check if player have enough ingredient
+        foreach (var required in currentSelectedAmmo.craftingRequirements)
+        {
+            int owned = inventory.GetAmmoCount(required.ammo);
+
+            if (owned < required.amountNeeded)
             {
-                Debug.Log($"Missing {requiredCount}x {ammo.ammoName}");
+                Debug.Log($"Not enough{required.ammo.ammoName} (Owned:{owned}/ Required:{required.amountNeeded}");  
                 return;
             }
         }
 
-        // Consume required ammo
-        for (int i = 0; i < currentRecipe.requiredAmmo.Count; i++)
+        // Deduct required ammo
+        foreach (var required in currentSelectedAmmo.craftingRequirements)
         {
-            AmmoData ammo = currentRecipe.requiredAmmo[i];
-            int count = currentRecipe.requiredCounts[i];
-            ammoInventory.ConsumeAmmo(ammo, count);
+            inventory.AddAmmo(required.ammo, -required.amountNeeded);
         }
 
-        // Add crafted result
-        ammoInventory.AddAmmo(currentRecipe.resultAmmo, currentRecipe.resultCount);
-        Debug.Log($"Crafted {currentRecipe.resultCount}x {currentRecipe.resultAmmo.ammoName}");
+        // Add ammo for crafted ammo
+        inventory.AddAmmo(currentSelectedAmmo, currentSelectedAmmo.amountProduced);
+        Debug.Log($"Crafted {currentSelectedAmmo.amountProduced} {currentSelectedAmmo.ammoName}");
+
+        // Refresh UI
+        DisplayRequirement();
+    }
+    
+    private void DisplayRequirement()
+    {
+        ammoImages[0].sprite = currentSelectedAmmo.craftingRequirements[0].ammo.icon;
+        ammoImages[1].sprite = currentSelectedAmmo.craftingRequirements[1].ammo.icon;
+        ammoImages[2].sprite = currentSelectedAmmo.icon;
+
+        ammoText[0].text = $"{currentSelectedAmmo.craftingRequirements[0].amountNeeded}/{inventory.GetAmmoCount(currentSelectedAmmo.craftingRequirements[0].ammo)}";
+        ammoText[1].text = $"{currentSelectedAmmo.craftingRequirements[1].amountNeeded}/{inventory.GetAmmoCount(currentSelectedAmmo.craftingRequirements[1].ammo)}";
+        ammoText[2].text = $"{currentSelectedAmmo.amountProduced}/{inventory.GetAmmoCount(currentSelectedAmmo)}";
     }
 }

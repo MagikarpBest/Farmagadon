@@ -9,9 +9,10 @@ public class LoadOutManager : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject loadoutPanel;
     [SerializeField] private WeaponInventory weaponInventory;
+    [SerializeField] private CraftManager craftManager;
 
     [Header("Inventory Slots Reference")]
-    [SerializeField] private List<Button> inventorySlots;
+    [SerializeField] private List<Button> inventorySlots;   
 
     [Header("Popup Prefabs")]
     [SerializeField] private GameObject equipPopupUI;
@@ -65,6 +66,7 @@ public class LoadOutManager : MonoBehaviour
         Debug.Log(inventorySlots[selectedInventoryIndex]);
     }
 
+    #region Equip Popup
     private void OpenEquipPopup(Button inventoryButton)
     {
         if (equipPopupUI == null) return;
@@ -106,7 +108,9 @@ public class LoadOutManager : MonoBehaviour
         {
             popupNav.DeactivateUI();
         }
+
         // Clear selection to trigger OnDeselect
+        // IMPORTANT OR ELSE WHEN OPEN WILL HAVE VISUAL ERROR
         if (EventSystem.current.currentSelectedGameObject != null)
         {
             EventSystem.current.SetSelectedGameObject(null);
@@ -121,7 +125,12 @@ public class LoadOutManager : MonoBehaviour
             loadoutNav.ActivateUI();
         }
     }
+    #endregion Equip Popup
 
+    #region Crafting Popup
+    /// <summary>
+    /// Assign on button
+    /// </summary>
     private void OpenCraftingPopup()
     {
         if (craftPopupUI == null || activePopup != equipPopupUI) return;
@@ -129,6 +138,7 @@ public class LoadOutManager : MonoBehaviour
         // Hide equip popup but remember it as previous
         equipPopupUI.SetActive(false);
 
+        craftManager.OpenCraft();
         craftPopupUI.SetActive(true);
         activePopup = craftPopupUI;
 
@@ -160,7 +170,7 @@ public class LoadOutManager : MonoBehaviour
             craftNav.DeactivateUI();
         }
     }
-
+    #endregion Crafting
     private void CloseActivePopup()
     {
         if (activePopup == craftPopupUI)
