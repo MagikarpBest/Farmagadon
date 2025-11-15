@@ -8,12 +8,14 @@ public class CraftManager : MonoBehaviour
     [SerializeField] private AmmoInventory inventory;
 
     [SerializeField] private Image[] ammoImages;
-    [SerializeField] private TextMeshProUGUI[] ammoText;
+    [SerializeField] private TextMeshProUGUI[] ammoName;
+    [SerializeField] private TextMeshProUGUI[] ammoCountText;
     private AmmoData currentSelectedAmmo;
 
     public void OpenCraft(AmmoData currentSlot)
     {
         currentSelectedAmmo = currentSlot;
+        DisplayRequirement();
         Debug.Log("Crafting popup opened for: " + currentSelectedAmmo.ammoName);
     }
 
@@ -63,8 +65,12 @@ public class CraftManager : MonoBehaviour
         ammoImages[1].sprite = currentSelectedAmmo.craftingRequirements[1].ammo.icon;
         ammoImages[2].sprite = currentSelectedAmmo.icon;
 
-        ammoText[0].text = $"{currentSelectedAmmo.craftingRequirements[0].amountNeeded}/{inventory.GetAmmoCount(currentSelectedAmmo.craftingRequirements[0].ammo)}";
-        ammoText[1].text = $"{currentSelectedAmmo.craftingRequirements[1].amountNeeded}/{inventory.GetAmmoCount(currentSelectedAmmo.craftingRequirements[1].ammo)}";
-        ammoText[2].text = $"{currentSelectedAmmo.amountProduced}/{inventory.GetAmmoCount(currentSelectedAmmo)}";
+        ammoName[0].text = $"{currentSelectedAmmo.craftingRequirements[0].ammo.ammoName}";
+        ammoName[1].text = $"{currentSelectedAmmo.craftingRequirements[1].ammo.ammoName}";
+        ammoName[2].text = $"{currentSelectedAmmo.ammoName}";
+
+        ammoCountText[0].text = $"{currentSelectedAmmo.craftingRequirements[0].amountNeeded}/{inventory.GetAmmoCount(currentSelectedAmmo.craftingRequirements[0].ammo)}";
+        ammoCountText[1].text = $"{currentSelectedAmmo.craftingRequirements[1].amountNeeded}/{inventory.GetAmmoCount(currentSelectedAmmo.craftingRequirements[1].ammo)}";
+        ammoCountText[2].text = $"{currentSelectedAmmo.amountProduced}/{inventory.GetAmmoCount(currentSelectedAmmo)}";
     }
 }

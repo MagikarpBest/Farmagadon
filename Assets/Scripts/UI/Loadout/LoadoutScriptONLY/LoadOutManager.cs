@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,8 +21,10 @@ public class LoadOutManager : MonoBehaviour
 
     private int selectedInventoryIndex = 0;
     private Button lastSelectedButton; // store the button that opened equip popup
-
     private GameObject activePopup; // Only one popup active at a time
+
+    // EVENT
+    public Action<int> OnInventorySlotChanged;
 
 
     private void OnEnable()
@@ -50,6 +53,18 @@ public class LoadOutManager : MonoBehaviour
         }
     }
 
+    public void OnSlotSelected(Button selectedButton)
+    {
+        selectedInventoryIndex = inventorySlots.IndexOf(selectedButton);
+
+        if (selectedInventoryIndex == -1)
+        {
+            Debug.LogWarning("Selected button is not in inventorySlots list!");
+            return;
+        }
+
+        OnInventorySlotChanged?.Invoke(selectedInventoryIndex);
+    }
     public void Interact()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
@@ -138,8 +153,18 @@ public class LoadOutManager : MonoBehaviour
         // Hide equip popup but remember it as previous
         equipPopupUI.SetActive(false);
 
-        craftManager.OpenCraft();
+        List<WeaponSlot> allOwned = weaponInventory.GetAllOwnedWeapons();
+
+        if (selectedInventoryIndex < 0 || selectedInventoryIndex >= allOwned.Count)
+        {
+            Debug.LogWarning("Selected inventory index is out of range!");
+            return;
+        }
+
+        WeaponSlot selectedWeapon = allOwned[selectedInventoryIndex];
+
         craftPopupUI.SetActive(true);
+        craftManager.OpenCraft(selectedWeapon.weaponData.ammoType);
         activePopup = craftPopupUI;
 
         // Position craft popup at same location as equip popup
@@ -181,10 +206,5 @@ public class LoadOutManager : MonoBehaviour
         {
             CloseEquipPopup();
         }
-    }
-
-    private void RefreshUI()
-    {
-
     }
 }
