@@ -1907,6 +1907,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635484642}
   m_CullTransparentMesh: 1
+--- !u!1 &640283576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 640283578}
+  - component: {fileID: 640283577}
+  m_Layer: 0
+  m_Name: AudioFade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &640283577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640283576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa4fe4898423044badf7fe050715560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &640283578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640283576}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 700.5641, y: 535.3495, z: -7.165496}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &654651311
 GameObject:
   m_ObjectHideFlags: 0
@@ -3876,6 +3920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: FarmScene
+  audioFade: {fileID: 640283577}
   fadeDuration: 1
   switchDelay: 1
 --- !u!4 &1199094925
@@ -3942,6 +3987,7 @@ MonoBehaviour:
   blocker: {fileID: 1288899942}
   creditCloseButton: {fileID: 22340143}
   optionCloseButton: {fileID: 1082368536}
+  continueButton: {fileID: 786572778}
   startButton: {fileID: 830359257}
   creditButton: {fileID: 58440576}
   optionButton: {fileID: 1623939861}
@@ -5289,6 +5335,7 @@ SceneRoots:
   - {fileID: 1655991285}
   - {fileID: 225167290}
   - {fileID: 1199094925}
+  - {fileID: 640283578}
   - {fileID: 602721353}
   - {fileID: 786332312}
   - {fileID: 1191785057}

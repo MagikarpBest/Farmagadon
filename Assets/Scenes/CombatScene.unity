@@ -6318,6 +6318,8 @@ MonoBehaviour:
   animator: {fileID: 1084670749}
   recoilDistance: 0.2
   recoilDuration: 0.1
+  playerMoveClip: {fileID: 0}
+  playerShootClip: {fileID: 8300000, guid: c1733ea0186a9fa49a30649db1ce9f93, type: 3}
 --- !u!95 &1084670749
 Animator:
   serializedVersion: 7
@@ -17166,6 +17168,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4346539952992440545, guid: 37132f580da8fc6429651598bba316c2, type: 3}
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
+      propertyPath: fenceBreakClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 08c228babcd82a24d87c5debc8616ed1, type: 3}
+    - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 1273859188}
@@ -17185,6 +17191,10 @@ PrefabInstance:
       propertyPath: destroyedSprite
       value: 
       objectReference: {fileID: 21300000, guid: 3d8f815017a35f145be962a44464e6e3, type: 3}
+    - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
+      propertyPath: fenceAttackedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 205d3dafafcad6745a7970e448482d84, type: 3}
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: fenceVisualManager
       value: 

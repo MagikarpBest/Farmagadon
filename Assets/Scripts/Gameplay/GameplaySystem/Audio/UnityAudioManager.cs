@@ -41,6 +41,11 @@ public class UnityAudioManager : MonoBehaviour, IAudio
         audioSource.Play();
     }
 
+    public void StopClip(AudioClip clip)
+    {
+        audioSource.Stop();
+    }
+
     public void SetPitch(float pitch)
     {
         audioSource.pitch = pitch;

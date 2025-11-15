@@ -24,7 +24,7 @@ public class FenceHealth : MonoBehaviour
     [SerializeField] private AudioClip fenceAttackedClip;
     [SerializeField] private AudioClip fenceBreakClip;
 
-    private float sfxCooldown = 0.2f;
+    private float sfxCooldown = 0.1f;
     private float lastSfxTime = -999f;
 
     public event Action<int, int> OnHealthChanged; // current, max

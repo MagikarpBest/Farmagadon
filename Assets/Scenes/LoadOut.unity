@@ -2791,6 +2791,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: CombatScene
+  audioFade: {fileID: 0}
+  fadeDuration: 0
+  switchDelay: 0
 --- !u!4 &1223600727
 Transform:
   m_ObjectHideFlags: 0
@@ -3215,8 +3218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 8489242888806506498}
-  loadoutColumn: 2
-  bagColumn: 4
   loadoutSlots:
   - {fileID: 1742573073}
   - {fileID: 1254591121}
@@ -3273,6 +3274,7 @@ MonoBehaviour:
   - {fileID: 1945085339}
   - {fileID: 1591736582}
   - {fileID: 1466076589}
+  loadoutBGM: {fileID: 8300000, guid: 0a08974545c6a154a88f627df8678cef, type: 3}
 --- !u!1001 &1493666956
 PrefabInstance:
   m_ObjectHideFlags: 0
