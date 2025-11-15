@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 /// <summary>
@@ -35,6 +36,11 @@ public class GameManager : MonoBehaviour
         InitializeSystem();
         CheckReferences();
         StartPhase(gameStateManager.CurrentPhase);
+        UnityAudioManager unityAudioManagerPrefab = Resources.Load<UnityAudioManager>("UnityAudioManager");
+        UnityAudioManager unityAudioManagerInstance = GameObject.Instantiate(unityAudioManagerPrefab);
+        unityAudioManagerInstance.Initiallize();
+        unityAudioManagerInstance.name = "AudioManager";
+        AudioService.SetAudioManager(unityAudioManagerInstance);
         Debug.Log($"current phase = {SaveData.currentPhase} ");
     }
 
@@ -100,9 +106,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
         //yield return circleTransition.CloseTransition();
 
-        // Just debug, remove in ltr
+
         // Initialize the current level from the database and start the game
-        waveManager?.BeginLevel(SaveData.currentLevel);
+        farmController.BeginFarmCycle(SaveData.currentLevel - 1);
         Debug.Log($"Starting farm level");
         Time.timeScale = 1.0f;
     }
@@ -128,7 +134,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] Starting COMBAT phase.");
         UIManager?.ShowHUD();
         Time.timeScale = 0.0f;
-        yield return circleTransition.CloseTransition();
+        //yield return circleTransition.CloseTransition();
         // Initialize the current level from the database and start the game
 
         waveManager?.BeginLevel(SaveData.currentLevel);
@@ -329,6 +335,9 @@ public class GameManager : MonoBehaviour
 
         if (levelRewardManager == null)
             Debug.LogWarning("[Game Manager] LevelRewardManager reference missing! Rewards won't trigger properly.");
+
+        if (farmController == null)
+            Debug.LogWarning("[Game Manager] FarmController reference missing! Farm level won't trigger properly.");
     }
     #endregion
 }

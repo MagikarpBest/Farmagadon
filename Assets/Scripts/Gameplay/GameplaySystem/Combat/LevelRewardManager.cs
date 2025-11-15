@@ -16,7 +16,7 @@ public class LevelRewardManager : MonoBehaviour
 
     [Header("Rewards Data")]
     [SerializeField] private LevelRewardData rewardData;
-    [SerializeField] private int debugOnReceiveAmmoAmount = 50;
+    [SerializeField] private int debugOnReceiveAmmoAmount = 500;
 
     public event Action OnRewardGiven;
 

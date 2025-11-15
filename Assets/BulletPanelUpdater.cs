@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,13 +10,13 @@ public class BulletPanelUpdater : MonoBehaviour
     public AmmoData AmmoData {  set { ammoData = value; } }
     private AmmoInventory ammoInventory;
     public AmmoInventory AmmoInventory { set { ammoInventory = value; } }
-    private Image ammoImage;
+    [SerializeField] private Image ammoImage;
     private TextMeshProUGUI ammoText;
-    
 
+    private bool scaleCD = false;
+    private bool firstRun = true;
     private void Awake()
     {
-        ammoImage = GetComponentsInChildren<Image>()[2];
         
         ammoText = GetComponentInChildren<TextMeshProUGUI>();
     }
@@ -23,8 +25,25 @@ public class BulletPanelUpdater : MonoBehaviour
     {
         ammoImage.sprite = sprite;
     }
+
     public void UpdateSelf()
     {
+        
+        //ammoText.transform.DOPunchScale(new Vector3(1, 1, 0), 1.0f);
         ammoText.text = "X " + ammoInventory.GetAmmoCount(ammoData);
+        if (firstRun) { firstRun = false; return; }
+        if (!scaleCD)
+        {
+            StartCoroutine(BounceText());
+        }
+
+    }
+
+    private IEnumerator BounceText()
+    {
+        scaleCD = true;
+        Tween punchTween = ammoText.transform.DOPunchScale(new Vector3(0, 1, 0), 0.2f, 1);
+        yield return punchTween.WaitForCompletion();
+        scaleCD = false;
     }
 }

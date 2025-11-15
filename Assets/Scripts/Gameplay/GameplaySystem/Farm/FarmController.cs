@@ -41,15 +41,13 @@ public class FarmController : MonoBehaviour
     {
         //gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
         saveData = SaveSystem.LoadGame();
-        StartFarmCycle?.Invoke();
-        BeginFarmCycle(saveData.currentLevel-1);
     }
 
 
-    public void cropFarmed(AmmoData cropName, int dropAmount)
+    public void CropFarmed(AmmoData cropName, int dropAmount)
     {
         ammoInventory.AddAmmo(cropName, dropAmount); // add to ammo inv is here
-        OnCropFarmed?.Invoke(); // this one connects to BulletPanelHandler, just to update the UI
+        //OnCropFarmed?.Invoke(); // this one connects to BulletPanelHandler, just to update the UI
     }
 
     public void BeginFarmCycle(int level)
@@ -60,6 +58,7 @@ public class FarmController : MonoBehaviour
             Debug.LogWarning("THERES NO LEVEL BRUH");
             return; 
         }
+        StartFarmCycle?.Invoke();
         StartGridPlanting?.Invoke(levelData);
         SetUpcomingEnemies?.Invoke(levelData);
     }

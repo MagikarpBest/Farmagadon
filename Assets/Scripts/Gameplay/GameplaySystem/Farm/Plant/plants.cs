@@ -20,7 +20,7 @@ public class plants : MonoBehaviour
     public int PosY { set { posY = value; } }
 
 
-    public delegate void Destroyed(int posX, int posY, Vector3 endPos, AmmoData data, float duration=1.0f);
+    public delegate void Destroyed(int posX, int posY, Vector3 endPos, AmmoData data, BulletPanelUpdater updater, float duration=1.0f, int dropAmount = 0);
     public Destroyed OnDestroyed;
     public delegate void Farmed(AmmoData plantName, int dropAmount);
     public Farmed OnFarmed;
@@ -28,27 +28,22 @@ public class plants : MonoBehaviour
     public void DestroySelf()
     {
         
-        OnFarmed?.Invoke(plantAmmoData, dropAmount);
+        //OnFarmed?.Invoke(plantAmmoData, dropAmount);
         flashEffect.CallDamageFlash();
         Sequence plantShrink = DOTween.Sequence();
         plantShrink.Prepend(transform.DOPunchPosition(new Vector3(0.1f, 0.0f, 0.0f), 0.5f));
         plantShrink.Prepend(GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.5f));
         plantShrink.Prepend(transform.DOScale(0, 0.5f));
-        
 
+        Vector3 panelPos = Vector2.zero;
         Image panel = BulletPanelHandler.GetBulletPanel(plantAmmoData);
-        //
-        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
-        //
-        //
-        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
-        //
-        //
-        // REMEMBER TO CHANGE THIS IS FOR THEM TO TEST VERSION
-        //
-        Vector3 panelPos = Vector3.zero;
+
+        if (panel != null) 
+        {
+            panelPos = panel.transform.position;
+        }
         
-        OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData, 1.0f);
+        OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData,panel.GetComponent<BulletPanelUpdater>(), 1.0f, dropAmount);
         StartCoroutine(destroyAfter(plantShrink.Duration()));
     }
 

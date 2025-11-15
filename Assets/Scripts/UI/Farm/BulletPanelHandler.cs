@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
@@ -10,7 +12,7 @@ public class BulletPanelHandler : MonoBehaviour
     [SerializeField] private Image bulletPanelPrefab;
     [SerializeField] private VerticalLayoutGroup verticalLayoutGroup;
 
-    private static PanelData[] bulletPanels = new PanelData[4];
+    private static List<PanelData> bulletPanels = new();
     private struct PanelData
     {
         public Image bulletPanel;
@@ -42,21 +44,37 @@ public class BulletPanelHandler : MonoBehaviour
                 return panelData.bulletPanel;
             }
         }
-        return null;
+        return bulletPanels[0].bulletPanel;
     }
 
     private void UpdateAmmoList()
     {
-        if (bulletPanels.Length > 0)
-        {
-            //DeleteBulletPanels();
-        }
 
         WeaponInventory wepInv = farmController.WeaponInventory;
         AmmoInventory ammoInv = farmController.AmmoInventory;
+
+        foreach (KeyValuePair<AmmoData, int> ammoDict in ammoInv.AmmoDict)
+        {
+            
+            AmmoData ammoData = ammoDict.Key;
+            string ammoID = ammoData.ammoID;
+            print($"AmmoData: {ammoID}, Ammo Amount: {ammoDict.Value}");
+            if (ammoID == "ammo_carrot" || ammoID == "ammo_corn" || ammoID == "ammo_potato") 
+            {
+                Image bulletPanelObject = Instantiate(bulletPanelPrefab, verticalLayoutGroup.transform);
+                bulletPanels.Add(new PanelData(bulletPanelObject, ammoData));
+                bulletPanelObject.GetComponent<BulletPanelUpdater>().AmmoData = ammoData;
+                bulletPanelObject.GetComponent<BulletPanelUpdater>().AmmoInventory = ammoInv;
+                bulletPanelObject.GetComponent<BulletPanelUpdater>().SetImage(ammoData.cropIcon);
+                farmController.OnCropFarmed += bulletPanelObject.GetComponent<BulletPanelUpdater>().UpdateSelf;
+                bulletPanelObject.GetComponent<BulletPanelUpdater>().UpdateSelf();
+            }
+        }
+
+        /*
         for (int i = 0; i < wepInv.getWeaponsSize(); ++i)
         {
-
+            
             WeaponSlot wepSlot = wepInv.GetWeaponSlot(i);
 
             if (wepSlot == null) { continue; }
@@ -73,19 +91,9 @@ public class BulletPanelHandler : MonoBehaviour
             farmController.OnCropFarmed += bulletPanelObject.GetComponent<BulletPanelUpdater>().UpdateSelf;
             bulletPanelObject.GetComponent<BulletPanelUpdater>().UpdateSelf();
 
-        }
+        }*/
     }
 
-    private void DeleteBulletPanels()
-    {
-        if (bulletPanels.Length <= 0) { return; }
-        for (int i = bulletPanels.Length - 1; i >= 0; --i)
-        {
-            if (bulletPanels[i].bulletPanel == null) { continue; }
-            Destroy(bulletPanels[i].bulletPanel);
-        }
-        bulletPanels = new PanelData[4];
-    }
 
 
 

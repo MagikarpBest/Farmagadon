@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3604f9e0b7cf2549a695de2c240dcfe, type: 3}
-  m_Name: Level 1
+  m_Name: FarmLevel 1
   m_EditorClassIdentifier: 
   cropsEntityList:
   - cropData: {fileID: 11400000, guid: 95b2f536f0335ef449337d16cdb9537d, type: 2}

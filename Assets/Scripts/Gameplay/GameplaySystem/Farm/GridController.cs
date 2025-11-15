@@ -77,14 +77,14 @@ namespace Farm
             }
         }
 
-        private void CropDestroyed(int posX, int posY, Vector3 endPos, AmmoData data, float duration)
+        private void CropDestroyed(int posX, int posY, Vector3 endPos, AmmoData data, BulletPanelUpdater updater, float duration, int dropAmount)
         {
             if (farmController.StopGame)
             {
                 return;
             }
             Vector3 startPos = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY));
-            StartCoroutine(PlayFlyingCrop(startPos, endPos, data, duration));
+            StartCoroutine(PlayFlyingCrop(startPos, endPos, data, duration, dropAmount, updater));
             StartCoroutine(CreatePlantHere(posX, posY));
             StartCoroutine(CreateFlashTile(posX, posY));
             
@@ -102,12 +102,13 @@ namespace Farm
         {
             
             PlantData plantData = GetPlantData();
-            yield return new WaitForSeconds(plantData.cropGrowRate);
+            
+            yield return new WaitForSeconds(plantData.cropGrowRate + Random.Range(Mathf.Max(1, plantData.cropGrowRate-3),3));
             InstantiateCrop(plantData, posX, posY);
 
         }
 
-        private IEnumerator PlayFlyingCrop(Vector3 startPos, Vector3 endPos, AmmoData data, float duration)
+        private IEnumerator PlayFlyingCrop(Vector3 startPos, Vector3 endPos, AmmoData data, float duration, int dropAmount, BulletPanelUpdater updater)
         {
             SpriteRenderer flyingCropSprite = Instantiate(flyingCropPrefab);
             flyingCropSprite.sprite = data.cropIcon;
@@ -117,13 +118,15 @@ namespace Farm
             int posY = playerFarmInput.PlayerPos.y;
 
             offset = Mathf.Abs(posY * 0.5f) + 0.5f;
-            
+            endPos.x -= 0.7f;
             Vector3[] curvePath = new[] { startPos, startPos + new Vector3(midpoint/3, offset), startPos + new Vector3(midpoint/2, offset), startPos + new Vector3(midpoint, offset), endPos };
             Sequence flyingSequence = DOTween.Sequence();
             flyingSequence.Append(flyingCropSprite.transform.DOPath(curvePath, duration, PathType.Linear).SetEase(Ease.InOutSine));
             flyingSequence.Append(flyingCropSprite.transform.DOScale(0.5f, 0.2f));
             
             yield return new WaitForSeconds(flyingSequence.Duration()+0.2f);
+            farmController.CropFarmed(data, dropAmount);
+            updater.UpdateSelf();
             Destroy(flyingCropSprite.gameObject);
         }
 
@@ -148,7 +151,7 @@ namespace Farm
             createPlant.GetComponent<plants>().DropAmount = data.cropDropAmount;
             createPlant.GetComponent<plants>().PlantAmmoData = data.cropData.ammoData;
             createPlant.GetComponent<plants>().OnDestroyed += CropDestroyed;
-            createPlant.GetComponent<plants>().OnFarmed += farmController.cropFarmed;
+            //createPlant.GetComponent<plants>().OnFarmed += farmController.CropFarmed;
             createPlant.GetComponent<plants>().PosX = posX;
             createPlant.GetComponent<plants>().PosY=  posY;
             createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY)) + new Vector3(0, createPlant.GetComponentInChildren<SpriteRenderer>().size.y / 3, 0);

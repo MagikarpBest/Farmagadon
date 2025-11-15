@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 8a2fe9885c310194e974a3c641a48a6e
+guid: a4ac7961a2bbf6749b78bca207fd3db6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3537951907894605739
-    second: reward card 2 580 x 730_0
-  - first:
-      213: -7856442673761161736
-    second: reward card 2 580 x 730_1
-  - first:
-      213: 5227723442720896335
-    second: reward card 2 580 x 730_2
+      213: -2445014837196951177
+    second: reference_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:

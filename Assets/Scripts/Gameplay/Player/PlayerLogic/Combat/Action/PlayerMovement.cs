@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] GameInput gameInput;
-    [SerializeField] PlayerVisualHandler playerVisualHandler;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private GameInput gameInput;
+    [SerializeField] private PlayerVisualHandler playerVisualHandler;
+    [SerializeField] private Animator animator;
 
 
     [Header("Movement Bounds")]
@@ -25,10 +26,19 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
-        Vector3 moveDir = new Vector3(inputVector.x, 0.0f, 0f);
+        // Get horizontal direction
+        float horizontalInput = inputVector.x;
 
+        
+        Vector3 moveDir = new Vector3(inputVector.x, 0.0f, 0f);
         transform.position += moveDir * moveSpeed * Time.deltaTime;
-        playerVisualHandler.PlayRotateAnimation(-inputVector.x * Time.deltaTime);
+
+        // Detect direction (-1 = left, 1 = right, 0 = idle)
+        int animationMoveDirection = 0;
+        if (horizontalInput >= 0.01f) animationMoveDirection = 1;
+        else if (horizontalInput < -0.01f) animationMoveDirection = -1;
+
+        playerVisualHandler.PlayMoveAnimation(animationMoveDirection);
 
         ClampPosition();
     }

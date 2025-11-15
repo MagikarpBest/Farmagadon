@@ -98,11 +98,12 @@ public class PlayerShooting : MonoBehaviour
             playerMovement.canMove = false;
         }
 
-        StartCoroutine(playerVisualHandler.PlayShootAnimation());
-        
+        Coroutine visualAnimation = StartCoroutine(playerVisualHandler.PlayShootAnimation());
+
+        yield return new WaitForSeconds(0.5f);
+
         nextFireTime = Time.time + currentSlot.weaponData.fireRate;
 
-        yield return new WaitForSeconds(0.15f);
         if (currentSlot.weaponData.pelletCount > 1)
         {
             ShotgunShoot(currentSlot.weaponData);
@@ -113,7 +114,7 @@ public class PlayerShooting : MonoBehaviour
         }
 
         // Wait for the weapon's fire rate duration
-        yield return new WaitForSeconds(weapon.fireRate);
+        yield return visualAnimation;
 
         if (playerMovement != null)
         {
