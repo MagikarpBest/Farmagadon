@@ -3,19 +3,21 @@ using UnityEngine.UI;
 public class VolumeManager : MonoBehaviour 
 {
     [SerializeField] private Slider volumeSlider;
-
+    [SerializeField] private AudioClip mainMenuBGM;
 
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("musicVolume"))
+        if (!PlayerPrefs.HasKey("mainVolume"))
         {
-            PlayerPrefs.SetFloat("musicVolume", 1);
+            PlayerPrefs.SetFloat("mainVolume", 1);
             Load();
         }
         else
         {
             Load();
         }
+        
+        AudioService.AudioManager.PlayBGM(mainMenuBGM);
     }
     public void ChangeVolume()
     {
@@ -25,12 +27,12 @@ public class VolumeManager : MonoBehaviour
 
     private void Load()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        volumeSlider.value = PlayerPrefs.GetFloat("mainVolume");
     }
 
     private void Save()
     {
-        PlayerPrefs.SetFloat("musicVolume",volumeSlider.value);
+        PlayerPrefs.SetFloat("mainVolume",volumeSlider.value);
     }
 
 

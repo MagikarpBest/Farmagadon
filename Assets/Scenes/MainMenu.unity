@@ -679,14 +679,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8037735, g: 0.6838756, b: 0.39885363, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4b6ac1d2f1194f84f98d7295051449e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3ee41d13765270a40907b52d85b55408, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1578,6 +1578,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &618790055
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.0002086
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.2600274
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0016217192
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 603722340209267968, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 808152214310413573, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
+      propertyPath: m_Name
+      value: UnityAudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ceff1920e4c2ce4f93dc4b8bbdec523, type: 3}
 --- !u!1 &631878561
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,7 +2118,7 @@ GameObject:
   - component: {fileID: 786332312}
   - component: {fileID: 786332311}
   m_Layer: 0
-  m_Name: VolumeManager
+  m_Name: OptionVolumeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2080,6 +2137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeSlider: {fileID: 21858997}
+  mainMenuBGM: {fileID: 8300000, guid: 0a08974545c6a154a88f627df8678cef, type: 3}
 --- !u!4 &786332312
 Transform:
   m_ObjectHideFlags: 0
@@ -2163,13 +2221,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1199094924}
         m_TargetAssemblyTypeName: SwitchScene, Assembly-CSharp
         m_MethodName: Switch
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: FarmScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &786572779
@@ -2551,13 +2609,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1199094924}
         m_TargetAssemblyTypeName: SwitchScene, Assembly-CSharp
         m_MethodName: Switch
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: FarmScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &830359258
@@ -3818,6 +3876,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: FarmScene
+  fadeDuration: 1
+  switchDelay: 1
 --- !u!4 &1199094925
 Transform:
   m_ObjectHideFlags: 0
@@ -3936,14 +3996,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8039216, g: 0.6862745, b: 0.4, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4b6ac1d2f1194f84f98d7295051449e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3ee41d13765270a40907b52d85b55408, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5230,5 +5290,6 @@ SceneRoots:
   - {fileID: 225167290}
   - {fileID: 1199094925}
   - {fileID: 602721353}
-  - {fileID: 1191785057}
   - {fileID: 786332312}
+  - {fileID: 1191785057}
+  - {fileID: 618790055}

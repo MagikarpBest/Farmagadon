@@ -17154,6 +17154,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 08c228babcd82a24d87c5debc8616ed1, type: 3}
+    - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: maxHealth
       value: 1002301
       objectReference: {fileID: 0}
@@ -21220,6 +21224,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412926114004694983, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213140740116064501, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

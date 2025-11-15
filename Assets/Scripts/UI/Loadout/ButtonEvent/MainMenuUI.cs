@@ -1,6 +1,8 @@
 using System.Collections;
+using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button creditCloseButton;
     [SerializeField] private Button optionCloseButton;
 
+    [SerializeField] private Button continueButton;
     [SerializeField] private Button startButton;
     [SerializeField] private Button creditButton;
     [SerializeField] private Button optionButton;
@@ -20,6 +23,8 @@ public class MainMenuUI : MonoBehaviour
         creditMenu.SetActive(false);
         optionMenu.SetActive(false);
         blocker.SetActive(false);
+
+        continueButton.onClick.AddListener(ContinueActive);
         startButton.onClick.AddListener(StartActive);
         creditButton.onClick.AddListener(CreditActive);
         optionButton.onClick.AddListener(OptionActive);
@@ -27,6 +32,41 @@ public class MainMenuUI : MonoBehaviour
         optionCloseButton.onClick.AddListener(OptionInactive);
     }
 
+    private void Update()
+    {
+        if (!optionMenu.activeSelf) return;
+
+        GameObject current = EventSystem.current.currentSelectedGameObject;
+
+        if (current == null)
+        {
+            EventSystem.current.SetSelectedGameObject(volumeSlider);
+        }
+        //prevent losing focus while submit on slider
+        if (current == volumeSlider)
+        {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame)
+            {
+
+            }
+            if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
+            {
+
+            }
+        }
+
+    }
+    public void ContinueActive()
+    {
+        if (SaveSystem.HasSaveData())
+        {
+            SaveSystem.LoadGame();
+        }
+        else
+        {
+            return;
+        }
+    }
     public void StartActive()
     {
         SaveSystem.ClearSave();
