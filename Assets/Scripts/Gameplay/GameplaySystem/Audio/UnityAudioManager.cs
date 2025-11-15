@@ -6,16 +6,16 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
     public AudioSource AudioSource => audioSource;
     //-------for debugging-----------
-    private void Awake()
-    {
-        Initiallize();
-    }
+    //private void Awake()
+    //{
+    //    Initiallize();
+    //}
     //-------------------------------
     public void Initiallize()
     {
         //-----------for debug----------
-        if (AudioService.AudioManager is NullAudioManager)
-            AudioService.SetAudioManager(this);
+        //if (AudioService.AudioManager is NullAudioManager)
+        //    AudioService.SetAudioManager(this);
         //------------------------------
 
         audioSource = GetComponent<AudioSource>();

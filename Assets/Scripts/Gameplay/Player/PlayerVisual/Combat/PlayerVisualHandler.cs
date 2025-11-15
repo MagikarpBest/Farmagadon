@@ -14,7 +14,7 @@ public class PlayerVisualHandler : MonoBehaviour
     [SerializeField] AudioClip playerMoveClip;
     [SerializeField] AudioClip playerShootClip;
 
-    private float sfxCooldown = 0.1f;
+    private float sfxCooldown = 0.2f;
     private float lastSfxTime = -999f;
     
     private Vector3 originalPosition;
@@ -44,7 +44,7 @@ public class PlayerVisualHandler : MonoBehaviour
         {
             if (Time.time - lastSfxTime >= sfxCooldown)
             {
-                AudioService.AudioManager.PlayBGM(playerMoveClip, 1f);
+                AudioService.AudioManager.PlayOneShot(playerMoveClip, 1f);
                 lastSfxTime = Time.time;
             }
         }

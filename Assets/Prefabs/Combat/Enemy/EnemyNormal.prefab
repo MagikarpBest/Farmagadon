@@ -313,6 +313,7 @@ MonoBehaviour:
     recoilEase: 24
     recoilElasticity: 1.4
     recoilAmplitude: 0.3
+  enemyHitClip: {fileID: 8300000, guid: ad36d623dda579e418b23ed69856c26b, type: 3}
 --- !u!1 &1972256855928013613
 GameObject:
   m_ObjectHideFlags: 0

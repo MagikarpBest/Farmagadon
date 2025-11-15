@@ -48,6 +48,9 @@ public class EnemyVisualHandler : MonoBehaviour
     [Header("Attack Animation Settings")]
     [SerializeField] private EnemyAttackAnimationSettings attackSettings;
 
+    [Header("Enemy Getting Hit Sound")]
+    [SerializeField] private AudioClip enemyHitClip;
+
     private SpriteRenderer[] spriteRenderer;
     private Vector3 basePosition;
     private Vector3 baseScale;
@@ -171,7 +174,7 @@ public class EnemyVisualHandler : MonoBehaviour
         {
             yield break;
         }
-
+        AudioService.AudioManager.PlayOneShot(enemyHitClip, 1f);
         // Stop any ongoing tweens (optional safety)
         hitEffectRoot.DOKill();
         hitEffectRoot.localPosition = basePosition;

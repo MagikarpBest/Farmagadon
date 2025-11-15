@@ -28,8 +28,6 @@ public class LoadOutManager : MonoBehaviour
     [SerializeField] private List<Image> slotImage;
     [SerializeField] private List<Image> bagImage;
 
-    [SerializeField] private AudioClip loadoutBGM;
-
     private int selectedIndex = 0;
     private int selectedBagIndex = 0;
     private bool selectingBag = false;
@@ -62,7 +60,7 @@ public class LoadOutManager : MonoBehaviour
         {
             slotImage[i].enabled = false;
         }
-        AudioService.AudioManager.PlayBGM(loadoutBGM, 1f);
+        //AudioService.AudioManager.PlayBGM(loadoutBGM, 1f);
     }
 
     private void OnEnable()

@@ -18,6 +18,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button optionButton;
     [SerializeField] private GameObject volumeSlider;
 
+    [SerializeField] private AudioClip clip;
     public void Start()
     {
         creditMenu.SetActive(false);
@@ -99,6 +100,11 @@ public class MainMenuUI : MonoBehaviour
         blocker.SetActive(false);
         StartCoroutine(SelectOnNextFrame(optionBtn));
         
+    }
+
+    public void OnClickSound()
+    {
+        AudioService.AudioManager.PlayOneShot(clip, 1f);
     }
 
     private IEnumerator SelectOnNextFrame(GameObject obj)

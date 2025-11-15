@@ -3274,7 +3274,6 @@ MonoBehaviour:
   - {fileID: 1945085339}
   - {fileID: 1591736582}
   - {fileID: 1466076589}
-  loadoutBGM: {fileID: 8300000, guid: 0a08974545c6a154a88f627df8678cef, type: 3}
 --- !u!1001 &1493666956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5009,6 +5008,10 @@ MonoBehaviour:
   gameStateManager: {fileID: 5789245999881830666}
   levelRewardManager: {fileID: 0}
   farmController: {fileID: 0}
+  mainMenuBGM: {fileID: 8300000, guid: 9c9fa312a76a9984ba6a412f7d71cd8a, type: 3}
+  farmBGM: {fileID: 8300000, guid: 01531e1a127bbc34d85b1ae6d2c42679, type: 3}
+  loadoutBGM: {fileID: 8300000, guid: 0a08974545c6a154a88f627df8678cef, type: 3}
+  combatBGM: {fileID: 8300000, guid: b6e500b2559405b4cb98196401d66776, type: 3}
 --- !u!4 &3827478829713332921
 Transform:
   m_ObjectHideFlags: 0
