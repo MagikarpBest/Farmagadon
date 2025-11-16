@@ -66,19 +66,58 @@ public class WeaponInventory : MonoBehaviour
         saveData = SaveSystem.LoadGame();
     }
 
-    // ----------------------
-    // Slot Management
-    // ----------------------
-
+    #region Slot Management
     /// <summary>
     /// Unlocks one additional weapon slot (up to the max slot limit).
     /// </summary>
+    // Ngl this is useless for now
     public void UnlockSlot()
     {
         if (unlockedSlots < maxSlot) 
         {
             unlockedSlots++;
         }
+    }
+
+    public void EquipWeapon(WeaponSlot newWeapon)
+    {
+        if (unlockedSlots <= 0)
+        {
+            Debug.LogWarning("[WeaponInventory] No unlocked slot");
+            return;
+        }
+
+        // Prevent equipping if it is already equipped
+        foreach (var slot in weapons)
+        {
+            if (slot != null && slot == newWeapon)
+            {
+                Debug.Log("Weapon already equipped.");
+                return;
+            }
+        }
+
+        // Step 1: Find the FIRST empty slot among unlocked slots
+        int targetSlot = -1;
+
+        for (int i = 0; i < unlockedSlots; i++)
+        {
+            if (weapons[i] == null)
+            {
+                targetSlot = i;
+                break;
+            }
+        }
+
+        // Step 2: If no empty slot, block the equip
+        if (targetSlot == -1)
+        {
+            Debug.Log("Cannot equip — all equipped slots are full!");
+            return;
+        }
+
+        // Step 3: Equip new weapon
+        weapons[targetSlot] = new WeaponSlot(newWeapon.weaponData);
     }
 
     /// <summary>
@@ -211,10 +250,9 @@ public class WeaponInventory : MonoBehaviour
         }
         return false;
     }
+    #endregion Slot Management
 
-    // ----------------------
-    // Save System
-    // ----------------------
+    #region Save System
     public void SaveToSaveData(SaveData data)
     {
         saveData = data;
@@ -322,8 +360,9 @@ public class WeaponInventory : MonoBehaviour
             Debug.LogWarning("[WeaponInventory] No valid weapon found after loading save data.");
         }
     }
+    #endregion Save System
 
-    // Getters
+    #region Getters
     /// <summary>
     /// Returns the weapon slot at the specified index.
     /// Returns null if the index is out of range.
@@ -373,4 +412,5 @@ public class WeaponInventory : MonoBehaviour
     public int GetCurrentWeaponIndex() => currentIndex;
     public int getWeaponsSize() => weapons.Length;
     public bool CanSwitchWeapon => canSwitchWeapon; // Read-only
+    #endregion Getters
 }

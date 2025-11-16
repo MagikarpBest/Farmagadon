@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,19 +21,25 @@ public class LoadOutManager : MonoBehaviour
     [SerializeField] private GameObject equipPopupUI;
     [SerializeField] private GameObject craftPopupUI;
 
-    private int selectedInventoryIndex = 0;
-    private Button lastSelectedButton; // store the button that opened equip popup
-    private GameObject activePopup; // Only one popup active at a time
-
     // EVENT
     public Action<int> OnInventorySlotChanged;
 
+    private int selectedInventoryIndex = 0;
+    private Button lastSelectedButton; // store the button that opened equip popup
+    private GameObject activePopup; // Only one popup active at a time
+    private List<WeaponSlot> allOwned;
+
+
+    // For navigation memory and button navigation logics
+    private UINavigationMemory loadoutNav;
+    private UINavigationMemory equipNav;
+    private UINavigationMemory craftNav;
 
     private void OnEnable()
     {
         if (gameInput != null)
         {
-            gameInput.OnPause += CloseActivePopup;
+            gameInput.OnPause += () => CloseActivePopup(true);
         }
     }
 
@@ -39,32 +47,48 @@ public class LoadOutManager : MonoBehaviour
     {
         if (gameInput != null)
         {
-            gameInput.OnPause -= CloseActivePopup;
+            gameInput.OnPause -= () => CloseActivePopup(true);
         }
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(0.3f);
         // Setup button read index on click
         for (int i = 0; i < inventorySlots.Count; i++)
         {
             int index = i;
             inventorySlots[index].onClick.AddListener(() => selectedInventoryIndex = index);
         }
+        
+        allOwned = weaponInventory.GetAllOwnedWeapons();
+        loadoutNav = loadoutPanel.GetComponent<UINavigationMemory>();
+        equipNav = equipPopupUI.GetComponent<UINavigationMemory>();
+        craftNav = craftPopupUI.GetComponent<UINavigationMemory>();
+    }
+
+    // Clean slot index selection function
+    // Call by OnSlotSelected (for item description) and Interact (loadout buttons)
+    private void SelectSlot(int index)
+    {
+        selectedInventoryIndex = index;
+        OnInventorySlotChanged?.Invoke(selectedInventoryIndex);
     }
 
     public void OnSlotSelected(Button selectedButton)
     {
-        selectedInventoryIndex = inventorySlots.IndexOf(selectedButton);
+        int index = inventorySlots.IndexOf(selectedButton);
 
-        if (selectedInventoryIndex == -1)
+        if (index == -1)
         {
             Debug.LogWarning("Selected button is not in inventorySlots list!");
             return;
         }
 
-        OnInventorySlotChanged?.Invoke(selectedInventoryIndex);
+        SelectSlot(index);
     }
+
+    // Assign to button for interact
     public void Interact()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
@@ -73,72 +97,45 @@ public class LoadOutManager : MonoBehaviour
         Button selectedButton = selected.GetComponent<Button>();
         if (selectedButton == null) return;
 
-        selectedInventoryIndex = inventorySlots.IndexOf(selectedButton);
-        if (selectedInventoryIndex == -1) return;
+        int index = inventorySlots.IndexOf(selectedButton);
+        if (index == -1) return;
 
+        SelectSlot(index);
         OpenEquipPopup(selectedButton);
         Debug.Log("NIGGA");
         Debug.Log(inventorySlots[selectedInventoryIndex]);
     }
 
+    public void EquipSelectedWeapon()
+    {
+        if (selectedInventoryIndex < 0 || selectedInventoryIndex >= allOwned.Count)
+        {
+            Debug.LogWarning("Selected inventory index is out of range!");
+            return;
+        }
+
+        WeaponSlot selectedWeapon = allOwned[selectedInventoryIndex];
+
+        weaponInventory.GetEquippedWeapon
+    }
+
     #region Equip Popup
     private void OpenEquipPopup(Button inventoryButton)
     {
-        if (equipPopupUI == null) return;
-
         lastSelectedButton = inventoryButton;
-        
         // Save loadout last selected
-        UINavigationMemory loadoutNav = loadoutPanel?.GetComponent<UINavigationMemory>();
-        if (loadoutNav != null)
-        {
-            loadoutNav.DeactivateUI();
-        }
+        SwitchNavigation(loadoutNav, false);
+
+        CloseActivePopup(false);
 
         // Activate popup
         equipPopupUI.SetActive(true);
         activePopup = equipPopupUI;
 
-        // Position popup to the right of the selected button
-        RectTransform buttonRect = inventoryButton.GetComponent<RectTransform>();
-        RectTransform popupRect = equipPopupUI.GetComponent<RectTransform>();
+        // Position poup
+        PositionPopup(equipPopupUI, inventoryButton);
 
-        // Position popup to the right of the inventory button
-        popupRect.position = buttonRect.position + new Vector3(200f, 0f, 0f);
-
-        // Set first button in popup as selected
-        UINavigationMemory popupNav = activePopup.GetComponent<UINavigationMemory>();
-        if (popupNav != null)
-        {
-            popupNav.ActivateUI();
-        }
-    }
-
-    private void CloseEquipPopup()
-    {
-        if (activePopup != equipPopupUI) return;
-
-        UINavigationMemory popupNav = activePopup.GetComponent<UINavigationMemory>();
-        if (popupNav != null)
-        {
-            popupNav.DeactivateUI();
-        }
-
-        // Clear selection to trigger OnDeselect
-        // IMPORTANT OR ELSE WHEN OPEN WILL HAVE VISUAL ERROR
-        if (EventSystem.current.currentSelectedGameObject != null)
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-        equipPopupUI.SetActive(false);
-        activePopup = null;
-
-        // Restore loadout navigation focus
-        UINavigationMemory loadoutNav = loadoutPanel.GetComponent<UINavigationMemory>();
-        if (loadoutNav != null)
-        {
-            loadoutNav.ActivateUI();
-        }
+        SwitchNavigation(equipNav, true);
     }
     #endregion Equip Popup
 
@@ -148,13 +145,6 @@ public class LoadOutManager : MonoBehaviour
     /// </summary>
     private void OpenCraftingPopup()
     {
-        if (craftPopupUI == null || activePopup != equipPopupUI) return;
-
-        // Hide equip popup but remember it as previous
-        equipPopupUI.SetActive(false);
-
-        List<WeaponSlot> allOwned = weaponInventory.GetAllOwnedWeapons();
-
         if (selectedInventoryIndex < 0 || selectedInventoryIndex >= allOwned.Count)
         {
             Debug.LogWarning("Selected inventory index is out of range!");
@@ -163,48 +153,84 @@ public class LoadOutManager : MonoBehaviour
 
         WeaponSlot selectedWeapon = allOwned[selectedInventoryIndex];
 
+        // Hide equip popup but remember it as previous
+        SwitchNavigation(equipNav, false);
+        CloseActivePopup(false);
+
+        PositionPopup(craftPopupUI, lastSelectedButton);
         craftPopupUI.SetActive(true);
         craftManager.OpenCraft(selectedWeapon.weaponData.ammoType);
         activePopup = craftPopupUI;
 
-        // Position craft popup at same location as equip popup
-        RectTransform buttonRect = lastSelectedButton.GetComponent<RectTransform>();
-        RectTransform craftRect = craftPopupUI.GetComponent<RectTransform>();
-        craftRect.position = buttonRect.position + new Vector3(200f, 0f, 0f);
-
-        UINavigationMemory craftNav = craftPopupUI.GetComponent<UINavigationMemory>();
-        if (craftNav != null)
-        {
-            craftNav.ActivateUI();
-        }
-    }
-
-    private void CloseCraftingPopup()
-    {
-        if (activePopup != craftPopupUI) return;
-
-        craftPopupUI.SetActive(false);
-        activePopup = null;
-
-        // Restore equip popup
-        equipPopupUI.SetActive(true);
-        activePopup = equipPopupUI;
-        UINavigationMemory craftNav = craftPopupUI.GetComponent<UINavigationMemory>();
-        if (craftNav != null)
-        {
-            craftNav.DeactivateUI();
-        }
+        SwitchNavigation(craftNav, true);
     }
     #endregion Crafting
-    private void CloseActivePopup()
+
+    #region Helpers
+    private void CloseActivePopup(bool returnToLoadout = true)
     {
         if (activePopup == craftPopupUI)
         {
-            CloseCraftingPopup();
+            craftPopupUI.SetActive(false);
+            activePopup = equipPopupUI;
+
+            // Restore equip popup
+            equipPopupUI.SetActive(true);
+
+            SwitchNavigation(craftNav, false);
+            SwitchNavigation(equipNav, true);
+            return;
         }
         else if (activePopup == equipPopupUI)
-        {
-            CloseEquipPopup();
+        { 
+            if (returnToLoadout)
+            {
+                // Clear selection to trigger OnDeselect
+                // IMPORTANT OR ELSE WHEN OPEN WILL HAVE VISUAL ERROR
+                ClearSelection();
+
+                // Restore loadout navigation focus
+                SwitchNavigation(loadoutNav, true);
+            }
+
+            equipPopupUI.SetActive(false);
+            activePopup = null;
+
+            SwitchNavigation(equipNav, false);
         }
     }
+
+    private void SwitchNavigation(UINavigationMemory navigation, bool active)
+    {
+        if (navigation == null)
+        {
+            return;
+        }
+
+        if (active)
+        {
+            navigation.ActivateUI();
+        }
+        else
+        {
+            navigation.DeactivateUI();
+        }
+    }
+
+    private void ClearSelection()
+    {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+    }
+
+    private void PositionPopup(GameObject popup, Button sourceButton)
+    {
+        RectTransform Button = sourceButton.GetComponent<RectTransform>();
+        RectTransform popupLocation = popup.GetComponent<RectTransform>();
+
+        popupLocation.position = Button.position + new Vector3(200f, 0f, 0f);
+    }
+    #endregion
 }
