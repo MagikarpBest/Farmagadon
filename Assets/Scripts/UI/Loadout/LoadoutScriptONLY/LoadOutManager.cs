@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,10 +19,13 @@ public class LoadOutManager : MonoBehaviour
 
     [Header("Popup Prefabs")]
     [SerializeField] private GameObject equipPopupUI;
+    [SerializeField] private Button equipButton;
+    [SerializeField] private TextMeshProUGUI equipButtonText;
     [SerializeField] private GameObject craftPopupUI;
 
     // EVENT
     public Action<int> OnInventorySlotChanged;
+    public Action OnTriggerUIUpdate;
 
     private int selectedInventoryIndex = 0;
     private Button lastSelectedButton; // store the button that opened equip popup
@@ -106,7 +109,29 @@ public class LoadOutManager : MonoBehaviour
         Debug.Log(inventorySlots[selectedInventoryIndex]);
     }
 
-    public void EquipSelectedWeapon()
+    private void EquipSelectedWeapon()
+    {
+        if (selectedInventoryIndex < 0 || selectedInventoryIndex >= allOwned.Count)
+        {
+            Debug.LogWarning("Selected inventory index is out of range!");
+            return;
+        }
+
+        WeaponSlot selectedWeapon = allOwned[selectedInventoryIndex];
+        List<WeaponSlot> equippedWeapon = weaponInventory.GetEquippedWeapon();
+
+        for (int i = 0; i < equippedWeapon.Count; i++)
+        {
+            Debug.Log($"{equippedWeapon[i].weaponData.weaponName}");
+        }
+
+        weaponInventory.EquipWeapon(selectedWeapon);
+        
+        CloseActivePopup();
+        OnTriggerUIUpdate?.Invoke();
+    }
+
+    private void UnequipSelectedWeapon()
     {
         if (selectedInventoryIndex < 0 || selectedInventoryIndex >= allOwned.Count)
         {
@@ -116,7 +141,17 @@ public class LoadOutManager : MonoBehaviour
 
         WeaponSlot selectedWeapon = allOwned[selectedInventoryIndex];
 
-        weaponInventory.GetEquippedWeapon
+        if (selectedWeapon == null || selectedWeapon.weaponData == null)
+        {
+            Debug.LogWarning("Selected weapon data is null!");
+            return;
+        }
+
+        // Use weapon ID to find its slot in equipped array
+        weaponInventory.UnEquipWeaponByID(selectedWeapon.weaponData.weaponID);
+
+        CloseActivePopup();
+        OnTriggerUIUpdate?.Invoke();
     }
 
     #region Equip Popup
@@ -132,6 +167,21 @@ public class LoadOutManager : MonoBehaviour
         equipPopupUI.SetActive(true);
         activePopup = equipPopupUI;
 
+        WeaponSlot selected = allOwned[selectedInventoryIndex];
+
+        bool isEquipped = weaponInventory.IsWeaponEquipped(selected);
+
+        equipButton.onClick.RemoveAllListeners();
+        if (isEquipped) 
+        {
+            equipButtonText.text = "Unequip";
+            equipButton.onClick.AddListener(UnequipSelectedWeapon);
+        }
+        else
+        {
+            equipButtonText.text = "Equip";
+            equipButton.onClick.AddListener(EquipSelectedWeapon);
+        }
         // Position poup
         PositionPopup(equipPopupUI, inventoryButton);
 

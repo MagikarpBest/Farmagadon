@@ -90,7 +90,7 @@ public class WeaponInventory : MonoBehaviour
         // Prevent equipping if it is already equipped
         foreach (var slot in weapons)
         {
-            if (slot != null && slot == newWeapon)
+            if (slot != null && slot.weaponData != null && slot.weaponData.weaponID == newWeapon.weaponData.weaponID)
             {
                 Debug.Log("Weapon already equipped.");
                 return;
@@ -112,12 +112,30 @@ public class WeaponInventory : MonoBehaviour
         // Step 2: If no empty slot, block the equip
         if (targetSlot == -1)
         {
-            Debug.Log("Cannot equip — all equipped slots are full!");
+            Debug.Log("Cannot equip, all equipped slots are full!");
             return;
         }
 
         // Step 3: Equip new weapon
         weapons[targetSlot] = new WeaponSlot(newWeapon.weaponData);
+        currentIndex = targetSlot;
+
+        Debug.Log($"Equipped {newWeapon.weaponData.weaponName} into slot {targetSlot}");
+    }
+
+    public void UnEquipWeaponByID(string weaponID)
+    {
+        for (int i = 0; i < unlockedSlots; i++)
+        {
+            if (weapons[i] != null && weapons[i].weaponData != null && weapons[i].weaponData.weaponID == weaponID)
+            {
+                string weaponName = weapons[i].weaponData.weaponName;
+                weapons[i] = null;
+                Debug.Log($"Unequipped {weaponName} from slot {i}");
+                return;
+            }
+        }
+        Debug.LogWarning($"Weapon {weaponID} not found in equipped slots.");
     }
 
     /// <summary>
@@ -376,6 +394,20 @@ public class WeaponInventory : MonoBehaviour
         return null;
     }
 
+    public bool IsWeaponEquipped(WeaponSlot weaponSlot)
+    {
+        // Prevent equipping if it is already equipped
+        foreach (var slot in weapons)
+        {
+            if (slot != null && slot.weaponData != null && slot.weaponData.weaponID == weaponSlot.weaponData.weaponID)
+            {
+                Debug.Log("Weapon already equipped.");
+                return true;
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Returns a list of all non-empty (equipped) weapon slots.
     /// </summary>
@@ -410,7 +442,7 @@ public class WeaponInventory : MonoBehaviour
     /// Returns the index of the currently active weapon.
     /// </summary>
     public int GetCurrentWeaponIndex() => currentIndex;
-    public int getWeaponsSize() => weapons.Length;
+
     public bool CanSwitchWeapon => canSwitchWeapon; // Read-only
     #endregion Getters
 }

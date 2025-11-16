@@ -26,8 +26,18 @@ public class LoadoutVisual : MonoBehaviour
         if (loadoutManager != null)
         {
             loadoutManager.OnInventorySlotChanged += UpdateSelectedDescription;
+            loadoutManager.OnTriggerUIUpdate += UpdateAll;
         }
     }
+    private void OnDisable()
+    {
+        if (loadoutManager != null)
+        {
+            loadoutManager.OnInventorySlotChanged -= UpdateSelectedDescription;
+            loadoutManager.OnTriggerUIUpdate -= UpdateAll;
+        }
+    }
+
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(0.5f);
@@ -37,6 +47,12 @@ public class LoadoutVisual : MonoBehaviour
         UpdateInventoryVisual();
         UpdateEquippedVisual();
         UpdateSelectedDescription(0);
+    }
+
+    private void UpdateAll()
+    {
+        UpdateInventoryVisual();
+        UpdateEquippedVisual();
     }
 
     private void UpdateInventoryVisual()
