@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashEffect: {fileID: -8170670067075274946}
-  prefab: {fileID: 9164064668460752072, guid: 6d96d9ec49720954ba05a7b2b14a14ef, type: 3}
+  farmedAudio: {fileID: 8300000, guid: f9ecede99678ec945a9487587a60abaa, type: 3}
 --- !u!114 &-8170670067075274946
 MonoBehaviour:
   m_ObjectHideFlags: 0

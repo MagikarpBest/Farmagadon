@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoImage: {fileID: 2387677328261244925}
+  updateAudio: {fileID: 8300000, guid: 1e26b09502349de4f81dc20eca4af384, type: 3}
 --- !u!1 &1455995254895696835
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoImage: {fileID: 0}
+  updateAudio: {fileID: 0}
 --- !u!1 &6730164212217637031
 GameObject:
   m_ObjectHideFlags: 0

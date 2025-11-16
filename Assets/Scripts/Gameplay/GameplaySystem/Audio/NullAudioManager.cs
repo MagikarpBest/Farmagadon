@@ -3,6 +3,7 @@ using UnityEngine;
 public class NullAudioManager : IAudio
 {
     
+
     public void Initiallize()
     {
         Debug.Log($"[This is NullAudioManager]");
@@ -11,6 +12,11 @@ public class NullAudioManager : IAudio
     public void PlayOneShot(AudioClip clip, float volumeScale = 1)
     {
         Debug.Log($"[This is NullAudioManager], you tried to play {clip.name} at volume {volumeScale} but this is not the right manager");
+    }
+
+    public void BufferPlayOneShot(AudioClip clip, float volumeScale = 1)
+    {
+        Debug.Log($"[This is NullAudioManager], you tried to buffer {clip.name} at volume {volumeScale} but this is not the right manager");
     }
 
     public void SetPitch(float pitch)

@@ -11,8 +11,8 @@ public class PlayerFarmAnimator : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private PlayerFarmInput farmInput;
     [SerializeField] private AnimationClip[] clips;
-    [SerializeField] private AudioClip clip;
-
+    [SerializeField] private AudioClip digAudio;
+    [SerializeField] private AudioClip walkAudio;
     public enum AnimState
     {
         Idle = 0,
@@ -72,6 +72,7 @@ public class PlayerFarmAnimator : MonoBehaviour
         if (playerAnimator.GetBool("digBool") == true) { return; }
         StopIdle();
         SetAllAnimsFalse();
+        AudioService.AudioManager.PlayOneShot(walkAudio); 
         if (move.x != 0)
         {
             PlayAnim(move.x < 0 ? AnimState.Walk_Left : AnimState.Walk_Right);
@@ -89,7 +90,7 @@ public class PlayerFarmAnimator : MonoBehaviour
     {
         print(AnimReachedGroundPound);
         Camera.main.transform.DOShakePosition(0.1f, 0.1f);
-        AudioService.AudioManager.PlayOneShot(clip, 1.0f);
+        AudioService.AudioManager.PlayOneShot(digAudio, 1.0f);
         AnimReachedGroundPound?.Invoke();
     }
 

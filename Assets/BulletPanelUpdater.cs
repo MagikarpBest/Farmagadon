@@ -11,6 +11,7 @@ public class BulletPanelUpdater : MonoBehaviour
     private AmmoInventory ammoInventory;
     public AmmoInventory AmmoInventory { set { ammoInventory = value; } }
     [SerializeField] private Image ammoImage;
+    [SerializeField] private AudioClip updateAudio;
     private TextMeshProUGUI ammoText;
 
 
@@ -33,9 +34,10 @@ public class BulletPanelUpdater : MonoBehaviour
     public void UpdateSelf()
     {
         
-        //ammoText.transform.DOPunchScale(new Vector3(1, 1, 0), 1.0f);
+        
         ammoText.text = "X " + ammoInventory.GetAmmoCount(ammoData);
         if (firstRun) { firstRun = false; return; }
+        AudioService.AudioManager.BufferPlayOneShot(updateAudio);
         if (!scaleCD)
         {
             StartCoroutine(BounceText());

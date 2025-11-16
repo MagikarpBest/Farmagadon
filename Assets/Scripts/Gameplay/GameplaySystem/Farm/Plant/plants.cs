@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class plants : MonoBehaviour
 {
     [SerializeField] FlashEffect flashEffect;
+    [SerializeField] AudioClip farmedAudio;
 
 
     private AmmoData plantAmmoData;
@@ -34,7 +35,7 @@ public class plants : MonoBehaviour
         plantShrink.Prepend(transform.DOPunchPosition(new Vector3(0.1f, 0.0f, 0.0f), 0.5f));
         plantShrink.Prepend(GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.5f));
         plantShrink.Prepend(transform.DOScale(0, 0.5f));
-
+        AudioService.AudioManager.BufferPlayOneShot(farmedAudio, 0.5f);
         Vector3 panelPos = Vector2.zero;
         Image panel = BulletPanelHandler.GetBulletPanel(plantAmmoData);
 
@@ -50,6 +51,7 @@ public class plants : MonoBehaviour
     private IEnumerator destroyAfter(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        
         Destroy(gameObject);
     }
 }

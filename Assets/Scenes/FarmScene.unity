@@ -1383,6 +1383,50 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &595291919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 595291921}
+  - component: {fileID: 595291920}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &595291920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595291919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba600c1523df3f48a0490ace1bdd9bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &595291921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595291919}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.0002086, y: -1.2600274, z: 0.0016217192}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &623077332
 GameObject:
   m_ObjectHideFlags: 0
@@ -3179,7 +3223,8 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 6ca5318a0b9bf3d43aac7677a4e0eef3, type: 2}
   - {fileID: 7400000, guid: f62a5ffb93221f642bad56cd2fa91e05, type: 2}
   - {fileID: 7400000, guid: d963b6da3befbe840a1c21b9d7f6f4e9, type: 2}
-  clip: {fileID: 8300000, guid: 724913e26a035f44b92af5d2c03d6070, type: 3}
+  digAudio: {fileID: 8300000, guid: 724913e26a035f44b92af5d2c03d6070, type: 3}
+  walkAudio: {fileID: 8300000, guid: 9c4bf5e18e0622a4587f44de703031e9, type: 3}
 --- !u!1 &1556055734
 GameObject:
   m_ObjectHideFlags: 0
@@ -4587,6 +4632,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 369c5b88f7d41b44099a50cba425c109, type: 2}
   farmController: {fileID: 43128269}
   playerFarmInput: {fileID: 957074649}
+  plantGrowAudio: {fileID: 8300000, guid: 47c54a92e05177942ab7d8275b2ca72b, type: 3}
 --- !u!1 &1992316744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6454645588647710531, guid: 5eb93ed005ab86d4e86fee34d0a1c915, type: 3}
@@ -5570,3 +5616,4 @@ SceneRoots:
   - {fileID: 957074648}
   - {fileID: 1980671681}
   - {fileID: 2223375761742621204}
+  - {fileID: 595291921}

@@ -25,3 +25,9 @@ public enum ENEMY_DENSITY
     Large=2,
     Army=3
 }
+
+public enum INPUT_DEVICE_TYPE
+{
+    Keyboard,
+    Controller
+}

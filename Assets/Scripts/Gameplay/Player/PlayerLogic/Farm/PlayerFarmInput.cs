@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class PlayerFarmInput : MonoBehaviour
 {
@@ -64,10 +65,13 @@ public class PlayerFarmInput : MonoBehaviour
     }
     private void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        
         if (playerFarmAnimator.PlayerAnimator.GetBool("digBool") == true) { return; }
         if (movementDone) { return; }
+        print(movementDone);
+        movementDone = true;
         Vector2 dir = playerInput.Player.Move.ReadValue<Vector2>().normalized;
-        OnMovementEvent?.Invoke(dir);
+        
         int x = (int)dir.x;
         int y = (int)dir.y;
         playerInitialPos = gridController.Grid.GetCellCenterWorld(playerPos);
@@ -81,18 +85,20 @@ public class PlayerFarmInput : MonoBehaviour
         playerFinalPos = gridController.Grid.GetCellCenterWorld(moveDir);
 
         playerPos = moveDir;
-        movementDone = true;
+        OnMovementEvent?.Invoke(dir);
         player.DOMove(playerFinalPos, 0.833f).SetEase(Ease.InOutQuint);
         StartCoroutine(MovementInternalCooldown());
     }
 
     private IEnumerator MovementInternalCooldown() 
     {
-        moveCD = 0.9f;
+        moveCD = 1.0f;
 
         yield return new WaitForSeconds(moveCD);
 
         movementDone = false;
+
+        print("????");
     }
 
     private void OnFarmPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

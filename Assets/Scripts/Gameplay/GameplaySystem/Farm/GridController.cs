@@ -30,6 +30,7 @@ namespace Farm
         [SerializeField] CropsData[] cropData;
         [SerializeField] FarmController farmController;
         [SerializeField] PlayerFarmInput playerFarmInput;
+        [SerializeField] private AudioClip plantGrowAudio;
 
         private List<GameObject> plants = new List<GameObject>();
         private PlantData[] levelPlantRoster;
@@ -156,6 +157,7 @@ namespace Farm
             createPlant.GetComponent<plants>().PosX = posX;
             createPlant.GetComponent<plants>().PosY=  posY;
             createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY)) + new Vector3(0, createPlant.GetComponentInChildren<SpriteRenderer>().size.y / 3, 0);
+            AudioService.AudioManager.BufferPlayOneShot(plantGrowAudio);
         }
 
         private void DestroyAllPlants()
