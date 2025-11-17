@@ -44,13 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b13f1eb034ae8439dceca1e6e2822e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDatabase: {fileID: 11400000, guid: 961139f3ab0273b41b127f3b56740aad, type: 2}
   levelManager: {fileID: 0}
   weaponInventory: {fileID: 0}
   ammoInventory: {fileID: 0}
   UIManager: {fileID: 0}
+  circleTransition: {fileID: 0}
   sceneController: {fileID: 0}
   waveManager: {fileID: 0}
   fenceHealth: {fileID: 0}
   gameStateManager: {fileID: 0}
   levelRewardManager: {fileID: 0}
+  farmController: {fileID: 0}
+  mainMenuBGM: {fileID: 8300000, guid: 9c9fa312a76a9984ba6a412f7d71cd8a, type: 3}
+  farmBGM: {fileID: 8300000, guid: 01531e1a127bbc34d85b1ae6d2c42679, type: 3}
+  loadoutBGM: {fileID: 8300000, guid: 9c9fa312a76a9984ba6a412f7d71cd8a, type: 3}
+  combatBGM: {fileID: 8300000, guid: b6e500b2559405b4cb98196401d66776, type: 3}

@@ -1,25 +1,115 @@
+using System.Collections;
+using UnityEditor.MPE;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField] public GameObject Menu;
-    [SerializeField] public GameObject Blocker;
-    [SerializeField] public Button closeButton;
+    [SerializeField] private GameObject creditMenu;
+    [SerializeField] private GameObject optionMenu;
+    [SerializeField] private GameObject blocker;
+    [SerializeField] private Button creditCloseButton;
+    [SerializeField] private Button optionCloseButton;
+
+    [SerializeField] private Button continueButton;
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button creditButton;
+    [SerializeField] private Button optionButton;
+    [SerializeField] private GameObject volumeSlider;
+
+    [SerializeField] private AudioClip clip;
     public void Start()
     {
-        Menu.SetActive(false);
-        Blocker.SetActive(false);
-        closeButton.onClick.AddListener(Inactive);
+        creditMenu.SetActive(false);
+        optionMenu.SetActive(false);
+        blocker.SetActive(false);
+
+        continueButton.onClick.AddListener(ContinueActive);
+        startButton.onClick.AddListener(StartActive);
+        creditButton.onClick.AddListener(CreditActive);
+        optionButton.onClick.AddListener(OptionActive);
+        creditCloseButton.onClick.AddListener(CreditInactive);
+        optionCloseButton.onClick.AddListener(OptionInactive);
     }
 
-    public void Active()
+    private void Update()
     {
-        Menu.SetActive(true);
-        Blocker.SetActive(true);
+        if (!optionMenu.activeSelf) return;
+
+        GameObject current = EventSystem.current.currentSelectedGameObject;
+
+        if (current == null)
+        {
+            EventSystem.current.SetSelectedGameObject(volumeSlider);
+        }
+        //prevent losing focus while submit on slider
+        if (current == volumeSlider)
+        {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame)
+            {
+
+            }
+            if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
+            {
+
+            }
+        }
+
     }
-    public void Inactive()
+    public void ContinueActive()
     {
-        Menu.SetActive(false);
-        Blocker.SetActive(false);
+        if (SaveSystem.HasSaveData())
+        {
+            SaveSystem.LoadGame();
+        }
+        else
+        {
+            return;
+        }
+    }
+    public void StartActive()
+    {
+        SaveSystem.ClearSave();
+    }
+
+    public void CreditActive()
+    {
+        GameObject creditClose = creditCloseButton.gameObject;
+        creditMenu.SetActive(true);
+        blocker.SetActive(true);
+        StartCoroutine(SelectOnNextFrame(creditClose));
+    }
+    public void OptionActive()
+    {
+        optionMenu.SetActive(true);
+        blocker.SetActive(true);
+        StartCoroutine(SelectOnNextFrame(volumeSlider));
+    }
+    public void CreditInactive()
+    {
+        GameObject creditBtn = creditButton.gameObject;
+        creditMenu.SetActive(false);
+        blocker.SetActive(false);
+        StartCoroutine(SelectOnNextFrame(creditBtn));
+    }
+    public void OptionInactive()
+    {
+        GameObject optionBtn = optionButton.gameObject;
+        optionMenu.SetActive(false);
+        blocker.SetActive(false);
+        StartCoroutine(SelectOnNextFrame(optionBtn));
+        
+    }
+
+    public void OnClickSound()
+    {
+        AudioService.AudioManager.PlayOneShot(clip, 1f);
+    }
+
+    private IEnumerator SelectOnNextFrame(GameObject obj)
+    {
+        yield return null; // wait 1 frame
+        EventSystem.current.SetSelectedGameObject(obj);
     }
 }

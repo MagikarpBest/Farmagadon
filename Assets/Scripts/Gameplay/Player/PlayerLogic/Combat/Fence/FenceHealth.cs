@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using DG.Tweening;
+using System.Runtime.CompilerServices;
 
 public class FenceHealth : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class FenceHealth : MonoBehaviour
     [SerializeField] private Sprite damaged50Sprite;
     [SerializeField] private Sprite damaged25Sprite;
     [SerializeField] private Sprite destroyedSprite;
+
+    [SerializeField] private AudioClip fenceAttackedClip;
+    [SerializeField] private AudioClip fenceBreakClip;
+
+    private float sfxCooldown = 0.1f;
+    private float lastSfxTime = -999f;
 
     public event Action<int, int> OnHealthChanged; // current, max
     public event Action OnFenceDestroy;
@@ -44,6 +51,11 @@ public class FenceHealth : MonoBehaviour
             }
         );
 
+        if (Time.time - lastSfxTime >= sfxCooldown)
+        {
+            AudioService.AudioManager.PlayOneShot(fenceAttackedClip, 1f);
+            lastSfxTime = Time.time;
+        }
 
         if (currentHealth <= 0)
         {
@@ -57,13 +69,25 @@ public class FenceHealth : MonoBehaviour
         float healthPercent = (float)currentHealth / maxHealth;
         //Debug.Log("Update fence sprite");
         if (healthPercent <= 0f)
+        {
             spriteRenderer.sprite = destroyedSprite;
+            AudioService.AudioManager.PlayOneShot(fenceBreakClip, 1f);
+        }
         else if (healthPercent <= 0.25f)
+        {
             spriteRenderer.sprite = damaged25Sprite;
+            AudioService.AudioManager.PlayOneShot(fenceBreakClip, 1f);
+        }
         else if (healthPercent <= 0.50f)
+        {
             spriteRenderer.sprite = damaged50Sprite;
+            AudioService.AudioManager.PlayOneShot(fenceBreakClip, 1f);
+        }
         else if (healthPercent <= 0.75f)
+        {
             spriteRenderer.sprite = damaged75Sprite;
+            AudioService.AudioManager.PlayOneShot(fenceBreakClip, 1f);
+        }
         else
             spriteRenderer.sprite = healthySprite;
     }
