@@ -16,6 +16,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
         float savedVol = PlayerPrefs.GetFloat("mainVolume", 1f);
         audioSource.volume = savedVol;
+        initialVolume = savedVol;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -33,8 +34,10 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
     public void PlayBGM(AudioClip clip, float volumeScale = 1)
     {
+        audioSource.Stop();
+
+        audioSource.clip = clip;
         audioSource.loop = true;
-        audioSource.PlayOneShot(clip, volumeScale);
     }
 
     public void StopClip(AudioClip clip)
@@ -72,14 +75,14 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
     private IEnumerator FadeOutCoroutine(float duration)
     {
-        initialVolume = AudioSource.volume;
+        float startVolume = AudioSource.volume;
         float time = 0f;
 
         while (time < duration)
         {
             time += Time.deltaTime;
             //Mathf.Lerp(a,b,t)    t=0,return a  t=1,return b   time/duration 0->1 gradually
-            audioSource.volume = Mathf.Lerp(initialVolume, 0f, time / duration);
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, time / duration);
             yield return null;
         }
         audioSource.volume = 0f;
@@ -89,6 +92,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     private IEnumerator FadeInCoroutine(float duration)
     {
         float time = 0f;
+        audioSource.volume = 0f;
 
         while (time < duration)
         {
@@ -97,6 +101,8 @@ public class UnityAudioManager : MonoBehaviour, IAudio
             audioSource.volume = Mathf.Lerp(0f, initialVolume, time / duration);
             yield return null;
         }
+
+        audioSource.volume = initialVolume;
     }
 
 }

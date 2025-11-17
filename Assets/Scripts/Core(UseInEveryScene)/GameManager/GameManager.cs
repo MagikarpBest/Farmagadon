@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
         StartPhase(gameStateManager.CurrentPhase);
         Debug.Log($"current phase = {SaveData.currentPhase} ");
         AudioHandling(gameStateManager.CurrentPhase);
-        AudioService.AudioManager.FadeInBGM();
 
     }
 
@@ -108,6 +107,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
         //yield return circleTransition.CloseTransition();
 
+        AudioService.AudioManager.FadeInBGM();
 
         // Initialize the current level from the database and start the game
         farmController.BeginFarmCycle(SaveData.currentLevel - 1);
