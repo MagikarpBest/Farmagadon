@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class FarmTutorialHandler : MonoBehaviour
 {
     [SerializeField] private UIManager manager;
-    [SerializeField] private AudioClip buttonAudio;
     private void OnEnable()
     {
         Time.timeScale = 0.0f;
@@ -17,7 +16,6 @@ public class FarmTutorialHandler : MonoBehaviour
     }
     public void CloseUI()
     {
-        AudioService.AudioManager.PlayOneShot(buttonAudio);
         manager.HideFarmTutorial();
     }
 }
