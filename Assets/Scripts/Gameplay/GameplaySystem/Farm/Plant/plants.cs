@@ -36,40 +36,42 @@ public class plants : MonoBehaviour
         plantShrink.Prepend(GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.5f));
         plantShrink.Prepend(transform.DOScale(0, 0.5f));
         AudioService.AudioManager.BufferPlayOneShot(farmedAudio, 0.5f);
+        Vector3 panelPos = Vector3.zero;
+        Image panel = BulletPanelHandler.Instance.GetBulletPanel(plantAmmoData);
+        BulletPanelUpdater updater = null; // Create a variable for the updater
 
-
-        Image panel = BulletPanelHandler.GetBulletPanel(plantAmmoData);
-
-        // Hard check for destroyed UI object (Unity ghost-null problem)
-        if (ReferenceEquals(panel, null) || ReferenceEquals(panel?.gameObject, null))
+        // --- Start Safety Checks ---
+        if (panel == null)
         {
-            Debug.LogWarning("BulletPanel destroyed or missing, skipping UI animation.");
-
-            // Still invoke event but with null panel/updater
-            OnDestroyed?.Invoke(posX, posY, Vector3.zero, plantAmmoData, null, 1.0f, dropAmount);
-
-            StartCoroutine(destroyAfter(plantShrink.Duration()));
-            return;
+            Debug.LogWarning($"[plants] GetBulletPanel returned null for {plantAmmoData.name}. UI animation skipped.");
         }
-
-        // Safe get component
-        BulletPanelUpdater updater = panel.GetComponent<BulletPanelUpdater>();
-
-        if (ReferenceEquals(updater, null))
+        else
         {
-            Debug.LogWarning("BulletPanelUpdater destroyed or missing.");
-
-            OnDestroyed?.Invoke(posX, posY, Vector3.zero, plantAmmoData, null, 1.0f, dropAmount);
-
-            StartCoroutine(destroyAfter(plantShrink.Duration()));
-            return;
+            // Panel exists, now try to get the updater
+            updater = panel.GetComponent<BulletPanelUpdater>();
+            if (updater == null)
+            {
+                Debug.LogWarning($"[plants] Panel '{panel.name}' is missing the BulletPanelUpdater component.");
+            }
+            else if (updater.AmmoImage == null) // Also check the image inside the updater!
+            {
+                Debug.LogWarning($"[plants] BulletPanelUpdater's 'AmmoImage' is not assigned (null).");
+                updater = null; // Set updater to null so we don't try to use it
+            }
+            else
+            {
+                // SUCCESS! All components are valid.
+                panelPos = updater.AmmoImage.position;
+            }
         }
+        // --- End Safety Checks ---
 
-        // SAFE animation position
-        Vector3 panelPos = updater.AmmoImage.position;
-
-        // SAFE invoke
+        // Now, the Invoke is safe.
+        // 'updater' will either be the valid component or null.
+        // 'panelPos' will either be the correct position or Vector3.zero.
         OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData, updater, 1.0f, dropAmount);
+
+        StartCoroutine(destroyAfter(plantShrink.Duration()));
     }
 
     private IEnumerator destroyAfter(float seconds)

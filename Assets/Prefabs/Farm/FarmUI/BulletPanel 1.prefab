@@ -392,7 +392,6 @@ GameObject:
   - component: {fileID: 5114942469346453861}
   - component: {fileID: 5079486209417087036}
   - component: {fileID: 596722978993476431}
-  - component: {fileID: 7044302918454283458}
   m_Layer: 5
   m_Name: BulletPanelImage
   m_TagString: Untagged
@@ -457,20 +456,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7044302918454283458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6615748737827787322}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05a525d2e724ce4fbe4cdf825a14a18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoImage: {fileID: 0}
-  updateAudio: {fileID: 0}
 --- !u!1 &6730164212217637031
 GameObject:
   m_ObjectHideFlags: 0

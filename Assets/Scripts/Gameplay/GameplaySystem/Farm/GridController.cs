@@ -128,7 +128,10 @@ namespace Farm
             
             yield return new WaitForSeconds(flyingSequence.Duration()+0.2f);
             farmController.CropFarmed(data, dropAmount);
-            updater.UpdateSelf();
+            if (updater != null)
+            {
+                updater.UpdateSelf();
+            }
             Destroy(flyingCropSprite.gameObject);
         }
 

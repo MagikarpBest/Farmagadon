@@ -46,7 +46,7 @@ public class BulletPanelUpdater : MonoBehaviour
     }
 
     private IEnumerator BounceText()
-    {
+    {   
         scaleCD = true;
         Tween punchTween = ammoText.transform.DOPunchScale(new Vector3(0, 1, 0), 0.2f, 1);
         yield return punchTween.WaitForCompletion();
