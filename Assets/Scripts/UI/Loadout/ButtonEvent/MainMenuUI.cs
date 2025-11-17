@@ -3,6 +3,7 @@ using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button optionButton;
     [SerializeField] private GameObject volumeSlider;
 
+
+    private SaveData saveData;
+    private float switchDelay = 0.8f;
+
     [SerializeField] private AudioClip clip;
     public void Start()
     {
@@ -25,12 +30,12 @@ public class MainMenuUI : MonoBehaviour
         optionMenu.SetActive(false);
         blocker.SetActive(false);
 
-        continueButton.onClick.AddListener(ContinueActive);
         startButton.onClick.AddListener(StartActive);
         creditButton.onClick.AddListener(CreditActive);
         optionButton.onClick.AddListener(OptionActive);
         creditCloseButton.onClick.AddListener(CreditInactive);
         optionCloseButton.onClick.AddListener(OptionInactive);
+        saveData = SaveSystem.LoadGame();
     }
 
     private void Update()
@@ -57,20 +62,10 @@ public class MainMenuUI : MonoBehaviour
         }
 
     }
-    public void ContinueActive()
-    {
-        if (SaveSystem.HasSaveData())
-        {
-            SaveSystem.LoadGame();
-        }
-        else
-        {
-            return;
-        }
-    }
     public void StartActive()
     {
         SaveSystem.ClearSave();
+        saveData = SaveSystem.LoadGame();
     }
 
     public void CreditActive()
@@ -111,5 +106,39 @@ public class MainMenuUI : MonoBehaviour
     {
         yield return null; // wait 1 frame
         EventSystem.current.SetSelectedGameObject(obj);
+    }
+
+    public void Switch()
+    {
+        AudioService.AudioManager.FadeOutBGM();
+        StartCoroutine(SwitchDelay(switchDelay));
+    }
+
+    public IEnumerator SwitchDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(GetSceneName());
+    }
+
+    private string GetSceneName()
+    {
+        switch (saveData.currentPhase)
+        {
+            case GamePhase.Farm:
+                Debug.Log("Farm phase detected");
+                return "FarmScene";
+
+            case GamePhase.Loadout:
+                Debug.Log("Loadout phase detected");
+                return "LoadOut";
+
+            case GamePhase.Combat:
+                Debug.Log("Combat phase detected");
+                return "CombatScene";
+
+            default:
+                Debug.LogWarning($"Unknown game phase: {saveData.currentPhase}. Returning to FarmScene.");
+                return "FarmScene";
+        }
     }
 }

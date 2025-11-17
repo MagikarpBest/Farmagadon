@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using Mono.Cecil;
 public class UnityAudioManager : MonoBehaviour, IAudio
 {
     private AudioSource audioSource;
@@ -32,12 +33,13 @@ public class UnityAudioManager : MonoBehaviour, IAudio
         StartCoroutine(PlayBufferedAudioClip(clip, volumeScale));
     }
 
-    public void PlayBGM(AudioClip clip, float volumeScale = 1)
+    public void PlayBGM(AudioClip clip,float duration)
     {
         audioSource.Stop();
 
         audioSource.clip = clip;
         audioSource.loop = true;
+        audioSource.Play();
     }
 
     public void StopClip(AudioClip clip)
@@ -81,28 +83,30 @@ public class UnityAudioManager : MonoBehaviour, IAudio
         while (time < duration)
         {
             time += Time.deltaTime;
-            //Mathf.Lerp(a,b,t)    t=0,return a  t=1,return b   time/duration 0->1 gradually
             audioSource.volume = Mathf.Lerp(startVolume, 0f, time / duration);
             yield return null;
         }
         audioSource.volume = 0f;
-        audioSource.Stop();
+        audioSource.Stop(); 
     }
 
     private IEnumerator FadeInCoroutine(float duration)
     {
+        float targetVolume = initialVolume;
         float time = 0f;
+
         audioSource.volume = 0f;
+        audioSource.Play();
 
         while (time < duration)
         {
             time += Time.deltaTime;
-            //Mathf.Lerp(a,b,t)    t=0,return a  t=1,return b   time/duration 0->1 gradually
-            audioSource.volume = Mathf.Lerp(0f, initialVolume, time / duration);
+            audioSource.volume = Mathf.Lerp(0f, targetVolume, time / duration);
             yield return null;
         }
 
-        audioSource.volume = initialVolume;
+        Debug.Log(targetVolume);
+        audioSource.volume = targetVolume;
     }
 
 }

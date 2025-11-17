@@ -36,16 +36,40 @@ public class plants : MonoBehaviour
         plantShrink.Prepend(GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.5f));
         plantShrink.Prepend(transform.DOScale(0, 0.5f));
         AudioService.AudioManager.BufferPlayOneShot(farmedAudio, 0.5f);
-        Vector3 panelPos = Vector2.zero;
+
+
         Image panel = BulletPanelHandler.GetBulletPanel(plantAmmoData);
 
-        if (panel != null) 
+        // Hard check for destroyed UI object (Unity ghost-null problem)
+        if (ReferenceEquals(panel, null) || ReferenceEquals(panel?.gameObject, null))
         {
-            panelPos = panel.GetComponent<BulletPanelUpdater>().AmmoImage.position;
+            Debug.LogWarning("BulletPanel destroyed or missing, skipping UI animation.");
+
+            // Still invoke event but with null panel/updater
+            OnDestroyed?.Invoke(posX, posY, Vector3.zero, plantAmmoData, null, 1.0f, dropAmount);
+
+            StartCoroutine(destroyAfter(plantShrink.Duration()));
+            return;
         }
-        
-        OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData,panel.GetComponent<BulletPanelUpdater>(), 1.0f, dropAmount);
-        StartCoroutine(destroyAfter(plantShrink.Duration()));
+
+        // Safe get component
+        BulletPanelUpdater updater = panel.GetComponent<BulletPanelUpdater>();
+
+        if (ReferenceEquals(updater, null))
+        {
+            Debug.LogWarning("BulletPanelUpdater destroyed or missing.");
+
+            OnDestroyed?.Invoke(posX, posY, Vector3.zero, plantAmmoData, null, 1.0f, dropAmount);
+
+            StartCoroutine(destroyAfter(plantShrink.Duration()));
+            return;
+        }
+
+        // SAFE animation position
+        Vector3 panelPos = updater.AmmoImage.position;
+
+        // SAFE invoke
+        OnDestroyed?.Invoke(posX, posY, panelPos, plantAmmoData, updater, 1.0f, dropAmount);
     }
 
     private IEnumerator destroyAfter(float seconds)

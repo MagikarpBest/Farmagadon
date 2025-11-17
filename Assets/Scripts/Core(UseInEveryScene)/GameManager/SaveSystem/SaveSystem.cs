@@ -45,8 +45,6 @@ public class SaveSystem : MonoBehaviour
         // Default value
         return new SaveData() 
         { 
-            currentLevel = 1, 
-            currentPhase = GamePhase.Farm
         };
     }
 

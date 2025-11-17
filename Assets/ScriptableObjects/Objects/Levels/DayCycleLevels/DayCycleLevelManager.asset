@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayLevels:
   - {fileID: 11400000, guid: 98b8e746b55b640439b0d0d7ade8a859, type: 2}
-  - {fileID: 11400000, guid: 98b8e746b55b640439b0d0d7ade8a859, type: 2}
+  - {fileID: 11400000, guid: 59cd732f8d62be54faef4692406bdc80, type: 2}
+  - {fileID: 11400000, guid: 508cefef9fcfaad4d99f42d771bb1682, type: 2}
+  - {fileID: 11400000, guid: 1f7169c431f9a2a47b77eb7269d51959, type: 2}
+  - {fileID: 11400000, guid: 5818687aa5b24fd49b2f50d404fb8501, type: 2}
+  - {fileID: 11400000, guid: 77aeb3eddb51ad54a8416e978d9d15f3, type: 2}
+  - {fileID: 11400000, guid: be5c0734a1f4e2f4a8835f141ca7095c, type: 2}

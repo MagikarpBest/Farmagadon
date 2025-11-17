@@ -32,5 +32,14 @@ MonoBehaviour:
     - weapon_cornpotato
     chooseOne: 1
   - levelNumber: 5
-    rewardWeaponIDs: []
-    chooseOne: 0
+    rewardWeaponIDs:
+    - weapon_ricepotato
+    - weapon_ricecarrot
+    - weapon_cornpotato
+    chooseOne: 1
+  - levelNumber: 6
+    rewardWeaponIDs:
+    - weapon_ricepotato
+    - weapon_ricecarrot
+    - weapon_cornpotato
+    chooseOne: 1

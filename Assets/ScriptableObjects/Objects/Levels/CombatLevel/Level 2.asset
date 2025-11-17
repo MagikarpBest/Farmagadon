@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0833922945385488052b2d42f5e2c3, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  totalDuration: 30
+  levelName: Tank Tank Tank
+  totalDuration: 60
   events:
   - time: 0
-    wavePattern: {fileID: 11400000, guid: f5d09afbd82b75d46b980fa2040fe4f8, type: 2}
+    wavePattern: {fileID: 11400000, guid: 838fb34a4e9397241891e339fdc39421, type: 2}
+  - time: 15
+    wavePattern: {fileID: 11400000, guid: d1ec58898b8e2e4498c940ae67b9dcaa, type: 2}

@@ -12,6 +12,7 @@ public class LevelRewardManager : MonoBehaviour
     [SerializeField] private WeaponDatabase weaponDatabase;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private WeaponChoiceUI weaponChoiceUI;
+    [SerializeField] private VictoryUI weaponVictoryUI;
     [SerializeField] private AmmoInventory ammoInventory;      // To add ammo debug
 
     [Header("Rewards Data")]

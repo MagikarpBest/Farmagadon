@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed794592e23d56b46af7c22da224113e, type: 3}
-  m_Name: TankEnemyWavePatternData
+  m_Name: NormalEnemyWaveFinalWavePatternData
   m_EditorClassIdentifier: 
   enemies:
-  - enemyPrefab: {fileID: 1940379239426215094, guid: 1ae25ab3e7b8ec1489eb314d79e5986b, type: 3}
-    count: 5
-    duration: 10
+  - enemyPrefab: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
+    count: 20
+    duration: 30

@@ -12,7 +12,7 @@ public class SaveData
     // Progress Data
     // --------------------------
     public int currentLevel = 1; 
-    public GamePhase currentPhase = GamePhase.Farm;
+    public GamePhase currentPhase = GamePhase.Combat;
 
     // --------------------------
     // Weapon Inventory

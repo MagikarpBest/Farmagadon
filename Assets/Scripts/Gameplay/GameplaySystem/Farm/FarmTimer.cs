@@ -6,8 +6,8 @@ public class FarmTimer : MonoBehaviour
 {
     [SerializeField] FarmController farmController;
     [SerializeField] Slider slider;
-
     [SerializeField] private float dayTimeDuration;
+
     private float currentTime, maxDuration;
     private float gameStartTime;
     private bool timerStarted = false;

@@ -41,14 +41,9 @@ public class GameManager : MonoBehaviour
         CheckReferences();
         StartPhase(gameStateManager.CurrentPhase);
         Debug.Log($"current phase = {SaveData.currentPhase} ");
-        AudioHandling(gameStateManager.CurrentPhase);
-
     }
 
-    private void OnDisable()
-    {
-        UnsubscribeEvent();
-    }
+
     #endregion
 
     #region System Initialization
@@ -104,15 +99,14 @@ public class GameManager : MonoBehaviour
         yield return null;
         Debug.Log("[GameManager] Starting FARM phase.");
         UIManager?.ShowHUD();
-        Time.timeScale = 0.0f;
-        //yield return circleTransition.CloseTransition();
+        yield return circleTransition.CloseTransition();
 
+        Debug.Log("farm bgm");
         AudioService.AudioManager.FadeInBGM();
-
+        AudioService.AudioManager.PlayBGM(farmBGM);
         // Initialize the current level from the database and start the game
         farmController.BeginFarmCycle(SaveData.currentLevel - 1);
         Debug.Log($"Starting farm level");
-        Time.timeScale = 1.0f;
         if (SaveData.currentLevel == 1)
         {
             UIManager.ShowFarmTutorial();
@@ -124,14 +118,13 @@ public class GameManager : MonoBehaviour
         yield return null;
         Debug.Log("[GameManager] Starting LOADOUT phase.");
         UIManager?.ShowHUD();
-        Time.timeScale = 0.0f;
-        //yield return circleTransition.CloseTransition();
+        yield return circleTransition.CloseTransition();
 
-        // Just debug, remove in ltr
+        Debug.Log("loadout bgm");
+        AudioService.AudioManager.FadeInBGM();
+        AudioService.AudioManager.PlayBGM(loadoutBGM);
         // Initialize the current level from the database and start the game
-        waveManager?.BeginLevel(SaveData.currentLevel);
         Debug.Log($"Starting loadout level");
-        Time.timeScale = 1.0f;
     }
 
     private IEnumerator StartCombatPhase()
@@ -139,45 +132,42 @@ public class GameManager : MonoBehaviour
         yield return null;
         Debug.Log("[GameManager] Starting COMBAT phase.");
         UIManager?.ShowHUD();
-        Time.timeScale = 0.0f;
-        //yield return circleTransition.CloseTransition();
+        yield return circleTransition.CloseTransition();
+
+        Debug.Log("combat bgm");
+        AudioService.AudioManager.FadeInBGM();
+        AudioService.AudioManager.PlayBGM(combatBGM);
         // Initialize the current level from the database and start the game
 
         waveManager?.BeginLevel(SaveData.currentLevel);
         Debug.Log($"spawning level");
-        Time.timeScale = 1.0f;
     }
-    #endregion
-
-    #region Audio Handling
-    private void AudioHandling(GamePhase phase)
-    {
-        switch (phase)
-        {
-            case GamePhase.Farm:
-                Debug.Log("farm bgm");
-                AudioService.AudioManager.PlayBGM(farmBGM, 0.3f);
-                break;
-
-            case GamePhase.Loadout:
-                Debug.Log("loadout bgm");
-                AudioService.AudioManager.PlayBGM(loadoutBGM, 0.3f);
-                break;
-
-            case GamePhase.Combat:
-                Debug.Log("combat bgm");
-                AudioService.AudioManager.PlayBGM(combatBGM, 0.3f);
-                break;
-        }
-    }
-
     #endregion
 
     #region Game Flow Control
-    private void OnFarmEnd()
+    public void OnLoadoutEnd()
+    {
+        StartCoroutine(HandleLoadoutEnd());
+    }
+
+    private IEnumerator HandleLoadoutEnd()
     {
         SaveAll();
         Debug.Log("[GameManager] Farm level completed!");
+        yield return circleTransition.OpenTransition();
+        sceneController.LoadScene(GetNextSceneName());
+    }
+
+    private void OnFarmEnd()
+    {
+        StartCoroutine(HandleFarmEnd());
+    }
+
+    private IEnumerator HandleFarmEnd()
+    {
+        SaveAll();
+        Debug.Log("[GameManager] Farm level completed!");
+        yield return circleTransition.OpenTransition();
         sceneController.LoadScene(GetNextSceneName());
     }
     /// <summary>
@@ -287,6 +277,11 @@ public class GameManager : MonoBehaviour
         {
             farmController.StopFarmCycle += OnFarmEnd;
         }
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvent();
     }
 
     private void UnsubscribeEvent()
