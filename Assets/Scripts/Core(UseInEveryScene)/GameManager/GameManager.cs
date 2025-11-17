@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelRewardManager levelRewardManager;
     [SerializeField] private FarmController farmController;
 
+    [Header("BGMs")]
+    [SerializeField] private AudioClip mainMenuBGM;
+    [SerializeField] private AudioClip farmBGM;
+    [SerializeField] private AudioClip loadoutBGM;
+    [SerializeField] private AudioClip combatBGM;
     public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
 
     #region Life Cycle
@@ -42,6 +47,7 @@ public class GameManager : MonoBehaviour
         unityAudioManagerInstance.name = "AudioManager";
         AudioService.SetAudioManager(unityAudioManagerInstance);
         Debug.Log($"current phase = {SaveData.currentPhase} ");
+        AudioHandling(gameStateManager.CurrentPhase);
     }
 
     private void OnDisable()
@@ -145,6 +151,27 @@ public class GameManager : MonoBehaviour
         Debug.Log($"spawning level");
         Time.timeScale = 1.0f;
     }
+    #endregion
+
+    #region Audio Handling
+    private void AudioHandling(GamePhase phase)
+    {
+        switch (phase)
+        {
+            case GamePhase.Farm:
+                AudioService.AudioManager.PlayBGM(farmBGM, 1f);
+                break;
+
+            case GamePhase.Loadout:
+                AudioService.AudioManager.PlayBGM(loadoutBGM, 1f);
+                break;
+
+            case GamePhase.Combat:
+                AudioService.AudioManager.PlayBGM(combatBGM,1f);
+                break;
+        }
+    }
+
     #endregion
 
     #region Game Flow Control

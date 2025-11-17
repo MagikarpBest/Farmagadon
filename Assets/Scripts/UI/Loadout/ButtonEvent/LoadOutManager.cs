@@ -60,6 +60,7 @@ public class LoadOutManager : MonoBehaviour
         {
             slotImage[i].enabled = false;
         }
+        //AudioService.AudioManager.PlayBGM(loadoutBGM, 1f);
     }
 
     private void OnEnable()

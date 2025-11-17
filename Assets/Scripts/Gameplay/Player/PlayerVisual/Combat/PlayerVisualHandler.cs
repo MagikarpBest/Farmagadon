@@ -11,6 +11,12 @@ public class PlayerVisualHandler : MonoBehaviour
     [SerializeField] float recoilDistance = 0.2f;
     [SerializeField] float recoilDuration = 0.15f;
 
+    [SerializeField] AudioClip playerMoveClip;
+    [SerializeField] AudioClip playerShootClip;
+
+    private float sfxCooldown = 0.2f;
+    private float lastSfxTime = -999f;
+    
     private Vector3 originalPosition;
     private Vector3 originalScale;
 
@@ -34,6 +40,14 @@ public class PlayerVisualHandler : MonoBehaviour
             animator.SetBool("IsMovingLeft", true);
         }
 
+        if (animator.GetBool("IsMovingLeft") || animator.GetBool("IsMovingRight")) 
+        {
+            if (Time.time - lastSfxTime >= sfxCooldown)
+            {
+                AudioService.AudioManager.PlayOneShot(playerMoveClip, 1f);
+                lastSfxTime = Time.time;
+            }
+        }
     }
 
     public IEnumerator PlayShootAnimation()
@@ -48,11 +62,14 @@ public class PlayerVisualHandler : MonoBehaviour
         Vector3 suckPosition = originalPosition + Vector3.down * 0.1f;
         Vector3 suckScale = originalScale * 1.1f; // slightly bigger, stretching
 
+        AudioService.AudioManager.PlayOneShot(playerShootClip, 1f);
+
         Sequence suckSeq = DOTween.Sequence()
             .Join(playerSprite.transform.DOLocalMove(suckPosition, 0.25f).SetEase(Ease.OutSine))
             .Join(playerSprite.transform.DOScale(suckScale, 0.25f).SetEase(Ease.OutSine));
         
         yield return suckSeq.WaitForCompletion();
+        
         animator.SetBool("IsShooting", false);
 
         // --- SHOOT / RECOIL PHASE ---

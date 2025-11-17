@@ -6318,6 +6318,8 @@ MonoBehaviour:
   animator: {fileID: 1084670749}
   recoilDistance: 0.2
   recoilDuration: 0.1
+  playerMoveClip: {fileID: 8300000, guid: ebf0853b71b070643a1ccb0b8b9e3854, type: 3}
+  playerShootClip: {fileID: 8300000, guid: c1733ea0186a9fa49a30649db1ce9f93, type: 3}
 --- !u!95 &1084670749
 Animator:
   serializedVersion: 7
@@ -12877,6 +12879,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7230259030125005739}
     - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
+      propertyPath: loadoutBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: 0a08974545c6a154a88f627df8678cef, type: 3}
+    - target: {fileID: 3629866534344860666, guid: 99517d3424c6b3a40beadc996a149882, type: 3}
       propertyPath: fenceHealth
       value: 
       objectReference: {fileID: 1954484845}
@@ -17096,6 +17102,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 631939030531806449, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
+      propertyPath: enemyHitClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ad36d623dda579e418b23ed69856c26b, type: 3}
     - target: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
       propertyPath: m_Name
       value: EnemyNormal
@@ -17154,6 +17164,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 08c228babcd82a24d87c5debc8616ed1, type: 3}
+    - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: maxHealth
       value: 1002301
       objectReference: {fileID: 0}
@@ -17161,6 +17175,10 @@ PrefabInstance:
       propertyPath: healthySprite
       value: 
       objectReference: {fileID: 4346539952992440545, guid: 37132f580da8fc6429651598bba316c2, type: 3}
+    - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
+      propertyPath: fenceBreakClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 08c228babcd82a24d87c5debc8616ed1, type: 3}
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: spriteRenderer
       value: 
@@ -17181,6 +17199,10 @@ PrefabInstance:
       propertyPath: destroyedSprite
       value: 
       objectReference: {fileID: 21300000, guid: 3d8f815017a35f145be962a44464e6e3, type: 3}
+    - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
+      propertyPath: fenceAttackedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 205d3dafafcad6745a7970e448482d84, type: 3}
     - target: {fileID: 1267725018976599679, guid: 7824f87ac8f961c4d99836cb23437975, type: 3}
       propertyPath: fenceVisualManager
       value: 
@@ -21220,6 +21242,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412926114004694983, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213140740116064501, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
