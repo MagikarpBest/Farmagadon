@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using TableForge.Demo;
+
 
 /// <summary>
 /// Represents a weapon slot that holds a specific weapon data.
@@ -66,19 +66,76 @@ public class WeaponInventory : MonoBehaviour
         saveData = SaveSystem.LoadGame();
     }
 
-    // ----------------------
-    // Slot Management
-    // ----------------------
-
+    #region Slot Management
     /// <summary>
     /// Unlocks one additional weapon slot (up to the max slot limit).
     /// </summary>
+    // Ngl this is useless for now
     public void UnlockSlot()
     {
         if (unlockedSlots < maxSlot) 
         {
             unlockedSlots++;
         }
+    }
+
+    public void EquipWeapon(WeaponSlot newWeapon)
+    {
+        if (unlockedSlots <= 0)
+        {
+            Debug.LogWarning("[WeaponInventory] No unlocked slot");
+            return;
+        }
+
+        // Prevent equipping if it is already equipped
+        foreach (var slot in weapons)
+        {
+            if (slot != null && slot.weaponData != null && slot.weaponData.weaponID == newWeapon.weaponData.weaponID)
+            {
+                Debug.Log("Weapon already equipped.");
+                return;
+            }
+        }
+
+        // Step 1: Find the FIRST empty slot among unlocked slots
+        int targetSlot = -1;
+
+        for (int i = 0; i < unlockedSlots; i++)
+        {
+            if (weapons[i] == null)
+            {
+                targetSlot = i;
+                break;
+            }
+        }
+
+        // Step 2: If no empty slot, block the equip
+        if (targetSlot == -1)
+        {
+            Debug.Log("Cannot equip, all equipped slots are full!");
+            return;
+        }
+
+        // Step 3: Equip new weapon
+        weapons[targetSlot] = new WeaponSlot(newWeapon.weaponData);
+        currentIndex = targetSlot;
+
+        Debug.Log($"Equipped {newWeapon.weaponData.weaponName} into slot {targetSlot}");
+    }
+
+    public void UnEquipWeaponByID(string weaponID)
+    {
+        for (int i = 0; i < unlockedSlots; i++)
+        {
+            if (weapons[i] != null && weapons[i].weaponData != null && weapons[i].weaponData.weaponID == weaponID)
+            {
+                string weaponName = weapons[i].weaponData.weaponName;
+                weapons[i] = null;
+                Debug.Log($"Unequipped {weaponName} from slot {i}");
+                return;
+            }
+        }
+        Debug.LogWarning($"Weapon {weaponID} not found in equipped slots.");
     }
 
     /// <summary>
@@ -211,10 +268,9 @@ public class WeaponInventory : MonoBehaviour
         }
         return false;
     }
+    #endregion Slot Management
 
-    // ----------------------
-    // Save System
-    // ----------------------
+    #region Save System
     public void SaveToSaveData(SaveData data)
     {
         saveData = data;
@@ -322,19 +378,42 @@ public class WeaponInventory : MonoBehaviour
             Debug.LogWarning("[WeaponInventory] No valid weapon found after loading save data.");
         }
     }
+    #endregion Save System
 
-    // Getters
+    #region Getters
     /// <summary>
     /// Returns the weapon slot at the specified index.
     /// Returns null if the index is out of range.
     /// </summary>
-    public WeaponSlot GetWeaponSlot(int index)
+    public WeaponSlot[] GetWeaponSlots()
+    {
+        return weapons;
+    }
+    /// <summary>
+    /// Returns the weapon slot at the specified index.
+    /// Returns null if the index is out of range.
+    /// </summary>
+    public WeaponSlot GetWeaponSlotOfSpecificIndex(int index)
     {
         if (index >= 0 && index < weapons.Length)
         {
             return weapons[index];
         }
         return null;
+    }
+
+    public bool IsWeaponEquipped(WeaponSlot weaponSlot)
+    {
+        // Prevent equipping if it is already equipped
+        foreach (var slot in weapons)
+        {
+            if (slot != null && slot.weaponData != null && slot.weaponData.weaponID == weaponSlot.weaponData.weaponID)
+            {
+                Debug.Log("Weapon already equipped.");
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -357,6 +436,11 @@ public class WeaponInventory : MonoBehaviour
         return equipped;
     }
 
+    public List<WeaponSlot> GetAllOwnedWeapons()
+    {
+        return weaponStorage;
+    }
+
     /// <summary>
     /// Returns the number of unlocked slots.
     /// </summary>
@@ -366,6 +450,7 @@ public class WeaponInventory : MonoBehaviour
     /// Returns the index of the currently active weapon.
     /// </summary>
     public int GetCurrentWeaponIndex() => currentIndex;
-    public int getWeaponsSize() => weapons.Length;
+
     public bool CanSwitchWeapon => canSwitchWeapon; // Read-only
+    #endregion Getters
 }

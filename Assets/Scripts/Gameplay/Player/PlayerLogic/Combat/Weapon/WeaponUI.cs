@@ -83,7 +83,7 @@ public class WeaponUI : MonoBehaviour
         // Add all unlocked weapon slots
         for (int i = 0; i < unlocked; i++)
         {
-            allSlots.Add(weaponInventory.GetWeaponSlot(i)); // may include nulls (locked or empty)
+            allSlots.Add(weaponInventory.GetWeaponSlotOfSpecificIndex(i)); // may include nulls (locked or empty)
         }
 
         // If no weapons equipped, display all as empty

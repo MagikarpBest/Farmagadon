@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(menuName = "Weapons")]
 public class WeaponData : ScriptableObject
@@ -23,7 +24,7 @@ public class WeaponData : ScriptableObject
     public int pelletCount = 1; // Set to more than 1 if shotgun
     public float spread = 0; // Set to more than 1 if shotgun
 
-    [System.Serializable]
+    [Serializable]
     public class ShrapnelSettings
     {
         [Header("Shrapnel Settings (special combination)")]
@@ -36,7 +37,7 @@ public class WeaponData : ScriptableObject
     [Header("Explosion / Shrapnel Settings")]
     public ShrapnelSettings shrapnel = new ShrapnelSettings();
 
-    [System.Serializable]
+    [Serializable]
     public class SlowExplosion
     {
         [Header("Slow effects")]
@@ -48,7 +49,7 @@ public class WeaponData : ScriptableObject
     [Header("Slow Zone Effect")]
     public SlowExplosion slowEffect = new SlowExplosion();
 
-    [System.Serializable]
+    [Serializable]
     public class SplitSettings
     {
         [Header("Split-on-Hit")]

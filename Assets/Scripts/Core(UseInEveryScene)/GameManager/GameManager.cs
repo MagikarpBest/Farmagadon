@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
 
 
         // Initialize the current level from the database and start the game
-        farmController.BeginFarmCycle(SaveData.currentLevel - 1);
+        //farmController.BeginFarmCycle(SaveData.currentLevel - 1);
         Debug.Log($"Starting farm level");
         Time.timeScale = 1.0f;
         if (SaveData.currentLevel == 1)

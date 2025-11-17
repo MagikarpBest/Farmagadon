@@ -23,13 +23,13 @@ MonoBehaviour:
   itemGUIDs:
     values: []
   cellAnchorMetadata:
-    mKeys: e963af083ef90ef07d77fa27963b54541cae497fc766b04c5cf2b78897d9bb0ade23b76d
+    mKeys: e963af083ef90ef07d77fa27963b54541cae497fc766b04c5cf2b78897d9bb0ade23b76d012729b34bdedd21
     mValues:
-    - position: 4
+    - position: 3
       size: {x: 0, y: 0}
     - position: 2
       size: {x: 0, y: 0}
-    - position: 3
+    - position: 4
       size: {x: 0, y: 0}
     - position: 1
       size: {x: 0, y: 0}
@@ -42,6 +42,10 @@ MonoBehaviour:
     - position: 0
       size: {x: 0, y: 0}
     - position: 0
+      size: {x: 0, y: 0}
+    - position: 8
+      size: {x: 0, y: 0}
+    - position: 9
       size: {x: 0, y: 0}
   functions:
     mKeys: 
