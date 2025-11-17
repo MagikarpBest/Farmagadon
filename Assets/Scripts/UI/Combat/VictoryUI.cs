@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
 public class VictoryUI : MonoBehaviour
 {
@@ -9,8 +11,16 @@ public class VictoryUI : MonoBehaviour
     [SerializeField] private Image rewardIcon;
     [SerializeField] private TextMeshProUGUI weaponName;
     [SerializeField] private TextMeshProUGUI weaponDescription;
+    [SerializeField] private GameObject confirmButton;
     [SerializeField] private WeaponDatabase weaponDatabase;
 
+    private void Start()
+    {
+        if (panel != null)
+        {
+            panel.SetActive(false);
+        }
+    }
     public void Show(string weaponID)
     {
         if (panel == null)
@@ -42,5 +52,12 @@ public class VictoryUI : MonoBehaviour
         {
             weaponDescription.text = data.weaponDescription;
         }
+        StartCoroutine(SelectAfterFrame());
+    }
+    private IEnumerator SelectAfterFrame()
+    {
+            yield return null;
+            EventSystem.current.SetSelectedGameObject(null); // Clear old selection
+            EventSystem.current.SetSelectedGameObject(confirmButton);
     }
 }

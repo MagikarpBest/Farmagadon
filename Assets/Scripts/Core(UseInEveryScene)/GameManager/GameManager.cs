@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         AudioService.AudioManager.FadeInBGM();
         AudioService.AudioManager.PlayBGM(farmBGM);
         // Initialize the current level from the database and start the game
-        farmController.BeginFarmCycle(SaveData.currentLevel - 1);
+        farmController.BeginFarmCycle(SaveData.currentLevel - 2);
         Debug.Log($"Starting farm level");
         if (SaveData.currentLevel == 1)
         {
@@ -183,6 +183,7 @@ public class GameManager : MonoBehaviour
     {
         // Complete level (give rewards, update progression)
         Debug.Log("[GameManager] Level completed!");
+        Time.timeScale = 0.0f;
         yield return circleTransition.OpenTransition();
         levelManager.CompleteLevel();
         yield return circleTransition.CloseTransition();

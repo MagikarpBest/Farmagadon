@@ -83,12 +83,11 @@ public class LevelRewardManager : MonoBehaviour
         }
         else
         {
-            uiManager.ShowVictory();
-
             // Give all reward directly
             foreach (var id in availableRewards)
             {
                 GetWeaponReward(id);
+                weaponVictoryUI.Show(id);
             }
         }
     }
