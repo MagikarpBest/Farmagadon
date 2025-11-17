@@ -15,4 +15,6 @@ public interface IAudio
     void SetPitch(float pitch);
 
     void SetVolume(float volume);
+    void FadeOutBGM(float duration = 1f);
+    void FadeInBGM(float duration = 1f);
 }

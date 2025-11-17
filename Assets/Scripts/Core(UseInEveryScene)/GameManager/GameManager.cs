@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FarmController farmController;
 
     [Header("BGMs")]
-    [SerializeField] private AudioClip mainMenuBGM;
     [SerializeField] private AudioClip farmBGM;
     [SerializeField] private AudioClip loadoutBGM;
     [SerializeField] private AudioClip combatBGM;
@@ -41,13 +40,10 @@ public class GameManager : MonoBehaviour
         InitializeSystem();
         CheckReferences();
         StartPhase(gameStateManager.CurrentPhase);
-        UnityAudioManager unityAudioManagerPrefab = Resources.Load<UnityAudioManager>("UnityAudioManager");
-        UnityAudioManager unityAudioManagerInstance = GameObject.Instantiate(unityAudioManagerPrefab);
-        unityAudioManagerInstance.Initiallize();
-        unityAudioManagerInstance.name = "AudioManager";
-        AudioService.SetAudioManager(unityAudioManagerInstance);
         Debug.Log($"current phase = {SaveData.currentPhase} ");
         AudioHandling(gameStateManager.CurrentPhase);
+        AudioService.AudioManager.FadeInBGM();
+
     }
 
     private void OnDisable()
@@ -159,14 +155,17 @@ public class GameManager : MonoBehaviour
         switch (phase)
         {
             case GamePhase.Farm:
+                Debug.Log("farm bgm");
                 AudioService.AudioManager.PlayBGM(farmBGM, 0.3f);
                 break;
 
             case GamePhase.Loadout:
+                Debug.Log("loadout bgm");
                 AudioService.AudioManager.PlayBGM(loadoutBGM, 0.3f);
                 break;
 
             case GamePhase.Combat:
+                Debug.Log("combat bgm");
                 AudioService.AudioManager.PlayBGM(combatBGM, 0.3f);
                 break;
         }
@@ -189,6 +188,7 @@ public class GameManager : MonoBehaviour
         // i have to do this or else i have to refractor alot of event linking which is smtg im lazy to do
         StartCoroutine(HandleCombatVictory());
     }
+    
     private IEnumerator HandleCombatVictory()
     {
         // Complete level (give rewards, update progression)

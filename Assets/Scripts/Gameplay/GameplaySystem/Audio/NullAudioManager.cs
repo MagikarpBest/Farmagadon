@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class NullAudioManager : IAudio
 {
@@ -37,4 +38,12 @@ public class NullAudioManager : IAudio
         Debug.Log($"[This is NullAudioManager], you tried to set volume to {volume}");
     }
 
+    public void FadeOutBGM(float duration)
+    {
+        Debug.Log($"[This is NullAudioManager], you tried to fade out bgm");
+    }
+    public void FadeInBGM(float duration)
+    {
+        Debug.Log($"[This is NullAudioManager], you tried to fade in bgm");
+    }
 }

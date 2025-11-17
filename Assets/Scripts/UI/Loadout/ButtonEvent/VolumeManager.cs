@@ -16,7 +16,11 @@ public class VolumeManager : MonoBehaviour
         {
             Load();
         }
-        
+        UnityAudioManager unityAudioManagerPrefab = Resources.Load<UnityAudioManager>("UnityAudioManager");
+        UnityAudioManager unityAudioManagerInstance = GameObject.Instantiate(unityAudioManagerPrefab);
+        unityAudioManagerInstance.Initiallize();
+        unityAudioManagerInstance.name = "AudioManager";
+        AudioService.SetAudioManager(unityAudioManagerInstance);
         AudioService.AudioManager.PlayBGM(mainMenuBGM);
     }
     public void ChangeVolume()
@@ -34,6 +38,4 @@ public class VolumeManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("mainVolume",volumeSlider.value);
     }
-
-
 }

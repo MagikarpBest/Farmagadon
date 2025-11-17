@@ -7,6 +7,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     private List<AudioClip> clipBuffer = new List<AudioClip>();
 
     public AudioSource AudioSource => audioSource;
+    private float initialVolume;
 
     public void Initiallize()
     {
@@ -26,7 +27,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     public void BufferPlayOneShot(AudioClip clip, float volumeScale = 1)
     {
         if (clipBuffer.Contains(clip)) { return; }
-        clipBuffer.Add(clip);   
+        clipBuffer.Add(clip);
         StartCoroutine(PlayBufferedAudioClip(clip, volumeScale));
     }
 
@@ -40,6 +41,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     {
         audioSource.Stop();
     }
+
     public void SetPitch(float pitch)
     {
         audioSource.pitch = pitch;
@@ -57,10 +59,44 @@ public class UnityAudioManager : MonoBehaviour, IAudio
         clipBuffer.Remove(clip);
     }
 
-    private void Update()
+
+    public void FadeOutBGM(float duration = 1f)
     {
-        
+        StartCoroutine(FadeOutCoroutine(duration));
     }
 
-    
+    public void FadeInBGM(float duration = 1f)
+    {
+        StartCoroutine(FadeInCoroutine(duration));
+    }
+
+    private IEnumerator FadeOutCoroutine(float duration)
+    {
+        initialVolume = AudioSource.volume;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            //Mathf.Lerp(a,b,t)    t=0,return a  t=1,return b   time/duration 0->1 gradually
+            audioSource.volume = Mathf.Lerp(initialVolume, 0f, time / duration);
+            yield return null;
+        }
+        audioSource.volume = 0f;
+        audioSource.Stop();
+    }
+
+    private IEnumerator FadeInCoroutine(float duration)
+    {
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            //Mathf.Lerp(a,b,t)    t=0,return a  t=1,return b   time/duration 0->1 gradually
+            audioSource.volume = Mathf.Lerp(0f, initialVolume, time / duration);
+            yield return null;
+        }
+    }
+
 }
