@@ -12,6 +12,7 @@ public class NullAudioManager : IAudio
     {
         Debug.Log($"[This is NullAudioManager], you tried to play {clip.name} at volume {volumeScale} but this is not the right manager");
     }
+<<<<<<< HEAD
     public void PlayBGM(AudioClip clip, float volumeScale = 1)
     {
         Debug.Log($"[This is NullAudioManager], you tried to play {clip.name} at volume {volumeScale} but this is not the right manager");
@@ -20,6 +21,8 @@ public class NullAudioManager : IAudio
     {
         Debug.Log($"[This is NullAudioManager], you tried to stop {clip.name}");
     }
+=======
+>>>>>>> 14/11-chris
 
     public void SetPitch(float pitch)
     {

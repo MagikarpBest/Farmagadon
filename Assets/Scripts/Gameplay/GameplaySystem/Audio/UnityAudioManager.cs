@@ -5,6 +5,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     private AudioSource audioSource;
 
     public AudioSource AudioSource => audioSource;
+<<<<<<< HEAD
     //-------for debugging-----------
     //private void Awake()
     //{
@@ -23,11 +24,18 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
         float savedVol = PlayerPrefs.GetFloat("mainVolume", 1f);
         audioSource.volume = savedVol;
+=======
+    public void Initiallize()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+>>>>>>> 14/11-chris
         DontDestroyOnLoad(gameObject);
     }
 
     public void PlayOneShot(AudioClip clip, float volumeScale = 1)
     {
+<<<<<<< HEAD
         float savedVol = PlayerPrefs.GetFloat("mainVolume", 1f);
         audioSource.PlayOneShot(clip, volumeScale * savedVol);
     }
@@ -44,6 +52,9 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     public void StopClip(AudioClip clip)
     {
         audioSource.Stop();
+=======
+        audioSource.PlayOneShot(clip, volumeScale);
+>>>>>>> 14/11-chris
     }
 
     public void SetPitch(float pitch)
