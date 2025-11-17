@@ -91,7 +91,7 @@ public class AmmoUI : MonoBehaviour
         // Add all unlocked weapon slots
         for (int i = 0; i < unlocked; i++)
         {
-            allSlots.Add(weaponInventory.GetWeaponSlot(i)); // may include nulls (locked or empty)
+            allSlots.Add(weaponInventory.GetWeaponSlotOfSpecificIndex(i)); // may include nulls (locked or empty)
         }
 
         // If no weapons equipped, display all as empty
@@ -151,7 +151,7 @@ public class AmmoUI : MonoBehaviour
         }
 
         // Update all four text slots
-        WeaponSlot centerSlot = weaponInventory.GetWeaponSlot(weaponInventory.GetCurrentWeaponIndex());
+        WeaponSlot centerSlot = weaponInventory.GetWeaponSlotOfSpecificIndex(weaponInventory.GetCurrentWeaponIndex());
 
         // Update only the center text
         SetText(centerWeaponText, centerSlot);

@@ -87,15 +87,15 @@ public class LoadoutVisual : MonoBehaviour
 
     private void UpdateEquippedVisual()
     {
-        List<WeaponSlot> equipped = weaponInventory.GetEquippedWeapon();
+        WeaponSlot[] slots = weaponInventory.GetWeaponSlots();
 
         for (int i = 0; i < equippedImages.Count; i++)
         {
             Image icon = equippedImages[i];
 
-            if (i < equipped.Count && equipped[i] != null && equipped[i].weaponData != null)
+            if (i < slots.Length && slots[i] != null && slots[i].weaponData != null)
             {
-                icon.sprite = equipped[i].weaponData.weaponSprite;
+                icon.sprite = slots[i].weaponData.weaponSprite;
             }
             else
             {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using TableForge.Demo;
+
 
 /// <summary>
 /// Represents a weapon slot that holds a specific weapon data.
@@ -385,7 +385,15 @@ public class WeaponInventory : MonoBehaviour
     /// Returns the weapon slot at the specified index.
     /// Returns null if the index is out of range.
     /// </summary>
-    public WeaponSlot GetWeaponSlot(int index)
+    public WeaponSlot[] GetWeaponSlots()
+    {
+        return weapons;
+    }
+    /// <summary>
+    /// Returns the weapon slot at the specified index.
+    /// Returns null if the index is out of range.
+    /// </summary>
+    public WeaponSlot GetWeaponSlotOfSpecificIndex(int index)
     {
         if (index >= 0 && index < weapons.Length)
         {
