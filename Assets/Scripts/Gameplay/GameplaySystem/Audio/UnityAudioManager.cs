@@ -12,22 +12,34 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
+
+        float savedVol = PlayerPrefs.GetFloat("mainVolume", 1f);
+        audioSource.volume = savedVol;
         DontDestroyOnLoad(gameObject);
     }
 
     public void PlayOneShot(AudioClip clip, float volumeScale = 1)
     {
-        
         audioSource.PlayOneShot(clip, volumeScale);
     }
 
     public void BufferPlayOneShot(AudioClip clip, float volumeScale = 1)
     {
         if (clipBuffer.Contains(clip)) { return; }
-        clipBuffer.Add(clip);
+        clipBuffer.Add(clip);   
         StartCoroutine(PlayBufferedAudioClip(clip, volumeScale));
     }
 
+    public void PlayBGM(AudioClip clip, float volumeScale = 1)
+    {
+        audioSource.loop = true;
+        audioSource.PlayOneShot(clip, volumeScale);
+    }
+
+    public void StopClip(AudioClip clip)
+    {
+        audioSource.Stop();
+    }
     public void SetPitch(float pitch)
     {
         audioSource.pitch = pitch;

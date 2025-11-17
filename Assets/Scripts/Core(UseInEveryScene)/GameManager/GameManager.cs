@@ -159,15 +159,15 @@ public class GameManager : MonoBehaviour
         switch (phase)
         {
             case GamePhase.Farm:
-                AudioService.AudioManager.PlayBGM(farmBGM, 1f);
+                AudioService.AudioManager.PlayBGM(farmBGM, 0.3f);
                 break;
 
             case GamePhase.Loadout:
-                AudioService.AudioManager.PlayBGM(loadoutBGM, 1f);
+                AudioService.AudioManager.PlayBGM(loadoutBGM, 0.3f);
                 break;
 
             case GamePhase.Combat:
-                AudioService.AudioManager.PlayBGM(combatBGM,1f);
+                AudioService.AudioManager.PlayBGM(combatBGM, 0.3f);
                 break;
         }
     }
