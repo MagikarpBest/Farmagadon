@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections;
 
 /// <summary>
 /// Handles the visual representation of the player's weapon wheel UI.
@@ -48,8 +49,9 @@ public class WeaponUI : MonoBehaviour
         }
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
         // Save original position for animation references
         leftPosition = leftWeaponImage.rectTransform.anchoredPosition;
         centerPosition = centerWeaponImage.rectTransform.anchoredPosition;
@@ -320,17 +322,38 @@ public class WeaponUI : MonoBehaviour
     /// </summary>
     public void SetImage(Image image, WeaponSlot slot)
     {
-        if (image == null)
+        Debug.Log("SetImage run, but dk valid or not");
+        // --- Check 1: Is the WeaponSlot itself valid? ---
+        if (slot != null)
         {
-            return;
-        }
-
-        if (slot != null && slot.weaponData != null & slot.weaponData.weaponSprite != null)
-        {
-            image.sprite = slot.weaponData.weaponSprite;
+            Debug.Log("SetImage weapon slot is not null");
+            // --- Check 2: Is the WeaponData ScriptableObject valid? ---
+            if (slot.weaponData != null)
+            {
+                Debug.Log("SetImage weaponslot.data is not null");
+                // --- Check 3: Is the Sprite field inside the WeaponData valid? ---
+                if (slot.weaponData.weaponSprite != null)
+                {
+                    image.sprite = slot.weaponData.weaponSprite;
+                    Debug.Log($"[WeaponUI Success] Set sprite for: {slot.weaponData.name}");
+                }
+                else
+                {
+                    // FAILURE POINT: The WeaponData is loaded, but the sprite asset inside is MISSING (stripped)
+                    Debug.LogError($"[WeaponUI ERROR] WeaponSprite is NULL in build for WeaponData: {slot.weaponData.name}. Likely stripped from build.");
+                    image.sprite = emptySlotSprite;
+                }
+            }
+            else
+            {
+                // FAILURE POINT: The WeaponSlot is assigned, but the WeaponData asset is MISSING
+                Debug.LogError($"[WeaponUI ERROR] WeaponData is NULL in WeaponSlot. Something wrong with Save/Load.");
+                image.sprite = emptySlotSprite;
+            }
         }
         else
         {
+            Debug.Log("SetImage Set emtpty slot sprite");
             image.sprite = emptySlotSprite;
         }
     }

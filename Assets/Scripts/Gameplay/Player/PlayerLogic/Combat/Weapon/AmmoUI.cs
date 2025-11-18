@@ -3,7 +3,7 @@ using System;
 using TMPro;
 using System.Collections.Generic;
 using DG.Tweening;
-
+using System.Collections;
 
 public class AmmoUI : MonoBehaviour
 {
@@ -60,8 +60,9 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
         // Save original position for animation references
         leftPosition = leftWeaponText.rectTransform.anchoredPosition;
         centerPosition = centerWeaponText.rectTransform.anchoredPosition;

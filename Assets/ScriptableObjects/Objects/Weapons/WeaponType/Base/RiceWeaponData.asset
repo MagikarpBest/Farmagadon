@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9abaee8ab25e3b448d370aba7cac92d, type: 3}
   m_Name: RiceWeaponData
   m_EditorClassIdentifier: 
+  weaponSpritePath: Arts/Combat/UI/Inventory/AmmoIcon/RiceAmmoIcon
   weaponID: weapon_rice
   weaponName: RiceRifle
   weaponDescription: Shoot a basic projectile.

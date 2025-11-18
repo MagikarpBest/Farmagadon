@@ -142,7 +142,14 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
+  - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
+  - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
+  - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
+  - {fileID: 11400000, guid: c4a4f090acd752a40af12892cae3358c, type: 2}
+  - {fileID: 11400000, guid: 5723daf85358a93478871a913ac0e02a, type: 2}
+  - {fileID: 11400000, guid: 2625ea96ab3cb80468b2251fb6bf357f, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -698,7 +705,8 @@ PlayerSettings:
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   il2cppStacktraceInformation: {}
-  managedStrippingLevel: {}
+  managedStrippingLevel:
+    Standalone: 0
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1
   allowUnsafeCode: 0
