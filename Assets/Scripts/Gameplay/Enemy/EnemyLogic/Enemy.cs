@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using UnityEditor.ShaderGraph.Internal;
-using Unity.VisualScripting;
 
 public class Enemy : MonoBehaviour, IDamageable
 {

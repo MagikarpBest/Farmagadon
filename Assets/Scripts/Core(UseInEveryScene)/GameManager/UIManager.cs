@@ -67,6 +67,7 @@ public class UIManager : MonoBehaviour
                 SafeHide(pausePanel, true);
                 SafeShow(settingsPanel);
                 break;
+
             case UIScreen.FarmTutorial:
                 SafeShow(farmTutorialPanel);
                 break;

@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -19,6 +18,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button optionButton;
     [SerializeField] private GameObject volumeSlider;
 
+    [SerializeField] private CircleTransition circleTransition;
+
 
     private SaveData saveData;
     private float switchDelay = 0.8f;
@@ -36,6 +37,7 @@ public class MainMenuUI : MonoBehaviour
         creditCloseButton.onClick.AddListener(CreditInactive);
         optionCloseButton.onClick.AddListener(OptionInactive);
         saveData = SaveSystem.LoadGame();
+        StartCoroutine(circleTransition.GoingOutTransition());
     }
 
     private void Update()
@@ -116,7 +118,7 @@ public class MainMenuUI : MonoBehaviour
 
     public IEnumerator SwitchDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return circleTransition.GoingInTransition();
         SceneManager.LoadScene(GetSceneName());
     }
 

@@ -17,17 +17,17 @@ public class CircleTransition : MonoBehaviour
         // Press O to open (expand)
         if (Input.GetKeyDown(KeyCode.O))
         {
-            StartCoroutine(OpenTransition());
+            StartCoroutine(GoingInTransition());
         }
 
         // Press P to close (shrink)
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StartCoroutine(CloseTransition());
+            StartCoroutine(GoingOutTransition());
         }
     }
 
-    public IEnumerator OpenTransition()
+    public IEnumerator GoingInTransition()
     {
         Debug.Log("close transition");
         circleTransition.DOSizeDelta(closeSize, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // shrink inward }
@@ -35,7 +35,7 @@ public class CircleTransition : MonoBehaviour
 
     }
 
-    public IEnumerator CloseTransition()
+    public IEnumerator GoingOutTransition()
     {
         circleTransition.DOSizeDelta(openSize, transitionDuration).SetEase(Ease.InOutQuad).SetUpdate(true); // expand outward
         yield return new WaitForSecondsRealtime(transitionDuration);
@@ -43,8 +43,8 @@ public class CircleTransition : MonoBehaviour
 
     public IEnumerator FullTransition()
     {
-        yield return OpenTransition();
+        yield return GoingInTransition();
 
-        yield return CloseTransition();
+        yield return GoingOutTransition();
     }
 }

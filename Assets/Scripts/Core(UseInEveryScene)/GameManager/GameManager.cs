@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Overlays;
 using UnityEngine;
 
 /// <summary>
@@ -99,18 +98,20 @@ public class GameManager : MonoBehaviour
         yield return null;
         Debug.Log("[GameManager] Starting FARM phase.");
         UIManager?.ShowHUD();
-        yield return circleTransition.CloseTransition();
+        yield return circleTransition.GoingOutTransition();
 
         Debug.Log("farm bgm");
         AudioService.AudioManager.FadeInBGM();
         AudioService.AudioManager.PlayBGM(farmBGM);
+
+        if (SaveData.currentLevel == 2)
+        {
+            UIManager.ShowFarmTutorial();
+            yield return new WaitForSeconds(10.0f);
+        }
         // Initialize the current level from the database and start the game
         farmController.BeginFarmCycle(SaveData.currentLevel - 2);
         Debug.Log($"Starting farm level");
-        if (SaveData.currentLevel == 1)
-        {
-            UIManager.ShowFarmTutorial();
-        }
     }
 
     private IEnumerator StartLoadoutPhase()
@@ -118,7 +119,7 @@ public class GameManager : MonoBehaviour
         yield return null;
         Debug.Log("[GameManager] Starting LOADOUT phase.");
         UIManager?.ShowHUD();
-        yield return circleTransition.CloseTransition();
+        yield return circleTransition.GoingOutTransition();
 
         Debug.Log("loadout bgm");
         AudioService.AudioManager.FadeInBGM();
@@ -132,7 +133,7 @@ public class GameManager : MonoBehaviour
         yield return null;
         Debug.Log("[GameManager] Starting COMBAT phase.");
         UIManager?.ShowHUD();
-        yield return circleTransition.CloseTransition();
+        yield return circleTransition.GoingOutTransition();
 
         Debug.Log("combat bgm");
         AudioService.AudioManager.FadeInBGM();
@@ -154,7 +155,7 @@ public class GameManager : MonoBehaviour
     {
         SaveAll();
         Debug.Log("[GameManager] Farm level completed!");
-        yield return circleTransition.OpenTransition();
+        yield return circleTransition.GoingInTransition();
         sceneController.LoadScene(GetNextSceneName());
     }
 
@@ -167,7 +168,7 @@ public class GameManager : MonoBehaviour
     {
         SaveAll();
         Debug.Log("[GameManager] Farm level completed!");
-        yield return circleTransition.OpenTransition();
+        yield return circleTransition.GoingInTransition();
         sceneController.LoadScene(GetNextSceneName());
     }
     /// <summary>
@@ -184,9 +185,9 @@ public class GameManager : MonoBehaviour
         // Complete level (give rewards, update progression)
         Debug.Log("[GameManager] Level completed!");
         Time.timeScale = 0.0f;
-        yield return circleTransition.OpenTransition();
+        yield return circleTransition.GoingInTransition();
         levelManager.CompleteLevel();
-        yield return circleTransition.CloseTransition();
+        yield return circleTransition.GoingOutTransition();
     }
 
     /// <summary>
@@ -203,7 +204,7 @@ public class GameManager : MonoBehaviour
         SaveAll();
         Debug.Log($"[TEST] CurrentPhase before load: {gameStateManager.CurrentPhase}");
         Debug.Log($"[GameManager] Progress saved. Next level: {SaveData.currentLevel + 1}, Next phase: {gameStateManager.CurrentPhase}");
-        yield return circleTransition.OpenTransition();
+        yield return circleTransition.GoingInTransition();
         sceneController.LoadScene(GetNextSceneName());
     }
 

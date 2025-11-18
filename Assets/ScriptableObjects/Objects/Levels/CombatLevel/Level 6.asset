@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0833922945385488052b2d42f5e2c3, type: 3}
+  m_Name: Level 6
+  m_EditorClassIdentifier: 
+  levelName: Swarmmmm
+  totalDuration: 60
+  events:
+  - time: 0
+    wavePattern: {fileID: 11400000, guid: a477c7caa92d0e94ea51d7de05769fdb, type: 2}
+  - time: 30
+    wavePattern: {fileID: 11400000, guid: f5d09afbd82b75d46b980fa2040fe4f8, type: 2}
+  - time: 15
+    wavePattern: {fileID: 11400000, guid: 5b18cb1920914804fa51f85b9fa52cc6, type: 2}
