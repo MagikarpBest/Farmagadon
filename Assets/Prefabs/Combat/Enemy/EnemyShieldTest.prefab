@@ -137,14 +137,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualRoot: {fileID: 0}
-  hitEffectRoot: {fileID: 0}
+  MovementVisualRoot: {fileID: 0}
+  hitEffectRoot: {fileID: 4889953351920427489}
   deathEffectDuration: 0.5
   wiggleSpeed: 15
   wiggleAmount: 3
   squishSpeed: 8
   squishAmount: 0.07
   jitterAmount: 0.02
+  attackSettings:
+    chargeRatio: 0.3
+    impactRatio: 0.1
+    recoilRatio: 0.6
+    chargeBackDistance: 0.08
+    bumpDistance: 0.15
+    chargeSquash: 0.9
+    impactStretchX: 1.15
+    impactStretchY: 0.85
+    chargeEase: 7
+    impactEase: 8
+    recoilEase: 24
+    recoilElasticity: 1.4
+    recoilAmplitude: 0.3
+  enemyHitClip: {fileID: 0}
 --- !u!114 &7172020342127600527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +298,7 @@ Transform:
   m_Children:
   - {fileID: 3481835269385445838}
   - {fileID: 5812306510737875382}
-  - {fileID: 5853396687044234735}
+  - {fileID: 551875158453470790}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3270376632214626398
@@ -401,14 +416,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fd36a729427954585259a8163698d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualRoot: {fileID: 5853396687044234735}
-  hitEffectRoot: {fileID: 0}
+  MovementVisualRoot: {fileID: 551875158453470790}
+  hitEffectRoot: {fileID: 5853396687044234735}
   deathEffectDuration: 0.5
   wiggleSpeed: 15
   wiggleAmount: 3
   squishSpeed: 8
   squishAmount: 0.07
   jitterAmount: 0.02
+  attackSettings:
+    chargeRatio: 0.3
+    impactRatio: 0.1
+    recoilRatio: 0.6
+    chargeBackDistance: 0.08
+    bumpDistance: 0.15
+    chargeSquash: 0.9
+    impactStretchX: 1.15
+    impactStretchY: 0.85
+    chargeEase: 7
+    impactEase: 8
+    recoilEase: 24
+    recoilElasticity: 1.4
+    recoilAmplitude: 0.3
+  enemyHitClip: {fileID: 0}
 --- !u!1 &6015970657606621490
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,12 +464,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6015970657606621490}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.611968, y: 0.611968, z: 0.611968}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2798471574156222828}
+  m_Father: {fileID: 551875158453470790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1104957016568486172
 SpriteRenderer:
@@ -583,3 +613,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7713647332075423515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 551875158453470790}
+  m_Layer: 0
+  m_Name: EnemyShieldVisualRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &551875158453470790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7713647332075423515}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5853396687044234735}
+  m_Father: {fileID: 2798471574156222828}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

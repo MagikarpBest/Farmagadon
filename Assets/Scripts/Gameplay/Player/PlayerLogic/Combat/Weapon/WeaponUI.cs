@@ -49,9 +49,9 @@ public class WeaponUI : MonoBehaviour
         }
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return null;
+        //yield return new WaitForSeconds(1f);
         // Save original position for animation references
         leftPosition = leftWeaponImage.rectTransform.anchoredPosition;
         centerPosition = centerWeaponImage.rectTransform.anchoredPosition;
@@ -59,7 +59,7 @@ public class WeaponUI : MonoBehaviour
         bottomPosition = bottomWeaponImage.rectTransform.anchoredPosition;
 
         // Prevent any stray tween movement
-        DOTween.KillAll();
+        //DOTween.KillAll();
 
         // Save size
         originalSize = leftWeaponImage.rectTransform.sizeDelta;
@@ -69,6 +69,7 @@ public class WeaponUI : MonoBehaviour
         {
             InitializeWeaponImages();
         }
+
     }
 
     /// <summary>
