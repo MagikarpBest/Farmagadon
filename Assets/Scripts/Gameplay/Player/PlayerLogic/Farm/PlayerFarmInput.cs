@@ -42,14 +42,15 @@ public class PlayerFarmInput : MonoBehaviour
         playerInput.Player.Enable();
         player.position = gridController.TileMap.GetCellCenterWorld(playerPos);
         playerInput.Player.Shoot.performed += OnFarmPerformed;
-        playerInput.Player.Move.performed += OnFarmMovement;
+        //playerInput.Player.Move.performed += OnFarmMovement;
     }
 
     private void OnDestroy()
     {
         playerInput.Player.Disable();
         playerInput.Player.Shoot.performed -= OnFarmPerformed;
-        playerInput.Player.Move.performed -= OnFarmMovement;
+        //playerInput.Player.Move.performed -= OnFarmMovement;
+        StopAllCoroutines();
 
     }
 
@@ -65,10 +66,10 @@ public class PlayerFarmInput : MonoBehaviour
     }
     private void OnFarmMovement(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        
+        if (!FarmController.GetCycleStarted) { return; }
         if (playerFarmAnimator.PlayerAnimator.GetBool("digBool") == true) { return; }
         if (movementDone) { return; }
-        print(movementDone);
+        
         movementDone = true;
         Vector2 dir = playerInput.Player.Move.ReadValue<Vector2>().normalized;
         
@@ -90,6 +91,36 @@ public class PlayerFarmInput : MonoBehaviour
         StartCoroutine(MovementInternalCooldown());
     }
 
+    private void Update()
+    {
+        if (playerInput.Player.Move.IsPressed())
+        {
+            if (!FarmController.GetCycleStarted) { return; }
+            if (playerFarmAnimator.PlayerAnimator.GetBool("digBool") == true) { return; }
+            if (movementDone) { return; }
+
+            movementDone = true;
+            Vector2 dir = playerInput.Player.Move.ReadValue<Vector2>().normalized;
+
+            int x = (int)dir.x;
+            int y = (int)dir.y;
+            playerInitialPos = gridController.Grid.GetCellCenterWorld(playerPos);
+            Vector3Int moveDir = new Vector3Int(x, y, 0) + playerPos;
+
+            int xBoundary = (int)Mathf.Clamp(moveDir.x, gridController.TileMap.cellBounds.min.x, gridController.TileMap.cellBounds.max.x - 1);
+            int yBoundary = (int)Mathf.Clamp(moveDir.y, gridController.TileMap.cellBounds.min.y, gridController.TileMap.cellBounds.max.y - 1);
+
+            moveDir = new Vector3Int(xBoundary, yBoundary, 0);
+
+            playerFinalPos = gridController.Grid.GetCellCenterWorld(moveDir);
+
+            playerPos = moveDir;
+            OnMovementEvent?.Invoke(dir);
+            player.DOMove(playerFinalPos, 0.833f).SetEase(Ease.InOutQuint);
+            StartCoroutine(MovementInternalCooldown());
+        }
+    }
+
     private IEnumerator MovementInternalCooldown() 
     {
         moveCD = 1.0f;
@@ -97,12 +128,11 @@ public class PlayerFarmInput : MonoBehaviour
         yield return new WaitForSeconds(moveCD);
 
         movementDone = false;
-
-        print("????");
     }
 
     private void OnFarmPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        if (!FarmController.GetCycleStarted) { return; }
         if (movementDone) { return; }
         if (farmDone) { return; }
         farmDone = true;
@@ -127,21 +157,16 @@ public class PlayerFarmInput : MonoBehaviour
         farmDone = false;
     }
 
-
-    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!plants.Contains(other.gameObject))
         {
             plants.Add(other.gameObject);
         }
-        
-        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-
         if (plants.Contains(collision.gameObject))
         {
             plants.Remove(collision.gameObject);

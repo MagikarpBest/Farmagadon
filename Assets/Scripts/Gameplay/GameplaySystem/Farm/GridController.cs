@@ -165,6 +165,7 @@ namespace Farm
 
         private void DestroyAllPlants()
         {
+            StopAllCoroutines();
             for (int i = plants.Count - 1; i >= 0; i--)
             {
                 Destroy(plants[i]);

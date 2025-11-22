@@ -108,9 +108,10 @@ public class GameManager : MonoBehaviour
         {
             UIManager.ShowFarmTutorial();
             yield return new WaitForSeconds(10.0f);
-        }
-        // Initialize the current level from the database and start the game
-        farmController.BeginFarmCycle(SaveData.currentLevel - 2);
+        } else
+        {
+            farmController.BeginFarmCycle(SaveData.currentLevel - 2);
+        }    
         Debug.Log($"Starting farm level");
     }
 

@@ -51,6 +51,7 @@ public class PauseManger : MonoBehaviour
         stateManager.SetGameState(GameState.Paused);
         Time.timeScale = 0f;
         UiManager.ShowVictory();
+        
         Debug.Log("Paused");
     }
 
@@ -61,7 +62,7 @@ public class PauseManger : MonoBehaviour
     {
         stateManager.SetGameState(GameState.Playing);
         Time.timeScale = 1f;
-        //UIManager.HidePause(false);
+        //UiManager.HidePause();
         UiManager.HideVictory();
         Debug.Log("Unpaused");
     }

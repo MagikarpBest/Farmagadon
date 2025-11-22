@@ -12,11 +12,13 @@ public class FarmController : MonoBehaviour
     [SerializeField] private AudioClip debugMusic;
     public AmmoInventory AmmoInventory { get { return ammoInventory; } }
     public WeaponInventory WeaponInventory { get { return weaponInventory; } }
+    private static bool cycleStarted = false;
+    public static bool GetCycleStarted => cycleStarted;
 
     private bool stopGame = false;
     public bool StopGame { get { return stopGame; } }
 
-    private SaveData saveData;
+    public static SaveData saveData;
 
     public event Action StartFarmCycle;
     public event Action StopFarmCycle;
@@ -38,7 +40,8 @@ public class FarmController : MonoBehaviour
         timer.OnTimerEnded -= EndFarmCycle;
     }
 
-    public void Start()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Init()
     {
         //gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
         saveData = SaveSystem.LoadGame();
@@ -62,12 +65,14 @@ public class FarmController : MonoBehaviour
         StartFarmCycle?.Invoke();
         StartGridPlanting?.Invoke(levelData);
         SetUpcomingEnemies?.Invoke(levelData);
+        cycleStarted = true;
         //AudioService.AudioManager.PlayOneShot(debugMusic);
         //AudioService.AudioManager.SetVolume(0.1f);
     }
     public void EndFarmCycle()
     {
         stopGame = true;
+        cycleStarted = false;
         StopFarmCycle?.Invoke();
     }
 
