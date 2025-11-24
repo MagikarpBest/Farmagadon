@@ -118,7 +118,7 @@ public class LoadOutManager : MonoBehaviour
         }
 
         WeaponSlot selectedWeapon = allOwned[selectedInventoryIndex];
-        List<WeaponSlot> equippedWeapon = weaponInventory.GetEquippedWeapon();
+        List<WeaponSlot> equippedWeapon = weaponInventory.GetOnlyEquippedWeapon();
 
         for (int i = 0; i < equippedWeapon.Count; i++)
         {

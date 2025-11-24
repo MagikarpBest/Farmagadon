@@ -45,6 +45,7 @@ public class WeaponInventory : MonoBehaviour
     private int currentIndex = 0;                               // The index of current active weapon slot
     private bool canSwitchWeapon = true;
 
+    public event Action OnWeaponLoadedFromSave;
     /// <summary>
     /// Event triggered whenever the currently equipped weapon changes.
     /// </summary>  
@@ -286,7 +287,7 @@ public class WeaponInventory : MonoBehaviour
         LoadWeaponFromSave();
 
         // Give default weapon if empty (for first time player)
-        if (GetEquippedWeapon().Count == 0)
+        if (GetOnlyEquippedWeapon().Count == 0)
         {
             foreach (var weapon in startingWeapon)
             {
@@ -309,7 +310,7 @@ public class WeaponInventory : MonoBehaviour
         HashSet<string> uniqueIDs = new HashSet<string>();
 
         // Save equipped weapons (no duplicates)
-        foreach (var slot in GetEquippedWeapon())
+        foreach (var slot in GetOnlyEquippedWeapon())
         {
             if (slot.weaponData != null && uniqueIDs.Add(slot.weaponData.weaponID))
             {
@@ -372,6 +373,7 @@ public class WeaponInventory : MonoBehaviour
         {
             currentIndex = 0;
             OnWeaponChanged?.Invoke(weapons[currentIndex], WeaponSwitchDirection.None);
+            OnWeaponLoadedFromSave?.Invoke();
         }
         else
         {
@@ -393,6 +395,7 @@ public class WeaponInventory : MonoBehaviour
     /// Returns the weapon slot at the specified index.
     /// Returns null if the index is out of range.
     /// </summary>
+   
     public WeaponSlot GetWeaponSlotOfSpecificIndex(int index)
     {
         if (index >= 0 && index < weapons.Length)
@@ -419,7 +422,7 @@ public class WeaponInventory : MonoBehaviour
     /// <summary>
     /// Returns a list of all non-empty (equipped) weapon slots.
     /// </summary>
-    public List<WeaponSlot> GetEquippedWeapon()
+    public List<WeaponSlot> GetOnlyEquippedWeapon()
     {
         if (weapons == null || weapons.Length == 0)
             return new List<WeaponSlot>();
