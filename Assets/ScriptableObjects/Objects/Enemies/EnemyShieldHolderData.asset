@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: ShieldHolder
   maxHealth: 3
-  moveSpeed: 1
+  moveSpeed: 0.5
   damage: 1
-  attackInterval: 1
+  attackInterval: 2
   enemyWeakness: 0

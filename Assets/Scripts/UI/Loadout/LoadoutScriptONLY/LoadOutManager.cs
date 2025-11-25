@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LoadOutManager : MonoBehaviour
+public class LoadoutManager : MonoBehaviour
 {
     [Header("Reference")]
     [SerializeField] private GameInput gameInput;
@@ -21,6 +21,7 @@ public class LoadOutManager : MonoBehaviour
     [SerializeField] private GameObject equipPopupUI;
     [SerializeField] private Button equipButton;
     [SerializeField] private TextMeshProUGUI equipButtonText;
+    [SerializeField] private GameObject craftButton;
     [SerializeField] private GameObject craftPopupUI;
 
     // EVENT
@@ -105,7 +106,6 @@ public class LoadOutManager : MonoBehaviour
 
         SelectSlot(index);
         OpenEquipPopup(selectedButton);
-        Debug.Log("NIGGA");
         Debug.Log(inventorySlots[selectedInventoryIndex]);
     }
 
@@ -157,6 +157,12 @@ public class LoadOutManager : MonoBehaviour
     #region Equip Popup
     private void OpenEquipPopup(Button inventoryButton)
     {
+        // Prevent trying to open popup for an empty slot
+        if (selectedInventoryIndex < 0 || selectedInventoryIndex >= allOwned.Count)
+        {
+            Debug.LogWarning("Tried to open equip popup on an empty slot.");
+            return;
+        }
         lastSelectedButton = inventoryButton;
         // Save loadout last selected
         SwitchNavigation(loadoutNav, false);
@@ -170,6 +176,7 @@ public class LoadOutManager : MonoBehaviour
         WeaponSlot selected = allOwned[selectedInventoryIndex];
 
         bool isEquipped = weaponInventory.IsWeaponEquipped(selected);
+        bool isCraftable = selected.weaponData.ammoType.canBeCrafted;
 
         equipButton.onClick.RemoveAllListeners();
         if (isEquipped) 
@@ -182,6 +189,12 @@ public class LoadOutManager : MonoBehaviour
             equipButtonText.text = "Equip";
             equipButton.onClick.AddListener(EquipSelectedWeapon);
         }
+        
+        if (!isCraftable)
+        {
+            craftButton.SetActive(false);
+        }
+
         // Position poup
         PositionPopup(equipPopupUI, inventoryButton);
 
@@ -242,7 +255,7 @@ public class LoadOutManager : MonoBehaviour
                 // Restore loadout navigation focus
                 SwitchNavigation(loadoutNav, true);
             }
-
+            craftButton.SetActive(true);
             equipPopupUI.SetActive(false);
             activePopup = null;
 

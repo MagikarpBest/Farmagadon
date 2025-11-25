@@ -9,7 +9,7 @@ public class LoadoutVisual : MonoBehaviour
     [Header("References")]
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private AmmoInventory ammoInventory;
-    [SerializeField] private LoadOutManager loadoutManager;
+    [SerializeField] private LoadoutManager loadoutManager;
 
     [Header("UI Elements")]
     [SerializeField] private List<Image> inventoryImages;               // Weapon icons on inventory
@@ -40,7 +40,7 @@ public class LoadoutVisual : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         
         // Get all owned weapon and put into a list
         allOwned = weaponInventory.GetAllOwnedWeapons();

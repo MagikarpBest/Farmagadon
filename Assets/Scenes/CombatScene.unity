@@ -2361,7 +2361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &449545201
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16460,10 +16460,10 @@ MonoBehaviour:
   MovementVisualRoot: {fileID: 0}
   hitEffectRoot: {fileID: 4889953351413753257}
   deathEffectDuration: 0.5
-  wiggleSpeed: 6
-  wiggleAmount: 3
-  squishSpeed: 8
-  squishAmount: 0.07
+  wiggleSpeed: 0
+  wiggleAmount: 0
+  squishSpeed: 4
+  squishAmount: 0.1
   jitterAmount: 0.02
   attackSettings:
     chargeRatio: 0
@@ -16712,7 +16712,7 @@ Transform:
   m_GameObject: {fileID: 1940379239933479166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9056718, y: 0.76675767, z: 0}
+  m_LocalPosition: {x: -3.9056718, y: 3.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19140,8 +19140,8 @@ Transform:
   m_GameObject: {fileID: 1076357978273563969}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.176, z: 0}
+  m_LocalScale: {x: 0.6457571, y: 0.6457571, z: 0.6457571}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5812306512318916094}
@@ -19489,7 +19489,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.000000059604645, y: -0.64349926}
+  m_Offset: {x: -0.0004069805, y: -0.59433186}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -19499,7 +19499,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3921553, y: 0.25545526}
+  m_Size: {x: 1.7681856, y: 0.26425266}
   m_EdgeRadius: 0
 --- !u!114 &5489329114479059492
 MonoBehaviour:
