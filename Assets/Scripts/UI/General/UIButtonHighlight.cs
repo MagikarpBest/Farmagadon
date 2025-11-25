@@ -19,7 +19,6 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
         }
     }
 
-
     public void OnSelect(BaseEventData eventData)
     {
         if (highlightImage != null)
