@@ -1,31 +1,37 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Audio;
+
 public class UnityAudioManager : MonoBehaviour, IAudio
 {
-    private AudioSource audioSource;
+    private const string SFXFloatKey = VolumeManager.SFXVolumeFloatKey;
+    private const string MUSICFloatKey = VolumeManager.MusicVolumeFloatKey;
+    [SerializeField] private AudioSource SFXAudioSource;
+    [SerializeField] private AudioSource MUSICAudioSource;
+
     private List<AudioClip> clipBuffer = new List<AudioClip>();
 
-    public AudioSource AudioSource => audioSource;
-    private float initialVolume;
+    public AudioSource AudioSource => SFXAudioSource;
+    public AudioSource AudioSFX => SFXAudioSource;
+    public AudioSource AudioMUSIC => MUSICAudioSource;
+
 
     public void Initiallize()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.playOnAwake = false;
+        SFXAudioSource.playOnAwake = false;
+        MUSICAudioSource.playOnAwake = false;
+        MUSICAudioSource.loop = true;
 
-        float savedVol = PlayerPrefs.GetFloat("mainVolume", 1f);
-        audioSource.volume = savedVol;
-        initialVolume = savedVol;
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayOneShot(AudioClip clip, float volumeScale = 1)
+    public void PlayOneShot(AudioClip clip, float volumeScale = 1.0f)
     {
-        audioSource.PlayOneShot(clip, volumeScale);
+        SFXAudioSource.PlayOneShot(clip, volumeScale);
     }
 
-    public void BufferPlayOneShot(AudioClip clip, float volumeScale = 1)
+    public void BufferPlayOneShot(AudioClip clip, float volumeScale = 1.0f)
     {
         if (clipBuffer.Contains(clip)) { return; }
         clipBuffer.Add(clip);
@@ -34,78 +40,73 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
     public void PlayBGM(AudioClip clip,float duration)
     {
-        audioSource.Stop();
-
-        audioSource.clip = clip;
-        audioSource.loop = true;
-        audioSource.Play();
+        MUSICAudioSource.Stop();
+        MUSICAudioSource.clip = clip;
+        MUSICAudioSource.Play();
     }
 
-    public void StopClip(AudioClip clip)
+    public void StopClip()
     {
-        audioSource.Stop();
+        MUSICAudioSource.Stop();
     }
 
-    public void SetPitch(float pitch)
-    {
-        audioSource.pitch = pitch;
-    }
-
-    public void SetVolume(float volume)
-    {
-        audioSource.volume = volume;
-    }
 
     private IEnumerator PlayBufferedAudioClip(AudioClip clip, float volumeScale)
     {
         yield return new WaitForEndOfFrame();
-        audioSource.PlayOneShot(clip, volumeScale);
+        SFXAudioSource.PlayOneShot(clip, volumeScale);
         clipBuffer.Remove(clip);
     }
 
 
-    public void FadeOutBGM(float duration = 1f)
+    public void FadeOutBGM(float duration = 1.0f)
     {
         StartCoroutine(FadeOutCoroutine(duration));
     }
 
-    public void FadeInBGM(float duration = 1f)
+    public void FadeInBGM(float duration = 1.0f)
     {
         StartCoroutine(FadeInCoroutine(duration));
     }
 
     private IEnumerator FadeOutCoroutine(float duration)
     {
-        float startVolume = AudioSource.volume;
-        float time = 0f;
+        
+        float startVolume = MUSICAudioSource.volume;
+        float time = 0.0f;
 
         while (time < duration)
         {
             time += Time.deltaTime;
-            audioSource.volume = Mathf.Lerp(startVolume, 0f, time / duration);
+            MUSICAudioSource.volume = Mathf.Lerp(startVolume, 0.0f, time / duration);
             yield return null;
         }
-        audioSource.volume = 0f;
-        audioSource.Stop(); 
+        MUSICAudioSource.volume = 0f;
+        MUSICAudioSource.Stop(); 
+        
+        yield return null;
     }
 
     private IEnumerator FadeInCoroutine(float duration)
     {
-        float targetVolume = initialVolume;
-        float time = 0f;
+        
+        float targetVolume = MUSICAudioSource.volume;
+        float time = 0.0f;
 
-        audioSource.volume = 0f;
-        audioSource.Play();
+        MUSICAudioSource.volume = 0f;
+        MUSICAudioSource.Play();
 
         while (time < duration)
         {
             time += Time.deltaTime;
-            audioSource.volume = Mathf.Lerp(0f, targetVolume, time / duration);
+            MUSICAudioSource.volume = Mathf.Lerp(0.0f, targetVolume, time / duration);
             yield return null;
         }
 
         Debug.Log(targetVolume);
-        audioSource.volume = targetVolume;
+        MUSICAudioSource.volume = targetVolume;
+        
+        yield return null;
     }
 
 }

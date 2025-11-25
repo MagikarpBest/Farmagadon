@@ -10,11 +10,8 @@ public interface IAudio
 
     void PlayBGM(AudioClip clip, float volumeScale = 1.0f);
 
-    void StopClip(AudioClip clip);
+    void StopClip();
 
-    void SetPitch(float pitch);
-
-    void SetVolume(float volume);
     void FadeOutBGM(float duration = 1f);
     void FadeInBGM(float duration = 1f);
 }
