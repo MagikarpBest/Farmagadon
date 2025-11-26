@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1628602070}
+  highlightImageObject: {fileID: 0}
 --- !u!114 &3783162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,6 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1529717354}
+  highlightImageObject: {fileID: 0}
 --- !u!114 &110752110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,6 +1234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 734915209}
+  highlightImageObject: {fileID: 0}
 --- !u!222 &163258307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1692,6 +1695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1558582627}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &287950423
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,6 +1803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1199900012}
+  highlightImageObject: {fileID: 0}
 --- !u!222 &287950427
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4322,7 +4327,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &735745720
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5009,6 +5014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1845424455}
+  highlightImageObject: {fileID: 0}
 --- !u!222 &952302514
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7584,6 +7590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 2103686012}
+  highlightImageObject: {fileID: 0}
 --- !u!222 &1381182744
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9036,6 +9043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1708642041}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &1616659221
 GameObject:
   m_ObjectHideFlags: 0
@@ -9899,6 +9907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1651937347}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &1708642039
 GameObject:
   m_ObjectHideFlags: 0
@@ -14580,7 +14589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1471735068730961719
 GameObject:
   m_ObjectHideFlags: 0
@@ -18944,6 +18953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1887629210}
+  highlightImageObject: {fileID: 0}
 --- !u!114 &6473577605380489282 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8322206384125942446, guid: 3006ce7e8bc0f0748b408722a419d6c8, type: 3}

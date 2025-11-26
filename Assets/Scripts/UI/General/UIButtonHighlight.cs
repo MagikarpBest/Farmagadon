@@ -10,12 +10,17 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [Header("References")]
     [SerializeField] private Image highlightImage;
+    [SerializeField] private GameObject highlightImageObject;
 
     private void Start()
     {
         if (highlightImage != null)
         {
             highlightImage.enabled = false;
+        }
+        if (highlightImageObject != null)
+        {
+            highlightImageObject.SetActive(false);
         }
     }
 
@@ -25,6 +30,10 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             highlightImage.enabled = true;
         }
+        if (highlightImageObject != null)
+        {
+            highlightImageObject.SetActive(true);
+        }
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -32,6 +41,11 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
         if (highlightImage != null)
         {
             highlightImage.enabled = false;
+        }
+
+        if (highlightImageObject != null)
+        {
+            highlightImageObject.SetActive(false);
         }
     }
 }
