@@ -151,7 +151,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Left and Right"",
                     ""id"": ""9c6d213e-e535-4c24-ba62-a78fe511027b"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -281,6 +281,138 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""FarmPlayer"",
+            ""id"": ""8fe103f0-41aa-49c0-b091-8f41db86c931"",
+            ""actions"": [
+                {
+                    ""name"": ""W"",
+                    ""type"": ""Value"",
+                    ""id"": ""fb2abcfd-1558-4bca-a610-d09532d0b48b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""A"",
+                    ""type"": ""Value"",
+                    ""id"": ""a0b3b4d5-a091-4992-877f-648d0403dda5"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""S"",
+                    ""type"": ""Value"",
+                    ""id"": ""068c5172-064b-4e91-afb4-8e1e53f1a8fc"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""D"",
+                    ""type"": ""Value"",
+                    ""id"": ""f44b55ad-ed1e-4603-8b2a-42cefaeabe89"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""W Key"",
+                    ""id"": ""f5f90095-deb3-4646-b64e-48e6394418dc"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""W"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""92baa05f-b8a3-46bb-a6fd-7a72af4449e5"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""W"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""A Key"",
+                    ""id"": ""053b207d-761b-4980-a75e-01fcb0bd0002"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5b026fd1-9a56-4e0c-9aec-a04cb50f575e"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""S Key"",
+                    ""id"": ""a7a8e241-58e0-453c-9247-40c40c5e6cb7"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""S"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""f01b7a25-bbf8-4669-b893-2a0cb52335c4"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""S"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""D Key"",
+                    ""id"": ""77c9c621-3bcd-4641-a24b-d3ac1ecc1e05"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d06a5a78-c603-41a1-a6bf-7b3678a3117a"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -293,11 +425,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_PreviousWeapon = m_Player.FindAction("PreviousWeapon", throwIfNotFound: true);
         m_Player_Farm = m_Player.FindAction("Farm", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        // FarmPlayer
+        m_FarmPlayer = asset.FindActionMap("FarmPlayer", throwIfNotFound: true);
+        m_FarmPlayer_W = m_FarmPlayer.FindAction("W", throwIfNotFound: true);
+        m_FarmPlayer_A = m_FarmPlayer.FindAction("A", throwIfNotFound: true);
+        m_FarmPlayer_S = m_FarmPlayer.FindAction("S", throwIfNotFound: true);
+        m_FarmPlayer_D = m_FarmPlayer.FindAction("D", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInput.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_FarmPlayer.enabled, "This will cause a leak and performance issues, PlayerInput.FarmPlayer.Disable() has not been called.");
     }
 
     /// <summary>
@@ -520,6 +659,135 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // FarmPlayer
+    private readonly InputActionMap m_FarmPlayer;
+    private List<IFarmPlayerActions> m_FarmPlayerActionsCallbackInterfaces = new List<IFarmPlayerActions>();
+    private readonly InputAction m_FarmPlayer_W;
+    private readonly InputAction m_FarmPlayer_A;
+    private readonly InputAction m_FarmPlayer_S;
+    private readonly InputAction m_FarmPlayer_D;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "FarmPlayer".
+    /// </summary>
+    public struct FarmPlayerActions
+    {
+        private @PlayerInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public FarmPlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "FarmPlayer/W".
+        /// </summary>
+        public InputAction @W => m_Wrapper.m_FarmPlayer_W;
+        /// <summary>
+        /// Provides access to the underlying input action "FarmPlayer/A".
+        /// </summary>
+        public InputAction @A => m_Wrapper.m_FarmPlayer_A;
+        /// <summary>
+        /// Provides access to the underlying input action "FarmPlayer/S".
+        /// </summary>
+        public InputAction @S => m_Wrapper.m_FarmPlayer_S;
+        /// <summary>
+        /// Provides access to the underlying input action "FarmPlayer/D".
+        /// </summary>
+        public InputAction @D => m_Wrapper.m_FarmPlayer_D;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_FarmPlayer; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="FarmPlayerActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(FarmPlayerActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="FarmPlayerActions" />
+        public void AddCallbacks(IFarmPlayerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_FarmPlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_FarmPlayerActionsCallbackInterfaces.Add(instance);
+            @W.started += instance.OnW;
+            @W.performed += instance.OnW;
+            @W.canceled += instance.OnW;
+            @A.started += instance.OnA;
+            @A.performed += instance.OnA;
+            @A.canceled += instance.OnA;
+            @S.started += instance.OnS;
+            @S.performed += instance.OnS;
+            @S.canceled += instance.OnS;
+            @D.started += instance.OnD;
+            @D.performed += instance.OnD;
+            @D.canceled += instance.OnD;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="FarmPlayerActions" />
+        private void UnregisterCallbacks(IFarmPlayerActions instance)
+        {
+            @W.started -= instance.OnW;
+            @W.performed -= instance.OnW;
+            @W.canceled -= instance.OnW;
+            @A.started -= instance.OnA;
+            @A.performed -= instance.OnA;
+            @A.canceled -= instance.OnA;
+            @S.started -= instance.OnS;
+            @S.performed -= instance.OnS;
+            @S.canceled -= instance.OnS;
+            @D.started -= instance.OnD;
+            @D.performed -= instance.OnD;
+            @D.canceled -= instance.OnD;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="FarmPlayerActions.UnregisterCallbacks(IFarmPlayerActions)" />.
+        /// </summary>
+        /// <seealso cref="FarmPlayerActions.UnregisterCallbacks(IFarmPlayerActions)" />
+        public void RemoveCallbacks(IFarmPlayerActions instance)
+        {
+            if (m_Wrapper.m_FarmPlayerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="FarmPlayerActions.AddCallbacks(IFarmPlayerActions)" />
+        /// <seealso cref="FarmPlayerActions.RemoveCallbacks(IFarmPlayerActions)" />
+        /// <seealso cref="FarmPlayerActions.UnregisterCallbacks(IFarmPlayerActions)" />
+        public void SetCallbacks(IFarmPlayerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_FarmPlayerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_FarmPlayerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="FarmPlayerActions" /> instance referencing this action map.
+    /// </summary>
+    public FarmPlayerActions @FarmPlayer => new FarmPlayerActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -569,5 +837,41 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "FarmPlayer" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="FarmPlayerActions.AddCallbacks(IFarmPlayerActions)" />
+    /// <seealso cref="FarmPlayerActions.RemoveCallbacks(IFarmPlayerActions)" />
+    public interface IFarmPlayerActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "W" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnW(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "A" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnA(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "S" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnS(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "D" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnD(InputAction.CallbackContext context);
     }
 }
