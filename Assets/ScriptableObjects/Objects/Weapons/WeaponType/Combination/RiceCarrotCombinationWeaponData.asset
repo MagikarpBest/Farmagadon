@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RiceCarrotCombinationWeaponData
   m_EditorClassIdentifier: 
   weaponID: weapon_ricecarrot
-  weaponName: RiceCarrot
+  weaponName: Rice Carrot
   weaponDescription: Shoots a piercing shot that passes through all enemies.
-  weaponSprite: {fileID: 21300000, guid: 61022bdfb679bcc44995548ba019fdc2, type: 3}
-  bulletPrefab: {fileID: 6108739619576341720, guid: 9093ef80a3d89a747aaf932e4e2841ce, type: 3}
+  weaponSprite: {fileID: 21300000, guid: 3e5bdd9958a680249ba6d7933252c36f, type: 3}
+  bulletPrefab: {fileID: 6108739619576341720, guid: 53cd6fd01e2d3e24486ede33efe435b5, type: 3}
   ammoType: {fileID: 11400000, guid: db599a4bb595ee943b9b9cb3951a3d69, type: 2}
   lifeTime: 5
   bulletSpeed: 15
@@ -28,10 +28,15 @@ MonoBehaviour:
   spread: 0
   shrapnel:
     enable: 0
-    bulletPrefab: {fileID: 0}
     count: 0
-    bulletSpeed: 10
-    damage: 1
-    pierceCount: 1
-    explosionRadius: 0
-    lifeTime: 0
+    bulletPrefab: {fileID: 0}
+    shrapnelWeaponData: {fileID: 0}
+  slowEffect:
+    enable: 0
+    slowAmount: 0.5
+    duration: 1
+  split:
+    enable: 0
+    bulletPrefab: {fileID: 0}
+    splitWeaponData: {fileID: 0}
+    spreadAngle: 45

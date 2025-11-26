@@ -5,12 +5,13 @@ using UnityEngine.U2D;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private GameObject normalHitEffect;
+    [SerializeField] private GameObject explosiveHitEffect;
     private WeaponData weaponData;
     private Rigidbody2D rb;
     private int pierceCountRemaining;
     private SpriteRenderer spriteRender;
     private HashSet<Collider2D> hitEnemies= new HashSet<Collider2D>();
-    private HashSet<Collider2D> ignoredColliders= new HashSet<Collider2D>();
 
     private void Awake()
     {
@@ -53,6 +54,10 @@ public class Bullet : MonoBehaviour
         if (other.TryGetComponent<IDamageable>(out var damageable))
         {
             damageable.TakeDamage(Mathf.RoundToInt(weaponData.damage));
+        }
+        if (normalHitEffect != null)
+        {
+            GameObject hitEffect = Instantiate(normalHitEffect, transform.position, Quaternion.identity);
         }
 
         // Apply any special effects (slow, split, etc.)

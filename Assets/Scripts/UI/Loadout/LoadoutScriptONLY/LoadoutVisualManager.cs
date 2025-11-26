@@ -15,7 +15,8 @@ public class LoadoutVisual : MonoBehaviour
     [SerializeField] private List<Image> inventoryImages;               // Weapon icons on inventory
     [SerializeField] private List<Image> equippedImages;                // Loadout equipped image
     [SerializeField] private List<TextMeshProUGUI> ammoTexts;           // Ammo count text
-    [SerializeField] private TextMeshProUGUI weaponDescription;   
+    [SerializeField] private TextMeshProUGUI weaponName;
+    [SerializeField] private TextMeshProUGUI weaponDescription;
     [SerializeField] private Sprite emptySlotSprite;
 
     private List<WeaponSlot> allOwned;
@@ -108,17 +109,20 @@ public class LoadoutVisual : MonoBehaviour
     {
         if (selectedIndex < 0 || selectedIndex >= allOwned.Count)
         {
-            weaponDescription.text = "NULL";
+            weaponName.text = " ";
+            weaponDescription.text = " ";
             return;
         }
 
         WeaponSlot selectedSlot = allOwned[selectedIndex];
         if (selectedSlot == null || selectedSlot.weaponData == null)
         {
-            weaponDescription.text = "";
+            weaponName.text = " ";
+            weaponDescription.text = " ";
             return;
         }
 
+        weaponName.text = selectedSlot.weaponData.weaponName;
         weaponDescription.text = selectedSlot.weaponData.weaponDescription;
     }
 }
