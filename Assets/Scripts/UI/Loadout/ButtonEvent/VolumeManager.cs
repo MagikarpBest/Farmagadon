@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 public class VolumeManager : MonoBehaviour 
@@ -34,25 +34,67 @@ public class VolumeManager : MonoBehaviour
     }
     public void ChangeMasterVolume()
     {
-        //AudioListener.volume = volumeSlider.value;
-        PlayerPrefs.SetFloat(MasterVolumeFloatKey, masterVolumeSlider.value);
-        audioMixer.SetFloat(MasterVolumeFloatKey, (1.0f - masterVolumeSlider.value) * (-80.0f));
+        float slider = masterVolumeSlider.value;
+        float dB;
+
+        if (slider <= 0f)
+        {
+            // mute
+            dB = -80f;
+        }
+        else
+        {
+            // Logarithmic audio curve (smooth + not silent in middle)
+            dB = Mathf.Log10(slider) * 20f;
+        }
+
+        audioMixer.SetFloat(MasterVolumeFloatKey, dB);
+
+        PlayerPrefs.SetFloat(MasterVolumeFloatKey, slider);
         Save();
     }
 
     public void ChangeSFXVolume()
     {
-        //AudioListener.volume = volumeSlider.value;
-        PlayerPrefs.SetFloat(SFXVolumeFloatKey, sfxVolumeSlider.value);
-        audioMixer.SetFloat(SFXVolumeFloatKey, (1.0f - sfxVolumeSlider.value) * (-80.0f));
+        float slider = sfxVolumeSlider.value;
+        float dB;
+
+        if (slider <= 0f)
+        {
+            // mute
+            dB = -80f; 
+        }
+        else
+        {
+            // Logarithmic audio curve (smooth + not silent in middle)
+            dB = Mathf.Log10(slider) * 20f; 
+        }
+
+        audioMixer.SetFloat(SFXVolumeFloatKey, dB);
+
+        PlayerPrefs.SetFloat(SFXVolumeFloatKey, slider);
         Save();
     }
 
     public void ChangeMusicVolume()
     {
-        //AudioListener.volume = volumeSlider.value;
-        PlayerPrefs.SetFloat(MusicVolumeFloatKey, musicVolumeSlider.value);
-        audioMixer.SetFloat(MusicVolumeFloatKey, (1.0f - musicVolumeSlider.value) * (-80.0f));
+        float slider = musicVolumeSlider.value;
+        float dB;
+
+        if (slider <= 0f)
+        {
+            // Mute
+            dB = -80f;
+        }
+        else
+        {
+            // Logarithmic audio curve (smooth + not silent in middle)
+            dB = Mathf.Log10(slider) * 20f;
+        }
+
+        audioMixer.SetFloat(MusicVolumeFloatKey, dB);
+
+        PlayerPrefs.SetFloat(MusicVolumeFloatKey, slider);
         Save();
     }
 

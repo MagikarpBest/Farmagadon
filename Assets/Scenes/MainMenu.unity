@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 278227459}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &22340141
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 22340144}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &29681780
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 58440577}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &114816822
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,58 +998,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174204566}
   m_CullTransparentMesh: 1
---- !u!1 &185338486
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 185338487}
-  - component: {fileID: 185338488}
-  m_Layer: 0
-  m_Name: AssetKeeper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &185338487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185338486}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.2401285, y: -0.32036215, z: -10.118754}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &185338488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185338486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8053ae9ca4ced2748b645eb45f95eed1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allGameWeaponData:
-  - {fileID: 11400000, guid: e3bfb32b01983ab4d96da6a351dc310e, type: 2}
-  - {fileID: 11400000, guid: 53c331e3ea2bab84fb60c5ee7b63865d, type: 2}
-  - {fileID: 11400000, guid: bdaa3f8dfbc35c64dae7401bfe093632, type: 2}
-  - {fileID: 11400000, guid: 4bd8da0e3191d7a4b8699354385fde21, type: 2}
-  - {fileID: 11400000, guid: c4a4f090acd752a40af12892cae3358c, type: 2}
-  - {fileID: 11400000, guid: 5723daf85358a93478871a913ac0e02a, type: 2}
-  - {fileID: 11400000, guid: 2625ea96ab3cb80468b2251fb6bf357f, type: 2}
 --- !u!1 &191484152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2777,6 +2728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 765551518}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &766822974
 GameObject:
   m_ObjectHideFlags: 0
@@ -3033,6 +2985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 786572779}
+  highlightImageObject: {fileID: 0}
 --- !u!114 &786572781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3456,6 +3409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 830359258}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &845069471
 GameObject:
   m_ObjectHideFlags: 0
@@ -4193,6 +4147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1082368537}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &1129468540
 GameObject:
   m_ObjectHideFlags: 0
@@ -5500,6 +5455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 766822976}
+  highlightImageObject: {fileID: 0}
 --- !u!114 &1586825962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5802,6 +5758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1623939862}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &1640438669
 GameObject:
   m_ObjectHideFlags: 0
@@ -6723,6 +6680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1525663556}
+  highlightImageObject: {fileID: 0}
 --- !u!114 &2085487398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6871,4 +6829,3 @@ SceneRoots:
   - {fileID: 602721353}
   - {fileID: 1191785057}
   - {fileID: 494212145}
-  - {fileID: 185338487}

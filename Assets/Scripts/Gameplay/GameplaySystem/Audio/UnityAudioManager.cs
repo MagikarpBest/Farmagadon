@@ -15,6 +15,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
     public AudioSource AudioSource => SFXAudioSource;
     public AudioSource AudioSFX => SFXAudioSource;
     public AudioSource AudioMUSIC => MUSICAudioSource;
+    private float startVolume;
 
 
     public void Initiallize()
@@ -71,8 +72,7 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
     private IEnumerator FadeOutCoroutine(float duration)
     {
-        
-        float startVolume = MUSICAudioSource.volume;
+        startVolume = MUSICAudioSource.volume;
         float time = 0.0f;
 
         while (time < duration)
@@ -89,8 +89,6 @@ public class UnityAudioManager : MonoBehaviour, IAudio
 
     private IEnumerator FadeInCoroutine(float duration)
     {
-        
-        float targetVolume = MUSICAudioSource.volume;
         float time = 0.0f;
 
         MUSICAudioSource.volume = 0f;
@@ -99,12 +97,12 @@ public class UnityAudioManager : MonoBehaviour, IAudio
         while (time < duration)
         {
             time += Time.deltaTime;
-            MUSICAudioSource.volume = Mathf.Lerp(0.0f, targetVolume, time / duration);
+            MUSICAudioSource.volume = Mathf.Lerp(0.0f, startVolume, time / duration);
             yield return null;
         }
 
-        Debug.Log(targetVolume);
-        MUSICAudioSource.volume = targetVolume;
+        Debug.Log(startVolume);
+        MUSICAudioSource.volume = startVolume;
         
         yield return null;
     }
