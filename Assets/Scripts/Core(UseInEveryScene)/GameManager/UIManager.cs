@@ -10,7 +10,9 @@ public enum UIScreen
     GameOver,
     Pause,
     Settings,
-    FarmTutorial
+    FarmTutorial,
+    CombatTutorial,
+    LoadoutTutorial
 }
 
 public class UIManager : MonoBehaviour
@@ -22,6 +24,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;         // Pause UI
     [SerializeField] private GameObject settingsPanel;       // Pause setting UI
     [SerializeField] private GameObject farmTutorialPanel;      // Tutorial UI
+    [SerializeField] private GameObject combatTutorialPanel;      // Tutorial UI
+    [SerializeField] private GameObject loadoutTutorialPanel;      // Tutorial UI
 
 
     public event Action OnVictoryCompleted;
@@ -71,6 +75,12 @@ public class UIManager : MonoBehaviour
             case UIScreen.FarmTutorial:
                 SafeShow(farmTutorialPanel);
                 break;
+            case UIScreen.CombatTutorial:
+                SafeShow(combatTutorialPanel);
+                break;
+            case UIScreen.LoadoutTutorial:
+                SafeShow(loadoutTutorialPanel);
+                break;
         }
     }
 
@@ -100,6 +110,12 @@ public class UIManager : MonoBehaviour
                 break;
             case UIScreen.FarmTutorial:
                 SafeHide(farmTutorialPanel);
+                break;
+            case UIScreen.CombatTutorial:
+                SafeHide(combatTutorialPanel);
+                break;
+            case UIScreen.LoadoutTutorial:
+                SafeHide(loadoutTutorialPanel);
                 break;
         }
     }
@@ -181,8 +197,12 @@ public class UIManager : MonoBehaviour
     public void ShowPause(bool rememberNavigation = false) => Show(UIScreen.Pause);
     public void ShowSettings() => Show(UIScreen.Settings);
     public void ShowFarmTutorial() => Show(UIScreen.FarmTutorial);
+    public void ShowCombatTutorial() => Show(UIScreen.CombatTutorial);
+    public void ShowLoadoutTutorial() => Show(UIScreen.LoadoutTutorial);
     public void HideSettings() => Hide(UIScreen.Settings);
     public void HideVictory() => Hide(UIScreen.Victory);
     public void HidePause(bool rememberNavigation = false) => Hide(UIScreen.Pause, rememberNavigation);
     public void HideFarmTutorial() => Hide(UIScreen.FarmTutorial);
+    public void HideCombatTutorial() => Hide(UIScreen.CombatTutorial);
+    public void HideLoadoutTutorial() => Hide(UIScreen.LoadoutTutorial);
 }
