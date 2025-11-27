@@ -21,7 +21,7 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
         if (highlightImage != null)
         {
             highlightImage.enabled = false;
-            highlightImage.color = new Color(highlightImage.color.r, highlightImage.color.g, highlightImage.color.b, 0.0f);
+            //highlightImage.color = new Color(highlightImage.color.r, highlightImage.color.g, highlightImage.color.b, 0.0f);
         }
         if (highlightImageObject != null)
         {
@@ -34,7 +34,7 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
         if (highlightImage != null)
         {
             highlightImage.enabled = true;
-            StartCoroutine(OutlineBreathe());
+            //StartCoroutine(OutlineBreathe());
         }
         if (highlightImageObject != null)
         {
@@ -47,8 +47,8 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
         if (highlightImage != null)
         {
             highlightImage.enabled = false;
-            StopCoroutine(OutlineBreathe());
-            StartCoroutine(OutlineFade());
+            //StopCoroutine(OutlineBreathe());
+            //StartCoroutine(OutlineFade());
         }
 
         if (highlightImageObject != null)
