@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 278227459}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &22340141
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 22340144}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &44766414
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 58440577}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &174204566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,6 +2309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 765551518}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &786332310
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,7 +2339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44c0804d4b56b6498db0b3354b2dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeSlider: {fileID: 21858997}
+  masterVolumeSlider: {fileID: 0}
+  sfxVolumeSlider: {fileID: 0}
+  musicVolumeSlider: {fileID: 0}
+  audioMixer: {fileID: 0}
   mainMenuBGM: {fileID: 8300000, guid: 9c9fa312a76a9984ba6a412f7d71cd8a, type: 3}
 --- !u!4 &786332312
 Transform:
@@ -2484,6 +2491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 786572779}
+  highlightImageObject: {fileID: 0}
 --- !u!114 &786572781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2907,6 +2915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 830359258}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &845069471
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,6 +3617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1082368537}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &1129468540
 GameObject:
   m_ObjectHideFlags: 0
@@ -4876,6 +4886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 1623939862}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &1640438669
 GameObject:
   m_ObjectHideFlags: 0
