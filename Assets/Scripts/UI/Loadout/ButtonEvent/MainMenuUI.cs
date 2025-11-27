@@ -32,7 +32,8 @@ public class MainMenuUI : MonoBehaviour
         blocker.SetActive(false);
 
         startButton.onClick.AddListener(StartActive);
-        creditButton.onClick.AddListener(CreditActive);
+        continueButton.onClick.AddListener(ContinueActive);
+        creditButton.onClick.AddListener(CreditActive); 
         optionButton.onClick.AddListener(OptionActive);
         creditCloseButton.onClick.AddListener(CreditInactive);
         optionCloseButton.onClick.AddListener(OptionInactive);
@@ -67,6 +68,11 @@ public class MainMenuUI : MonoBehaviour
     public void StartActive()
     {
         SaveSystem.ClearSave();
+        saveData = SaveSystem.LoadGame();
+    }
+
+    public void ContinueActive()
+    {
         saveData = SaveSystem.LoadGame();
     }
 

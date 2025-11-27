@@ -40,13 +40,14 @@ public class LoadoutVisual : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
         
         // Get all owned weapon and put into a list
         allOwned = weaponInventory.GetAllOwnedWeapons();
         UpdateInventoryVisual();
         UpdateEquippedVisual();
         UpdateSelectedDescription(0);
+        yield return null;
     }
 
     private void UpdateAll()
