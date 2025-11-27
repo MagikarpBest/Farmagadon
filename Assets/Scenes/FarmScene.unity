@@ -1619,6 +1619,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultFirstSelected: {fileID: 6606807248260644253}
   rememberLastPosition: 1
+--- !u!114 &657188088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657188085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fea5a86a181fa34b8eb41a1a9a9502c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &775633233 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7412926114004694983, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
@@ -5225,6 +5237,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 623077332}
     - target: {fileID: 1475579070564021755, guid: d1b604026c7f5124a8e8f1e05e72332f, type: 3}
+      propertyPath: UIBouncer
+      value: 
+      objectReference: {fileID: 657188088}
+    - target: {fileID: 1475579070564021755, guid: d1b604026c7f5124a8e8f1e05e72332f, type: 3}
       propertyPath: victoryUI
       value: 
       objectReference: {fileID: 0}
@@ -5796,6 +5812,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3850036665748686062, guid: 7dbd32f583a63334a870b617899ff4f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 657188087}
+    - targetCorrespondingSourceObject: {fileID: 3850036665748686062, guid: 7dbd32f583a63334a870b617899ff4f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 657188088}
     - targetCorrespondingSourceObject: {fileID: 4238172948542474692, guid: 7dbd32f583a63334a870b617899ff4f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6606807248260644254}
