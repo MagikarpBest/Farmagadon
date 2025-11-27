@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee24ebf878ea4b4a9148ed36058ebf3, type: 3}
-  m_Name: EnemyBossData
+  m_Script: {fileID: 11500000, guid: bd0833922945385488052b2d42f5e2c3, type: 3}
+  m_Name: LEVEL DEBUG 1
   m_EditorClassIdentifier: 
-  enemyName: Boss
-  maxHealth: 130
-  moveSpeed: 0.2
-  damage: 4
-  attackInterval: 10
-  isBoss: 1
-  enemyWeakness: 0
+  levelName: Debug
+  totalDuration: 2
+  events:
+  - time: 0
+    wavePattern: {fileID: 11400000, guid: 8d87a3f8b5c6cb84ab8ac99c08047945, type: 2}

@@ -38,6 +38,12 @@ public class MainMenuUI : MonoBehaviour
         creditCloseButton.onClick.AddListener(CreditInactive);
         optionCloseButton.onClick.AddListener(OptionInactive);
         saveData = SaveSystem.LoadGame();
+       StartCoroutine(GarbageTransitionTimer());
+    }
+
+    private IEnumerator GarbageTransitionTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
         StartCoroutine(circleTransition.GoingOutTransition());
     }
 

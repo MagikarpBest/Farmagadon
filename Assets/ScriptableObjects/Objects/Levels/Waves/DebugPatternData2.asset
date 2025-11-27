@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee24ebf878ea4b4a9148ed36058ebf3, type: 3}
-  m_Name: EnemyBossData
+  m_Script: {fileID: 11500000, guid: ed794592e23d56b46af7c22da224113e, type: 3}
+  m_Name: DebugPatternData2
   m_EditorClassIdentifier: 
-  enemyName: Boss
-  maxHealth: 130
-  moveSpeed: 0.2
-  damage: 4
-  attackInterval: 10
-  isBoss: 1
-  enemyWeakness: 0
+  enemies:
+  - enemyPrefab: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
+    count: 1
+    duration: 1

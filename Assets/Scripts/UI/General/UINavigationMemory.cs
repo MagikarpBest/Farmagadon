@@ -22,7 +22,7 @@
 
         private IEnumerator SelectAfterFrame()
         {
-            yield return null; // Wait 1 frame
+            yield return new WaitForSeconds(0.2f); ; // Wait 1 frame
 
             // Set toSelect to lastSelectedlocal if not null or else set to defaultFirstSelect
             GameObject toSelect = lastSelectedLocal ?? defaultFirstSelected;

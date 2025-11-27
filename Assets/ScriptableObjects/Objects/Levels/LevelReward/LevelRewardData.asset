@@ -61,3 +61,21 @@ MonoBehaviour:
     - weapon_corncarrot
     - weapon_potatocarrot
     chooseOne: 1
+  - levelNumber: 8
+    rewardWeaponIDs:
+    - weapon_ricecorn
+    - weapon_ricepotato
+    - weapon_ricecarrot
+    - weapon_cornpotato
+    - weapon_corncarrot
+    - weapon_potatocarrot
+    chooseOne: 1
+  - levelNumber: 9
+    rewardWeaponIDs:
+    - weapon_ricecorn
+    - weapon_ricepotato
+    - weapon_ricecarrot
+    - weapon_cornpotato
+    - weapon_corncarrot
+    - weapon_potatocarrot
+    chooseOne: 1

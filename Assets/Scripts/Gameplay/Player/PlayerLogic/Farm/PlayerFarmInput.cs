@@ -144,7 +144,7 @@ public class PlayerFarmInput : MonoBehaviour
         if (farmDone) { return; }
         farmDone = true;
         StartCoroutine(FarmInternalCooldown());
-
+        Debug.Log("farm input");
         OnFarmInput?.Invoke(true);
 
     }   

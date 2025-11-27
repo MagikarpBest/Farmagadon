@@ -16,7 +16,7 @@ public class PauseManger : MonoBehaviour
     {
         if (gameInput != null)
         {
-            gameInput.OnPause += TogglePause;
+            //gameInput.OnPause += TogglePause;
         }
     }
 
@@ -24,7 +24,7 @@ public class PauseManger : MonoBehaviour
     {
         if (gameInput != null)
         {
-            gameInput.OnPause -= TogglePause;
+            //gameInput.OnPause -= TogglePause;
         }
     }
 

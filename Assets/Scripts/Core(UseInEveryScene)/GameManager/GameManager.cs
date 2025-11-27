@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour
         Debug.Log($"current phase = {SaveData.currentPhase} ");
     }
 
+    private void Update()
+    {
+        RestartGame();
+    }
 
     #endregion
 
@@ -78,6 +82,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game Phase Control
+    private void RestartGame()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            sceneController.RestartLevel();
+        }
+    }
     private void StartPhase(GamePhase phase)
     {
         switch (phase)
@@ -145,16 +156,16 @@ public class GameManager : MonoBehaviour
         AudioService.AudioManager.PlayBGM(combatBGM);
 
         //Playtest temporary fix
-        //waveManager?.BeginLevel(SaveData.currentLevel);
+        waveManager?.BeginLevel(SaveData.currentLevel);
         //Initialize the current level from the database and start the game
-        if (SaveData.currentLevel == 1)
-        {
-            UIManager.ShowCombatTutorial();
-        }
-        else
-        {
-            waveManager?.BeginLevel(SaveData.currentLevel);
-        }
+        //if (SaveData.currentLevel == 1)
+        //{
+        //    UIManager.ShowCombatTutorial();
+        //}
+        //else
+        //{
+        //    waveManager?.BeginLevel(SaveData.currentLevel);
+        //}
 
         Debug.Log($"spawning level");
     }

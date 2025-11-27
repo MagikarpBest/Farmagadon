@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: EnemyNormalData
   m_EditorClassIdentifier: 
   enemyName: Normal
-  maxHealth: 3
+  maxHealth: 2
   moveSpeed: 1
   damage: 1
   attackInterval: 2
+  isBoss: 0
   enemyWeakness: 0

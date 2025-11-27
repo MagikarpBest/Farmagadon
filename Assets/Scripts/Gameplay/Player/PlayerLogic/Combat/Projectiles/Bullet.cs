@@ -67,11 +67,13 @@ public class Bullet : MonoBehaviour
             pierceCountRemaining--;
             if (pierceCountRemaining <= 0)
             {
+                spriteRender.enabled = false;
                 Destroy(gameObject, 0.1f); // tiny delay
             }
         }
         else
         {
+            spriteRender.enabled = false;
             Destroy(gameObject, 0.1f);
         }
     }
@@ -112,11 +114,13 @@ public class Bullet : MonoBehaviour
             pierceCountRemaining--;
             if (pierceCountRemaining <= 0)
             {
+                spriteRender.enabled = false;
                 Destroy(gameObject, 0.1f); // tiny delay
             }
         }
         else
         {
+            spriteRender.enabled = false;
             Destroy(gameObject, 0.1f);
         }
 

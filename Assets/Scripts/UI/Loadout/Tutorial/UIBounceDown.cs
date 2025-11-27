@@ -29,6 +29,6 @@ public class UIBounceDown : MonoBehaviour
     {
         Tween moveTween = gameObject.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, hiddenY), 1.0f).SetEase(Ease.InOutBack);
         yield return moveTween.WaitForCompletion();
-        enabled = false;
+        gameObject.SetActive(false);
     }
 }

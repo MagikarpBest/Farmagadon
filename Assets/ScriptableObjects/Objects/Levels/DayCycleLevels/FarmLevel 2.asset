@@ -16,10 +16,10 @@ MonoBehaviour:
   - cropData: {fileID: 11400000, guid: 7929126337943034abb6c1cd934887fb, type: 2}
     cropGrowChance: 50
     cropGrowRate: 1
-    cropDropAmount: 10
+    cropDropAmount: 2
   - cropData: {fileID: 11400000, guid: 95b2f536f0335ef449337d16cdb9537d, type: 2}
     cropGrowChance: 50
     cropGrowRate: 1
-    cropDropAmount: 10
+    cropDropAmount: 2
   dayCycleDuration: 60
   upcomingEnemyDatas: {fileID: 11400000, guid: 73d013eb60bb9f44f919f9dc441b8781, type: 2}
