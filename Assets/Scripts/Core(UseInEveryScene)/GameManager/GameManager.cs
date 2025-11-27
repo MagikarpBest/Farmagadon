@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
     {
         yield return null;
         Debug.Log("[GameManager] Starting LOADOUT phase.");
+        if (SaveData.currentLevel == 2) { UIManager.ShowLoadoutTutorial(); }
         UIManager?.ShowHUD();
         yield return circleTransition.GoingOutTransition();
 
@@ -143,8 +144,15 @@ public class GameManager : MonoBehaviour
         AudioService.AudioManager.FadeInBGM();
         AudioService.AudioManager.PlayBGM(combatBGM);
         // Initialize the current level from the database and start the game
-
-        waveManager?.BeginLevel(SaveData.currentLevel);
+        if (SaveData.currentLevel == 1) 
+        { 
+            UIManager.ShowCombatTutorial();
+        }
+        else
+        {
+            waveManager?.BeginLevel(SaveData.currentLevel);
+        }
+            
         Debug.Log($"spawning level");
     }
     #endregion

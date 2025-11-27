@@ -13473,6 +13473,10 @@ PrefabInstance:
       propertyPath: weaponChoicePanel
       value: 
       objectReference: {fileID: 1103869410}
+    - target: {fileID: 1475579070564021755, guid: d1b604026c7f5124a8e8f1e05e72332f, type: 3}
+      propertyPath: combatTutorialPanel
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2907419801157073865, guid: d1b604026c7f5124a8e8f1e05e72332f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

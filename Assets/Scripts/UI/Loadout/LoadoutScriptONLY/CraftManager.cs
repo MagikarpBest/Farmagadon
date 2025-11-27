@@ -64,7 +64,7 @@ public class CraftManager : MonoBehaviour
         ammoImages[0].sprite = currentSelectedAmmo.craftingRequirements[0].ammo.icon;
         ammoImages[1].sprite = currentSelectedAmmo.craftingRequirements[1].ammo.icon;
         ammoImages[2].sprite = currentSelectedAmmo.icon;
-
+        return;
         ammoName[0].text = $"{currentSelectedAmmo.craftingRequirements[0].ammo.ammoName}";
         ammoName[1].text = $"{currentSelectedAmmo.craftingRequirements[1].ammo.ammoName}";
         ammoName[2].text = $"{currentSelectedAmmo.ammoName}";
