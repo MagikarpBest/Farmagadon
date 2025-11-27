@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 4314493516630187794}
   - component: {fileID: 4654882526863230939}
   m_Layer: 3
-  m_Name: ExplosiveHitEffectVisual
+  m_Name: SlowExplosiveHitEffectVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 30
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -171,7 +171,7 @@ Animator:
   m_GameObject: {fileID: 6317027258394281969}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 63396c44450b13149894f6a9e273fb21, type: 2}
+  m_Controller: {fileID: 9100000, guid: a495298c84ecd6d4da20a74e60b278b4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

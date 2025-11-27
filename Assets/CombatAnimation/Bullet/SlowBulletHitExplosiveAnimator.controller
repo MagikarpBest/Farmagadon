@@ -11,7 +11,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -4665029685451179204}
-    m_Position: {x: 270, y: 120, z: 0}
+    m_Position: {x: 280, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6600139011535924367}
     m_Position: {x: 490.71857, y: 253.5629, z: 0}
@@ -47,7 +47,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BulletHitExplosiveAnimation
+  m_Name: SlowBulletHitExplosiveAnimation
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

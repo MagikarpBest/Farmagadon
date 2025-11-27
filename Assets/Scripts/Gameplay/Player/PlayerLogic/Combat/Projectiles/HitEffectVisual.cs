@@ -5,18 +5,18 @@ public class HitEffectVisual : MonoBehaviour
 {
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private Vector3 originalScale;
-
+    private float animDuration;
     void Awake()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        originalScale = transform.localScale;
     }
     void OnEnable()
     {
         PlayAnimationAndDestroy();
+        // Get current animation duration
+        AnimatorStateInfo animInfo = animator.GetCurrentAnimatorStateInfo(0);
+        animDuration = animInfo.length;
     }
 
     private void PlayAnimationAndDestroy()
@@ -28,9 +28,7 @@ public class HitEffectVisual : MonoBehaviour
             return;
         }
 
-        // Get current animation duration
-        AnimatorStateInfo animInfo = animator.GetCurrentAnimatorStateInfo(0);
-        float animDuration = animInfo.length;
+
 
         //After animation ends > fade out > destroy
         DOVirtual.DelayedCall(animDuration, () =>
@@ -47,8 +45,7 @@ public class HitEffectVisual : MonoBehaviour
             return;
         }
 
-        // Fade out to 0 alpha over 0.2 seconds
-        spriteRenderer.DOFade(0f, 0.4f).OnComplete(() => { Destroy(transform.parent.gameObject); }); 
+        Destroy(transform.parent.gameObject, animDuration);
     }
 
 }
