@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoID: ammo_corn
   ammoName: Corn
-  icon: {fileID: 21300000, guid: cad45563336f06546af05c0f7099f393, type: 3}
+  icon: {fileID: 21300000, guid: ad2b21a835e401d449ea7c904bd42591, type: 3}
   cropIcon: {fileID: 21300000, guid: bf386a8e8c92bdb45a76731f61faed95, type: 3}
+  canBeCrafted: 0
+  amountProduced: 2
+  craftingRequirements: []

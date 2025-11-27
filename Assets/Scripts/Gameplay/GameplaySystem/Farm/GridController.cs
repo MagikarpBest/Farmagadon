@@ -68,9 +68,9 @@ namespace Farm
 
         private void PlantCrops()
         {
-            for (int y = tileMap.cellBounds.yMin; y < tileMap.cellBounds.yMax; ++y)
+            for (int y = tileMap.cellBounds.yMax-1; y > tileMap.cellBounds.yMin-1; --y)
             {
-                for (int x = tileMap.cellBounds.xMin; x < tileMap.cellBounds.xMax; ++x)
+                for (int x = tileMap.cellBounds.xMax-1; x > tileMap.cellBounds.xMin-1; --x)
                 {
                     PlantData getPlant = GetPlantData();
                     InstantiateCrop(getPlant, x, y);
@@ -159,7 +159,9 @@ namespace Farm
             //createPlant.GetComponent<plants>().OnFarmed += farmController.CropFarmed;
             createPlant.GetComponent<plants>().PosX = posX;
             createPlant.GetComponent<plants>().PosY=  posY;
-            createPlant.transform.position = tileMap.GetCellCenterWorld(new Vector3Int(posX, posY)) + new Vector3(0, createPlant.GetComponentInChildren<SpriteRenderer>().size.y / 3, 0);
+            //print(createPlant.GetComponentInChildren<SpriteRenderer>().renderingLayerMask);
+            createPlant.GetComponentInChildren<SpriteRenderer>().sortingOrder += (tileMap.cellBounds.yMax - posY);
+            createPlant.transform.position = grid.GetCellCenterWorld(new Vector3Int(posX, posY));
             AudioService.AudioManager.BufferPlayOneShot(plantGrowAudio);
         }
 

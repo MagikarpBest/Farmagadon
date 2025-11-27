@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9abaee8ab25e3b448d370aba7cac92d, type: 3}
   m_Name: RiceWeaponData
   m_EditorClassIdentifier: 
-  weaponSpritePath: Arts/Combat/UI/Inventory/AmmoIcon/RiceAmmoIcon
   weaponID: weapon_rice
-  weaponName: RiceRifle
+  weaponName: Rice Rifle
   weaponDescription: Shoot a basic projectile.
-  weaponSprite: {fileID: 21300000, guid: 46946d55282c9d84da09e07ab62135d2, type: 3}
+  weaponSprite: {fileID: 21300000, guid: efc31aa45e7d296448ab227e28a779c0, type: 3}
   bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
   ammoType: {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
   lifeTime: 3
-  bulletSpeed: 10
+  bulletSpeed: 15
   damage: 1
   pierceCount: 1
   explosionRadius: 0

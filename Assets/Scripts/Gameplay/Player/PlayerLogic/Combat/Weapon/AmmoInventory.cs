@@ -37,8 +37,9 @@ public class AmmoInventory : MonoBehaviour
     // Runtime ammo data storage
     private Dictionary<AmmoData, int> ammoDict = new Dictionary<AmmoData, int>();
     private SaveData saveData;
-
     public Dictionary<AmmoData, int> AmmoDict => ammoDict;
+
+    public event Action OnAmmoLoadedFromSave;
     // ----------------------
     // Inventory Management
     // ----------------------
@@ -156,6 +157,7 @@ public class AmmoInventory : MonoBehaviour
             }
         }
 
+        OnAmmoLoadedFromSave?.Invoke();
         Debug.Log("Ammo loaded from SaveData.");
     }
 }

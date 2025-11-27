@@ -65,7 +65,7 @@
                 {
                     "name": "Left and Right",
                     "id": "9c6d213e-e535-4c24-ba62-a78fe511027b",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -193,6 +193,138 @@
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "FarmPlayer",
+            "id": "8fe103f0-41aa-49c0-b091-8f41db86c931",
+            "actions": [
+                {
+                    "name": "W",
+                    "type": "Value",
+                    "id": "fb2abcfd-1558-4bca-a610-d09532d0b48b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "A",
+                    "type": "Value",
+                    "id": "a0b3b4d5-a091-4992-877f-648d0403dda5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "S",
+                    "type": "Value",
+                    "id": "068c5172-064b-4e91-afb4-8e1e53f1a8fc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "D",
+                    "type": "Value",
+                    "id": "f44b55ad-ed1e-4603-8b2a-42cefaeabe89",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "W Key",
+                    "id": "f5f90095-deb3-4646-b64e-48e6394418dc",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "W",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "92baa05f-b8a3-46bb-a6fd-7a72af4449e5",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "W",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "A Key",
+                    "id": "053b207d-761b-4980-a75e-01fcb0bd0002",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "left",
+                    "id": "5b026fd1-9a56-4e0c-9aec-a04cb50f575e",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "S Key",
+                    "id": "a7a8e241-58e0-453c-9247-40c40c5e6cb7",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "S",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "down",
+                    "id": "f01b7a25-bbf8-4669-b893-2a0cb52335c4",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "S",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "D Key",
+                    "id": "77c9c621-3bcd-4641-a24b-d3ac1ecc1e05",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "right",
+                    "id": "d06a5a78-c603-41a1-a6bf-7b3678a3117a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

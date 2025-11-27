@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RicePotatoCombinationWeaponData
   m_EditorClassIdentifier: 
   weaponID: weapon_ricepotato
-  weaponName: RicePotato
+  weaponName: Rice Potato
   weaponDescription: Explodes on impact, scattering shrapnel in all directions.
-  weaponSprite: {fileID: 21300000, guid: f73a4408ca7571748ad828b48a529dae, type: 3}
-  bulletPrefab: {fileID: 3267392343543207434, guid: d22e0389198fdb84bae98a806d8cb4b9, type: 3}
+  weaponSprite: {fileID: 21300000, guid: fac3e6ebcb81bca44ae12dc44f8f3c85, type: 3}
+  bulletPrefab: {fileID: 3267392343543207434, guid: dcb4ef915ee04644baf71b7c91b63492, type: 3}
   ammoType: {fileID: 11400000, guid: 3f5081983a75611418362d67acf7bea4, type: 2}
   lifeTime: 3
   bulletSpeed: 15

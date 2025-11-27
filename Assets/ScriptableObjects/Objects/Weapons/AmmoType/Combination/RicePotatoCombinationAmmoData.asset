@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoID: ammo_ricepotato
   ammoName: RicePotato
-  icon: {fileID: 21300000, guid: f73a4408ca7571748ad828b48a529dae, type: 3}
+  icon: {fileID: 21300000, guid: fac3e6ebcb81bca44ae12dc44f8f3c85, type: 3}
   cropIcon: {fileID: 21300000, guid: dc8b808d134d23d43b5b427cb2a1bdb7, type: 3}
   canBeCrafted: 1
   amountProduced: 2

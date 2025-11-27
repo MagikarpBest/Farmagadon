@@ -33,12 +33,13 @@ public class WeaponUI : MonoBehaviour
     private Vector2 originalSize;
     private Vector2 centerBigSize;
 
+    private bool initialized = false;
     private void OnEnable()
     {
         if (weaponInventory != null)
         {
             weaponInventory.OnWeaponChanged += UpdateUI;
-
+            weaponInventory.OnWeaponLoadedFromSave += InitializeWeaponImages;
         }
     }
     private void OnDisable()
@@ -46,30 +47,8 @@ public class WeaponUI : MonoBehaviour
         if (weaponInventory != null)
         {
             weaponInventory.OnWeaponChanged -= UpdateUI;
+            weaponInventory.OnWeaponLoadedFromSave -= InitializeWeaponImages;
         }
-    }
-
-    private void Start()
-    {
-        //yield return new WaitForSeconds(1f);
-        // Save original position for animation references
-        leftPosition = leftWeaponImage.rectTransform.anchoredPosition;
-        centerPosition = centerWeaponImage.rectTransform.anchoredPosition;
-        rightPosition = rightWeaponImage.rectTransform.anchoredPosition;
-        bottomPosition = bottomWeaponImage.rectTransform.anchoredPosition;
-
-        // Prevent any stray tween movement
-        //DOTween.KillAll();
-
-        // Save size
-        originalSize = leftWeaponImage.rectTransform.sizeDelta;
-        centerBigSize = centerWeaponImage.rectTransform.sizeDelta;
-
-        if (weaponInventory != null)
-        {
-            InitializeWeaponImages();
-        }
-
     }
 
     /// <summary>
@@ -79,6 +58,16 @@ public class WeaponUI : MonoBehaviour
     /// </summary>
     private void InitializeWeaponImages()
     {
+        // Save original position for animation references
+        leftPosition = leftWeaponImage.rectTransform.anchoredPosition;
+        centerPosition = centerWeaponImage.rectTransform.anchoredPosition;
+        rightPosition = rightWeaponImage.rectTransform.anchoredPosition;
+        bottomPosition = bottomWeaponImage.rectTransform.anchoredPosition;
+
+        // Save size
+        originalSize = leftWeaponImage.rectTransform.sizeDelta;
+        centerBigSize = centerWeaponImage.rectTransform.sizeDelta;
+
         // Always show all slots (up to max)
         int unlocked = weaponInventory.UnlockedSlotCount;
         List<WeaponSlot> allSlots = new();
@@ -109,6 +98,14 @@ public class WeaponUI : MonoBehaviour
         SetImage(rightWeaponImage, rightSlot);
         SetImage(bottomWeaponImage, bottomSlot);
         SetImage(leftWeaponImage, leftSlot);
+
+        StartCoroutine(SetInitialize());
+    }
+
+    private IEnumerator SetInitialize()
+    {
+        yield return new WaitForSeconds(0.5f);
+        initialized = true;
     }
 
     /// <summary>
@@ -117,23 +114,31 @@ public class WeaponUI : MonoBehaviour
     /// </summary>
     private void UpdateUI(WeaponSlot currentSlot,WeaponSwitchDirection direction)
     {
+        if (!initialized)
+        {
+            Debug.Log("update ui returned");
+            return;
+        }
+
+        Debug.Log("updated ui");
         if (weaponInventory == null || currentSlot == null)  
         {
             Debug.LogWarning("[WeaponUI] Missing inventory or current slot.");
             return;
         }
 
-        int unlockedCount = weaponInventory.UnlockedSlotCount;
+        int equippedCount = weaponInventory.GetOnlyEquippedWeapon().Count;
+        //Debug.Log($"equipped count is{equippedCount}");
 
-        if (unlockedCount == 2)
+        if (equippedCount == 2)
         {
             RotateAnimation_Two();
         }
-        else if (unlockedCount == 3)
+        else if (equippedCount == 3)
         {
             RotateAnimation_Three(direction == WeaponSwitchDirection.Next);
         }
-        else if (unlockedCount >= 4)
+        else if (equippedCount >= 4)
         {
             RotateAnimation_Four(direction == WeaponSwitchDirection.Next);
         }
@@ -323,20 +328,20 @@ public class WeaponUI : MonoBehaviour
     /// </summary>
     public void SetImage(Image image, WeaponSlot slot)
     {
-        Debug.Log("SetImage run, but dk valid or not");
+        //Debug.Log("SetImage run, but dk valid or not");
         // --- Check 1: Is the WeaponSlot itself valid? ---
         if (slot != null)
         {
-            Debug.Log("SetImage weapon slot is not null");
+            //Debug.Log("SetImage weapon slot is not null");
             // --- Check 2: Is the WeaponData ScriptableObject valid? ---
             if (slot.weaponData != null)
             {
-                Debug.Log("SetImage weaponslot.data is not null");
+                //Debug.Log("SetImage weaponslot.data is not null");
                 // --- Check 3: Is the Sprite field inside the WeaponData valid? ---
                 if (slot.weaponData.weaponSprite != null)
                 {
                     image.sprite = slot.weaponData.weaponSprite;
-                    Debug.Log($"[WeaponUI Success] Set sprite for: {slot.weaponData.name}");
+                    //Debug.Log($"[WeaponUI Success] Set sprite for: {slot.weaponData.name}");
                 }
                 else
                 {

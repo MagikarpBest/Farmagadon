@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: CornPotatoCombinationWeaponData
   m_EditorClassIdentifier: 
   weaponID: weapon_cornpotato
-  weaponName: CornPotato
-  weaponDescription: Shoots a spread of explosive pellets.
-  weaponSprite: {fileID: 21300000, guid: 139c073ad1b36784c90ce0758605d990, type: 3}
-  bulletPrefab: {fileID: 6037540156501391096, guid: 0034eda3ffcf874448c9a5bef2a9c4c4, type: 3}
+  weaponName: Corn Potato
+  weaponDescription: Releases a backward spray of corn pellets after the initial
+    hit.
+  weaponSprite: {fileID: 21300000, guid: 4711e6e75c4366c49961424503292bfb, type: 3}
+  bulletPrefab: {fileID: 6037540156501391096, guid: 3cc09536cf77e674d9ebad1ba1ab1acf, type: 3}
   ammoType: {fileID: 11400000, guid: ca16e71508f8a714d9a7de4ac000aef4, type: 2}
   lifeTime: 0.4
   bulletSpeed: 10
@@ -28,10 +29,15 @@ MonoBehaviour:
   spread: 40
   shrapnel:
     enable: 0
-    bulletPrefab: {fileID: 0}
     count: 0
-    bulletSpeed: 10
-    damage: 1
-    pierceCount: 1
-    explosionRadius: 0
-    lifeTime: 0
+    bulletPrefab: {fileID: 0}
+    shrapnelWeaponData: {fileID: 0}
+  slowEffect:
+    enable: 0
+    slowAmount: 0.5
+    duration: 1
+  split:
+    enable: 0
+    bulletPrefab: {fileID: 0}
+    splitWeaponData: {fileID: 0}
+    spreadAngle: 45

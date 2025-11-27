@@ -1,15 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 public class VolumeManager : MonoBehaviour 
 {
-    [SerializeField] private Slider volumeSlider;
+    public const string MasterVolumeFloatKey = "MASTERVolume";
+    public const string SFXVolumeFloatKey = "SFXVolume";
+    public const string MusicVolumeFloatKey = "MUSICVolume";
+    [SerializeField] private Slider masterVolumeSlider;
+    [SerializeField] private Slider sfxVolumeSlider;
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private AudioClip mainMenuBGM;
 
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("mainVolume"))
+        if (!PlayerPrefs.HasKey(MasterVolumeFloatKey))
         {
-            PlayerPrefs.SetFloat("mainVolume", 1);
+            PlayerPrefs.SetFloat(MasterVolumeFloatKey, 1.0f);
+            PlayerPrefs.SetFloat(SFXVolumeFloatKey, 1.0f);
+            PlayerPrefs.SetFloat(MusicVolumeFloatKey, 1.0f);
             Load();
         }
         else
@@ -23,19 +32,82 @@ public class VolumeManager : MonoBehaviour
         AudioService.SetAudioManager(unityAudioManagerInstance);
         AudioService.AudioManager.PlayBGM(mainMenuBGM);
     }
-    public void ChangeVolume()
+    public void ChangeMasterVolume()
     {
-        AudioListener.volume = volumeSlider.value;
+        float slider = masterVolumeSlider.value;
+        float dB;
+
+        if (slider <= 0f)
+        {
+            // mute
+            dB = -80f;
+        }
+        else
+        {
+            // Logarithmic audio curve (smooth + not silent in middle)
+            dB = Mathf.Log10(slider) * 20f;
+        }
+
+        audioMixer.SetFloat(MasterVolumeFloatKey, dB);
+
+        PlayerPrefs.SetFloat(MasterVolumeFloatKey, slider);
+        Save();
+    }
+
+    public void ChangeSFXVolume()
+    {
+        float slider = sfxVolumeSlider.value;
+        float dB;
+
+        if (slider <= 0f)
+        {
+            // mute
+            dB = -80f; 
+        }
+        else
+        {
+            // Logarithmic audio curve (smooth + not silent in middle)
+            dB = Mathf.Log10(slider) * 20f; 
+        }
+
+        audioMixer.SetFloat(SFXVolumeFloatKey, dB);
+
+        PlayerPrefs.SetFloat(SFXVolumeFloatKey, slider);
+        Save();
+    }
+
+    public void ChangeMusicVolume()
+    {
+        float slider = musicVolumeSlider.value;
+        float dB;
+
+        if (slider <= 0f)
+        {
+            // Mute
+            dB = -80f;
+        }
+        else
+        {
+            // Logarithmic audio curve (smooth + not silent in middle)
+            dB = Mathf.Log10(slider) * 20f;
+        }
+
+        audioMixer.SetFloat(MusicVolumeFloatKey, dB);
+
+        PlayerPrefs.SetFloat(MusicVolumeFloatKey, slider);
         Save();
     }
 
     private void Load()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("mainVolume");
+        if (!PlayerPrefs.HasKey(MasterVolumeFloatKey)) return;
+        masterVolumeSlider.value = PlayerPrefs.GetFloat(MasterVolumeFloatKey);
+        sfxVolumeSlider.value = PlayerPrefs.GetFloat(SFXVolumeFloatKey);
+        musicVolumeSlider.value = PlayerPrefs.GetFloat(MusicVolumeFloatKey);
     }
 
     private void Save()
     {
-        PlayerPrefs.SetFloat("mainVolume",volumeSlider.value);
+        //PlayerPrefs.SetFloat("mainVolume",volumeSlider.value);
     }
 }

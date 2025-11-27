@@ -5,7 +5,7 @@ using System.Collections;
 [System.Serializable]
 public class EnemyAttackAnimationSettings
 {
-    [Header("Timing Ratios (sum ≈ 1.0)")]
+    [Header("Timing Ratios (sum = 1.0)")]
     [Range(0f, 1f)] public float chargeRatio = 0.3f;
     [Range(0f, 1f)] public float impactRatio = 0.1f;
     [Range(0f, 1f)] public float recoilRatio = 0.6f;
@@ -39,7 +39,7 @@ public class EnemyVisualHandler : MonoBehaviour
     [SerializeField] private float deathEffectDuration = 0.5f;
 
     [Header("Move Settings")]
-    [SerializeField] private float wiggleSpeed = 15f;     // how fast it wiggles side-to-side
+    [SerializeField] private float wiggleSpeed = 6f;     // how fast it wiggles side-to-side
     [SerializeField] private float wiggleAmount = 3f;     // degrees of body rotation
     [SerializeField] private float squishSpeed = 8f;      // breathing / leg rhythm
     [SerializeField] private float squishAmount = 0.07f;  // how much it squishes vertically

@@ -31,13 +31,13 @@ public class AmmoUI : MonoBehaviour
     private Vector2 originalSize;
     private Vector2 centerBigSize;
 
-    private Action<WeaponSlot, WeaponSwitchDirection> weaponChangedHandler;
-
+    private bool initialized = false;
     private void OnEnable()
     {
         if(ammoInventory!=null)
         { 
             ammoInventory.OnInventoryChanged += UpdateUITextOnly;
+            ammoInventory.OnAmmoLoadedFromSave += InitializeAmmoText;
         }
         
         if (weaponInventory!=null)  
@@ -52,17 +52,17 @@ public class AmmoUI : MonoBehaviour
         if (ammoInventory != null)
         {
             ammoInventory.OnInventoryChanged -= UpdateUITextOnly;
+            ammoInventory.OnAmmoLoadedFromSave += InitializeAmmoText;
         }
 
         if (weaponInventory != null)
         {
-            weaponInventory.OnWeaponChanged -= weaponChangedHandler;
+            weaponInventory.OnWeaponChanged -= UpdateUI;
         }
     }
 
-    private IEnumerator Start()
+    private void InitializeAmmoText()
     {
-        yield return null;
         // Save original position for animation references
         leftPosition = leftWeaponText.rectTransform.anchoredPosition;
         centerPosition = centerWeaponText.rectTransform.anchoredPosition;
@@ -70,21 +70,12 @@ public class AmmoUI : MonoBehaviour
         bottomPosition = bottomWeaponText.rectTransform.anchoredPosition;
 
         // Prevent any stray tween movement
-        DOTween.KillAll();
+        //DOTween.KillAll();
 
         // Save size
         originalSize = leftWeaponText.rectTransform.localScale;
         centerBigSize = centerWeaponText.rectTransform.localScale;
 
-
-        if (weaponInventory != null)
-        {
-            InitializeAmmoText();
-        }
-    }
-
-    private void InitializeAmmoText()
-    {
         // Always show all slots (up to max)
         int unlocked = weaponInventory.UnlockedSlotCount;
         List<WeaponSlot> allSlots = new();
@@ -115,6 +106,13 @@ public class AmmoUI : MonoBehaviour
         SetText(rightWeaponText, rightSlot);
         SetText(bottomWeaponText, bottomSlot);
         SetText(leftWeaponText, leftSlot);
+
+        StartCoroutine(SetInitialize());
+    }
+    private IEnumerator SetInitialize()
+    {
+        yield return new WaitForSeconds(0.5f);
+        initialized = true;
     }
 
     /// <summary>
@@ -122,23 +120,30 @@ public class AmmoUI : MonoBehaviour
     /// </summary>
     private void UpdateUI(WeaponSlot weaponSlot, WeaponSwitchDirection direction)
     {
+        if (!initialized)
+        {
+            Debug.Log("update ammotext returned");
+            return;
+        }
+
         if (weaponInventory == null || ammoInventory == null) 
         {
             Debug.LogWarning("[AmmoUI] Missing inventory reference.");
             return;
         }
 
-        int unlockedCount = weaponInventory.UnlockedSlotCount;
+        int equippedCount = weaponInventory.GetOnlyEquippedWeapon().Count;
+        Debug.Log($"equipped count is{equippedCount}");
 
-        if (unlockedCount == 2)
+        if (equippedCount == 2)
         {
             RotateAnimation_Two();
         }
-        else if (unlockedCount == 3)
+        else if (equippedCount == 3)
         {
             RotateAnimation_Three(direction == WeaponSwitchDirection.Next);
         }
-        else if (unlockedCount >= 4)
+        else if (equippedCount >= 4)
         {
             RotateAnimation_Four(direction == WeaponSwitchDirection.Next);
         }
@@ -168,14 +173,12 @@ public class AmmoUI : MonoBehaviour
         }
 
         var rect = centerWeaponText.rectTransform;
-
-        // 1. Stop any ongoing tween on this target
         rect.DOKill();
 
-        // 2. Reset to base scale (so it doesn’t keep stacking)
+        // Reset to base scale (so it doesn’t keep stacking)
         rect.localScale = centerBigSize;
 
-        // 3. Apply the punch
+        // Apply the punch
         rect.DOPunchScale(Vector3.one * 0.3f, 0.3f, 1, 1f).SetEase(Ease.OutBack);
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip farmBGM;
     [SerializeField] private AudioClip loadoutBGM;
     [SerializeField] private AudioClip combatBGM;
+
     public SaveData SaveData { get; private set;}               // Loaded save data (tracks current level + game phase)
 
     #region Life Cycle
@@ -67,6 +69,7 @@ public class GameManager : MonoBehaviour
         {
             gameStateManager.SetGamePhase(SaveData.currentPhase);
         }
+
         // Events
         SubscribeEvent();
 

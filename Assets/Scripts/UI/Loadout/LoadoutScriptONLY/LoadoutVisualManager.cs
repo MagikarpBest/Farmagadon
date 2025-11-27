@@ -9,13 +9,14 @@ public class LoadoutVisual : MonoBehaviour
     [Header("References")]
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private AmmoInventory ammoInventory;
-    [SerializeField] private LoadOutManager loadoutManager;
+    [SerializeField] private LoadoutManager loadoutManager;
 
     [Header("UI Elements")]
     [SerializeField] private List<Image> inventoryImages;               // Weapon icons on inventory
     [SerializeField] private List<Image> equippedImages;                // Loadout equipped image
     [SerializeField] private List<TextMeshProUGUI> ammoTexts;           // Ammo count text
-    [SerializeField] private TextMeshProUGUI weaponDescription;   
+    [SerializeField] private TextMeshProUGUI weaponName;
+    [SerializeField] private TextMeshProUGUI weaponDescription;
     [SerializeField] private Sprite emptySlotSprite;
 
     private List<WeaponSlot> allOwned;
@@ -40,14 +41,13 @@ public class LoadoutVisual : MonoBehaviour
 
     private IEnumerator Start()
     {
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         
         // Get all owned weapon and put into a list
         allOwned = weaponInventory.GetAllOwnedWeapons();
         UpdateInventoryVisual();
         UpdateEquippedVisual();
         UpdateSelectedDescription(0);
-        yield return null;
     }
 
     private void UpdateAll()
@@ -109,17 +109,20 @@ public class LoadoutVisual : MonoBehaviour
     {
         if (selectedIndex < 0 || selectedIndex >= allOwned.Count)
         {
-            weaponDescription.text = "NULL";
+            weaponName.text = " ";
+            weaponDescription.text = " ";
             return;
         }
 
         WeaponSlot selectedSlot = allOwned[selectedIndex];
         if (selectedSlot == null || selectedSlot.weaponData == null)
         {
-            weaponDescription.text = "";
+            weaponName.text = " ";
+            weaponDescription.text = " ";
             return;
         }
 
+        weaponName.text = selectedSlot.weaponData.weaponName;
         weaponDescription.text = selectedSlot.weaponData.weaponDescription;
     }
 }
