@@ -88,13 +88,34 @@ public class WaveManager : MonoBehaviour
     {
         // Calculate interval between spawns (So you dont need to do it yourself incase you are lazy)
         float interval = info.duration / info.count;
+        // READ ENEMY DATA FROM PREFAB
+        Enemy enemyComponent = info.enemyPrefab.GetComponent<Enemy>();
+
+        bool isBoss = false;
+        if (enemyComponent != null && enemyComponent.Data != null) 
+        {
+            isBoss = enemyComponent.Data.isBoss;
+        }
+        else
+        {
+            Debug.LogWarning($"Enemy prefab '{info.enemyPrefab.name}' missing Enemy or EnemyData!");
+        }
 
         for (int i = 0; i < info.count; i++)
         {
             // Pick random position between spawnPointA and spawnPointB
-            Vector3 spawnPos = Vector3.Lerp(spawnPointA.position, spawnPointB.position, UnityEngine.Random.value);
-            GameObject enemyObject = Instantiate(info.enemyPrefab, spawnPos, Quaternion.identity);
+            Vector3 spawnPos;
+            if (isBoss)
+            {
+                spawnPos = new Vector3(-3.47f, spawnPointA.position.y, 0f);
+            }
+            else
+            {   
+                spawnPos = Vector3.Lerp(spawnPointA.position, spawnPointB.position, UnityEngine.Random.value);
+            }
 
+            GameObject enemyObject = Instantiate(info.enemyPrefab, spawnPos, Quaternion.identity);
+                
             activeEnemies++;
 
             // Subscribe to enemy death event

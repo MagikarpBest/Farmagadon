@@ -17,5 +17,7 @@ MonoBehaviour:
   events:
   - time: 0
     wavePattern: {fileID: 11400000, guid: a477c7caa92d0e94ea51d7de05769fdb, type: 2}
+  - time: 15
+    wavePattern: {fileID: 11400000, guid: a477c7caa92d0e94ea51d7de05769fdb, type: 2}
   - time: 30
     wavePattern: {fileID: 11400000, guid: a477c7caa92d0e94ea51d7de05769fdb, type: 2}

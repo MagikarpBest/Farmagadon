@@ -10,10 +10,12 @@ public class LoadoutVisual : MonoBehaviour
     [SerializeField] private WeaponInventory weaponInventory;
     [SerializeField] private AmmoInventory ammoInventory;
     [SerializeField] private LoadoutManager loadoutManager;
+    [SerializeField] private CraftManager craftManager;
 
     [Header("UI Elements")]
     [SerializeField] private List<Image> inventoryImages;               // Weapon icons on inventory
     [SerializeField] private List<Image> equippedImages;                // Loadout equipped image
+    [SerializeField] private List<TextMeshProUGUI> equippedAmmoCount;
     [SerializeField] private List<TextMeshProUGUI> ammoTexts;           // Ammo count text
     [SerializeField] private TextMeshProUGUI weaponName;
     [SerializeField] private TextMeshProUGUI weaponDescription;
@@ -29,6 +31,12 @@ public class LoadoutVisual : MonoBehaviour
             loadoutManager.OnInventorySlotChanged += UpdateSelectedDescription;
             loadoutManager.OnTriggerUIUpdate += UpdateAll;
         }
+
+        if (craftManager != null)
+        {
+            craftManager.OnAmmoCrafted += UpdateAll;
+        }
+
     }
     private void OnDisable()
     {
@@ -36,6 +44,11 @@ public class LoadoutVisual : MonoBehaviour
         {
             loadoutManager.OnInventorySlotChanged -= UpdateSelectedDescription;
             loadoutManager.OnTriggerUIUpdate -= UpdateAll;
+        }
+        
+        if (craftManager != null)
+        {
+            craftManager.OnAmmoCrafted -= UpdateAll;
         }
     }
 
@@ -103,6 +116,30 @@ public class LoadoutVisual : MonoBehaviour
                 icon.sprite = emptySlotSprite;
             }
         }
+
+        for (int i = 0; i < equippedAmmoCount.Count; i++)
+        {
+            TextMeshProUGUI text = equippedAmmoCount[i];
+
+            if (i < slots.Length && slots[i] != null && slots[i].weaponData != null)
+            {
+                var weapons = slots[i].weaponData;
+
+                if (weapons.ammoType != null)
+                {
+                    text.text = $"{ammoInventory.GetAmmoCount(weapons.ammoType)}";
+                }
+                else
+                {
+                    text.text = "N/A";
+                }
+            }
+            else
+            {
+                text.text = "N/A";
+            }
+        }
+
     }
 
     private void UpdateSelectedDescription(int selectedIndex)
@@ -115,7 +152,7 @@ public class LoadoutVisual : MonoBehaviour
             return;
         }
 
-        WeaponSlot selectedSlot = allOwned[selectedIndex];
+        WeaponSlot selectedSlot = allOwned[selectedIndex];  
         if (selectedSlot == null || selectedSlot.weaponData == null)
         {
             weaponName.text = " ";

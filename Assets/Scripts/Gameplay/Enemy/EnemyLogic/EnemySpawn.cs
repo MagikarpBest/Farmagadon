@@ -16,9 +16,6 @@ public class EnemySpawn : MonoBehaviour
     private bool goingNextWave = false;
 
     public GameObject enemyPrefab;
-    
-
-    int waveCount;
 
     private void Start()
     {

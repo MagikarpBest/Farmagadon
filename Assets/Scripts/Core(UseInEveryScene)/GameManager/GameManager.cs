@@ -145,16 +145,16 @@ public class GameManager : MonoBehaviour
         AudioService.AudioManager.PlayBGM(combatBGM);
 
         //Playtest temporary fix
-        waveManager?.BeginLevel(SaveData.currentLevel);
-        // Initialize the current level from the database and start the game
-        //if (SaveData.currentLevel == 1) 
-        //{ 
-        //    UIManager.ShowCombatTutorial();
-        //}
-        //else
-        //{
-        //    waveManager?.BeginLevel(SaveData.currentLevel);
-        //}
+        //waveManager?.BeginLevel(SaveData.currentLevel);
+        //Initialize the current level from the database and start the game
+        if (SaveData.currentLevel == 1)
+        {
+            UIManager.ShowCombatTutorial();
+        }
+        else
+        {
+            waveManager?.BeginLevel(SaveData.currentLevel);
+        }
 
         Debug.Log($"spawning level");
     }

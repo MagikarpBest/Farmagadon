@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DebugPatternData
   m_EditorClassIdentifier: 
   enemies:
-  - enemyPrefab: {fileID: 1940379239426215094, guid: af43c6b80da51074b9cd0bdc5535ce7c, type: 3}
+  - enemyPrefab: {fileID: 1940379239426215094, guid: 03c7a44499b9b5342b97f36af0d21101, type: 3}
     count: 1
     duration: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0833922945385488052b2d42f5e2c3, type: 3}
   m_Name: Level 7
   m_EditorClassIdentifier: 
-  levelName: Swarmmmm
+  levelName: Final Boss
   totalDuration: 60
   events:
   - time: 0
@@ -21,3 +21,5 @@ MonoBehaviour:
     wavePattern: {fileID: 11400000, guid: f5d09afbd82b75d46b980fa2040fe4f8, type: 2}
   - time: 15
     wavePattern: {fileID: 11400000, guid: 5b18cb1920914804fa51f85b9fa52cc6, type: 2}
+  - time: 55
+    wavePattern: {fileID: 11400000, guid: 2b1cb8f7f64431247a6c049f7c337b6a, type: 2}

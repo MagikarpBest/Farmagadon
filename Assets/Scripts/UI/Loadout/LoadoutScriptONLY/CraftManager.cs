@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class CraftManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] ammoName;
     [SerializeField] private TextMeshProUGUI[] ammoCountText;
     private AmmoData currentSelectedAmmo;
+    public event Action OnAmmoCrafted;
 
     public void OpenCraft(AmmoData currentSlot)
     {
@@ -57,6 +59,7 @@ public class CraftManager : MonoBehaviour
 
         // Refresh UI
         DisplayRequirement();
+        OnAmmoCrafted?.Invoke();
     }
     
     private void DisplayRequirement()
@@ -64,7 +67,6 @@ public class CraftManager : MonoBehaviour
         ammoImages[0].sprite = currentSelectedAmmo.craftingRequirements[0].ammo.icon;
         ammoImages[1].sprite = currentSelectedAmmo.craftingRequirements[1].ammo.icon;
         ammoImages[2].sprite = currentSelectedAmmo.icon;
-        return;
         ammoName[0].text = $"{currentSelectedAmmo.craftingRequirements[0].ammo.ammoName}";
         ammoName[1].text = $"{currentSelectedAmmo.craftingRequirements[1].ammo.ammoName}";
         ammoName[2].text = $"{currentSelectedAmmo.ammoName}";

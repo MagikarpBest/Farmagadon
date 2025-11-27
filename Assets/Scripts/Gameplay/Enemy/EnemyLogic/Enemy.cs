@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour, IDamageable
     private Coroutine slowRoutine;
     private Coroutine attackRoutine;
 
+    public EnemyData Data => enemyData;
+
     private void Awake()
     {
         // Save movementspeed to modify later
