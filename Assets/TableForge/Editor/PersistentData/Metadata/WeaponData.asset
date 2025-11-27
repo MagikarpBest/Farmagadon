@@ -15,7 +15,7 @@ MonoBehaviour:
   expandedTables:
     values: cf2d2f45bcaa85bb441c63e22958ab34b46977970047a45dd585be58
   transposedTables:
-    values: 00000000
+    values: 
   hiddenFields:
     values: 
   itemsTypeName: WeaponData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -45,7 +45,7 @@ MonoBehaviour:
       size: {x: 82, y: 50}
     - position: 11
       size: {x: 0, y: 0}
-    - position: 12
+    - position: 11
       size: {x: 0, y: 0}
     - position: 5
       size: {x: 321, y: 0}

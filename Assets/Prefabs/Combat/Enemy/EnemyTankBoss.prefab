@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 4720210101423255396}
   - component: {fileID: 8154638399408860453}
   m_Layer: 0
-  m_Name: EnemyTankTest
+  m_Name: EnemyTankBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,8 +118,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3.57, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.27, y: 2.27, z: 2.27}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4908080808740764945}
   - {fileID: 8177183426835357164}
@@ -159,7 +159,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.000000059604645}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -169,7 +169,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.8101913}
+  m_Size: {x: 1.3940756, y: 1.6446421}
   m_EdgeRadius: 0
 --- !u!50 &-1748277552686560176
 Rigidbody2D:
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyVisualHandler: {fileID: 8154638399408860453}
-  enemyData: {fileID: 11400000, guid: 75b4b7c60637f0f4289d012fc4376b13, type: 2}
+  enemyData: {fileID: 11400000, guid: 0430481583d7ae44988b9aae2e3f7822, type: 2}
   flashEffect: {fileID: 4720210101423255396}
 --- !u!114 &4720210101423255396
 MonoBehaviour:
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76657cbc1975317419b519414c60bb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashColor: {r: 2.297397, g: 2.297397, b: 2.297397, a: 1}
+  flashColor: {r: 1.7207954, g: 1.7207954, b: 1.7207954, a: 1}
   flashTimer: 0.2
   flashCooldown: 0
 --- !u!114 &8154638399408860453
@@ -262,6 +262,7 @@ MonoBehaviour:
     recoilEase: 24
     recoilElasticity: 1.4
     recoilAmplitude: 0.3
+  enemyHitClip: {fileID: 8300000, guid: ad36d623dda579e418b23ed69856c26b, type: 3}
 --- !u!1 &1976188481713807388
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,8 +370,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c44a655b713241944a0f82991a07434c, type: 3}
+  m_SortingOrder: 12
+  m_Sprite: {fileID: 21300000, guid: b3dbeb8cef127fa49b9e0af60436a470, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

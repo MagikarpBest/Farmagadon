@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2200329525127851901}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.176, z: 0}
+  m_LocalPosition: {x: 0, y: -0.11, z: 0}
   m_LocalScale: {x: 0.6457571, y: 0.6457571, z: 0.6457571}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 055858a892676534180f8afc0200d866, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 3543306645227628300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.013, y: 0.0638, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.3335263, y: 1.9086459, z: 0.97117966}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 7022358537389644620}
   - component: {fileID: 5017107506207728239}
   m_Layer: 0
-  m_Name: EnemyShieldTest
+  m_Name: EnemyShield
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.030637145, y: 0.055146813}
+  m_Offset: {x: 0.030637145, y: 0.109025896}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -257,7 +257,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.232842, y: 1.6127427}
+  m_Size: {x: 1.232842, y: 1.5049845}
   m_EdgeRadius: 0
 --- !u!50 &3284126174936020815
 Rigidbody2D:
@@ -350,7 +350,7 @@ MonoBehaviour:
     recoilEase: 24
     recoilElasticity: 1.4
     recoilAmplitude: 0.3
-  enemyHitClip: {fileID: 0}
+  enemyHitClip: {fileID: 8300000, guid: ad36d623dda579e418b23ed69856c26b, type: 3}
 --- !u!1 &4873816120495923774
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +381,7 @@ Transform:
   m_GameObject: {fileID: 4873816120495923774}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.2880001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -422,7 +422,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0004069805, y: -0.59433186}
+  m_Offset: {x: -0.0004069805, y: -0.93299997}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -432,7 +432,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.7681856, y: 0.26425266}
+  m_Size: {x: 1.7681856, y: 0.26425242}
   m_EdgeRadius: 0
 --- !u!50 &247603079813941729
 Rigidbody2D:
@@ -510,7 +510,7 @@ MonoBehaviour:
     recoilEase: 24
     recoilElasticity: 0.5
     recoilAmplitude: 0
-  enemyHitClip: {fileID: 0}
+  enemyHitClip: {fileID: 8300000, guid: ad36d623dda579e418b23ed69856c26b, type: 3}
 --- !u!114 &19760794512621963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,7 +601,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 4369315618931253590, guid: ed02e921923745b49a0ff3fa9bf3912c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

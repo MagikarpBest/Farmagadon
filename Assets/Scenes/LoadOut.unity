@@ -3681,7 +3681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6690957542152636751, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7412926114004694983, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_Pivot.x
@@ -4387,13 +4387,13 @@ MonoBehaviour:
   - {fileID: 1620150225161996138}
   - {fileID: 6677107365531774975}
   ammoName:
-  - {fileID: 0}
+  - {fileID: 1990409212}
   - {fileID: 2002856484}
-  - {fileID: 0}
+  - {fileID: 1861436088}
   ammoCountText:
-  - {fileID: 0}
+  - {fileID: 451872657}
   - {fileID: 978712284}
-  - {fileID: 0}
+  - {fileID: 222016550}
 --- !u!114 &1109739612 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1002755787554602893, guid: b3f474be5c39c4d49a09d2eddb0dd2b0, type: 3}
@@ -11250,11 +11250,11 @@ MonoBehaviour:
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: 0}
   m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 0}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
