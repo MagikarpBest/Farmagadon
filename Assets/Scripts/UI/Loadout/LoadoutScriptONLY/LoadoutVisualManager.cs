@@ -107,6 +107,7 @@ public class LoadoutVisual : MonoBehaviour
 
     private void UpdateSelectedDescription(int selectedIndex)
     {
+        if (allOwned == null) { return; }
         if (selectedIndex < 0 || selectedIndex >= allOwned.Count)
         {
             weaponName.text = " ";

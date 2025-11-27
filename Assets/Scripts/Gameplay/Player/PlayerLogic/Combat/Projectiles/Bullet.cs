@@ -5,8 +5,7 @@ using UnityEngine.U2D;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private GameObject normalHitEffect;
-    [SerializeField] private GameObject explosiveHitEffect;
+    [SerializeField] private GameObject hitEffect;
     private WeaponData weaponData;
     private Rigidbody2D rb;
     private int pierceCountRemaining;
@@ -55,21 +54,25 @@ public class Bullet : MonoBehaviour
         {
             damageable.TakeDamage(Mathf.RoundToInt(weaponData.damage));
         }
-        if (normalHitEffect != null)
+        if (hitEffect != null)
         {
-            GameObject hitEffect = Instantiate(normalHitEffect, transform.position, Quaternion.identity);
+            GameObject instantiatedHitEffect = Instantiate(hitEffect, transform.position, Quaternion.identity);
         }
 
         // Apply any special effects (slow, split, etc.)
         HandleSpecialEffects();
 
-        pierceCountRemaining--;
         if (weaponData.pierceCount > 0)
         {
+            pierceCountRemaining--;
             if (pierceCountRemaining <= 0)
             {
-                Destroy(gameObject);
+                Destroy(gameObject, 0.1f); // tiny delay
             }
+        }
+        else
+        {
+            Destroy(gameObject, 0.1f);
         }
     }
 
@@ -82,6 +85,10 @@ public class Bullet : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
         }
 
+        if (hitEffect != null)
+        {
+            GameObject instantiatedHitEffect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+        }
         // Apply explosion damage first
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, weaponData.explosionRadius);
 
@@ -98,7 +105,21 @@ public class Bullet : MonoBehaviour
                 }
             }
         }
+
         HandleSpecialEffects();
+        if (weaponData.pierceCount > 0)
+        {
+            pierceCountRemaining--;
+            if (pierceCountRemaining <= 0)
+            {
+                Destroy(gameObject, 0.1f); // tiny delay
+            }
+        }
+        else
+        {
+            Destroy(gameObject, 0.1f);
+        }
+
     }
 
     private IEnumerator ReenableCollision(Collider2D collider, float delay)
@@ -110,6 +131,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    #region Special Effects
     private void HandleSpecialEffects()
     {
         if (weaponData.shrapnel != null && weaponData.shrapnel.enable) 
@@ -123,6 +145,11 @@ public class Bullet : MonoBehaviour
         if (weaponData.slowEffect != null && weaponData.slowEffect.enable)
         {
             StartCoroutine(ApplySlowEffect());
+        }
+        if (weaponData.firecracker != null && weaponData.firecracker.enable)
+        {
+            Debug.Log("fired firecracker");
+            StartCoroutine(FireCracker());
         }
     }
 
@@ -245,6 +272,52 @@ public class Bullet : MonoBehaviour
         }
         yield return null;
     }
+    private IEnumerator FireCracker()
+    {
+        Debug.Log("successfully fired firecracker ammo");
+        var fc = weaponData.firecracker;
+        yield return new WaitForSeconds(0.05f);
+
+        Vector2 forward = transform.up; // now base directions on forward
+
+        float angleStep = fc.backSpreadAngle / (fc.pelletCount - 1);
+        float startAngle = -fc.backSpreadAngle / 2f;
+
+        for (int i = 0; i < fc.pelletCount; i++)
+        {
+            float angle = startAngle + angleStep * i;
+            // rotate forward vector by angle
+            Vector2 dir = Quaternion.Euler(0f, 0f, angle) * forward;
+
+            Vector3 spawnPos = transform.position + (Vector3)(forward * fc.backwardOffset);
+
+            // Instantiate with rotation matching dir
+            Quaternion rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
+            GameObject bulletGO = Instantiate(fc.bulletPrefab, spawnPos, rotation);
+
+            Bullet bullet = bulletGO.GetComponent<Bullet>();
+            if (bullet == null)
+            {
+                Debug.LogError("Firecracker bullet prefab missing Bullet script!");
+                continue;
+            }
+
+            // Fire bullet
+            bullet.Fire(dir.normalized * fc.firecrackerWeaponData.bulletSpeed, fc.firecrackerWeaponData);
+
+            // Disable collider briefly
+            Collider2D collider = bullet.GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+                bullet.StartCoroutine(ReenableCollision(collider, 0.15f));
+            }
+        }
+    }
+
+
+
+    #endregion Special Effects
 
     private void OnTriggerEnter2D(Collider2D other)
     {

@@ -33,12 +33,12 @@ public class SaveData
     public SaveData() 
     {
         // Default weapon on new game
-        string starterWeapon = "weapon_rice";
+        string starterWeapon = "weapon_potato";
         ownedWeaponIDs.Add(starterWeapon);
         equippedWeaponIDs.Add(starterWeapon);  
 
         // Give starting ammo (unlimited
-        string starterAmmo = "ammo_rice";
+        string starterAmmo = "ammo_potato";
         int starterAmmoCount = 99999;
 
         ownedAmmoIDs.Add(starterAmmo);

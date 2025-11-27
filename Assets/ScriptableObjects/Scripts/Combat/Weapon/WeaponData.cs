@@ -61,4 +61,19 @@ public class WeaponData : ScriptableObject
 
     [Header("Split Settings")]
     public SplitSettings split = new SplitSettings();
+
+    [Serializable]
+    public class FirecrackerSettings
+    {
+        [Header("Firecracker Effect (shoots backward shotgun on hit)")]
+        public bool enable = false;
+        public int pelletCount = 5;         // how many bullets to fire
+        public float backSpreadAngle = 30f; // spread of backward pellets
+        public float backwardOffset = 0.5f; // spawn a bit behind enemy
+        public GameObject bulletPrefab;     // bullet to shoot backward
+        public WeaponData firecrackerWeaponData; // data for these pellets
+    }
+
+    [Header("Firecracker Settings")]
+    public FirecrackerSettings firecracker = new FirecrackerSettings();
 }

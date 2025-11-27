@@ -28,9 +28,9 @@ MonoBehaviour:
   spread: 0
   shrapnel:
     enable: 0
-    count: 0
-    bulletPrefab: {fileID: 0}
-    shrapnelWeaponData: {fileID: 0}
+    count: 3
+    bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
+    shrapnelWeaponData: {fileID: 11400000, guid: 4faf61cf99ff0c54888ce28775298c98, type: 2}
   slowEffect:
     enable: 0
     slowAmount: 0.5
@@ -40,3 +40,10 @@ MonoBehaviour:
     bulletPrefab: {fileID: 0}
     splitWeaponData: {fileID: 0}
     spreadAngle: 45
+  firecracker:
+    enable: 0
+    pelletCount: 5
+    backSpreadAngle: 30
+    backwardOffset: 0.5
+    bulletPrefab: {fileID: 0}
+    firecrackerWeaponData: {fileID: 0}

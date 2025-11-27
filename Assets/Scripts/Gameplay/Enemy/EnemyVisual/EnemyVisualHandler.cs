@@ -69,11 +69,6 @@ public class EnemyVisualHandler : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void InitializeVisuals()
     {
         if (MovementVisualRoot == null)
@@ -174,7 +169,11 @@ public class EnemyVisualHandler : MonoBehaviour
         {
             yield break;
         }
-        AudioService.AudioManager.PlayOneShot(enemyHitClip, 1f);
+
+        if (enemyHitClip != null)
+        {
+            AudioService.AudioManager.PlayOneShot(enemyHitClip, 1f);
+        }
         // Stop any ongoing tweens (optional safety)
         hitEffectRoot.DOKill();
         hitEffectRoot.localPosition = basePosition;

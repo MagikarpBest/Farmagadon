@@ -21,7 +21,7 @@ MonoBehaviour:
   lifeTime: 3
   bulletSpeed: 10
   damage: 1
-  pierceCount: 0
+  pierceCount: 1
   explosionRadius: 1
   fireRate: 0.2
   pelletCount: 1
@@ -29,7 +29,7 @@ MonoBehaviour:
   shrapnel:
     enable: 0
     count: 5
-    bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
+    bulletPrefab: {fileID: 6037540156501391096, guid: 0034eda3ffcf874448c9a5bef2a9c4c4, type: 3}
     shrapnelWeaponData: {fileID: 11400000, guid: 4faf61cf99ff0c54888ce28775298c98, type: 2}
   slowEffect:
     enable: 0
@@ -38,5 +38,12 @@ MonoBehaviour:
   split:
     enable: 0
     bulletPrefab: {fileID: 3267392343543207434, guid: 93dfbf02c67888047bd4c337d2fee202, type: 3}
-    splitWeaponData: {fileID: 11400000, guid: 966e3dd4527721d43b8261856af9446a, type: 2}
+    splitWeaponData: {fileID: 0}
     spreadAngle: 180
+  firecracker:
+    enable: 0
+    pelletCount: 5
+    backSpreadAngle: 30
+    backwardOffset: 0.5
+    bulletPrefab: {fileID: 6037540156501391096, guid: 0034eda3ffcf874448c9a5bef2a9c4c4, type: 3}
+    firecrackerWeaponData: {fileID: 11400000, guid: 4faf61cf99ff0c54888ce28775298c98, type: 2}

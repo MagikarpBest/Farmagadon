@@ -27,19 +27,37 @@ MonoBehaviour:
     chooseOne: 0
   - levelNumber: 4
     rewardWeaponIDs:
+    - weapon_ricecorn
     - weapon_ricepotato
     - weapon_ricecarrot
     - weapon_cornpotato
+    - weapon_corncarrot
+    - weapon_potatocarrot
     chooseOne: 1
   - levelNumber: 5
     rewardWeaponIDs:
+    - weapon_ricecorn
     - weapon_ricepotato
     - weapon_ricecarrot
     - weapon_cornpotato
+    - weapon_corncarrot
+    - weapon_potatocarrot
     chooseOne: 1
   - levelNumber: 6
     rewardWeaponIDs:
+    - weapon_ricecorn
     - weapon_ricepotato
     - weapon_ricecarrot
     - weapon_cornpotato
+    - weapon_corncarrot
+    - weapon_potatocarrot
+    chooseOne: 1
+  - levelNumber: 7
+    rewardWeaponIDs:
+    - weapon_ricecorn
+    - weapon_ricepotato
+    - weapon_ricecarrot
+    - weapon_cornpotato
+    - weapon_corncarrot
+    - weapon_potatocarrot
     chooseOne: 1

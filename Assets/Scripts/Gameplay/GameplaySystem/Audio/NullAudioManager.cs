@@ -12,11 +12,11 @@ public class NullAudioManager : IAudio
 
     public void PlayOneShot(AudioClip clip, float volumeScale = 1)
     {
-        Debug.Log($"[This is NullAudioManager], you tried to play {clip.name} at volume {volumeScale} but this is not the right manager");
+        Debug.LogWarning($"[This is NullAudioManager], you tried to play {clip.name} at volume {volumeScale} but this is not the right manager");
     }
     public void PlayBGM(AudioClip clip, float volumeScale = 1)
     {
-        Debug.Log($"[This is NullAudioManager], you tried to play {clip.name} at volume {volumeScale} but this is not the right manager");
+        Debug.LogWarning($"[This is NullAudioManager], you tried to play {clip.name} at volume {volumeScale} but this is not the right manager");
     }
     public void StopClip()
     {
@@ -25,7 +25,7 @@ public class NullAudioManager : IAudio
 
     public void BufferPlayOneShot(AudioClip clip, float volumeScale = 1)
     {
-        Debug.Log($"[This is NullAudioManager], you tried to buffer {clip.name} at volume {volumeScale} but this is not the right manager");
+        Debug.LogWarning($"[This is NullAudioManager], you tried to buffer {clip.name} at volume {volumeScale} but this is not the right manager");
     }
 
     public void FadeOutBGM(float duration)

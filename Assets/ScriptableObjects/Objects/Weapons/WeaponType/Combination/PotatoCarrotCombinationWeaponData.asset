@@ -21,8 +21,8 @@ MonoBehaviour:
   lifeTime: 5
   bulletSpeed: 15
   damage: 2
-  pierceCount: 99
-  explosionRadius: 0
+  pierceCount: 1
+  explosionRadius: 1
   fireRate: 0.2
   pelletCount: 1
   spread: 0
@@ -40,3 +40,10 @@ MonoBehaviour:
     bulletPrefab: {fileID: 0}
     splitWeaponData: {fileID: 0}
     spreadAngle: 45
+  firecracker:
+    enable: 0
+    pelletCount: 5
+    backSpreadAngle: 30
+    backwardOffset: 0.5
+    bulletPrefab: {fileID: 0}
+    firecrackerWeaponData: {fileID: 0}

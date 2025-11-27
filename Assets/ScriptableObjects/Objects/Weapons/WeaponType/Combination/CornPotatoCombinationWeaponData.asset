@@ -41,3 +41,10 @@ MonoBehaviour:
     bulletPrefab: {fileID: 0}
     splitWeaponData: {fileID: 0}
     spreadAngle: 45
+  firecracker:
+    enable: 1
+    pelletCount: 5
+    backSpreadAngle: 30
+    backwardOffset: 0.5
+    bulletPrefab: {fileID: 0}
+    firecrackerWeaponData: {fileID: 0}
