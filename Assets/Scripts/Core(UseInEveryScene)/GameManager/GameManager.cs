@@ -143,6 +143,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("combat bgm");
         AudioService.AudioManager.FadeInBGM();
         AudioService.AudioManager.PlayBGM(combatBGM);
+
+        //Playtest temporary fix
+        waveManager?.BeginLevel(SaveData.currentLevel);
         // Initialize the current level from the database and start the game
         //if (SaveData.currentLevel == 1) 
         //{ 
@@ -152,7 +155,7 @@ public class GameManager : MonoBehaviour
         //{
         //    waveManager?.BeginLevel(SaveData.currentLevel);
         //}
-            
+
         Debug.Log($"spawning level");
     }
     #endregion
