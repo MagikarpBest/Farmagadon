@@ -20,6 +20,7 @@ public class MainMenuUI : MonoBehaviour
 
     [SerializeField] private CircleTransition circleTransition;
 
+    [SerializeField] private UIBounceDown UIBouncer;
 
     private SaveData saveData;
     private float switchDelay = 0.8f;
@@ -81,6 +82,7 @@ public class MainMenuUI : MonoBehaviour
     {
         optionMenu.SetActive(true);
         blocker.SetActive(true);
+        UIBouncer.MoveUI();
         StartCoroutine(SelectOnNextFrame(volumeSlider));
     }
     public void CreditInactive()
@@ -93,8 +95,9 @@ public class MainMenuUI : MonoBehaviour
     public void OptionInactive()
     {
         GameObject optionBtn = optionButton.gameObject;
-        optionMenu.SetActive(false);
+        //optionMenu.SetActive(false);
         blocker.SetActive(false);
+        UIBouncer.HideUI();
         StartCoroutine(SelectOnNextFrame(optionBtn));
         
     }

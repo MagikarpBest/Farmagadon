@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject combatTutorialPanel;      // Tutorial UI
     [SerializeField] private GameObject loadoutTutorialPanel;      // Tutorial UI
 
+    [SerializeField] private UIBounceDown UIBouncer;                // UI bounce
+
 
     public event Action OnVictoryCompleted;
 
@@ -74,12 +76,15 @@ public class UIManager : MonoBehaviour
 
             case UIScreen.FarmTutorial:
                 SafeShow(farmTutorialPanel);
+                UIBouncer.MoveUI();
                 break;
             case UIScreen.CombatTutorial:
                 SafeShow(combatTutorialPanel);
+                UIBouncer.MoveUI();
                 break;
             case UIScreen.LoadoutTutorial:
                 SafeShow(loadoutTutorialPanel);
+                UIBouncer.MoveUI();
                 break;
         }
     }
@@ -109,13 +114,16 @@ public class UIManager : MonoBehaviour
                 ShowPause(true);
                 break;
             case UIScreen.FarmTutorial:
-                SafeHide(farmTutorialPanel);
+                //SafeHide(farmTutorialPanel);
+                UIBouncer?.HideUI();
                 break;
             case UIScreen.CombatTutorial:
-                SafeHide(combatTutorialPanel);
+                //SafeHide(combatTutorialPanel);
+                UIBouncer?.HideUI();
                 break;
             case UIScreen.LoadoutTutorial:
-                SafeHide(loadoutTutorialPanel);
+                //SafeHide(loadoutTutorialPanel);
+                UIBouncer?.HideUI();
                 break;
         }
     }

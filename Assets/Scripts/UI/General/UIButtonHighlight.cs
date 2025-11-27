@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System.Collections;
+using Unity.Hierarchy;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,15 +15,18 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
     [SerializeField] private Image highlightImage;
     [SerializeField] private GameObject highlightImageObject;
 
-    private const float zeroAlphaValue = 0.0f;
+    private const float zeroAlphaValue = 0.5f;
     private const float oneAlphaValue = 1.0f;
+    private bool outlineShowing;
+    private bool inhale = false;
 
     private void Start()
     {
         if (highlightImage != null)
         {
             highlightImage.enabled = false;
-            //highlightImage.color = new Color(highlightImage.color.r, highlightImage.color.g, highlightImage.color.b, 0.0f);
+            highlightImage.DOFade(zeroAlphaValue, 0.0f);
+            outlineShowing = false;
         }
         if (highlightImageObject != null)
         {
@@ -34,7 +39,8 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
         if (highlightImage != null)
         {
             highlightImage.enabled = true;
-            //StartCoroutine(OutlineBreathe());
+            outlineShowing = true;
+            StartCoroutine(OutlineBreathe());
         }
         if (highlightImageObject != null)
         {
@@ -46,9 +52,10 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         if (highlightImage != null)
         {
-            highlightImage.enabled = false;
-            //StopCoroutine(OutlineBreathe());
-            //StartCoroutine(OutlineFade());
+            //highlightImage.enabled = false;
+            outlineShowing = false;
+            StopCoroutine(OutlineBreathe());
+            StartCoroutine(OutlineFade());
         }
 
         if (highlightImageObject != null)
@@ -59,11 +66,32 @@ public class UIButtonHighlight : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     private IEnumerator OutlineBreathe()
     {
-        yield return new WaitForEndOfFrame();
+        Tween tween;
+        while(outlineShowing)
+        {
+            if (!inhale)
+            {
+                inhale = true;
+                tween = highlightImage.DOFade(oneAlphaValue, 0.5f);
+            }
+            else
+            {
+                inhale = false;
+                tween = highlightImage.DOFade(zeroAlphaValue, 0.5f);
+            }
+            yield return tween.WaitForCompletion();
+
+        }
+        inhale = false;
+        highlightImage.DOFade(zeroAlphaValue, 0.0f);
+        yield return null;
     }
 
     private IEnumerator OutlineFade()
     {
-        yield return new WaitForEndOfFrame();
+
+        Tween fadeTween = highlightImage.DOFade(0.0f, 0.2f);
+        yield return fadeTween.WaitForCompletion();
+        highlightImage.enabled = false;
     }
 }
