@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2200329525127851901}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.11, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.34, z: 0}
   m_LocalScale: {x: 0.6457571, y: 0.6457571, z: 0.6457571}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5391595747654873035}
+  m_Father: {fileID: 4885093434939678968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5616461464101819509
 SpriteRenderer:
@@ -247,7 +247,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.030637145, y: 0.109025896}
+  m_Offset: {x: 0.030637145, y: 0.044482827}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -257,7 +257,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.232842, y: 1.5049845}
+  m_Size: {x: 1.232842, y: 1.6340706}
   m_EdgeRadius: 0
 --- !u!50 &3284126174936020815
 Rigidbody2D:
@@ -385,7 +385,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2835540907515669463}
+  - {fileID: 4885093434939678968}
   m_Father: {fileID: 8557796977735359132}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &7398535754747467112
@@ -422,7 +422,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0004069805, y: -0.93299997}
+  m_Offset: {x: -0.0004069805, y: -1.1185771}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -432,7 +432,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.7681856, y: 0.26425242}
+  m_Size: {x: 1.7681856, y: 0.2422545}
   m_EdgeRadius: 0
 --- !u!50 &247603079813941729
 Rigidbody2D:
@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementVisualRoot: {fileID: 0}
-  hitEffectRoot: {fileID: 2835540907515669463}
+  hitEffectRoot: {fileID: 4885093434939678968}
   deathEffectDuration: 0.5
   wiggleSpeed: 0
   wiggleAmount: 0
@@ -644,4 +644,36 @@ Transform:
   m_Children:
   - {fileID: 8244239229275057153}
   m_Father: {fileID: 8557796977735359132}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9099579331367376383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4885093434939678968}
+  m_Layer: 0
+  m_Name: EnemyShieldVisualRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4885093434939678968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9099579331367376383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2835540907515669463}
+  m_Father: {fileID: 5391595747654873035}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

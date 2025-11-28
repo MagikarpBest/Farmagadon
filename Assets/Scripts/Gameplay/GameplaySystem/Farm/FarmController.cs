@@ -32,7 +32,7 @@ public class FarmController : MonoBehaviour
     public void OnEnable()
     {
         timer.OnTimerEnded += EndFarmCycle;
-        
+        Init();
     }
 
     public void OnDisable()
@@ -40,11 +40,11 @@ public class FarmController : MonoBehaviour
         timer.OnTimerEnded -= EndFarmCycle;
     }
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
     {
         //gameStart?.Invoke(); // ideally this should start the whole farm sequence+UI but i not sure how exactly it will happen so for now it runs on start
         saveData = SaveSystem.LoadGame();
+        Debug.Log($"current farm level = {saveData.currentLevel}");
     }
 
 

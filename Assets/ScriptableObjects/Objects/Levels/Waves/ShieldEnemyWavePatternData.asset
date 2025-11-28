@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ShieldEnemyWavePatternData
   m_EditorClassIdentifier: 
   enemies:
-  - enemyPrefab: {fileID: 1940379239426215094, guid: 1ae25ab3e7b8ec1489eb314d79e5986b, type: 3}
+  - enemyPrefab: {fileID: 3896176299776463598, guid: 1ae25ab3e7b8ec1489eb314d79e5986b, type: 3}
     count: 5
     duration: 15

@@ -10,22 +10,31 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement; // Make it stop while shooting
     [SerializeField] private PlayerVisualHandler playerVisualHandler;
 
+    private bool isHoldingShoot = false;    
     private WeaponSlot currentSlot;
     private float nextFireTime;
     private bool isShooting = false;
+    private PlayerInput p_Input;
 
     private void OnEnable()
     {
-        gameInput.OnShootAction += HandleShoot;
+        //p_Input = new PlayerInput();
+        //p_Input.Player.Enable();
+        gameInput.OnShootAction += GameInput_OnShootPerformed;
+        gameInput.OnShootReleased += GameInput_OnShootReleased;
         gameInput.OnPreviousWeapon += HandlePreviousWeapon;
         gameInput.OnNextWeapon += HandleNextWeapon;
 
         weaponInventory.OnWeaponChanged += HandleWeaponChange;
     }
 
+
+
     private void OnDisable()
     {
-        gameInput.OnShootAction -= HandleShoot;
+        //p_Input.Player.Disable();
+        gameInput.OnShootAction -= GameInput_OnShootPerformed;
+        gameInput.OnShootReleased -= GameInput_OnShootReleased;
         gameInput.OnPreviousWeapon -= HandlePreviousWeapon;
         gameInput.OnNextWeapon -= HandleNextWeapon;
 
@@ -54,9 +63,52 @@ public class PlayerShooting : MonoBehaviour
             Debug.Log("Empty slot selected");
         }
     }
+    private void Update()
+    {
+        //if (p_Input.Player.Shoot.IsPressed())
+        //{
+        //    if (isShooting)
+        //    {
+        //        // Make player can only stop and shoot
+        //        return;
+        //    }
+
+        //    if (!weaponInventory.CanSwitchWeapon)
+        //    {
+        //        // Prevent shooting during weapon swap animation
+        //        return;
+        //    }
+
+        //    if (currentSlot == null || currentSlot.weaponData == null)
+        //    {
+        //        return;
+        //    }
+
+        //    if (Time.time < nextFireTime)
+        //    {
+        //        // Fire rate check
+        //        return;
+        //    }
+        //    // Reduce ammo after shoot
+        //    if (!ammoInventory.ConsumeAmmo(currentSlot.weaponData.ammoType, 1))
+        //    {
+        //        Debug.Log("Out of ammo for: " + currentSlot.weaponData.weaponName);
+        //        return;
+        //    }
+
+        //    StartCoroutine(ShootRoutine(currentSlot.weaponData));
+        //}
+
+        HandleShoot();
+    }
 
     private void HandleShoot()
     {
+        if (!isHoldingShoot)
+        {
+            return;
+        }
+
         if (isShooting)
         {   
             // Make player can only stop and shoot
@@ -89,6 +141,14 @@ public class PlayerShooting : MonoBehaviour
         StartCoroutine(ShootRoutine(currentSlot.weaponData));
     }
 
+    private void GameInput_OnShootPerformed()
+    {
+        isHoldingShoot = true;
+    }
+    private void GameInput_OnShootReleased()
+    {
+        isHoldingShoot = false;
+    }
     private IEnumerator ShootRoutine(WeaponData weapon)
     {
         isShooting = true;

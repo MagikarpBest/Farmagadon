@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
     {
         SaveAll();
         Debug.Log($"[TEST] CurrentPhase before load: {gameStateManager.CurrentPhase}");
-        Debug.Log($"[GameManager] Progress saved. Next level: {SaveData.currentLevel + 1}, Next phase: {gameStateManager.CurrentPhase}");
+        Debug.Log($"[GameManager] Progress saved. Next level: {SaveData.currentLevel}, Next phase: {gameStateManager.CurrentPhase}");
         yield return circleTransition.GoingInTransition();
         sceneController.LoadScene(GetNextSceneName());
     }

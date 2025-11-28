@@ -68,12 +68,22 @@ public class Bullet : MonoBehaviour
             if (pierceCountRemaining <= 0)
             {
                 spriteRender.enabled = false;
+                Collider2D collider = gameObject.GetComponent<Collider2D>();
+                if (collider != null)
+                {
+                    collider.enabled = false;
+                }
                 Destroy(gameObject, 0.1f); // tiny delay
             }
         }
         else
         {
             spriteRender.enabled = false;
+            Collider2D collider = gameObject.GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
             Destroy(gameObject, 0.1f);
         }
     }
@@ -115,12 +125,22 @@ public class Bullet : MonoBehaviour
             if (pierceCountRemaining <= 0)
             {
                 spriteRender.enabled = false;
+                Collider2D collider = gameObject.GetComponent<Collider2D>();
+                if (collider != null)
+                {
+                    collider.enabled = false;
+                }
                 Destroy(gameObject, 0.1f); // tiny delay
             }
         }
         else
         {
             spriteRender.enabled = false;
+            Collider2D collider = gameObject.GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
             Destroy(gameObject, 0.1f);
         }
 

@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public event Action<Enemy> OnDeath;
 
-    private Collider2D[] colliders;
+    private Collider2D gameObjectColllider;
     private float originalMoveSpeed;
     private float currentMoveSpeed;
     private int currentHealth;
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour, IDamageable
         currentMoveSpeed = originalMoveSpeed;
 
         currentHealth = enemyData.maxHealth;
-        colliders = GetComponentsInChildren<Collider2D>();
+        gameObjectColllider = gameObject.GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -102,10 +102,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
         Debug.Log(enemyData.enemyName + " died");
 
-        foreach (var collider in colliders)
-        {
-            collider.enabled = false;
-        }
+        gameObjectColllider.enabled = false;
 
         // Stop attack if died
         if (attackRoutine != null)

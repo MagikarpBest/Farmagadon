@@ -8,6 +8,7 @@ public class GameInput : MonoBehaviour
     public event Action OnNextWeapon;
     public event Action OnPreviousWeapon;
     public event Action OnPause;
+    public event Action OnShootReleased;
 
     private PlayerInput playerInput;
 
@@ -17,9 +18,13 @@ public class GameInput : MonoBehaviour
         playerInput.Player.Enable();
         playerInput.Player.Pause.performed += Pause_performed;
         playerInput.Player.Shoot.performed += Shoot_performed;
+        playerInput.Player.Shoot.canceled += Shoot_canceled;
         playerInput.Player.PreviousWeapon.performed += PreviousWeapon_performed;
         playerInput.Player.NextWeapon.performed += NextWeapon_performed;
     }
+
+
+
     private void OnDisable()
     {
         playerInput.Player.Disable();
@@ -41,6 +46,12 @@ public class GameInput : MonoBehaviour
     {
         OnShootAction?.Invoke();
         Debug.Log("Space pressed");
+    }
+
+    private void Shoot_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnShootReleased?.Invoke();
+        Debug.Log("Space released");
     }
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
