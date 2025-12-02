@@ -4880,7 +4880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6690957542152636751, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7412926114004694983, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_Pivot.x
@@ -5764,7 +5764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3850036665748686062, guid: 7dbd32f583a63334a870b617899ff4f9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4995962667598507454, guid: 7dbd32f583a63334a870b617899ff4f9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5837,7 +5837,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightImage: {fileID: 28518137}
-  highlightImageObject: {fileID: 0}
 --- !u!114 &6776002790584438959
 MonoBehaviour:
   m_ObjectHideFlags: 0

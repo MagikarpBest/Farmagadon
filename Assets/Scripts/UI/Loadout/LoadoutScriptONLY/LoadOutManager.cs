@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,6 +25,9 @@ public class LoadoutManager : MonoBehaviour
     [SerializeField] private GameObject craftButton;
     [SerializeField] private GameObject craftPopupUI;
 
+    [Header("Tutorial Button (optional)")]
+    [SerializeField] private GameObject tutorialButton;
+
     // EVENT
     public Action<int> OnInventorySlotChanged;
     public Action OnTriggerUIUpdate;
@@ -32,12 +36,14 @@ public class LoadoutManager : MonoBehaviour
     private Button lastSelectedButton; // store the button that opened equip popup
     private GameObject activePopup; // Only one popup active at a time
     private List<WeaponSlot> allOwned;
+    private bool loadoutTutorialFinished = false;
 
 
     // For navigation memory and button navigation logics
     private UINavigationMemory loadoutNav;
     private UINavigationMemory equipNav;
     private UINavigationMemory craftNav;
+
 
     private void OnEnable()
     {
@@ -54,7 +60,10 @@ public class LoadoutManager : MonoBehaviour
             gameInput.OnPause -= () => CloseActivePopup(true);
         }
     }
-
+    private void onTutorialFinished()
+    {
+        loadoutTutorialFinished = true;
+    }
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(0.3f);
@@ -69,6 +78,12 @@ public class LoadoutManager : MonoBehaviour
         loadoutNav = loadoutPanel.GetComponent<UINavigationMemory>();
         equipNav = equipPopupUI.GetComponent<UINavigationMemory>();
         craftNav = craftPopupUI.GetComponent<UINavigationMemory>();
+
+        if (!loadoutTutorialFinished && tutorialButton != null)
+        {
+            
+            EventSystem.current.SetSelectedGameObject(tutorialButton);
+        }
     }
 
     // Clean slot index selection function
@@ -293,7 +308,10 @@ public class LoadoutManager : MonoBehaviour
         RectTransform Button = sourceButton.GetComponent<RectTransform>();
         RectTransform popupLocation = popup.GetComponent<RectTransform>();
 
-        popupLocation.position = Button.position + new Vector3(200f, 0f, 0f);
+        Vector3 targetPosition = Button.position + new Vector3(250f, 0f, 0f);
+        popupLocation.position = targetPosition - new Vector3(Screen.width,0f, 0f);
+
+        popupLocation.DOMove(targetPosition, 0.4f).SetEase(Ease.InOutBack);
     }
     #endregion
 }
