@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using Unity.Properties;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIBounceDown : MonoBehaviour
 {
@@ -29,6 +30,6 @@ public class UIBounceDown : MonoBehaviour
     {
         Tween moveTween = gameObject.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, hiddenY), 1.0f).SetEase(Ease.InOutBack);
         yield return moveTween.WaitForCompletion();
-        gameObject.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }

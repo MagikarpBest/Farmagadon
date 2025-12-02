@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 2148072015258211121}
   - component: {fileID: 912771122391196938}
   - component: {fileID: 884519144303638250}
+  - component: {fileID: 1165244960702842191}
   m_Layer: 5
   m_Name: BagButton1
   m_TagString: Untagged
@@ -429,6 +430,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9bc969456ae834499e6e4e7a5a078b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1165244960702842191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894441717241758045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893bc3b1dcc8a84489c65b6543ca3f6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightImage: {fileID: 7850340093587638027}
+  highlightImageObject: {fileID: 0}
 --- !u!1 &4312645130911983376
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,8 +569,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0177, y: -0.2131}
-  m_SizeDelta: {x: 198.2112, y: 196.1219}
+  m_AnchoredPosition: {x: 0.157, y: 0.484}
+  m_SizeDelta: {x: 211.2424, y: 210.9634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2690967895123533972
 CanvasRenderer:
@@ -585,7 +600,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 33e98f86f12e4054e8ad064aa1e65605, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6a6a24ac1d54b1b40aac510c93111475, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -796,8 +811,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00044954, y: -87.48152}
-  m_SizeDelta: {x: 153.61, y: 58.5271}
+  m_AnchoredPosition: {x: 0.0000090301, y: -94}
+  m_SizeDelta: {x: 166.1146, y: 57.5652}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1375006330220746083
 CanvasRenderer:
@@ -827,8 +842,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1a92fe22eee763a47bcb3969b433a7ba, type: 3}
-  m_Type: 2
+  m_Sprite: {fileID: 21300000, guid: 6a6a24ac1d54b1b40aac510c93111475, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

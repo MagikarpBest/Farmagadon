@@ -121,7 +121,6 @@ public class GameManager : MonoBehaviour
         if (SaveData.currentLevel == 2)
         {
             UIManager.ShowFarmTutorial();
-            yield return new WaitForSeconds(10.0f);
         } else
         {
             farmController.BeginFarmCycle(SaveData.currentLevel - 2);
@@ -133,7 +132,10 @@ public class GameManager : MonoBehaviour
     {
         yield return null;
         Debug.Log("[GameManager] Starting LOADOUT phase.");
-        //if (SaveData.currentLevel == 2) { UIManager.ShowLoadoutTutorial(); }
+        if (SaveData.currentLevel == 2) 
+        { 
+            UIManager.ShowLoadoutTutorial(); 
+        }
         UIManager?.ShowHUD();
         yield return circleTransition.GoingOutTransition();
 
