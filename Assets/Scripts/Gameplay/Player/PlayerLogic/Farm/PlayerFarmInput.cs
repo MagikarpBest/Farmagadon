@@ -101,7 +101,7 @@ public class PlayerFarmInput : MonoBehaviour
         if (!FarmController.GetCycleStarted) { return; }
         if (playerFarmAnimator.PlayerAnimator.GetBool("digBool") == true) { return; }
         if (movementDone) { return; }
-
+        
         movementDone = true;
         
         if (prevDir != Vector2.zero)
@@ -123,14 +123,14 @@ public class PlayerFarmInput : MonoBehaviour
         playerPos = moveDir;
         gameObject.GetComponentInChildren<SpriteRenderer>().sortingOrder = gridController.TileMap.cellBounds.yMax - playerPos.y + 1;
         OnMovementEvent?.Invoke(moveinput);
-        player.DOMove(playerFinalPos, 0.833f).SetEase(Ease.InOutQuint);
+        player.DOMove(playerFinalPos, 0.5f).SetEase(Ease.InOutQuint);
         StartCoroutine(MovementInternalCooldown());
         
     }
 
     private IEnumerator MovementInternalCooldown() 
     {
-        moveCD = 1.0f;
+        moveCD = 0.5f;
 
         yield return new WaitForSeconds(moveCD);
 
