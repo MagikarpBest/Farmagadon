@@ -3154,7 +3154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6690957542152636751, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7412926114004694983, guid: 0bcbb2381e269b54b8d2260508e2c571, type: 3}
       propertyPath: m_Pivot.x
@@ -5548,6 +5548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcda7985a1810f4980ef1d2a01381fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1776432787}
   gameInput: {fileID: 8489242888806506498}
   loadoutPanel: {fileID: 1430272188}
   weaponInventory: {fileID: 1185385922134049834}

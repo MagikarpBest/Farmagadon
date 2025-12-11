@@ -193,9 +193,16 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HandleFarmEnd()
     {
-        SaveAll();
         Debug.Log("[GameManager] Farm level completed!");
         yield return circleTransition.GoingInTransition();
+        if (SaveData.currentLevel <= 4)
+        {
+            sceneController.LoadScene("CombatScene");
+            SaveData.currentPhase = GamePhase.Combat;
+            SaveAll();
+            yield break;
+        }
+        SaveAll();
         sceneController.LoadScene(GetNextSceneName());
     }
     /// <summary>
@@ -213,12 +220,11 @@ public class GameManager : MonoBehaviour
         // Complete level (give rewards, update progression)
         Debug.Log("[GameManager] Level completed!");
         //Time.timeScale = 0.0f;
-        if (SaveData.currentLevel == 7)
+        if (SaveData.currentLevel == 9)
         {
             yield return circleTransition.GoingInTransition();
             UIManager.ShowFinishVictory();
             yield return circleTransition.GoingOutTransition();
-
             yield break;
         }
         yield return circleTransition.GoingInTransition();
