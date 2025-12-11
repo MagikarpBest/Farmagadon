@@ -7,9 +7,6 @@ public class DayCycleLevelData : ScriptableObject
     [SerializeField] public CropEntityData[] cropsEntityList;
     public int dayCycleDuration;
 
-    [Header("Enemy that will show up")]
-    [SerializeField] public UpcomingEnemyData upcomingEnemyDatas;
-
 }
 
 [System.Serializable]

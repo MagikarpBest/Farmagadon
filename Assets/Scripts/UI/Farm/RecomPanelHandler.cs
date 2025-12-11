@@ -16,12 +16,7 @@ public class RecomPanelHandler : MonoBehaviour
 
     private void UpdateRecomPanel(DayCycleLevelData data)
     {
-        upcomingEnemyData = data.upcomingEnemyDatas;
-        for (int i = 0; i < bulletImages.Length; ++i)
-        {
-            //HandleEnemyIcons(i);
-            bulletImages[i].sprite = upcomingEnemyData.upcomingEnemyDatas[i].enemyWeakness;
-        }
+        
     }
 
     /*

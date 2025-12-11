@@ -108,7 +108,7 @@ public class PlayerFarmAnimator : MonoBehaviour
     {
         playerAnimator.SetBool(animDict[AnimState.Idle], false);
     }
-    private void SetAllAnimsFalse()
+    public void SetAllAnimsFalse()
     {
         foreach (var anim in animDict.Values)
         {

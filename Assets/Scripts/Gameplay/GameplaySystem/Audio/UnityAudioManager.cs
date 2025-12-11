@@ -5,8 +5,6 @@ using UnityEngine.Audio;
 
 public class UnityAudioManager : MonoBehaviour, IAudio
 {
-    private const string SFXFloatKey = VolumeManager.SFXVolumeFloatKey;
-    private const string MUSICFloatKey = VolumeManager.MusicVolumeFloatKey;
     [SerializeField] private AudioSource SFXAudioSource;
     [SerializeField] private AudioSource MUSICAudioSource;
 
