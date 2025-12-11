@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameStateManager gameStateManager;
     [SerializeField] private LevelRewardManager levelRewardManager;
     [SerializeField] private FarmController farmController;
+    [SerializeField] private GameInput gameInput;
 
     [Header("BGMs")]
     [SerializeField] private AudioClip farmBGM;
@@ -162,10 +163,6 @@ public class GameManager : MonoBehaviour
         {
             UIManager.ShowCombatTutorial();
         }
-        else if (SaveData.currentLevel == 7) 
-        {
-            
-        }
         else 
         {
             waveManager?.BeginLevel(SaveData.currentLevel);
@@ -212,9 +209,18 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator HandleCombatVictory()
     {
+        gameInput.playerInput.Disable();
         // Complete level (give rewards, update progression)
         Debug.Log("[GameManager] Level completed!");
-        Time.timeScale = 0.0f;
+        //Time.timeScale = 0.0f;
+        if (SaveData.currentLevel == 7)
+        {
+            yield return circleTransition.GoingInTransition();
+            UIManager.ShowFinishVictory();
+            yield return circleTransition.GoingOutTransition();
+
+            yield break;
+        }
         yield return circleTransition.GoingInTransition();
         levelManager.CompleteLevel();
         yield return circleTransition.GoingOutTransition();
@@ -237,6 +243,15 @@ public class GameManager : MonoBehaviour
         yield return circleTransition.GoingInTransition();
         sceneController.LoadScene(GetNextSceneName());
     }
+    
+    public void CombatRestart()
+    {
+        gameInput.playerInput.Disable();
+        Debug.Log($"current phase after restart : {SaveData.currentPhase}");
+        SaveData.currentPhase = GamePhase.Loadout;
+        SaveSystem.SaveGame(SaveData);
+        sceneController.LoadScene("LoadOut");
+    }
 
     /// <summary>
     /// Called when the player loses (e.g. fence destroyed).
@@ -244,7 +259,6 @@ public class GameManager : MonoBehaviour
     private void OnCombatGameOver()
     {
         // Pause gameplay
-        Time.timeScale = 0f;
         UIManager.ShowGameOver();
         Debug.Log("[GameManager] Game Over!");
     }

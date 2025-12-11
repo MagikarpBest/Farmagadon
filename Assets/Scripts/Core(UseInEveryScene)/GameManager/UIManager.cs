@@ -64,7 +64,6 @@ public class UIManager : MonoBehaviour
                 break;
 
             case UIScreen.GameOver:
-                HideAllExcept(screen);
                 SafeShow(gameOverPanel);
                 break;
 

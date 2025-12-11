@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class LoadoutManager : MonoBehaviour
 {
     [Header("Reference")]
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private GameObject loadoutPanel;
     [SerializeField] private WeaponInventory weaponInventory;
@@ -63,7 +64,7 @@ public class LoadoutManager : MonoBehaviour
     }
     private void CheckShowTutorial()
     {
-        SaveData save = SaveSystem.LoadGame();
+        SaveData save = gameManager.SaveData;
         if (save.currentLevel != 5)
         {
             Debug.Log("level not 5");
@@ -77,6 +78,7 @@ public class LoadoutManager : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(0.3f);
+        SaveData save = gameManager.SaveData;
         CheckShowTutorial();
         // Setup button read index on click
         for (int i = 0; i < inventorySlots.Count; i++)
@@ -84,7 +86,7 @@ public class LoadoutManager : MonoBehaviour
             int index = i;
             inventorySlots[index].onClick.AddListener(() => selectedInventoryIndex = index);
         }
-        
+
         allOwned = weaponInventory.GetAllOwnedWeapons();
         loadoutNav = loadoutPanel.GetComponent<UINavigationMemory>();
         equipNav = equipPopupUI.GetComponent<UINavigationMemory>();

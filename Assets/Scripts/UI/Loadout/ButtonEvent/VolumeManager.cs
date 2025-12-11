@@ -25,12 +25,21 @@ public class VolumeManager : MonoBehaviour
         {
             Load();
         }
+
+        UnityAudioManager existing = FindFirstObjectByType<UnityAudioManager>();
+        if (existing != null)
+        {
+            Debug.Log("AudioManager already exists. Not spawning a new one.");
+            AudioService.AudioManager.PlayBGM(mainMenuBGM);
+            return;
+        }
         UnityAudioManager unityAudioManagerPrefab = Resources.Load<UnityAudioManager>("UnityAudioManager");
         UnityAudioManager unityAudioManagerInstance = GameObject.Instantiate(unityAudioManagerPrefab);
         unityAudioManagerInstance.Initiallize();
         unityAudioManagerInstance.name = "AudioManager";
         AudioService.SetAudioManager(unityAudioManagerInstance);
         AudioService.AudioManager.PlayBGM(mainMenuBGM);
+
     }
     public void ChangeMasterVolume()
     {

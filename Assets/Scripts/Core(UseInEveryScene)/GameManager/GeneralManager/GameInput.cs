@@ -10,7 +10,7 @@ public class GameInput : MonoBehaviour
     public event Action OnPause;
     public event Action OnShootReleased;
 
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
 
     private void OnEnable()
     {
