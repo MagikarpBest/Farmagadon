@@ -20,6 +20,6 @@ MonoBehaviour:
   amountProduced: 1
   craftingRequirements:
   - ammo: {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
-    amountNeeded: 3
+    amountNeeded: 0
   - ammo: {fileID: 11400000, guid: 21c78205cc5d4024896b0f0c17a3d757, type: 2}
-    amountNeeded: 3
+    amountNeeded: 6

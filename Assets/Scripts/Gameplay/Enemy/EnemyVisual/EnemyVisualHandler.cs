@@ -179,7 +179,6 @@ public class EnemyVisualHandler : MonoBehaviour
         hitEffectRoot.localPosition = basePosition;
 
         hitEffectRoot.DOShakePosition(0.3f, 0.12f, 9, 90, false, true);
-        //visualRoot.DOPunchPosition(Vector3.one * 0.10f, 0.2f, 10, 1f).SetEase(Ease.OutQuad);
         yield return new WaitForSeconds(0.3f);
     }
 

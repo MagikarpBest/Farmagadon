@@ -8,6 +8,7 @@ public class LevelIntroUI : MonoBehaviour
     [Header("References")]
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI levelText;
 
     [Header("Timing Settings")]
     [SerializeField] private Ease fadeInEase = Ease.OutQuad;
@@ -22,6 +23,7 @@ public class LevelIntroUI : MonoBehaviour
 
         canvasGroup.alpha = 0f;
 
+        levelText.text = $"Level {levelNumber}";
         titleText.text = $"Level {levelNumber}\n{levelName}";
 
         // Let Unity update UI before tween starts

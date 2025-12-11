@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class LoadoutManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class LoadoutManager : MonoBehaviour
     private Button lastSelectedButton; // store the button that opened equip popup
     private GameObject activePopup; // Only one popup active at a time
     private List<WeaponSlot> allOwned;
-    private bool loadoutTutorialFinished = false;
+    private bool showTutorial = false;
 
 
     // For navigation memory and button navigation logics
@@ -60,13 +61,23 @@ public class LoadoutManager : MonoBehaviour
             gameInput.OnPause -= () => CloseActivePopup(true);
         }
     }
-    private void onTutorialFinished()
+    private void CheckShowTutorial()
     {
-        loadoutTutorialFinished = true;
+        SaveData save = SaveSystem.LoadGame();
+        if (save.currentLevel != 5)
+        {
+            Debug.Log("level not 5");
+            return;
+        }
+
+        Debug.Log("level is 5");
+        showTutorial = true;
     }
+
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(0.3f);
+        CheckShowTutorial();
         // Setup button read index on click
         for (int i = 0; i < inventorySlots.Count; i++)
         {
@@ -79,9 +90,8 @@ public class LoadoutManager : MonoBehaviour
         equipNav = equipPopupUI.GetComponent<UINavigationMemory>();
         craftNav = craftPopupUI.GetComponent<UINavigationMemory>();
 
-        if (!loadoutTutorialFinished && tutorialButton != null)
+        if (showTutorial && tutorialButton != null)
         {
-            
             EventSystem.current.SetSelectedGameObject(tutorialButton);
         }
     }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UnityEngine.Device;
+using UnityEngine.SceneManagement;
 
 public enum UIScreen
 {
@@ -12,7 +13,8 @@ public enum UIScreen
     Settings,
     FarmTutorial,
     CombatTutorial,
-    LoadoutTutorial
+    LoadoutTutorial,
+    FinalFinish
 }
 
 public class UIManager : MonoBehaviour
@@ -26,6 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject farmTutorialPanel;      // Tutorial UI
     [SerializeField] private GameObject combatTutorialPanel;      // Tutorial UI
     [SerializeField] private GameObject loadoutTutorialPanel;      // Tutorial UI
+    [SerializeField] private GameObject finalFinishPanel;
 
     [SerializeField] private UIBounceDown UIBouncer;                // UI bounce
 
@@ -85,6 +88,9 @@ public class UIManager : MonoBehaviour
             case UIScreen.LoadoutTutorial:
                 SafeShow(loadoutTutorialPanel);
                 UIBouncer.MoveUI();
+                break;
+            case UIScreen.FinalFinish:
+                SafeShow(finalFinishPanel);
                 break;
         }
     }
@@ -198,6 +204,11 @@ public class UIManager : MonoBehaviour
         OnVictoryCompleted?.Invoke();// Fire event so GameManager knows
     }
 
+    public void FinishVictoryButton()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     // Optional helpers for quick access
     public void ShowHUD() => Show(UIScreen.HUD);
     public void ShowVictory() => Show(UIScreen.Victory);
@@ -213,4 +224,5 @@ public class UIManager : MonoBehaviour
     public void HideFarmTutorial() => Hide(UIScreen.FarmTutorial);
     public void HideCombatTutorial() => Hide(UIScreen.CombatTutorial);
     public void HideLoadoutTutorial() => Hide(UIScreen.LoadoutTutorial);
+    public void ShowFinishVictory() => Show(UIScreen.FinalFinish);
 }

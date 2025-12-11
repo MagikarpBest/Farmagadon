@@ -19,7 +19,7 @@ MonoBehaviour:
   canBeCrafted: 1
   amountProduced: 1
   craftingRequirements:
+  - ammo: {fileID: 11400000, guid: 165cc5808f9c14a4cbf7839702540e70, type: 2}
+    amountNeeded: 0
   - ammo: {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}
-    amountNeeded: 3
-  - ammo: {fileID: 11400000, guid: 0ac4b86111ff5ea468fd562436eaad37, type: 2}
-    amountNeeded: 3
+    amountNeeded: 6

@@ -16,7 +16,6 @@ MonoBehaviour:
   maxHealth: 20
   moveSpeed: 0
   damage: 0
-  attackInterval: 0
-  useRandomSprite: 0
-  normalEnemySprite: []
-  defaultSprite: {fileID: 0}
+  attackInterval: 1e+10
+  isBoss: 0
+  enemyWeakness: 0
